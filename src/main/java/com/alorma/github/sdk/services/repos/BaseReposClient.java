@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListRepos;
 import com.alorma.github.sdk.services.client.BaseClient;
-import com.alorma.github.sdk.services.user.UsersService;
+import com.alorma.github.sdk.utils.GitskariosSettings;
 
 import retrofit.RestAdapter;
 
@@ -31,23 +31,25 @@ public abstract class BaseReposClient extends BaseClient<ListRepos> {
     @Override
     protected void executeService(RestAdapter restAdapter) {
         ReposService reposService = restAdapter.create(ReposService.class);
+		GitskariosSettings settings = new GitskariosSettings(context);
+		String sort = settings.getRepoSort("full_name");
         if (page == 0) {
             if (username == null) {
-                executeUserFirstPage(reposService);
+                executeUserFirstPage(sort, reposService);
             } else {
-                executeFirstPageByUsername(username, reposService);
+                executeFirstPageByUsername(username, sort, reposService);
             }
         } else {
             if (username == null) {
-                executeUserPaginated(page, reposService);
+                executeUserPaginated(page, sort, reposService);
             } else {
-                executePaginatedByUsername(username, page, reposService);
+                executePaginatedByUsername(username, page, sort, reposService);
             }
         }
     }
 
-    protected abstract void executeUserFirstPage(ReposService usersService);
-    protected abstract void executeFirstPageByUsername(String username, ReposService usersService);
-    protected abstract void executeUserPaginated(int page, ReposService usersService);
-    protected abstract void executePaginatedByUsername(String username, int page, ReposService usersService);
+    protected abstract void executeUserFirstPage(String sort, ReposService usersService);
+    protected abstract void executeFirstPageByUsername(String username, String sort, ReposService usersService);
+    protected abstract void executeUserPaginated(int page, String sort, ReposService usersService);
+    protected abstract void executePaginatedByUsername(String username, int page, String sort, ReposService usersService);
 }

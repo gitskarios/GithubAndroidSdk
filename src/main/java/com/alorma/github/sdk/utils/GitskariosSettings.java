@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.utils;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**

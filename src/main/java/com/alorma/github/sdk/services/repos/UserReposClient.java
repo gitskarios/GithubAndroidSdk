@@ -17,22 +17,22 @@ public class UserReposClient extends BaseReposClient {
     }
 
     @Override
-    protected void executeUserFirstPage(ReposService usersService) {
+    protected void executeUserFirstPage(String sort, ReposService usersService) {
         usersService.userReposList(this);
     }
 
     @Override
-    protected void executeFirstPageByUsername(String username, ReposService usersService) {
+    protected void executeFirstPageByUsername(String username, String sort, ReposService usersService) {
         usersService.userReposList(username, this);
     }
 
     @Override
-    protected void executeUserPaginated(int page, ReposService usersService) {
+    protected void executeUserPaginated(int page, String sort, ReposService usersService) {
         usersService.userReposList(page, this);
     }
 
     @Override
-    protected void executePaginatedByUsername(String username, int page, ReposService usersService) {
+    protected void executePaginatedByUsername(String username, int page, String sort, ReposService usersService) {
         usersService.userReposList(username, page, this);
     }
 }

@@ -20,22 +20,22 @@ public class WatchedReposClient extends BaseReposClient{
     }
 
     @Override
-    protected void executeUserFirstPage(ReposService usersService) {
+    protected void executeUserFirstPage(String sort, ReposService usersService) {
         usersService.userSubscribedReposList(this);
     }
 
     @Override
-    protected void executeFirstPageByUsername(String username, ReposService usersService) {
+    protected void executeFirstPageByUsername(String username, String sort, ReposService usersService) {
         usersService.userSubscribedReposList(username, this);
     }
 
     @Override
-    protected void executeUserPaginated(int page, ReposService usersService) {
+    protected void executeUserPaginated(int page, String sort, ReposService usersService) {
         usersService.userSubscribedReposList(page, this);
     }
 
     @Override
-    protected void executePaginatedByUsername(String username, int page, ReposService usersService) {
+    protected void executePaginatedByUsername(String username, int page, String sort, ReposService usersService) {
         usersService.userSubscribedReposList(username, page, this);
     }
 

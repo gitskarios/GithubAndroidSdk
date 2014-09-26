@@ -13,22 +13,22 @@ public class OrgsReposClient extends BaseReposClient {
     }
 
     @Override
-    protected void executeUserFirstPage(ReposService orgsService) {
+    protected void executeUserFirstPage(String sort, ReposService orgsService) {
 
     }
 
     @Override
-    protected void executeFirstPageByUsername(String org, ReposService orgsService) {
+    protected void executeFirstPageByUsername(String org, String sort, ReposService orgsService) {
 		orgsService.orgsReposList(org, this);
     }
 
     @Override
-    protected void executeUserPaginated(int page, ReposService orgsService) {
+    protected void executeUserPaginated(int page, String sort, ReposService orgsService) {
 
     }
 
     @Override
-    protected void executePaginatedByUsername(String org, int page, ReposService orgsService) {
+    protected void executePaginatedByUsername(String org, int page, String sort, ReposService orgsService) {
 		orgsService.orgsReposList(org, page, this);
     }
 }
