@@ -14,12 +14,6 @@ public class Repo implements Parcelable {
 
 	public boolean fork;
 
-	public boolean hasDownloads;
-
-	public boolean hasIssues;
-
-	public boolean hasWiki;
-
 	@SerializedName("private")
 	public boolean isPrivate;
 
@@ -77,15 +71,15 @@ public class Repo implements Parcelable {
 
 	public boolean has_downloads;
 
+
+	public boolean has_wiki;
+
 	public Permissions permissions;
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Repo{");
 		sb.append("fork=").append(fork);
-		sb.append(", hasDownloads=").append(hasDownloads);
-		sb.append(", hasIssues=").append(hasIssues);
-		sb.append(", hasWiki=").append(hasWiki);
 		sb.append(", isPrivate=").append(isPrivate);
 		sb.append(", created_at=").append(created_at);
 		sb.append(", pushed_at=").append(pushed_at);
@@ -114,6 +108,7 @@ public class Repo implements Parcelable {
 		sb.append(", open_issues_count=").append(open_issues_count);
 		sb.append(", has_issues=").append(has_issues);
 		sb.append(", has_downloads=").append(has_downloads);
+		sb.append(", has_wiki=").append(has_wiki);
 		sb.append(", permissions=").append(permissions);
 		sb.append('}');
 		return sb.toString();
@@ -132,9 +127,6 @@ public class Repo implements Parcelable {
 
 	protected Repo(Parcel in) {
 		fork = in.readByte() != 0x00;
-		hasDownloads = in.readByte() != 0x00;
-		hasIssues = in.readByte() != 0x00;
-		hasWiki = in.readByte() != 0x00;
 		isPrivate = in.readByte() != 0x00;
 		long tmpCreated_at = in.readLong();
 		created_at = tmpCreated_at != -1 ? new Date(tmpCreated_at) : null;
@@ -166,6 +158,7 @@ public class Repo implements Parcelable {
 		open_issues_count = in.readInt();
 		has_issues = in.readByte() != 0x00;
 		has_downloads = in.readByte() != 0x00;
+		has_wiki = in.readByte() != 0x00;
 		permissions = (Permissions) in.readValue(Permissions.class.getClassLoader());
 	}
 
@@ -177,9 +170,6 @@ public class Repo implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeByte((byte) (fork ? 0x01 : 0x00));
-		dest.writeByte((byte) (hasDownloads ? 0x01 : 0x00));
-		dest.writeByte((byte) (hasIssues ? 0x01 : 0x00));
-		dest.writeByte((byte) (hasWiki ? 0x01 : 0x00));
 		dest.writeByte((byte) (isPrivate ? 0x01 : 0x00));
 		dest.writeLong(created_at != null ? created_at.getTime() : -1L);
 		dest.writeLong(pushed_at != null ? pushed_at.getTime() : -1L);
@@ -208,6 +198,7 @@ public class Repo implements Parcelable {
 		dest.writeInt(open_issues_count);
 		dest.writeByte((byte) (has_issues ? 0x01 : 0x00));
 		dest.writeByte((byte) (has_downloads ? 0x01 : 0x00));
+		dest.writeByte((byte) (has_wiki ? 0x01 : 0x00));
 		dest.writeValue(permissions);
 	}
 
