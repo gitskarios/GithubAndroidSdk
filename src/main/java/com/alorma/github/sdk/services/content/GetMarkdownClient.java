@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.content;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
@@ -29,12 +30,14 @@ import retrofit.client.Response;
  */
 public class GetMarkdownClient implements Callback<String>, Client {
 
-    private RequestMarkdownDTO readme;
+	private final Handler handler;
+	private RequestMarkdownDTO readme;
 
     private BaseClient.OnResultCallback<String> onResultCallback;
 
-    public GetMarkdownClient(Context context, RequestMarkdownDTO readme) {
+    public GetMarkdownClient(Context context, RequestMarkdownDTO readme, Handler handler) {
         this.readme = readme;
+		this.handler = handler;
     }
 
     public void execute() {
@@ -69,18 +72,20 @@ public class GetMarkdownClient implements Callback<String>, Client {
         HttpPost httppost = new HttpPost(request.getUrl());
         httppost.setHeader("Accept", "application/json");
         httppost.setHeader("Content-type", "text/plain");
-
-        Log.i("ALORMA_JSON", new Gson().toJson(readme));
-
         httppost.setEntity(new StringEntity(readme.text));
 
         HttpResponse response = httpclient.execute(httppost);
 
-        String inputStreamString = new Scanner(response.getEntity().getContent(),"UTF-8").useDelimiter("\\A").next();
+        final String inputStreamString = new Scanner(response.getEntity().getContent(),"UTF-8").useDelimiter("\\A").next();
 
-        if (onResultCallback != null) {
-            onResultCallback.onResponseOk(inputStreamString, null);
-        }
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (onResultCallback != null) {
+					onResultCallback.onResponseOk(inputStreamString, null);
+				}
+			}
+		});
 
         return null;
     }

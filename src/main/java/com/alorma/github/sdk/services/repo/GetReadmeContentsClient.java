@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Base64;
 
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
@@ -19,11 +20,13 @@ import retrofit.client.Response;
  */
 public class GetReadmeContentsClient extends BaseRepoClient<String> {
 
-    private OnResultCallback<String> callback;
+	private final Handler handler;
+	private OnResultCallback<String> callback;
     private Branch currentBranch;
 
     public GetReadmeContentsClient(Context context, String owner, String repo) {
         super(context, owner, repo);
+		handler = new Handler();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class GetReadmeContentsClient extends BaseRepoClient<String> {
             }
 
             requestMarkdownDTO.text = content.content;
-            GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO);
+            GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO, handler);
             markdownClient.setOnResultCallback(callback);
             markdownClient.execute();
         }
