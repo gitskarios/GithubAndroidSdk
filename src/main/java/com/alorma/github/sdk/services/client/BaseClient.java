@@ -33,8 +33,6 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 
 	public void execute() {
 
-		handler = new Handler();
-
 		RestAdapter restAdapter = new RestAdapter.Builder()
 				.setClient(new OkClient())
 				.setEndpoint(ApiConstants.API_URL)
@@ -50,32 +48,48 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 
 	@Override
 	public void success(final K k, final Response response) {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				if (onResultCallback != null) {
-					onResultCallback.onResponseOk(k, response);
+		if (handler != null) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					sendResponse(k, response);
 				}
-			}
-		});
+			});
+		} else {
+			sendResponse(k, response);
+		}
+	}
+
+	private void sendResponse(K k, Response response) {
+		if (onResultCallback != null) {
+			onResultCallback.onResponseOk(k, response);
+		}
 	}
 
 	@Override
 	public void failure(final RetrofitError error) {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
-					storeCredentials.clear();
-					LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
-					manager.sendBroadcast(new UnAuthIntent());
-				} else {
-					if (onResultCallback != null) {
-						onResultCallback.onFail(error);
-					}
+		if (handler != null) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					sendError(error);
 				}
+			});
+		} else {
+			sendError(error);
+		}
+	}
+
+	private void sendError(RetrofitError error) {
+		if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
+			storeCredentials.clear();
+			LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+			manager.sendBroadcast(new UnAuthIntent());
+		} else {
+			if (onResultCallback != null) {
+				onResultCallback.onFail(error);
 			}
-		});
+		}
 	}
 
 	public OnResultCallback<K> getOnResultCallback() {
