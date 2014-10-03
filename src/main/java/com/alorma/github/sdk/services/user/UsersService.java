@@ -49,4 +49,6 @@ public interface UsersService {
     @GET("/users/{username}/following")
     void following(@Path("username") String username, @Query("page") int page, Callback<ListUsers> callback);
 
+	@GET("/user")
+	void me(Callback<User> userCallback);
 }

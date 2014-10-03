@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.client;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -20,76 +21,89 @@ import retrofit.client.Response;
 
 public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, RestAdapter.Log {
 
-    private final StoreCredentials storeCredentials;
-    protected final Context context;
-    private OnResultCallback<K> onResultCallback;
+	private final StoreCredentials storeCredentials;
+	protected final Context context;
+	private OnResultCallback<K> onResultCallback;
+	private Handler handler;
 
-    public BaseClient(Context context) {
-        this.context = context;
-        storeCredentials = new StoreCredentials(context);
-    }
+	public BaseClient(Context context) {
+		this.context = context;
+		storeCredentials = new StoreCredentials(context);
+	}
 
-    public void execute() {
+	public void execute() {
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
+		handler = new Handler();
+
+		RestAdapter restAdapter = new RestAdapter.Builder()
 				.setClient(new OkClient())
-                .setEndpoint(ApiConstants.API_URL)
-                .setRequestInterceptor(this)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(this)
-                .build();
+				.setEndpoint(ApiConstants.API_URL)
+				.setRequestInterceptor(this)
+				.setLogLevel(RestAdapter.LogLevel.FULL)
+				.setLog(this)
+				.build();
 
-        executeService(restAdapter);
-    }
+		executeService(restAdapter);
+	}
 
-    protected abstract void executeService(RestAdapter restAdapter);
+	protected abstract void executeService(RestAdapter restAdapter);
 
-    @Override
-    public void success(K k, Response response) {
-        if (onResultCallback != null) {
-            onResultCallback.onResponseOk(k, response);
-        }
-    }
+	@Override
+	public void success(final K k, final Response response) {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (onResultCallback != null) {
+					onResultCallback.onResponseOk(k, response);
+				}
+			}
+		});
+	}
 
-    @Override
-    public void failure(RetrofitError error) {
-        if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
-            storeCredentials.clear();
-            LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
-            manager.sendBroadcast(new UnAuthIntent());
-        } else {
-            if (onResultCallback != null) {
-                onResultCallback.onFail(error);
-            }
-        }
-    }
+	@Override
+	public void failure(final RetrofitError error) {
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
+					storeCredentials.clear();
+					LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+					manager.sendBroadcast(new UnAuthIntent());
+				} else {
+					if (onResultCallback != null) {
+						onResultCallback.onFail(error);
+					}
+				}
+			}
+		});
+	}
 
-    public OnResultCallback<K> getOnResultCallback() {
-        return onResultCallback;
-    }
+	public OnResultCallback<K> getOnResultCallback() {
+		return onResultCallback;
+	}
 
-    public void setOnResultCallback(OnResultCallback<K> onResultCallback) {
-        this.onResultCallback = onResultCallback;
-    }
+	public void setOnResultCallback(OnResultCallback<K> onResultCallback) {
+		this.onResultCallback = onResultCallback;
+	}
 
-    @Override
-    public void intercept(RequestFacade request) {
-        request.addHeader("Accept", getAcceptHeader());
-        request.addHeader("Authorization", "token " + storeCredentials.token());
-    }
+	@Override
+	public void intercept(RequestFacade request) {
+		request.addHeader("Accept", getAcceptHeader());
+		request.addHeader("Authorization", "token " + storeCredentials.token());
+	}
 
-    @Override
-    public void log(String message) {
-        Log.v("RETROFIT_LOG", message);
-    }
+	@Override
+	public void log(String message) {
+		Log.v("RETROFIT_LOG", message);
+	}
 
-    public String getAcceptHeader() {
-        return "application/vnd.github.v3.full+json";
-    }
+	public String getAcceptHeader() {
+		return "application/vnd.github.v3.full+json";
+	}
 
-    public interface OnResultCallback<K> {
-        void onResponseOk(K k, Response r);
+	public interface OnResultCallback<K> {
+		void onResponseOk(K k, Response r);
 
-        void onFail(RetrofitError error);
-    }
+		void onFail(RetrofitError error);
+	}
 }

@@ -12,14 +12,24 @@ import retrofit.RestAdapter;
  */
 public class GetUserEventsClient extends BaseClient<ListEvents> {
 	private String username;
+	private int page = 0;
 
 	public GetUserEventsClient(Context context, String username) {
 		super(context);
 		this.username = username;
 	}
+	public GetUserEventsClient(Context context, String username, int page) {
+		super(context);
+		this.username = username;
+		this.page = page;
+	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(EventsService.class).events(username, this);
+		if (page == 0) {
+			restAdapter.create(EventsService.class).events(username, this);
+		} else {
+			restAdapter.create(EventsService.class).events(username, page, this);
+		}
 	}
 }
