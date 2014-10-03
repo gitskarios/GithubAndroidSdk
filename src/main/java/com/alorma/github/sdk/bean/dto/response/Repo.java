@@ -1,5 +1,8 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -7,123 +10,208 @@ import java.util.Date;
 /**
  * Created by Bernat on 13/07/2014.
  */
-public class Repo {
+public class Repo implements Parcelable {
 
-    public boolean fork;
+	public boolean fork;
 
-    public boolean hasDownloads;
+	@SerializedName("private")
+	public boolean isPrivate;
 
-    public boolean hasIssues;
+	public Date created_at;
 
-    public boolean hasWiki;
+	public Date pushed_at;
 
-    @SerializedName("private")
-    public boolean isPrivate;
+	public Date updated_at;
 
-    public Date created_at;
+	public int forks_count;
 
-    public Date pushed_at;
+	public long id;
 
-    public Date updated_at;
+	public Repo parent;
 
-    public int forks_count;
+	public Repo source;
 
-    public long id;
+	public String clone_url;
 
-    public Repo parent;
+	public String description;
 
-    public Repo source;
+	public String homepage;
 
-    public String clone_url;
+	public String git_url;
 
-    public String description;
+	public String html_url;
 
-    public String homepage;
+	public String language;
 
-    public String git_url;
+	public String default_branch;
 
-    public String html_url;
+	public String mirror_url;
 
-    public String language;
+	public String name;
 
-    public String default_branch;
+	public String full_name;
 
-    public String mirror_url;
+	public String ssh_url;
 
-    public String name;
+	public String svn_url;
 
-    public String full_name;
+	public String url;
 
-    public String ssh_url;
+	public User owner;
 
-    public String svn_url;
+	public int stargazers_count;
 
-    public String url;
+	public int watchers_count;
 
-    public User owner;
+	public int size;
 
-    public int stargazers_count;
+	public int open_issues_count;
 
-    public int watchers_count;
+	public boolean has_issues;
 
-    public int size;
+	public boolean has_downloads;
 
-    public int open_issues_count;
 
-    public boolean has_issues;
+	public boolean has_wiki;
 
-    public boolean has_downloads;
+	public Permissions permissions;
 
-    public Permissions permissions;
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Repo{");
+		sb.append("fork=").append(fork);
+		sb.append(", isPrivate=").append(isPrivate);
+		sb.append(", created_at=").append(created_at);
+		sb.append(", pushed_at=").append(pushed_at);
+		sb.append(", updated_at=").append(updated_at);
+		sb.append(", forks_count=").append(forks_count);
+		sb.append(", id=").append(id);
+		sb.append(", parent=").append(parent);
+		sb.append(", source=").append(source);
+		sb.append(", clone_url='").append(clone_url).append('\'');
+		sb.append(", description='").append(description).append('\'');
+		sb.append(", homepage='").append(homepage).append('\'');
+		sb.append(", git_url='").append(git_url).append('\'');
+		sb.append(", html_url='").append(html_url).append('\'');
+		sb.append(", language='").append(language).append('\'');
+		sb.append(", default_branch='").append(default_branch).append('\'');
+		sb.append(", mirror_url='").append(mirror_url).append('\'');
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", full_name='").append(full_name).append('\'');
+		sb.append(", ssh_url='").append(ssh_url).append('\'');
+		sb.append(", svn_url='").append(svn_url).append('\'');
+		sb.append(", url='").append(url).append('\'');
+		sb.append(", owner=").append(owner);
+		sb.append(", stargazers_count=").append(stargazers_count);
+		sb.append(", watchers_count=").append(watchers_count);
+		sb.append(", size=").append(size);
+		sb.append(", open_issues_count=").append(open_issues_count);
+		sb.append(", has_issues=").append(has_issues);
+		sb.append(", has_downloads=").append(has_downloads);
+		sb.append(", has_wiki=").append(has_wiki);
+		sb.append(", permissions=").append(permissions);
+		sb.append('}');
+		return sb.toString();
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Repo{");
-        sb.append("fork=").append(fork);
-        sb.append(", hasDownloads=").append(hasDownloads);
-        sb.append(", hasIssues=").append(hasIssues);
-        sb.append(", hasWiki=").append(hasWiki);
-        sb.append(", isPrivate=").append(isPrivate);
-        sb.append(", created_at=").append(created_at);
-        sb.append(", pushed_at=").append(pushed_at);
-        sb.append(", updated_at=").append(updated_at);
-        sb.append(", forks_count=").append(forks_count);
-        sb.append(", id=").append(id);
-        sb.append(", parent=").append(parent);
-        sb.append(", source=").append(source);
-        sb.append(", clone_url='").append(clone_url).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", homepage='").append(homepage).append('\'');
-        sb.append(", git_url='").append(git_url).append('\'');
-        sb.append(", html_url='").append(html_url).append('\'');
-        sb.append(", language='").append(language).append('\'');
-        sb.append(", default_branch='").append(default_branch).append('\'');
-        sb.append(", mirror_url='").append(mirror_url).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", full_name='").append(full_name).append('\'');
-        sb.append(", ssh_url='").append(ssh_url).append('\'');
-        sb.append(", svn_url='").append(svn_url).append('\'');
-        sb.append(", url='").append(url).append('\'');
-        sb.append(", owner=").append(owner);
-        sb.append(", stargazers_count=").append(stargazers_count);
-        sb.append(", watchers_count=").append(watchers_count);
-        sb.append(", size=").append(size);
-        sb.append(", open_issues_count=").append(open_issues_count);
-        sb.append(", has_issues=").append(has_issues);
-        sb.append(", has_downloads=").append(has_downloads);
-        sb.append(", permissions=").append(permissions);
-        sb.append('}');
-        return sb.toString();
-    }
+	public boolean canPull() {
+		return permissions != null && permissions.pull;
+	}
 
-    public boolean canPull() {
-        return permissions != null && permissions.pull;
-    }
+	public boolean canPush() {
+		return permissions != null && permissions.push;
+	}
+	public boolean canAdmin() {
+		return permissions != null && permissions.admin;
+	}
 
-    public boolean canPush() {
-        return permissions != null && permissions.push;
-    }
-    public boolean canAdmin() {
-        return permissions != null && permissions.admin;
-    }
+	protected Repo(Parcel in) {
+		fork = in.readByte() != 0x00;
+		isPrivate = in.readByte() != 0x00;
+		long tmpCreated_at = in.readLong();
+		created_at = tmpCreated_at != -1 ? new Date(tmpCreated_at) : null;
+		long tmpPushed_at = in.readLong();
+		pushed_at = tmpPushed_at != -1 ? new Date(tmpPushed_at) : null;
+		long tmpUpdated_at = in.readLong();
+		updated_at = tmpUpdated_at != -1 ? new Date(tmpUpdated_at) : null;
+		forks_count = in.readInt();
+		id = in.readLong();
+		parent = (Repo) in.readValue(Repo.class.getClassLoader());
+		source = (Repo) in.readValue(Repo.class.getClassLoader());
+		clone_url = in.readString();
+		description = in.readString();
+		homepage = in.readString();
+		git_url = in.readString();
+		html_url = in.readString();
+		language = in.readString();
+		default_branch = in.readString();
+		mirror_url = in.readString();
+		name = in.readString();
+		full_name = in.readString();
+		ssh_url = in.readString();
+		svn_url = in.readString();
+		url = in.readString();
+		owner = (User) in.readValue(User.class.getClassLoader());
+		stargazers_count = in.readInt();
+		watchers_count = in.readInt();
+		size = in.readInt();
+		open_issues_count = in.readInt();
+		has_issues = in.readByte() != 0x00;
+		has_downloads = in.readByte() != 0x00;
+		has_wiki = in.readByte() != 0x00;
+		permissions = (Permissions) in.readValue(Permissions.class.getClassLoader());
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeByte((byte) (fork ? 0x01 : 0x00));
+		dest.writeByte((byte) (isPrivate ? 0x01 : 0x00));
+		dest.writeLong(created_at != null ? created_at.getTime() : -1L);
+		dest.writeLong(pushed_at != null ? pushed_at.getTime() : -1L);
+		dest.writeLong(updated_at != null ? updated_at.getTime() : -1L);
+		dest.writeInt(forks_count);
+		dest.writeLong(id);
+		dest.writeValue(parent);
+		dest.writeValue(source);
+		dest.writeString(clone_url);
+		dest.writeString(description);
+		dest.writeString(homepage);
+		dest.writeString(git_url);
+		dest.writeString(html_url);
+		dest.writeString(language);
+		dest.writeString(default_branch);
+		dest.writeString(mirror_url);
+		dest.writeString(name);
+		dest.writeString(full_name);
+		dest.writeString(ssh_url);
+		dest.writeString(svn_url);
+		dest.writeString(url);
+		dest.writeValue(owner);
+		dest.writeInt(stargazers_count);
+		dest.writeInt(watchers_count);
+		dest.writeInt(size);
+		dest.writeInt(open_issues_count);
+		dest.writeByte((byte) (has_issues ? 0x01 : 0x00));
+		dest.writeByte((byte) (has_downloads ? 0x01 : 0x00));
+		dest.writeByte((byte) (has_wiki ? 0x01 : 0x00));
+		dest.writeValue(permissions);
+	}
+
+	@SuppressWarnings("unused")
+	public static final Parcelable.Creator<Repo> CREATOR = new Parcelable.Creator<Repo>() {
+		@Override
+		public Repo createFromParcel(Parcel in) {
+			return new Repo(in);
+		}
+
+		@Override
+		public Repo[] newArray(int size) {
+			return new Repo[size];
+		}
+	};
 }
