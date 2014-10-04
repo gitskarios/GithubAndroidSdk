@@ -6,5 +6,20 @@ package com.alorma.github.sdk.bean.dto.response.events;
 public enum EventType {
 	WatchEvent,
 	CreateEvent,
+	CommitCommentEvent,
+	DownloadEvent,
+	FollowEvent,
+	ForkEvent,
+	GistEvent,
+	IssueCommentEvent,
+	IssueEvent,
+	MemberEvent,
+	PublicEvent,
+	PullRequestEvent,
+	PullRequestReviewCommentEvent,
+	PushEvent,
+	ReleaseEvent,
+	StatusEvent,
+	TeamAddEvent,
 	Unhandled
 }
