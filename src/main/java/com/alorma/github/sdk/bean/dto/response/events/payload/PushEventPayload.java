@@ -8,7 +8,7 @@ import com.alorma.github.sdk.bean.dto.response.ListCommit;
 public class PushEventPayload extends GithubEventPayload{
 	public long push_id;
 	public int size;
-	public int distninct_size;
+	public int distinct_size;
 	public String ref;
 	public String head;
 	public String before;
