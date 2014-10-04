@@ -7,6 +7,7 @@ public class Commit extends ShaUrl{
     public ListShaUrl parents;
     public User committer;
 	public String message;
+	public boolean distinct;
 
 	@Override
 	public String toString() {
