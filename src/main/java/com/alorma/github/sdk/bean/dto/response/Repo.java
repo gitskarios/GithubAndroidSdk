@@ -125,6 +125,10 @@ public class Repo implements Parcelable {
 		return permissions != null && permissions.admin;
 	}
 
+	public Repo() {
+
+	}
+
 	protected Repo(Parcel in) {
 		fork = in.readByte() != 0x00;
 		isPrivate = in.readByte() != 0x00;
