@@ -27,8 +27,9 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	private Handler handler;
 
 	public BaseClient(Context context) {
-		this.context = context;
+		this.context = context.getApplicationContext();
 		storeCredentials = new StoreCredentials(context);
+		handler = new Handler();
 	}
 
 	public void execute() {
