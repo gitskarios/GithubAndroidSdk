@@ -2,10 +2,9 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "com.alorma.github.sdk"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
@@ -21,7 +20,7 @@ dependencies {
 
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     
-    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:support-v4:21.0.2'
 
     compile 'com.android.support:support-annotations:20.0.0'
 }
