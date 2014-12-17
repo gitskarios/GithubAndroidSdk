@@ -23,4 +23,7 @@ public interface ContentService {
 
 	@GET("/repos/{owner}/{repo}/contents/{path}")
 	void fileContent(@Path("owner") String owner, @Path("repo") String repo, @Path("path") String path, @Query("sha") String sha, Callback<Content> callback);
+
+	@GET("/repos/{owner}/{repo}/{file_type}/{path}")
+	void archiveLink(@Path("owner") String owner, @Path("repo") String repo, @Path("file_type") String file_type, @Path("path") String path, Callback<Object> callback);
 }

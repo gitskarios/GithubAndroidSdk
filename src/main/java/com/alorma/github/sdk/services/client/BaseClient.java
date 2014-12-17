@@ -24,7 +24,7 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	private final StoreCredentials storeCredentials;
 	protected final Context context;
 	private OnResultCallback<K> onResultCallback;
-	private Handler handler;
+	protected Handler handler;
 
 	public BaseClient(Context context) {
 		this.context = context.getApplicationContext();
