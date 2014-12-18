@@ -8,6 +8,7 @@ import android.content.Context;
 public class GitskariosSettings extends PreferencesHelper{
 	public static final String KEY_REPO_SORT = "KEY_REPO_SORT";
 	public static final String KEY_AUTH_USER = "KEY_AUTH_USER";
+	public static final String KEY_DOWNLOAD_FILE_TYPE = "KEY_DOWNLOAD_FILE_TYPE";
 
 	public GitskariosSettings(Context context) {
 		super(context);
@@ -26,5 +27,13 @@ public class GitskariosSettings extends PreferencesHelper{
 
 	public String getAuthUser(String defaultValue) {
 		return getStringSetting(KEY_AUTH_USER, defaultValue);
+	}
+
+	public String getDownloadFileType() {
+		return getStringSetting(KEY_DOWNLOAD_FILE_TYPE, "zipball");
+	}
+
+	public void saveDownloadFileType(String downloadFileType) {
+		saveStringSetting(KEY_DOWNLOAD_FILE_TYPE, downloadFileType);
 	}
 }
