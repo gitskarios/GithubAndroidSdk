@@ -18,4 +18,10 @@ public interface CommitsService {
 	@GET("/repos/{owner}/{repo}/commits")
 	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, Callback<ListCommit> callback);
 
+	@GET("/repos/{owner}/{repo}/commits")
+	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("sha") String sha, Callback<ListCommit> callback);
+
+	@GET("/repos/{owner}/{repo}/commits")
+	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, @Query("sha") String sha, Callback<ListCommit> callback);
+
 }
