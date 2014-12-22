@@ -6,7 +6,7 @@ public class GistRevision {
 
 	private Date committedAt;
 
-	private GistChangeStatus changeStatus;
+	private GitChangeStatus changeStatus;
 
 	private String url;
 
@@ -33,7 +33,7 @@ public class GistRevision {
 	/**
 	 * @return changeStatus
 	 */
-	public GistChangeStatus getChangeStatus() {
+	public GitChangeStatus getChangeStatus() {
 		return changeStatus;
 	}
 
@@ -41,7 +41,7 @@ public class GistRevision {
 	 * @param changeStatus
 	 * @return this gist revision
 	 */
-	public GistRevision setChangeStatus(GistChangeStatus changeStatus) {
+	public GistRevision setChangeStatus(GitChangeStatus changeStatus) {
 		this.changeStatus = changeStatus;
 		return this;
 	}

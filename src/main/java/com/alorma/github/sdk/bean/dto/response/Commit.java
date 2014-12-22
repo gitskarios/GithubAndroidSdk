@@ -5,12 +5,14 @@ public class Commit extends ShaUrl{
     private Commit commit;
     public User author;
     public ListShaUrl parents;
+	public GitChangeStatus stats;
     public User committer;
 	public String message;
 	public boolean distinct;
+	public GitCommitFiles files;
 
 	@Override
 	public String toString() {
-		return commit != null ? commit.message : "No message";
+		return "[" + sha + "] " + commit.message;
 	}
 }
