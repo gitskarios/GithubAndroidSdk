@@ -21,6 +21,8 @@ public class User implements Parcelable {
     public String blog;
     public String bio;
     public String email;
+	
+	public String date;
 
     public String location;
     public String html_url;
@@ -78,6 +80,7 @@ public class User implements Parcelable {
         organizations_url = in.readString();
         repos_url = in.readString();
         events_url = in.readString();
+        date = in.readString();
         received_events_url = in.readString();
         type = (UserType) in.readValue(UserType.class.getClassLoader());
         site_admin = in.readByte() != 0x00;
@@ -121,6 +124,7 @@ public class User implements Parcelable {
         dest.writeString(organizations_url);
         dest.writeString(repos_url);
         dest.writeString(events_url);
+        dest.writeString(date);
         dest.writeString(received_events_url);
         dest.writeValue(type);
         dest.writeByte((byte) (site_admin ? 0x01 : 0x00));
