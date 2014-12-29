@@ -19,9 +19,6 @@ public interface UsersService {
 	@GET("/users/{user}")
 	void getSingleUser(@Path("user") String user, Callback<User> callback);
 
-	@GET("/user")
-	void getUser(Callback<User> callback);
-
 	@GET("/user/emails")
 	void userEmails(Callback<ListEmails> callback);
 
