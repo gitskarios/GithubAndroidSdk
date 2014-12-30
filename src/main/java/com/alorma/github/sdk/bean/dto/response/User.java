@@ -42,8 +42,11 @@ public class User implements Parcelable {
 
     public int public_repos;
     public int public_gists;
+    public int private_gists;
     public int owned_public_repos;
+    public int owned_private_repos;
     public int total_public_repos;
+    public int total_private_repos;
     public int followers;
     public int following;
     public int collaborators;
@@ -86,8 +89,11 @@ public class User implements Parcelable {
         site_admin = in.readByte() != 0x00;
         public_repos = in.readInt();
         public_gists = in.readInt();
+		private_gists = in.readInt();
         owned_public_repos = in.readInt();
+        owned_private_repos = in.readInt();
         total_public_repos = in.readInt();
+        total_private_repos = in.readInt();
         followers = in.readInt();
         following = in.readInt();
         collaborators = in.readInt();
@@ -130,8 +136,11 @@ public class User implements Parcelable {
         dest.writeByte((byte) (site_admin ? 0x01 : 0x00));
         dest.writeInt(public_repos);
         dest.writeInt(public_gists);
+        dest.writeInt(private_gists);
         dest.writeInt(owned_public_repos);
+        dest.writeInt(owned_private_repos);
         dest.writeInt(total_public_repos);
+        dest.writeInt(total_private_repos);
         dest.writeInt(followers);
         dest.writeInt(following);
         dest.writeInt(collaborators);
