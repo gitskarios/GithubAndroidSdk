@@ -10,6 +10,7 @@ public class Commit extends ShaUrl{
 	public String message;
 	public boolean distinct;
 	public GitCommitFiles files;
+	public long days;
 
 	@Override
 	public String toString() {
