@@ -46,7 +46,7 @@ public class GetArchiveLinkService extends BaseClient {
 					DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 					DownloadManager.Request request = new DownloadManager.Request(
 							Uri.parse(url));
-					String fileName = repo + "." + (fileType.equalsIgnoreCase("zipball") ? "zip" : "tar");
+					String fileName = repo + "_" + path + "_" + "." + (fileType.equalsIgnoreCase("zipball") ? "zip" : "tar");
 					request.setTitle(fileName);
 					request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "gitskarios/" + fileName);
 					request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
