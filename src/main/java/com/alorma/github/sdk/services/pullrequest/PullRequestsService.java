@@ -20,30 +20,30 @@ import retrofit.http.Query;
  */
 public interface PullRequestsService {
 
-    @GET("/repos/{owner}/{repo}/pulls?state=all&sort=created&direction=desc")
-    void pulls(@Path("owner") String owner, @Path("repo") String repo, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/pulls?state=all&sort=created&direction=desc")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, Callback<ListIssues> callback);
 
-    @GET("/repos/{owner}/{repo}/pulls?state=all&sort=created&direction=desc")
-    void pulls(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/pulls?state=all&sort=created&direction=desc")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListIssues> callback);
 
-    @GET("/repos/{owner}/{repo}/pulls/{num}")
-    void detail(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, Callback<Issue> callback);
+    @GET("/repos/{owner}/{name}/pulls/{num}")
+    void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<Issue> callback);
 
-    @GET("/repos/{owner}/{repo}/pulls/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, Callback<ListIssueComments> callback);
+    @GET("/repos/{owner}/{name}/pulls/{num}/comments")
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueComments> callback);
 
-    @GET("/repos/{owner}/{repo}/pulls/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
+    @GET("/repos/{owner}/{name}/pulls/{num}/comments")
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
 
-	@GET("/repos/{owner}/{repo}/pulls/{num}/events")
-	void events(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, Callback<ListEvents> callback);
+	@GET("/repos/{owner}/{name}/pulls/{num}/events")
+	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListEvents> callback);
 
-	@GET("/repos/{owner}/{repo}/pulls/{num}/events")
-	void events(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, @Query("page") int page, Callback<ListEvents> callback);
+	@GET("/repos/{owner}/{name}/pulls/{num}/events")
+	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListEvents> callback);
 
-	@PATCH("/repos/{owner}/{repo}/pulls/{num}")
-	void closeIssue(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);
+	@PATCH("/repos/{owner}/{name}/pulls/{num}")
+	void closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);
 
-	@POST("/repos/{owner}/{repo}/pulls/{num}/comments")
-	void addComment(@Path("owner") String owner, @Path("repo") String repo, @Path("num") int num, @Body IssueComment comment, Callback<IssueComment> callback);
+	@POST("/repos/{owner}/{name}/pulls/{num}/comments")
+	void addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueComment comment, Callback<IssueComment> callback);
 }

@@ -12,24 +12,24 @@ import retrofit.http.Path;
  */
 public interface ActionsService {
 
-    @GET("/user/starred/{owner}/{repo}")
-    void checkIfRepoIsStarred(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @GET("/user/starred/{owner}/{name}")
+    void checkIfRepoIsStarred(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
     @Headers("Content-Length: 0")
-    @PUT("/user/starred/{owner}/{repo}")
-    void starRepo(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @PUT("/user/starred/{owner}/{name}")
+    void starRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
-    @DELETE("/user/starred/{owner}/{repo}")
-    void unstarRepo(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @DELETE("/user/starred/{owner}/{name}")
+    void unstarRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
-    @GET("/user/subscriptions/{owner}/{repo}")
-    void checkIfRepoIsWatched(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @GET("/user/subscriptions/{owner}/{name}")
+    void checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
     @Headers("Content-Length: 0")
-    @PUT("/user/subscriptions/{owner}/{repo}")
-    void watchRepo(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @PUT("/user/subscriptions/{owner}/{name}")
+    void watchRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
-    @DELETE("/user/subscriptions/{owner}/{repo}")
-    void unwatchRepo(@Path("owner") String owner, @Path("repo") String repo, Callback<Object> callback);
+    @DELETE("/user/subscriptions/{owner}/{name}")
+    void unwatchRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
 }

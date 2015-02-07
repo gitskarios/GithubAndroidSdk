@@ -9,14 +9,16 @@ import android.os.Parcelable;
 public class RepoInfo implements Parcelable{
 
 	public String owner;
-	public String repo;
+	public String name;
+	public String branch;
 
 	public RepoInfo() {
 	}
 
 	public RepoInfo(Parcel in) {
 		owner = in.readString();
-		repo = in.readString();
+		name = in.readString();
+		branch = in.readString();
 	}
 
 	@Override
@@ -27,7 +29,8 @@ public class RepoInfo implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(owner);
-		dest.writeString(repo);
+		dest.writeString(name);
+		dest.writeString(branch);
 	}
 
 

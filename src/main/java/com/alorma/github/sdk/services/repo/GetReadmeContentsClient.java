@@ -7,6 +7,7 @@ import android.util.Base64;
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
 import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.Content;
+import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.content.GetMarkdownClient;
 
 import java.io.UnsupportedEncodingException;
@@ -22,28 +23,23 @@ public class GetReadmeContentsClient extends BaseRepoClient<String> {
 
 	private final Handler handler;
 	private OnResultCallback<String> callback;
-    private Branch currentBranch;
 
-    public GetReadmeContentsClient(Context context, String owner, String repo) {
-        super(context, owner, repo);
+    public GetReadmeContentsClient(Context context, RepoInfo info) {
+        super(context, info);
 		handler = new Handler();
     }
 
     @Override
     protected void executeService(RepoService repoService) {
-        if (currentBranch == null) {
-            repoService.readme(owner, repo, new ContentCallback());
+        if (getBranch() == null) {
+            repoService.readme(getOwner(), getRepo(), new ContentCallback());
         } else {
-            repoService.readme(owner, repo, currentBranch.name, new ContentCallback());
+            repoService.readme(getOwner(), getRepo(), getBranch(), new ContentCallback());
         }
     }
 
     public void setCallback(OnResultCallback<String> callback) {
         this.callback = callback;
-    }
-
-    public void setCurrentBranch(Branch currentBranch) {
-        this.currentBranch = currentBranch;
     }
 
     private class ContentCallback implements Callback<Content> {

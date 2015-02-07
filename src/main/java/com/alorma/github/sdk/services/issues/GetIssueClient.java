@@ -18,8 +18,8 @@ public class GetIssueClient extends BaseClient<Issue> {
 
 	public GetIssueClient(Context context, IssueInfo issueInfo) {
 		super(context);
-		this.owner = issueInfo.owner;
-		this.repo = issueInfo.repo;
+		this.owner = issueInfo.repo.owner;
+		this.repo = issueInfo.repo.name;
 		this.number = issueInfo.num;
 	}
 
