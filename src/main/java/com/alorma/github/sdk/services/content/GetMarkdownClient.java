@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
 import com.alorma.github.sdk.security.ApiConstants;
+import com.alorma.github.sdk.security.StoreCredentials;
 import com.alorma.github.sdk.services.client.BaseClient;
 import com.google.gson.Gson;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Client;
@@ -31,12 +33,14 @@ import retrofit.client.Response;
 public class GetMarkdownClient implements Callback<String>, Client {
 
 	private final Handler handler;
+	private Context context;
 	private RequestMarkdownDTO readme;
 
     private BaseClient.OnResultCallback<String> onResultCallback;
 
     public GetMarkdownClient(Context context, RequestMarkdownDTO readme, Handler handler) {
-        this.readme = readme;
+		this.context = context;
+		this.readme = readme;
 		this.handler = handler;
     }
 
@@ -68,10 +72,14 @@ public class GetMarkdownClient implements Callback<String>, Client {
     @Override
     public Response execute(Request request) throws IOException {
 
+
+		StoreCredentials storeCredentials = new StoreCredentials(context);
+		
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(request.getUrl());
         httppost.setHeader("Accept", "application/json");
         httppost.setHeader("Content-type", "text/plain");
+		httppost.setHeader("Authorization", "token " + storeCredentials.token());
         httppost.setEntity(new StringEntity(readme.text));
 
         HttpResponse response = httpclient.execute(httppost);
@@ -90,6 +98,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
         return null;
     }
 
+	
     public void setOnResultCallback(BaseClient.OnResultCallback<String> onResultCallback) {
         this.onResultCallback = onResultCallback;
     }
