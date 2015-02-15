@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.gists;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListGists;

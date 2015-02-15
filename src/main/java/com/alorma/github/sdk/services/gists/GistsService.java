@@ -12,16 +12,22 @@ import retrofit.http.Query;
  */
 public interface GistsService {
 
-    @GET("/gists")
-    void userGistsList(Callback<ListGists> callback);
+	@GET("/gists")
+	void userGistsList(Callback<ListGists> callback);
 
-    @GET("/gists")
-    void userGistsList(@Query("page") int page, Callback<ListGists> callback);
+	@GET("/gists")
+	void userGistsList(@Query("page") int page, Callback<ListGists> callback);
 
-    @GET("/users/{username}/gists")
-    void userGistsList(@Path("username") String username, Callback<ListGists> callback);
+	@GET("/users/{username}/gists")
+	void userGistsList(@Path("username") String username, Callback<ListGists> callback);
 
-    @GET("/users/{username}/gists")
-    void userGistsList(@Path("username") String username, @Query("page") int page, Callback<ListGists> callback);
+	@GET("/users/{username}/gists")
+	void userGistsList(@Path("username") String username, @Query("page") int page, Callback<ListGists> callback);
 
+
+	@GET("/gists/starred")
+	void userStarredGistsList(Callback<ListGists> callback);
+
+	@GET("/gists/starred")
+	void userStarredGistsList(@Query("page") int page, Callback<ListGists> callback);
 }

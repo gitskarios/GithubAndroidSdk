@@ -11,9 +11,9 @@ public class Gist {
     @SerializedName("public")
 	public boolean isPublic;
 
-	public Date createdAt;
+	public String created_at;
 
-	public Date updatedAt;
+	public String updated_at;
 
 	public int comments;
 
