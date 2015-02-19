@@ -13,6 +13,7 @@ public class StoreCredentials {
 
 	private static final String USER_TOKEN = StoreCredentials.class.getSimpleName() + ".USER_TOKEN";
 	private static final String USER_SCOPES = StoreCredentials.class.getSimpleName() + ".USER_SCOPES";
+	private static final String USER_SCOPES_NO_ASK = StoreCredentials.class.getSimpleName() + ".USER_SCOPES_NO_ASK";
 	private final SharedPreferences.Editor editor;
 	private final SharedPreferences preferences;
 
@@ -30,12 +31,22 @@ public class StoreCredentials {
 		return preferences.getString(USER_TOKEN, null);
 	}
 
-	public String storeScopes(String scopes) {
-		return preferences.getString(USER_SCOPES, null);
+	public void storeScopes(String scopes) {
+		editor.putString(USER_SCOPES, scopes);
+		editor.commit();
 	}
 
 	public String scopes() {
 		return preferences.getString(USER_SCOPES, null);
+	}
+
+	public void saveScopeNoAsk(boolean scopesNoAsk) {
+		editor.putBoolean(USER_SCOPES_NO_ASK, scopesNoAsk);
+		editor.commit();
+	}
+
+	public Boolean scopeNoAsk() {
+		return preferences.getBoolean(USER_SCOPES_NO_ASK, false);
 	}
 
 	public void clear() {
