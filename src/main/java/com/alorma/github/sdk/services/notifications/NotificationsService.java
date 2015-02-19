@@ -1,6 +1,6 @@
 package com.alorma.github.sdk.services.notifications;
 
-import com.alorma.github.sdk.bean.dto.Notification;
+import com.alorma.github.sdk.bean.dto.response.Notification;
 
 import java.util.List;
 

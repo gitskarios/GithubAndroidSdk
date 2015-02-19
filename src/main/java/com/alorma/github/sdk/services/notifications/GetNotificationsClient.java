@@ -2,7 +2,7 @@ package com.alorma.github.sdk.services.notifications;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.Notification;
+import com.alorma.github.sdk.bean.dto.response.Notification;
 import com.alorma.github.sdk.services.client.BaseClient;
 
 import java.util.List;

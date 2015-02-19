@@ -1,9 +1,6 @@
-package com.alorma.github.sdk.bean.dto;
-
-import com.alorma.github.sdk.bean.dto.response.Repo;
+package com.alorma.github.sdk.bean.dto.response;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
