@@ -5,8 +5,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.utils.GitskariosSettings;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -21,19 +23,17 @@ public class GetArchiveLinkService extends BaseClient {
 	private OnDownloadServiceListener onDownloadServiceListener;
 
 	private RepoInfo repoInfo;
-	private final String fileType;
 
-	public GetArchiveLinkService(Context context, RepoInfo repoInfo, String fileType) {
+	public GetArchiveLinkService(Context context, RepoInfo repoInfo) {
 		super(context);
 		this.repoInfo = repoInfo;
-		if (fileType== null) {
-			fileType = "zipball";
-		}
-		this.fileType = fileType;
 	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
+		GitskariosSettings settings = new GitskariosSettings(context);
+		String zipBall = context.getString(R.string.download_zip_value);
+		String fileType = settings.getDownloadFileType(zipBall);
 		restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch, new Callback<Object>() {
 			@Override
 			public void success(Object o, Response r) {
@@ -47,7 +47,13 @@ public class GetArchiveLinkService extends BaseClient {
 					DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 					DownloadManager.Request request = new DownloadManager.Request(
 							Uri.parse(url));
-					String fileName = repoInfo.name + "_" + repoInfo.branch + "_" + "." + (fileType.equalsIgnoreCase("zipball") ? "zip" : "tar");
+
+					GitskariosSettings settings = new GitskariosSettings(context);
+					
+					String zipBall = context.getString(R.string.download_zip_value);
+					String fileType = settings.getDownloadFileType(zipBall);
+					
+					String fileName = repoInfo.name + "_" + repoInfo.branch + "_" + "." + (fileType.equalsIgnoreCase(zipBall) ? "zip" : "tar");
 					request.setTitle(fileName);
 					request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "gitskarios/" + fileName);
 					request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sort_created_value">created</string>
+    <string name="sort_updated_value">updated</string>
+    <string name="sort_pushed_value">pushed</string>
+    <string name="sort_full_name_value">full_name</string>
+
+    <string name="download_zip_value">zipball</string>
+    <string name="download_tar_value">tarball</string>
+</resources>

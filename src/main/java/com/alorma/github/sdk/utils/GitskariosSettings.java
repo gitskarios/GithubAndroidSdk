@@ -39,8 +39,8 @@ public class GitskariosSettings extends PreferencesHelper{
 		return getStringSetting(KEY_AUTH_USER_JSON, null);
 	}
 
-	public String getDownloadFileType() {
-		return getStringSetting(KEY_DOWNLOAD_FILE_TYPE, "zipball");
+	public String getDownloadFileType(String defaultType) {
+		return getStringSetting(KEY_DOWNLOAD_FILE_TYPE, defaultType);
 	}
 
 	public void saveDownloadFileType(String downloadFileType) {

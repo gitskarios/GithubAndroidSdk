@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.repos;
 
 import android.content.Context;
 
+import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.dto.response.ListRepos;
 import com.alorma.github.sdk.services.client.BaseClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
@@ -33,7 +34,7 @@ public abstract class BaseReposClient extends BaseClient<ListRepos> {
     protected void executeService(RestAdapter restAdapter) {
         ReposService reposService = restAdapter.create(ReposService.class);
 		GitskariosSettings settings = new GitskariosSettings(context);
-		String sort = settings.getRepoSort("full_name");
+		String sort = settings.getRepoSort(context.getString(R.string.sort_pushed_value));
         if (page == 0) {
             if (username == null) {
                 executeUserFirstPage(sort, reposService);
