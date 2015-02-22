@@ -61,4 +61,13 @@ public interface UsersService {
 
 	@DELETE("/user/following/{username}")
 	void unfollowUser(@Path("username") String username, Callback<Object> callback);
+	
+
+	//ORGS MEMBERS
+
+	@GET("/orgs/{org}/members")
+	void orgMembers(@Path("org") String org, Callback<ListUsers> callback);
+
+	@GET("/orgs/{org}/members")
+	void orgMembers(@Path("org") String org, @Query("page") int page, Callback<ListUsers> callback);
 }
