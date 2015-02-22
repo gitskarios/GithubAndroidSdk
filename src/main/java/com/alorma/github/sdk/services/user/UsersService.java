@@ -19,9 +19,6 @@ public interface UsersService {
 	@GET("/users/{user}")
 	void getSingleUser(@Path("user") String user, Callback<User> callback);
 
-	@GET("/user")
-	void getUser(Callback<User> callback);
-
 	@GET("/user/emails")
 	void userEmails(Callback<ListEmails> callback);
 
@@ -64,4 +61,13 @@ public interface UsersService {
 
 	@DELETE("/user/following/{username}")
 	void unfollowUser(@Path("username") String username, Callback<Object> callback);
+	
+
+	//ORGS MEMBERS
+
+	@GET("/orgs/{org}/members")
+	void orgMembers(@Path("org") String org, Callback<ListUsers> callback);
+
+	@GET("/orgs/{org}/members")
+	void orgMembers(@Path("org") String org, @Query("page") int page, Callback<ListUsers> callback);
 }

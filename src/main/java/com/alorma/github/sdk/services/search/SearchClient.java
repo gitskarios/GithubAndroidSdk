@@ -24,5 +24,8 @@ public interface SearchClient {
 
     @GET("/search/users")
     void users(@Query("q") String query, Callback<UsersSearch> callback);
+	
+	@GET("/search/repositories")
+	void usersPaginated(@Query("q") String query, @Query("page") int page, Callback<UsersSearch> callback);
 
 }

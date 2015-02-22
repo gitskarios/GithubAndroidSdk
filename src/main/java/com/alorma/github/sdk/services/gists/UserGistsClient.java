@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.gists;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListGists;
@@ -19,7 +18,12 @@ public class UserGistsClient extends BaseClient<ListGists> {
     public UserGistsClient(Context context) {
         super(context);
     }
-    public UserGistsClient(Context context, String username) {
+    public UserGistsClient(Context context, int page) {
+        super(context);
+		this.page = page;
+    }
+    
+	public UserGistsClient(Context context, String username) {
         super(context);
         this.username = username;
     }
@@ -47,4 +51,9 @@ public class UserGistsClient extends BaseClient<ListGists> {
             }
         }
     }
+
+	@Override
+	public String getAcceptHeader() {
+		return "application/vnd.github.v3.raw";
+	}
 }

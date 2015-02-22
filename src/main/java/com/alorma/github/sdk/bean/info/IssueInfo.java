@@ -6,18 +6,21 @@ import android.os.Parcelable;
 /**
  * Created by Bernat on 06/09/2014.
  */
-public class IssueInfo implements Parcelable{
+public class IssueInfo implements Parcelable {
 
-	public String owner;
-	public String repo;
+	public RepoInfo repo;
 	public int num;
 
 	public IssueInfo() {
+		
 	}
 
-	public IssueInfo(Parcel in) {
-		owner = in.readString();
-		repo = in.readString();
+	public IssueInfo(RepoInfo repoInfo) {
+		this.repo = repoInfo;
+	}
+
+	protected IssueInfo(Parcel in) {
+		repo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
 		num = in.readInt();
 	}
 
@@ -28,13 +31,11 @@ public class IssueInfo implements Parcelable{
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(owner);
-		dest.writeString(repo);
+		dest.writeValue(repo);
 		dest.writeInt(num);
 	}
 
-
-
+	@SuppressWarnings("unused")
 	public static final Parcelable.Creator<IssueInfo> CREATOR = new Parcelable.Creator<IssueInfo>() {
 		@Override
 		public IssueInfo createFromParcel(Parcel in) {

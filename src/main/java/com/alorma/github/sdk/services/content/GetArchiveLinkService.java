@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseClient;
 
 import retrofit.Callback;
@@ -18,22 +19,22 @@ import retrofit.client.Response;
 public class GetArchiveLinkService extends BaseClient {
 
 	private OnDownloadServiceListener onDownloadServiceListener;
-	private final String owner;
-	private final String repo;
-	private final String path;
+
+	private RepoInfo repoInfo;
 	private final String fileType;
 
-	public GetArchiveLinkService(Context context, String owner, String repo, String path, String fileType) {
+	public GetArchiveLinkService(Context context, RepoInfo repoInfo, String fileType) {
 		super(context);
-		this.owner = owner;
-		this.repo = repo;
-		this.path = path;
+		this.repoInfo = repoInfo;
+		if (fileType== null) {
+			fileType = "zipball";
+		}
 		this.fileType = fileType;
 	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(ContentService.class).archiveLink(owner, repo, fileType, path, new Callback<Object>() {
+		restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch, new Callback<Object>() {
 			@Override
 			public void success(Object o, Response r) {
 				r.getHeaders();
@@ -46,7 +47,7 @@ public class GetArchiveLinkService extends BaseClient {
 					DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 					DownloadManager.Request request = new DownloadManager.Request(
 							Uri.parse(url));
-					String fileName = repo + "." + (fileType.equalsIgnoreCase("zipball") ? "zip" : "tar");
+					String fileName = repoInfo.name + "_" + repoInfo.branch + "_" + "." + (fileType.equalsIgnoreCase("zipball") ? "zip" : "tar");
 					request.setTitle(fileName);
 					request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "gitskarios/" + fileName);
 					request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

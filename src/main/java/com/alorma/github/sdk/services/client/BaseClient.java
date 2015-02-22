@@ -22,6 +22,7 @@ import retrofit.client.Response;
 public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, RestAdapter.Log {
 
 	private final StoreCredentials storeCredentials;
+
 	protected final Context context;
 	private OnResultCallback<K> onResultCallback;
 	protected Handler handler;
@@ -116,6 +117,10 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 		return "application/vnd.github.v3.full+json";
 	}
 
+	public Context getContext() {
+		return context;
+	}
+	
 	public interface OnResultCallback<K> {
 		void onResponseOk(K k, Response r);
 

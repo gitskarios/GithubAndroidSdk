@@ -6,6 +6,5 @@ package com.alorma.github.sdk.bean.dto.response;
 public enum ContentType {
     file,
     dir,
-    submodule,
-    up
+    submodule
 }

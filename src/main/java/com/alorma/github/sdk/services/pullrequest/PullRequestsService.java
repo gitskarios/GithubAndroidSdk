@@ -1,4 +1,4 @@
-package com.alorma.github.sdk.services.issues;
+package com.alorma.github.sdk.services.pullrequest;
 
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
@@ -18,35 +18,32 @@ import retrofit.http.Query;
 /**
  * Created by Bernat on 22/08/2014.
  */
-public interface IssuesService {
+public interface PullRequestsService {
 
-    @GET("/repos/{owner}/{name}/issues?state=all&sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/pulls?state=all&sort=created&direction=desc")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, Callback<ListIssues> callback);
 
-    @GET("/repos/{owner}/{name}/issues?state=all&sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/pulls?state=all&sort=created&direction=desc")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListIssues> callback);
 
-    @POST("/repos/{owner}/{name}/issues")
-    void create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue, Callback<Issue> callback);
-
-    @GET("/repos/{owner}/{name}/issues/{num}")
+    @GET("/repos/{owner}/{name}/pulls/{num}")
     void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<Issue> callback);
 
-    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    @GET("/repos/{owner}/{name}/pulls/{num}/comments")
     void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueComments> callback);
 
-    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    @GET("/repos/{owner}/{name}/pulls/{num}/comments")
     void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
 
-	@GET("/repos/{owner}/{name}/issues/{num}/events")
-	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num,Callback<ListEvents> callback);
+	@GET("/repos/{owner}/{name}/pulls/{num}/events")
+	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListEvents> callback);
 
-	@GET("/repos/{owner}/{name}/issues/{num}/events")
+	@GET("/repos/{owner}/{name}/pulls/{num}/events")
 	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListEvents> callback);
 
-	@PATCH("/repos/{owner}/{name}/issues/{num}")
+	@PATCH("/repos/{owner}/{name}/pulls/{num}")
 	void closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);
 
-	@POST("/repos/{owner}/{name}/issues/{num}/comments")
+	@POST("/repos/{owner}/{name}/pulls/{num}/comments")
 	void addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueComment comment, Callback<IssueComment> callback);
 }

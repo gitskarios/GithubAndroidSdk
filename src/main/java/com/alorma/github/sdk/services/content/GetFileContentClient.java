@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.content;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Content;
+import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseClient;
 
 import retrofit.RestAdapter;
@@ -17,12 +18,12 @@ public class GetFileContentClient extends BaseClient<Content> {
 	private String path;
 	private String head;
 
-	public GetFileContentClient(Context context, String owner, String repo, String path, String head) {
+	public GetFileContentClient(Context context, RepoInfo info, String path) {
 		super(context);
-		this.owner = owner;
-		this.repo = repo;
+		this.owner = info.owner;
+		this.repo = info.name;
 		this.path = path;
-		this.head = head;
+		this.head = info.branch;
 	}
 
 	@Override

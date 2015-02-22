@@ -11,9 +11,9 @@ public class Gist {
     @SerializedName("public")
 	public boolean isPublic;
 
-	public Date createdAt;
+	public String created_at;
 
-	public Date updatedAt;
+	public String updated_at;
 
 	public int comments;
 
@@ -23,8 +23,10 @@ public class Gist {
 
 	public String description;
 
+	@SerializedName("git_pull_url")
 	public String gitPullUrl;
 
+	@SerializedName("git_push_url")
 	public String gitPushUrl;
 
     @SerializedName("forks_url")
@@ -36,6 +38,8 @@ public class Gist {
 
 	public String url;
 
+	public User owner;
+	
 	public User user;
 
 }

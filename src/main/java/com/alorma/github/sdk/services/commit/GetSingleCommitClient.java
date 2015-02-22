@@ -23,6 +23,6 @@ public class GetSingleCommitClient extends BaseClient<Commit> {
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(CommitsService.class).singleCommit(info.owner, info.repo, sha, this);
+		restAdapter.create(CommitsService.class).singleCommit(info.owner, info.name, sha, this);
 	}
 }

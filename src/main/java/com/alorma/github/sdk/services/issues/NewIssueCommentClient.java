@@ -20,8 +20,8 @@ public class NewIssueCommentClient extends BaseClient<IssueComment> {
 	public NewIssueCommentClient(Context context, IssueInfo issueInfo, String body) {
 		super(context);
 		this.body = body;
-		owner = issueInfo.owner;
-		repo = issueInfo.repo;
+		owner = issueInfo.repo.owner;
+		repo = issueInfo.repo.name;
 		num = issueInfo.num;
 	}
 

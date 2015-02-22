@@ -3,18 +3,19 @@ package com.alorma.github.sdk.services.repo;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Repo;
+import com.alorma.github.sdk.bean.info.RepoInfo;
 
 /**
  * Created by Bernat on 17/07/2014.
  */
 public class GetRepoClient extends BaseRepoClient<Repo> {
 
-    public GetRepoClient(Context context, String owner, String repo) {
-        super(context, owner, repo);
-    }
+	public GetRepoClient(Context context, RepoInfo repoInfo) {
+		super(context, repoInfo);
+	}
 
-    @Override
+	@Override
     protected void executeService(RepoService repoService) {
-        repoService.get(owner, repo, this);
+        repoService.get(getOwner(), getRepo(), this);
     }
 }

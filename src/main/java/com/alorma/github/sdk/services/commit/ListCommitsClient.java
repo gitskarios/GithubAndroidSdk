@@ -15,29 +15,27 @@ import retrofit.RestAdapter;
 public class ListCommitsClient extends BaseClient<ListCommit> {
 	private RepoInfo info;
 	private int page;
-	private Branch branch;
 
-	public ListCommitsClient(Context context, RepoInfo info, int page, Branch branch) {
+	public ListCommitsClient(Context context, RepoInfo info, int page) {
 		super(context);
 		this.info = info;
 		this.page = page;
-		this.branch = branch;
 	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
 		CommitsService commitsService = restAdapter.create(CommitsService.class);
-		if (branch == null) {
+		if (info.branch == null) {
 			if (page == 0) {
-				commitsService.commits(info.owner, info.repo, this);
+				commitsService.commits(info.owner, info.name, this);
 			} else {
-				commitsService.commits(info.owner, info.repo, page, this);
+				commitsService.commits(info.owner, info.name, page, this);
 			}
 		} else {
 			if (page == 0) {
-				commitsService.commits(info.owner, info.repo, branch.name, this);
+				commitsService.commits(info.owner, info.name, info.branch, this);
 			} else {
-				commitsService.commits(info.owner, info.repo, page, branch.name, this);
+				commitsService.commits(info.owner, info.name, page, info.branch, this);
 			}
 		}
 	}

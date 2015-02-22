@@ -35,4 +35,9 @@ public class UserReposClient extends BaseReposClient {
 	protected void executePaginatedByUsername(String username, int page, String sort, ReposService usersService) {
 		usersService.userReposList(username, page, sort, this);
 	}
+
+	@Override
+	public String getAcceptHeader() {
+		return "application/vnd.github.moondragon+json";
+	}
 }

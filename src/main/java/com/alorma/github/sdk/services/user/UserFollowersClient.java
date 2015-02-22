@@ -12,10 +12,6 @@ public class UserFollowersClient extends BaseUsersClient<ListUsers>  {
     private String username;
     private int page = 0;
 
-    public UserFollowersClient(Context context) {
-        super(context);
-    }
-
     public UserFollowersClient(Context context, String username) {
         super(context);
         this.username = username;

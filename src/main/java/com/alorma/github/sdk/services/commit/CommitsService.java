@@ -13,19 +13,19 @@ import retrofit.http.Query;
  */
 public interface CommitsService {
 
-	@GET("/repos/{owner}/{repo}/commits")
-	void commits(@Path("owner") String owner, @Path("repo") String repo, Callback<ListCommit> callback);
+	@GET("/repos/{owner}/{name}/commits")
+	void commits(@Path("owner") String owner, @Path("name") String repo, Callback<ListCommit> callback);
 
-	@GET("/repos/{owner}/{repo}/commits/{sha}")
-	void singleCommit(@Path("owner") String owner, @Path("repo") String repo, @Path("sha") String sha, Callback<Commit> callback);
+	@GET("/repos/{owner}/{name}/commits/{sha}")
+	void singleCommit(@Path("owner") String owner, @Path("name") String repo, @Path("sha") String sha, Callback<Commit> callback);
 
-	@GET("/repos/{owner}/{repo}/commits")
-	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, Callback<ListCommit> callback);
+	@GET("/repos/{owner}/{name}/commits")
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListCommit> callback);
 
-	@GET("/repos/{owner}/{repo}/commits")
-	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("sha") String sha, Callback<ListCommit> callback);
+	@GET("/repos/{owner}/{name}/commits")
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("sha") String sha, Callback<ListCommit> callback);
 
-	@GET("/repos/{owner}/{repo}/commits")
-	void commits(@Path("owner") String owner, @Path("repo") String repo, @Query("page") int page, @Query("sha") String sha, Callback<ListCommit> callback);
+	@GET("/repos/{owner}/{name}/commits")
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, @Query("sha") String sha, Callback<ListCommit> callback);
 
 }

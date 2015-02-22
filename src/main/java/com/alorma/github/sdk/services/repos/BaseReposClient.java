@@ -22,6 +22,7 @@ public abstract class BaseReposClient extends BaseClient<ListRepos> {
     public BaseReposClient(Context context, String username) {
         this(context, username, 0);
     }
+   
     public BaseReposClient(Context context, String username, int page) {
         super(context);
         this.username = username;

@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.issues;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
+import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.issues.BaseIssuesClient;
 import com.alorma.github.sdk.services.issues.IssuesService;
 
@@ -11,26 +12,26 @@ import com.alorma.github.sdk.services.issues.IssuesService;
  */
 public class GetIssueComments extends BaseIssuesClient<ListIssueComments> {
 
-	public GetIssueComments(Context context, String owner, String repository, int num) {
-		super(context, owner, repository, num);
+	public GetIssueComments(Context context, IssueInfo issueInfo, int page) {
+		super(context, issueInfo, page);
 	}
 
-	public GetIssueComments(Context context, String owner, String repository, int num, int page) {
-		super(context, owner, repository, num, page);
+	public GetIssueComments(Context context, IssueInfo issueInfo) {
+		super(context, issueInfo);
 	}
 
 	@Override
-    protected void executeFirstPage(String owner, String repository, int num, IssuesService issuesService) {
-        issuesService.comments(owner, repository, num, this);
-    }
+	protected void executeFirstPage(IssueInfo issueInfo, IssuesService issuesService) {
+		issuesService.comments(issueInfo.repo.owner, issueInfo.repo.name, issueInfo.num, this);
+	}
 
-    @Override
-    protected void executePaginated(String owner, String repository, int num, int page, IssuesService issuesService) {
-        issuesService.comments(owner, repository, num, page, this);
-    }
+	@Override
+	protected void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService) {
+		issuesService.comments(issueInfo.repo.owner, issueInfo.repo.name, issueInfo.num, page, this);
+	}
 
-    @Override
-    public String getAcceptHeader() {
-        return "application/vnd.github.v3.html+json";
-    }
+	@Override
+	public String getAcceptHeader() {
+		return "application/vnd.github.v3.html+json";
+	}
 }
