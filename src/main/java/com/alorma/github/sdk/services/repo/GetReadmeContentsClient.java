@@ -64,8 +64,8 @@ public class GetReadmeContentsClient extends BaseRepoClient<String> {
 
         @Override
         public void failure(RetrofitError error) {
-            if (getOnResultCallback() != null) {
-                getOnResultCallback().onFail(error);
+            if (callback != null) {
+                callback.onFail(error);
             }
         }
     }
