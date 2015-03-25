@@ -51,6 +51,6 @@ public class StoreCredentials {
 
 	public void clear() {
 		editor.clear();
-		editor.apply();
+		editor.commit();
 	}
 }
