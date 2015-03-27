@@ -105,7 +105,11 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	@Override
 	public void intercept(RequestFacade request) {
 		request.addHeader("Accept", getAcceptHeader());
-		request.addHeader("Authorization", "token " + storeCredentials.token());
+		request.addHeader("Authorization", "token " + getToken());
+	}
+
+	protected String getToken() {
+		return storeCredentials.token();
 	}
 
 	@Override

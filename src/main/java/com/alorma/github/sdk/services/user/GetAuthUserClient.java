@@ -14,41 +14,45 @@ import retrofit.client.Response;
  * Created by Bernat on 03/10/2014.
  */
 public class GetAuthUserClient extends BaseUsersClient<User> {
-	public GetAuthUserClient(Context context) {
-		super(context);
-	}
+    private String accessToken;
 
-	@Override
-	protected void executeService(UsersService usersService) {
-		if (getOnResultCallback() != null) {
-			final GitskariosSettings gitskariosSettings = new GitskariosSettings(getContext());
+    public GetAuthUserClient(Context context, String accessToken) {
+        super(context);
+        this.accessToken = accessToken;
+    }
 
-			String userJson = gitskariosSettings.getAuthUserJson();
+    @Override
+    protected void executeService(UsersService usersService) {
+        if (getOnResultCallback() != null) {
+            final GitskariosSettings gitskariosSettings = new GitskariosSettings(getContext());
 
-			final Gson gson = new Gson();
-			if (userJson != null) {
-				User user = gson.fromJson(userJson, User.class);
-				getOnResultCallback().onResponseOk(user, null);
-			}
+            String userJson = gitskariosSettings.getAuthUserJson();
 
-			usersService.me(new Callback<User>() {
-				@Override
-				public void success(User me, Response response) {
-					String userJson = gson.toJson(me);
-					gitskariosSettings.saveAuthUser(me.login);
-					gitskariosSettings.saveAuthUserJson(userJson);
+            final Gson gson = new Gson();
+            if (userJson != null) {
+                User user = gson.fromJson(userJson, User.class);
+                getOnResultCallback().onResponseOk(user, null);
+            }
 
-					getOnResultCallback().onResponseOk(me, null);
-				}
+            usersService.me(new Callback<User>() {
+                @Override
+                public void success(User me, Response response) {
+                    getOnResultCallback().onResponseOk(me, null);
+                }
 
-				@Override
-				public void failure(RetrofitError error) {
+                @Override
+                public void failure(RetrofitError error) {
 
-				}
-			});
+                }
+            });
 
-		} else {
-			usersService.me(this);
-		}
-	}
+        } else {
+            usersService.me(this);
+        }
+    }
+
+    @Override
+    protected String getToken() {
+        return accessToken;
+    }
 }
