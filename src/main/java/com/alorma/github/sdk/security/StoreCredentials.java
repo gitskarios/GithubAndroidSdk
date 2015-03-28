@@ -11,6 +11,7 @@ import com.google.gson.Gson;
  */
 public class StoreCredentials {
 
+	private static final String USER_NAME = StoreCredentials.class.getSimpleName() + ".USER_NAME";
 	private static final String USER_TOKEN = StoreCredentials.class.getSimpleName() + ".USER_TOKEN";
 	private static final String USER_SCOPES = StoreCredentials.class.getSimpleName() + ".USER_SCOPES";
 	private static final String USER_SCOPES_NO_ASK = StoreCredentials.class.getSimpleName() + ".USER_SCOPES_NO_ASK";
@@ -52,5 +53,14 @@ public class StoreCredentials {
 	public void clear() {
 		editor.clear();
 		editor.commit();
+	}
+
+	public void storeUsername(String name) {
+		editor.putString(USER_NAME, name);
+		editor.apply();
+	}
+
+	public String getUserName() {
+		return preferences.getString(USER_NAME, null);
 	}
 }
