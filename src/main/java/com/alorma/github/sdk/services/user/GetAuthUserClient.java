@@ -16,6 +16,9 @@ import retrofit.client.Response;
 public class GetAuthUserClient extends BaseUsersClient<User> {
     private String accessToken;
 
+    public GetAuthUserClient(Context context) {
+        super(context);
+    }
     public GetAuthUserClient(Context context, String accessToken) {
         super(context);
         this.accessToken = accessToken;
@@ -23,36 +26,15 @@ public class GetAuthUserClient extends BaseUsersClient<User> {
 
     @Override
     protected void executeService(UsersService usersService) {
-        if (getOnResultCallback() != null) {
-            final GitskariosSettings gitskariosSettings = new GitskariosSettings(getContext());
-
-            String userJson = gitskariosSettings.getAuthUserJson();
-
-            final Gson gson = new Gson();
-            if (userJson != null) {
-                User user = gson.fromJson(userJson, User.class);
-                getOnResultCallback().onResponseOk(user, null);
-            }
-
-            usersService.me(new Callback<User>() {
-                @Override
-                public void success(User me, Response response) {
-                    getOnResultCallback().onResponseOk(me, null);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-
-        } else {
-            usersService.me(this);
-        }
+        usersService.me(this);
     }
 
     @Override
     protected String getToken() {
-        return accessToken;
+        if (accessToken != null) {
+            return accessToken;
+        } else {
+            return super.getToken();
+        }
     }
 }

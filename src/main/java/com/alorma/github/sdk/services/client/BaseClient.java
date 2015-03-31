@@ -118,7 +118,7 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	}
 
 	public String getAcceptHeader() {
-		return "application/vnd.github.v3.full+json";
+		return "application/vnd.github.moondragon+json";
 	}
 
 	public Context getContext() {
