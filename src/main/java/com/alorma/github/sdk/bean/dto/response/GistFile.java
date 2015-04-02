@@ -13,7 +13,7 @@ public class GistFile {
 	public String filename;
 
 	@SerializedName("raw_url")
-	private String rawUrl;
+	public String rawUrl;
 	
 	public boolean truncated;
 	
