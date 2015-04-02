@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.services.gists;
 
+import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.bean.dto.response.ListGists;
 
 import retrofit.Callback;
@@ -30,4 +31,7 @@ public interface GistsService {
 
 	@GET("/gists/starred")
 	void userStarredGistsList(@Query("page") int page, Callback<ListGists> callback);
+
+	@GET("/gists/{id}")
+	void gistDetail(@Path("id") String id, Callback<Gist> callback);
 }
