@@ -8,6 +8,8 @@ public class GistFile {
 
 	public String content;
 
+	public String type;
+
 	public String filename;
 
 	@SerializedName("raw_url")
