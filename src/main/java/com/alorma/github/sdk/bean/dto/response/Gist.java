@@ -32,6 +32,7 @@ public class Gist {
     @SerializedName("forks_url")
 	public String forksUrl;
 
+	@SerializedName("html_url")
 	public String htmlUrl;
 
 	public String id;
