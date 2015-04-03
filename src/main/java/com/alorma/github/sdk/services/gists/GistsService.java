@@ -4,7 +4,9 @@ import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.bean.dto.response.ListGists;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -25,7 +27,6 @@ public interface GistsService {
 	@GET("/users/{username}/gists")
 	void userGistsList(@Path("username") String username, @Query("page") int page, Callback<ListGists> callback);
 
-
 	@GET("/gists/starred")
 	void userStarredGistsList(Callback<ListGists> callback);
 
@@ -34,4 +35,7 @@ public interface GistsService {
 
 	@GET("/gists/{id}")
 	void gistDetail(@Path("id") String id, Callback<Gist> callback);
+
+	@POST("/gists")
+	void publish(@Body Gist gist, Callback<Gist> gistCallback);
 }
