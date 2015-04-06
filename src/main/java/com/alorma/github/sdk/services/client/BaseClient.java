@@ -84,9 +84,8 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 
 	private void sendError(RetrofitError error) {
 		if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
-			storeCredentials.clear();
 			LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
-			manager.sendBroadcast(new UnAuthIntent());
+			manager.sendBroadcast(new UnAuthIntent(storeCredentials.token()));
 		} else {
 			if (onResultCallback != null) {
 				onResultCallback.onFail(error);
