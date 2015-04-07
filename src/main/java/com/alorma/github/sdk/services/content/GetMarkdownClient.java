@@ -80,7 +80,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
         httppost.setHeader("Accept", "application/json");
         httppost.setHeader("Content-type", "text/plain");
 		httppost.setHeader("Authorization", "token " + storeCredentials.token());
-        httppost.setEntity(new StringEntity(readme.text));
+        httppost.setEntity(new StringEntity(readme.text, "UTF-8"));
 
         HttpResponse response = httpclient.execute(httppost);
 
