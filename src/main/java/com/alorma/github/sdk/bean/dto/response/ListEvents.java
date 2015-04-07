@@ -1,5 +1,7 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import com.alorma.github.sdk.bean.issue.IssueEvent;
+
 import java.util.ArrayList;
 
 /**

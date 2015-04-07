@@ -34,7 +34,6 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	}
 
 	public void execute() {
-
 		RestAdapter restAdapter = new RestAdapter.Builder()
 				.setClient(new OkClient())
 				.setEndpoint(ApiConstants.API_URL)
