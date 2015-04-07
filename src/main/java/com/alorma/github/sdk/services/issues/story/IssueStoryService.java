@@ -35,10 +35,10 @@ public interface IssueStoryService {
     void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/events")
-    ListIssueEvents events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueEvents> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/events")
-    ListIssueEvents events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueEvents> callback);
 
     @PATCH("/repos/{owner}/{name}/issues/{num}")
     void closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);

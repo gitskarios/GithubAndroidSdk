@@ -59,21 +59,6 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         storyDetailMap = new HashMap<>();
 
         new IssueCallback(issueInfo, issueStoryService).execute();
-
-/*
-        ListIssueEvents events = issueStoryService.events(info.repo.owner, info.repo.name, info.num);
-
-        for (IssueEvent event : events) {
-            long time = getMilisFromDate(event.created_at);
-            List<IssueStoryDetail> details = storyDetailMap.get(time);
-            if (details == null) {
-                details = new ArrayList<>();
-                storyDetailMap.put(time, details);
-            }
-            details.add(new IssueEventComment(event));
-        }
-
-        */
     }
 
     private void parseIssueStoryDetails() {
@@ -148,7 +133,7 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
 
         @Override
         protected void executeNext() {
-            parseIssueStoryDetails();
+            new IssueEventsCallbacks(info, issueStoryService).execute();
         }
 
         @Override
@@ -170,6 +155,45 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         }
     }
 
+    private class IssueEventsCallbacks extends BaseCallback<ListIssueEvents> {
+
+        public IssueEventsCallbacks(IssueInfo info, IssueStoryService issueStoryService) {
+            super(info, issueStoryService);
+        }
+
+        @Override
+        public void execute() {
+            issueStoryService.events(info.repo.owner, info.repo.name, info.num, this);
+        }
+
+        @Override
+        protected void executePaginated(int nextPage) {
+            issueStoryService.events(info.repo.owner, info.repo.name, info.num, nextPage, this);
+        }
+
+        @Override
+        protected void executeNext() {
+            parseIssueStoryDetails();
+        }
+
+        @Override
+        protected void response(ListIssueEvents issueEvents) {
+            for (IssueEvent event : issueEvents) {
+                long time = getMilisFromDate(event.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueEventComment(event));
+            }
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+
+        }
+    }
 
     private abstract class BaseCallback<T> implements Callback<T> {
 
