@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.ListEvents;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
+import com.alorma.github.sdk.bean.issue.ListIssueLabels;
 import com.squareup.okhttp.Call;
 
 import retrofit.Callback;
@@ -45,6 +46,12 @@ public interface IssueStoryService {
 
     @POST("/repos/{owner}/{name}/issues/{num}/comments")
     void addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueComment comment, Callback<IssueComment> callback);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/labels")
+    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueLabels> issueCallback);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/labels")
+    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueLabels> issueCallback);
 
 
 }

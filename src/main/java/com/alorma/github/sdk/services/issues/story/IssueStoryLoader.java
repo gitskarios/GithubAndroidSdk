@@ -1,18 +1,17 @@
 package com.alorma.github.sdk.services.issues.story;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueComment;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
-import com.alorma.github.sdk.bean.dto.response.ListEvents;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
-import com.alorma.github.sdk.bean.issue.IssueEventComment;
+import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
@@ -24,7 +23,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -66,13 +64,11 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
 
         Collections.sort(times);
 
-        List<IssueStoryDetail> details = new ArrayList<>();
+        List<Pair<Long, List<IssueStoryDetail>>> details = new ArrayList<>();
 
         for (Long time : times) {
             List<IssueStoryDetail> detailsRow = storyDetailMap.get(time);
-            for (IssueStoryDetail issueStoryDetail : detailsRow) {
-                details.add(issueStoryDetail);
-            }
+            details.add(new Pair<>(time, detailsRow));
         }
 
         issueStory.details = details;
@@ -108,10 +104,6 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
             issueStory.issue = issue;
         }
 
-        @Override
-        public void failure(RetrofitError error) {
-
-        }
     }
 
     private class IssueCommentsCallback extends BaseCallback<ListIssueComments> {
@@ -148,11 +140,6 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
                 details.add(new IssueStoryComment(comment));
             }
         }
-
-        @Override
-        public void failure(RetrofitError error) {
-
-        }
     }
 
     private class IssueEventsCallbacks extends BaseCallback<ListIssueEvents> {
@@ -185,13 +172,8 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
                     details = new ArrayList<>();
                     storyDetailMap.put(time, details);
                 }
-                details.add(new IssueEventComment(event));
+                details.add(new IssueStoryEvent(event));
             }
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-
         }
     }
 
@@ -246,6 +228,14 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         }
 
         public abstract void execute();
+
+        @Override
+        public void failure(RetrofitError error) {
+            if (getOnResultCallback() != null) {
+                getOnResultCallback().onFail(error);
+            }
+        }
+
     }
 
     private long getMilisFromDate(String createdAt) {
