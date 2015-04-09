@@ -131,7 +131,7 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         @Override
         protected void response(ListIssueComments issueComments) {
             for (IssueComment comment : issueComments) {
-                long time = getMilisFromDate(comment.createdAt);
+                long time = getMilisFromDate(comment.created_at);
                 List<IssueStoryDetail> details = storyDetailMap.get(time);
                 if (details == null) {
                     details = new ArrayList<>();
@@ -249,5 +249,10 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
     @Override
     public void log(String message) {
         Log.i("IssueStoryLoader", message);
+    }
+
+    @Override
+    public String getAcceptHeader() {
+        return "application/vnd.github.VERSION.html+json";
     }
 }

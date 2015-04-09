@@ -9,8 +9,6 @@ public class IssueComment extends ShaUrl{
     public String body;
     public String body_html;
     public User user;
-    @SerializedName("created_at")
-    public String createdAt;
-    @SerializedName("updated_at")
-    public String updatedAt;
+    public String created_at;
+    public String updated_at;
 }
