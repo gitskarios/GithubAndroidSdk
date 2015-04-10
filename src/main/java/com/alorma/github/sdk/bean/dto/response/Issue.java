@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Issue extends IssueComment{
     public int number;
     public IssueState state;
+    public boolean locked;
     public String title;
     public ListLabels labels;
     public User asignee;

@@ -168,14 +168,22 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         @Override
         protected void response(ListIssueEvents issueEvents) {
             for (IssueEvent event : issueEvents) {
-                long time = getMilisFromDate(event.created_at);
-                List<IssueStoryDetail> details = storyDetailMap.get(time);
-                if (details == null) {
-                    details = new ArrayList<>();
-                    storyDetailMap.put(time, details);
+                if (validEvent(event.event)) {
+                    long time = getMilisFromDate(event.created_at);
+                    List<IssueStoryDetail> details = storyDetailMap.get(time);
+                    if (details == null) {
+                        details = new ArrayList<>();
+                        storyDetailMap.put(time, details);
+                    }
+                    details.add(new IssueStoryEvent(event));
                 }
-                details.add(new IssueStoryEvent(event));
             }
+        }
+
+        private boolean validEvent(String event) {
+            return !(event.equals("mentioned") ||
+                    event.equals("subscribed") ||
+                    event.equals("unsubscribed"));
         }
     }
 
