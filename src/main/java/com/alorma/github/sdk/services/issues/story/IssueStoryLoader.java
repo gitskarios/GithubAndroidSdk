@@ -64,11 +64,13 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
 
         Collections.sort(times);
 
-        List<Pair<Long, List<IssueStoryDetail>>> details = new ArrayList<>();
+        List<Pair<Long, IssueStoryDetail>> details = new ArrayList<>();
 
         for (Long time : times) {
             List<IssueStoryDetail> detailsRow = storyDetailMap.get(time);
-            details.add(new Pair<>(time, detailsRow));
+            for (IssueStoryDetail issueStoryDetail : detailsRow) {
+                details.add(new Pair<>(time, issueStoryDetail));
+            }
         }
 
         issueStory.details = details;
