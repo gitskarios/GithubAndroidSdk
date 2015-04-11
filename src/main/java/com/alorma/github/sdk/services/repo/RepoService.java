@@ -46,6 +46,9 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/stats/contributors")
     void contributors(@Path("owner") String owner, @Path("name") String repo, Callback<ListContributors> callback);
 
+    @GET("/repos/{owner}/{name}/stats/contributors")
+    void contributors(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListContributors> callback);
+
     @GET("/repos/{owner}/{name}/collaborators")
     void collaborators(@Path("owner") String owner, @Path("name") String repo, Callback<ListUsers> callback);
 

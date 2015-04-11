@@ -10,12 +10,22 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
  */
 public class GetRepoContributorsClient extends BaseRepoClient<ListContributors> {
 
+	private int page;
+
 	public GetRepoContributorsClient(Context context, RepoInfo repoInfo) {
+		this(context, repoInfo, 0);
+	}
+	public GetRepoContributorsClient(Context context, RepoInfo repoInfo, int page) {
 		super(context, repoInfo);
+		this.page = page;
 	}
 
 	@Override
     protected void executeService(RepoService repoService) {
-        repoService.contributors(getOwner(), getRepo(), this);
+		if (page == 0) {
+			repoService.contributors(getOwner(), getRepo(), this);
+		} else {
+			repoService.contributors(getOwner(), getRepo(), page, this);
+		}
     }
 }
