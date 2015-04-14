@@ -8,6 +8,7 @@ import android.content.Context;
 public class GitskariosSettings extends PreferencesHelper{
 	public static final String KEY_REPO_SORT = "KEY_REPO_SORT";
 	public static final String KEY_AUTH_USER = "KEY_AUTH_USER";
+	public static final String KEY_VERSION = "KEY_VERSION";
 	public static final String KEY_AUTH_USER_JSON = "KEY_AUTH_USER_JSON";
 	public static final String KEY_DOWNLOAD_FILE_TYPE = "KEY_DOWNLOAD_FILE_TYPE";
 
@@ -45,5 +46,13 @@ public class GitskariosSettings extends PreferencesHelper{
 
 	public void saveDownloadFileType(String downloadFileType) {
 		saveStringSetting(KEY_DOWNLOAD_FILE_TYPE, downloadFileType);
+	}
+
+	public void saveVersion(int currentVersion) {
+		saveIntSetting(KEY_VERSION, currentVersion);
+	}
+
+	public int getVersion(int currentVersion) {
+		return getIntSetting(KEY_VERSION, currentVersion);
 	}
 }

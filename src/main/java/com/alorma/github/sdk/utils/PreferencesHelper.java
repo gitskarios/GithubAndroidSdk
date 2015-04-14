@@ -17,17 +17,26 @@ public class PreferencesHelper {
 		editor = preferences.edit();
 	}
 
-	public void saveStringSetting(String key, String value) {
+	protected void saveStringSetting(String key, String value) {
 		editor.putString(key, value).apply();
 	}
 
-	public String getStringSetting(String key, String defaultValue) {
+	protected String getStringSetting(String key, String defaultValue) {
 		return preferences.getString(key, defaultValue);
+	}
+
+	protected void saveIntSetting(String key, int value) {
+		editor.putInt(key, value).apply();
+	}
+
+	protected int getIntSetting(String key, int defaultValue) {
+		return preferences.getInt(key, defaultValue);
 	}
 
 	public void registerListener(SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
 		preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 	}
+
 	public void unregisterListener(SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
 		preferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 	}
