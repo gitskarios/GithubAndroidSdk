@@ -80,10 +80,14 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         }
     }
 
-    private class IssueCallback extends BaseCallback<Issue> {
+    private class IssueCallback extends BaseInfiniteCallback<Issue> {
+
+        private final IssueInfo info;
+        private final IssueStoryService issueStoryService;
 
         public IssueCallback(IssueInfo info, IssueStoryService issueStoryService) {
-            super(info, issueStoryService);
+            this.info = info;
+            this.issueStoryService = issueStoryService;
         }
 
         @Override
@@ -108,10 +112,14 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
 
     }
 
-    private class IssueCommentsCallback extends BaseCallback<ListIssueComments> {
+    private class IssueCommentsCallback extends BaseInfiniteCallback<ListIssueComments> {
+
+        private final IssueInfo info;
+        private final IssueStoryService issueStoryService;
 
         public IssueCommentsCallback(IssueInfo info, IssueStoryService issueStoryService) {
-            super(info, issueStoryService);
+            this.info = info;
+            this.issueStoryService = issueStoryService;
         }
 
 
@@ -144,10 +152,14 @@ public class IssueStoryLoader extends BaseClient<IssueStory> {
         }
     }
 
-    private class IssueEventsCallbacks extends BaseCallback<ListIssueEvents> {
+    private class IssueEventsCallbacks extends BaseInfiniteCallback<ListIssueEvents> {
+
+        private IssueInfo info;
+        private IssueStoryService issueStoryService;
 
         public IssueEventsCallbacks(IssueInfo info, IssueStoryService issueStoryService) {
-            super(info, issueStoryService);
+            this.info = info;
+            this.issueStoryService = issueStoryService;
         }
 
         @Override

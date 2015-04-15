@@ -1,11 +1,16 @@
 package com.alorma.github.sdk.services.issues;
 
+import com.alorma.github.sdk.bean.dto.request.CreateMilestoneRequestDTO;
+import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueComment;
 import com.alorma.github.sdk.bean.dto.response.ListEvents;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
+import com.alorma.github.sdk.bean.dto.response.Milestone;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -49,4 +54,16 @@ public interface IssuesService {
 
 	@POST("/repos/{owner}/{name}/issues/{num}/comments")
 	void addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueComment comment, Callback<IssueComment> callback);
+
+    @GET("/repos/{owner}/{name}/milestones")
+    void milestones(@Path("owner") String owner, @Path("name") String repo, Callback<List<Milestone>> callback);
+
+    @GET("/repos/{owner}/{name}/milestones")
+    void milestones(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Milestone>> callback);
+
+    @POST("/repos/{owner}/{name}/milestones")
+    void createMilestone(@Path("owner") String owner, @Path("name") String repo, @Body CreateMilestoneRequestDTO createMilestoneRequestDTO, Callback<Milestone> callback);
+
+    @PATCH("/repos/{owner}/{name}/issues/{number}")
+    void editIssue(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number, @Body EditIssueRequestDTO editIssueRequestDTO, Callback<Issue> callback);
 }
