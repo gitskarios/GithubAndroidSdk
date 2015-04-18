@@ -26,6 +26,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+import retrofit.converter.Converter;
 
 public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, RestAdapter.Log {
 
@@ -42,15 +43,22 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 	}
 
 	public void execute() {
-		RestAdapter restAdapter = new RestAdapter.Builder()
+		RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder()
 				.setClient(new OkClient())
 				.setEndpoint(ApiConstants.API_URL)
 				.setRequestInterceptor(this)
 				.setLogLevel(RestAdapter.LogLevel.FULL)
-				.setLog(this)
-				.build();
+				.setLog(this);
 
-		executeService(restAdapter);
+		if (customConverter() != null) {
+			restAdapterBuilder.setConverter(customConverter());
+		}
+
+		executeService(restAdapterBuilder.build());
+	}
+
+	protected Converter customConverter() {
+		return null;
 	}
 
 	protected abstract void executeService(RestAdapter restAdapter);

@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.issues;
 
 import com.alorma.github.sdk.bean.dto.request.CreateMilestoneRequestDTO;
+import com.alorma.github.sdk.bean.dto.request.EditIssueMilestoneRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;

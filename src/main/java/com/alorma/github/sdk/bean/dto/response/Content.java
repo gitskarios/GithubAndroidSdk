@@ -26,6 +26,11 @@ public class Content extends ShaUrl implements Comparable<Content> {
 		return ContentType.file.equals(type);
 	}
 
+	public boolean isSubmodule() {
+		return ContentType.submodule.equals(type);
+	}
+
+
 	@Override
 	public int compareTo(Content another) {
 		return Comparators.TYPE.compare(this, another);
