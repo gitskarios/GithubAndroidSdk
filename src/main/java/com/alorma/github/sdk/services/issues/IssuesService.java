@@ -6,6 +6,7 @@ import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueComment;
+import com.alorma.github.sdk.bean.dto.response.IssueState;
 import com.alorma.github.sdk.bean.dto.response.ListEvents;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
@@ -26,11 +27,11 @@ import retrofit.http.Query;
  */
 public interface IssuesService {
 
-    @GET("/repos/{owner}/{name}/issues?state=all&sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/issues?sort=updated")
+    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<ListIssues> callback);
 
-    @GET("/repos/{owner}/{name}/issues?state=all&sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListIssues> callback);
+    @GET("/repos/{owner}/{name}/issues?sort=updated")
+    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page, Callback<ListIssues> callback);
 
     @POST("/repos/{owner}/{name}/issues")
     void create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue, Callback<Issue> callback);

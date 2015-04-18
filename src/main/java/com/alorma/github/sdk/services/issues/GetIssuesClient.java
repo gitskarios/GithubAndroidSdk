@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.issues;
 
 import android.content.Context;
 
+import com.alorma.github.sdk.bean.dto.response.IssueState;
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 
@@ -20,11 +21,11 @@ public class GetIssuesClient extends BaseIssuesClient<ListIssues> {
 
 	@Override
 	protected void executeFirstPage(IssueInfo issueInfo, IssuesService issuesService) {
-		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, this);
+		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, String.valueOf(issueInfo.state), this);
 	}
 
 	@Override
 	protected void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService) {
-		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, page, this);
+		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, String.valueOf(issueInfo.state), page, this);
 	}
 }
