@@ -2,14 +2,15 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.BaseClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 08/08/2014.
  */
-public abstract class BaseSearchClient<K> extends BaseClient<K> {
+public abstract class BaseSearchClient<K> extends GithubClient<K> {
     protected String query;
     private int page = 0;
 

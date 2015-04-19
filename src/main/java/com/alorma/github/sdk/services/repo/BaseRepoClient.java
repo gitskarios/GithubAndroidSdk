@@ -3,14 +3,14 @@ package com.alorma.github.sdk.services.repo;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 13/07/2014.
  */
-public abstract class BaseRepoClient<K> extends BaseClient<K> {
+public abstract class BaseRepoClient<K> extends GithubClient<K> {
 
 	private RepoInfo repoInfo;
 

@@ -2,14 +2,15 @@ package com.alorma.github.sdk.services.pullrequest;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.BaseClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 22/08/2014.
  */
-public abstract class BasePullRequestsClient<K> extends BaseClient<K> {
+public abstract class BasePullRequestsClient<K> extends GithubClient<K> {
     private String owner;
     private String repository;
 	private int num;

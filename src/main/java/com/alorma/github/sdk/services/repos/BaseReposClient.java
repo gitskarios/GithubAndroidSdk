@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.dto.response.ListRepos;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.BaseClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
 
 import retrofit.RestAdapter;
@@ -12,7 +13,7 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 13/07/2014.
  */
-public abstract class BaseReposClient extends BaseClient<ListRepos> {
+public abstract class BaseReposClient extends GithubClient<ListRepos> {
     private String username;
     private int page;
 

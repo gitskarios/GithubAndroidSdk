@@ -3,14 +3,15 @@ package com.alorma.github.sdk.services.issues;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.BaseClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 22/08/2014.
  */
-public abstract class BaseIssuesClient<K> extends BaseClient<K> {
+public abstract class BaseIssuesClient<K> extends GithubClient<K> {
 
 	private int page;
 	private IssueInfo issueInfo;

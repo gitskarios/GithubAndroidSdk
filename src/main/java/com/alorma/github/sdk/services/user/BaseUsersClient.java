@@ -2,14 +2,15 @@ package com.alorma.github.sdk.services.user;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.BaseClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 13/07/2014.
  */
-public abstract class BaseUsersClient<K> extends BaseClient<K> {
+public abstract class BaseUsersClient<K> extends GithubClient<K> {
     public BaseUsersClient(Context context) {
         super(context);
     }
