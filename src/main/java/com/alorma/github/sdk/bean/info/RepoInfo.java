@@ -3,22 +3,26 @@ package com.alorma.github.sdk.bean.info;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.alorma.github.sdk.bean.dto.response.Permissions;
+
 /**
  * Created by Bernat on 07/09/2014.
  */
-public class RepoInfo implements Parcelable{
+public class RepoInfo implements Parcelable {
 
 	public String owner;
 	public String name;
 	public String branch;
+	public Permissions permissions = new Permissions();
 
 	public RepoInfo() {
 	}
 
-	public RepoInfo(Parcel in) {
+	protected RepoInfo(Parcel in) {
 		owner = in.readString();
 		name = in.readString();
 		branch = in.readString();
+		permissions = (Permissions) in.readValue(Permissions.class.getClassLoader());
 	}
 
 	@Override
@@ -31,9 +35,10 @@ public class RepoInfo implements Parcelable{
 		dest.writeString(owner);
 		dest.writeString(name);
 		dest.writeString(branch);
+		dest.writeValue(permissions);
 	}
 
-
+	@SuppressWarnings("unused")
 	public static final Parcelable.Creator<RepoInfo> CREATOR = new Parcelable.Creator<RepoInfo>() {
 		@Override
 		public RepoInfo createFromParcel(Parcel in) {

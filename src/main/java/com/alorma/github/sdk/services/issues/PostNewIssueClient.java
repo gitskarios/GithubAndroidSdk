@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
+import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseClient;
 
 import retrofit.RestAdapter;
@@ -12,14 +13,14 @@ import retrofit.RestAdapter;
  * Created by Bernat on 23/08/2014.
  */
 public class PostNewIssueClient extends BaseClient<Issue> {
-    private String owner;
-    private String repo;
-    private IssueRequest issue;
 
-    public PostNewIssueClient(Context context, String owner, String repo, IssueRequest issue) {
+    private IssueRequest issue;
+    private RepoInfo repoInfo;
+
+    public PostNewIssueClient(Context context, RepoInfo repoInfo, IssueRequest issue) {
         super(context);
-        this.owner = owner;
-        this.repo = repo;
+        this.repoInfo = repoInfo;
+        this.repoInfo = repoInfo;
         this.issue = issue;
     }
 
@@ -29,7 +30,7 @@ public class PostNewIssueClient extends BaseClient<Issue> {
             throw new RuntimeException("Issue or Issue title can not be null");
         }
         IssuesService service = restAdapter.create(IssuesService.class);
-        service.create(owner, repo, issue, this);
+        service.create(repoInfo.owner, repoInfo.name, issue, this);
     }
 
     @Override

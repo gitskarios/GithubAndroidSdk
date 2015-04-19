@@ -21,6 +21,12 @@ public class Permissions implements Parcelable {
 		return sb.toString();
 	}
 
+	public Permissions() {
+		this.admin = false;
+		this.push = false;
+		this.pull = false;
+	}
+
 	protected Permissions(Parcel in) {
 		admin = in.readByte() != 0x00;
 		push = in.readByte() != 0x00;
