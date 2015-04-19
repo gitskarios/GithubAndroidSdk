@@ -35,5 +35,5 @@ dependencies {
 
     compile 'net.danlew:android.joda:2.6.0'
 
-    compile project(':sdks:basesdk')
+    compile project(':sdks:BaseSDK')
 }
