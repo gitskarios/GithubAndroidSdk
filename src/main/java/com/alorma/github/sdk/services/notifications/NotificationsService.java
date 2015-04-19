@@ -9,8 +9,10 @@ import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by Bernat on 18/02/2015.
@@ -23,5 +25,12 @@ public interface NotificationsService {
 	@PUT("/repos/{owner}/{repo}/notifications")
 	void markAsReadRepo(@Path("owner") String owner, @Path("repo") String repo, @Body LastDate body, Callback<Response> responseCallback);
 	
-	
+	@PATCH("/notifications/threads/{id}")
+	void markThreadAsRead(@Path("id") String id, Callback<Response> callback);
+
+	@PUT("/notifications/threads/{id}/subscription")
+	void subscribeThread(@Path("id") String id, @Query("subscribed") boolean subscribed, @Query("ignored") boolean ignored, Callback<Response> callback);
+
+	@PATCH("/notifications/threads/{id}/subscription")
+	void unsubscribeThread(@Path("id") String id, Callback<Response> callback);
 }
