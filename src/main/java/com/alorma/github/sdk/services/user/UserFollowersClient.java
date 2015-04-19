@@ -7,7 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.ListUsers;
 /**
  * Created by Bernat on 14/07/2014.
  */
-public class UserFollowersClient extends BaseUsersClient<ListUsers>  {
+public class UserFollowersClient extends GithubUsersClient<ListUsers> {
 
     private String username;
     private int page = 0;

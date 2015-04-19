@@ -7,7 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.User;
 /**
  * Created by Bernat on 12/07/2014.
  */
-public class RequestUserClient extends BaseUsersClient<User>{
+public class RequestUserClient extends GithubUsersClient<User> {
 
     private String username;
 

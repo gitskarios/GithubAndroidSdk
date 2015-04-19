@@ -2,11 +2,11 @@ package com.alorma.github.sdk.services.repo;
 
 import com.alorma.github.sdk.bean.dto.response.ListBranches;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.client.Response;
 
-public abstract class BranchesCallback implements BaseClient.OnResultCallback<ListBranches> {
+public abstract class BranchesCallback implements GithubClient.OnResultCallback<ListBranches> {
 
 	private RepoInfo repoInfo;
 

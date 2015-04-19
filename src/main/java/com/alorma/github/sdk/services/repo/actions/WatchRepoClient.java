@@ -2,14 +2,14 @@ package com.alorma.github.sdk.services.repo.actions;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 07/08/2014.
  */
-public class WatchRepoClient extends BaseClient<Object> {
+public class WatchRepoClient extends GithubClient<Object> {
 
     private final String owner;
     private final String repo;

@@ -4,13 +4,11 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.services.issues.BaseIssuesClient;
-import com.alorma.github.sdk.services.issues.IssuesService;
 
 /**
  * Created by Bernat on 23/08/2014.
  */
-public class GetIssueComments extends BaseIssuesClient<ListIssueComments> {
+public class GetIssueComments extends GithubIssuesClient<ListIssueComments> {
 
 	public GetIssueComments(Context context, IssueInfo issueInfo, int page) {
 		super(context, issueInfo, page);

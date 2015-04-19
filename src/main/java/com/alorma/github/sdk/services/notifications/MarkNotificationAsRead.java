@@ -3,7 +3,7 @@ package com.alorma.github.sdk.services.notifications;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Notification;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 import retrofit.client.Response;
@@ -11,7 +11,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 19/04/2015.
  */
-public class MarkNotificationAsRead extends BaseClient<Response> {
+public class MarkNotificationAsRead extends GithubClient<Response> {
 
     private Notification notification;
 

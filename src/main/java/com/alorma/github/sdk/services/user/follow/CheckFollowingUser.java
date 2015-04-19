@@ -2,7 +2,7 @@ package com.alorma.github.sdk.services.user.follow;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.user.UsersService;
 
 import retrofit.RestAdapter;
@@ -12,7 +12,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 27/12/2014.
  */
-public class CheckFollowingUser extends BaseClient<Object> implements BaseClient.OnResultCallback<Object> {
+public class CheckFollowingUser extends GithubClient<Object> implements GithubClient.OnResultCallback<Object> {
 
 	private OnCheckFollowingUser onCheckFollowingUser;
 	private String username;

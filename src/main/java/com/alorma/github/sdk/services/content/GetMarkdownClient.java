@@ -2,13 +2,11 @@ package com.alorma.github.sdk.services.content;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
-import com.alorma.github.sdk.security.ApiConstants;
-import com.alorma.github.sdk.security.StoreCredentials;
-import com.alorma.github.sdk.services.client.BaseClient;
-import com.google.gson.Gson;
+import com.alorma.github.sdk.security.GitHub;
+import com.alorma.gitskarios.basesdk.client.StoreCredentials;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Client;
@@ -36,7 +33,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
 	private Context context;
 	private RequestMarkdownDTO readme;
 
-    private BaseClient.OnResultCallback<String> onResultCallback;
+    private GithubClient.OnResultCallback<String> onResultCallback;
 
     public GetMarkdownClient(Context context, RequestMarkdownDTO readme, Handler handler) {
 		this.context = context;
@@ -47,7 +44,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
     public void execute() {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiConstants.API_URL)
+                .setEndpoint(new GitHub().getApiEndpoint())
                 .setLogLevel(RestAdapter.LogLevel.HEADERS)
                 .setClient(this)
                 .build();
@@ -99,7 +96,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
     }
 
 	
-    public void setOnResultCallback(BaseClient.OnResultCallback<String> onResultCallback) {
+    public void setOnResultCallback(GithubClient.OnResultCallback<String> onResultCallback) {
         this.onResultCallback = onResultCallback;
     }
 }

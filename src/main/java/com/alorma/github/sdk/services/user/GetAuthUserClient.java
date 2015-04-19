@@ -3,17 +3,11 @@ package com.alorma.github.sdk.services.user;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.User;
-import com.alorma.github.sdk.utils.GitskariosSettings;
-import com.google.gson.Gson;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by Bernat on 03/10/2014.
  */
-public class GetAuthUserClient extends BaseUsersClient<User> {
+public class GetAuthUserClient extends GithubUsersClient<User> {
     private String accessToken;
 
     public GetAuthUserClient(Context context) {

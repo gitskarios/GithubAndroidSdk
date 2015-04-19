@@ -3,14 +3,14 @@ package com.alorma.github.sdk.services.gists;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListGists;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 08/07/2014.
  */
-public class UserStarredGistsClient extends BaseClient<ListGists> {
+public class UserStarredGistsClient extends GithubClient<ListGists> {
 
 	private String username;
 	private int page = 0;

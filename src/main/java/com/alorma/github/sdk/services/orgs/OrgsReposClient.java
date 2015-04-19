@@ -2,10 +2,10 @@ package com.alorma.github.sdk.services.orgs;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.services.repos.BaseReposClient;
+import com.alorma.github.sdk.services.repos.GithubReposClient;
 import com.alorma.github.sdk.services.repos.ReposService;
 
-public class OrgsReposClient extends BaseReposClient {
+public class OrgsReposClient extends GithubReposClient {
 
 	public OrgsReposClient(Context context, String org) {
 		super(context, org);

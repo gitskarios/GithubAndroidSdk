@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by Bernat on 17/07/2014.
  */
-public class StarredReposClient extends BaseReposClient {
+public class StarredReposClient extends GithubReposClient {
 
 	public StarredReposClient(Context context) {
 		super(context);

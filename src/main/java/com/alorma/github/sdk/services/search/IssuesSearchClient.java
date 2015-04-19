@@ -2,23 +2,17 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
 import com.alorma.github.sdk.bean.dto.response.search.IssuesSearch;
-import com.alorma.github.sdk.bean.dto.response.search.ReposSearch;
-import com.alorma.github.sdk.services.client.BaseClient;
-
-import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
  * Created by Bernat on 08/08/2014.
  */
-public class IssuesSearchClient extends BaseSearchClient<ListIssues> {
+public class IssuesSearchClient extends GithubSearchClient<ListIssues> {
 
     public IssuesSearchClient(Context context, String query) {
         super(context, query);

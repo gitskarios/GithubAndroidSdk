@@ -5,14 +5,14 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.CreateMilestoneRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 15/04/2015.
  */
-public class CreateMilestoneClient extends BaseClient<Milestone> {
+public class CreateMilestoneClient extends GithubClient<Milestone> {
     private RepoInfo repoInfo;
     private CreateMilestoneRequestDTO createMilestoneRequestDTO;
 

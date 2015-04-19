@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.Base64;
 
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
-import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.content.GetMarkdownClient;
@@ -19,7 +18,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetReadmeContentsClient extends BaseRepoClient<String> {
+public class GetReadmeContentsClient extends GithubRepoClient<String> {
 
 	private final Handler handler;
 	private OnResultCallback<String> callback;

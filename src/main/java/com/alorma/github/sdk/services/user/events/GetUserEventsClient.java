@@ -3,14 +3,14 @@ package com.alorma.github.sdk.services.user.events;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListEvents;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 03/10/2014.
  */
-public class GetUserEventsClient extends BaseClient<ListEvents> {
+public class GetUserEventsClient extends GithubClient<ListEvents> {
 	private String username;
 	private int page = 0;
 

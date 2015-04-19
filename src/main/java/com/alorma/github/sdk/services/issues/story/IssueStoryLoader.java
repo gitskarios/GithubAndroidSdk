@@ -16,7 +16,7 @@ import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -37,7 +37,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryLoader extends BaseClient<IssueStory> {
+public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     private final IssueInfo issueInfo;
     private Map<Long, List<IssueStoryDetail>> storyDetailMap;

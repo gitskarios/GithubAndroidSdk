@@ -9,22 +9,31 @@ android {
         targetSdkVersion 22
     }
 
+    publishNonDefault true
+
     lintOptions {
         abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "CLIENT_ID", "\"" + GH_DEV_ID + "\""
+            buildConfigField "String", "CLIENT_SECRET", "\"" + GH_DEV_SECRET + "\""
+            buildConfigField "String", "CLIENT_CALLBACK", "\"" + GH_DEV_CALLBACK + "\""
+        }
+        release {
+            buildConfigField "String", "CLIENT_ID", "\"" + GH_PRO_ID + "\""
+            buildConfigField "String", "CLIENT_SECRET", "\"" + GH_PRO_SECRET + "\""
+            buildConfigField "String", "CLIENT_CALLBACK", "\"" + GH_PRO_CALLBACK + "\""
+        }
     }
 }
 
 dependencies {
 
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    
-    compile 'com.android.support:support-v4:21.0.3'
-
     compile 'com.android.support:support-annotations:21.0.3'
 
     compile 'net.danlew:android.joda:2.6.0'
+
+    compile project(':sdks:basesdk')
 }

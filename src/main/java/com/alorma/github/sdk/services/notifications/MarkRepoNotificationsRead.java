@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.request.LastDate;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -16,7 +16,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 01/03/2015.
  */
-public class MarkRepoNotificationsRead extends BaseClient<Response> {
+public class MarkRepoNotificationsRead extends GithubClient<Response> {
 	private RepoInfo repoInfo;
 
 	public MarkRepoNotificationsRead(Context context, RepoInfo repoInfo) {

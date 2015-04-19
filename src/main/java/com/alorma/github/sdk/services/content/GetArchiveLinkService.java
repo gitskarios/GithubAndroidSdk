@@ -7,7 +7,7 @@ import android.os.Environment;
 
 import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
 
 import retrofit.Callback;
@@ -18,7 +18,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 17/12/2014.
  */
-public class GetArchiveLinkService extends BaseClient {
+public class GetArchiveLinkService extends GithubClient {
 
 	private OnDownloadServiceListener onDownloadServiceListener;
 

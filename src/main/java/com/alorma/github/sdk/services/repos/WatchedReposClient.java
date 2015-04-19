@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by Bernat on 17/07/2014.
  */
-public class WatchedReposClient extends BaseReposClient {
+public class WatchedReposClient extends GithubReposClient {
 
 	public WatchedReposClient(Context context) {
 		super(context);

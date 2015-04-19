@@ -5,14 +5,14 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueState;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 01/09/2014.
  */
-public class CloseIssueClient extends BaseClient<Issue> {
+public class CloseIssueClient extends GithubClient<Issue> {
 
 	private final IssueRequest issueRequest;
 	private String owner;

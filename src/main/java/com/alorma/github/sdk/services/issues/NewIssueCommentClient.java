@@ -4,14 +4,14 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.IssueComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 06/09/2014.
  */
-public class NewIssueCommentClient extends BaseClient<IssueComment> {
+public class NewIssueCommentClient extends GithubClient<IssueComment> {
 	private String body;
 	private String owner;
 	private String repo;

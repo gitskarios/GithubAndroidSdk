@@ -4,14 +4,14 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 10/09/2014.
  */
-public class GetFileContentClient extends BaseClient<Content> {
+public class GetFileContentClient extends GithubClient<Content> {
 
 	private String owner;
 	private String repo;

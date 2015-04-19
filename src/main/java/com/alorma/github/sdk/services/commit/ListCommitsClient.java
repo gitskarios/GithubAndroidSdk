@@ -2,17 +2,16 @@ package com.alorma.github.sdk.services.commit;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.ListCommit;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 07/09/2014.
  */
-public class ListCommitsClient extends BaseClient<ListCommit> {
+public class ListCommitsClient extends GithubClient<ListCommit> {
 	private RepoInfo info;
 	private int page;
 

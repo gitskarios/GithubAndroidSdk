@@ -4,8 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
-import com.alorma.github.sdk.services.issues.story.IssueStoryService;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 14/04/2015.
  */
-public class GetMilestonesClient extends BaseClient<List<Milestone>> {
+public class GetMilestonesClient extends GithubClient<List<Milestone>> {
 
     private IssueInfo issueInfo;
 

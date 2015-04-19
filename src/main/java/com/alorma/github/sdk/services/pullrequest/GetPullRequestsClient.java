@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
 
-public class GetPullRequestsClient extends BasePullRequestsClient<ListIssues> {
+public class GetPullRequestsClient extends GithubPullRequestsClient<ListIssues> {
 
 	public GetPullRequestsClient(Context context, String owner, String repository) {
 		super(context, owner, repository);

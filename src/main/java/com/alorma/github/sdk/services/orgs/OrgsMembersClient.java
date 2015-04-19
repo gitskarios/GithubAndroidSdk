@@ -3,13 +3,13 @@ package com.alorma.github.sdk.services.orgs;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListUsers;
-import com.alorma.github.sdk.services.user.BaseUsersClient;
+import com.alorma.github.sdk.services.user.GithubUsersClient;
 import com.alorma.github.sdk.services.user.UsersService;
 
 /**
  * Created by Bernat on 22/02/2015.
  */
-public class OrgsMembersClient extends BaseUsersClient<ListUsers> {
+public class OrgsMembersClient extends GithubUsersClient<ListUsers> {
 
 	private final String org;
 	private int page = 0;

@@ -2,21 +2,17 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListRepos;
 import com.alorma.github.sdk.bean.dto.response.ListUsers;
-import com.alorma.github.sdk.bean.dto.response.search.ReposSearch;
 import com.alorma.github.sdk.bean.dto.response.search.UsersSearch;
-import com.alorma.github.sdk.services.client.BaseClient;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
  * Created by Bernat on 08/08/2014.
  */
-public class UsersSearchClient extends BaseSearchClient<ListUsers> {
+public class UsersSearchClient extends GithubSearchClient<ListUsers> {
 
 	public UsersSearchClient(Context context, String query) {
 		super(context, query);

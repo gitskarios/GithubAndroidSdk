@@ -8,7 +8,7 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetRepoContributorsClient extends BaseRepoClient<ListContributors> {
+public class GetRepoContributorsClient extends GithubRepoClient<ListContributors> {
 
 	private int page;
 

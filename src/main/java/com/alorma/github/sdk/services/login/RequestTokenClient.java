@@ -4,15 +4,15 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.request.RequestTokenDTO;
 import com.alorma.github.sdk.bean.dto.response.Token;
-import com.alorma.github.sdk.services.client.BaseClient;
-import com.alorma.github.sdk.security.ApiConstants;
+import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.ApiClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 13/07/2014.
  */
-public class RequestTokenClient extends BaseClient<Token> {
+public class RequestTokenClient extends GithubClient<Token> {
     private String code;
 
     public RequestTokenClient(Context context, String code) {
@@ -23,7 +23,7 @@ public class RequestTokenClient extends BaseClient<Token> {
     @Override
     public void execute() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("https://github.com")
+                .setEndpoint(getClient().getApiOauthUrlEndpoint())
                 .setRequestInterceptor(this)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
@@ -40,10 +40,11 @@ public class RequestTokenClient extends BaseClient<Token> {
     protected void executeService(RestAdapter restAdapter) {
         LoginService loginService = restAdapter.create(LoginService.class);
 
+
         RequestTokenDTO tokenDTO = new RequestTokenDTO();
-        tokenDTO.client_id = ApiConstants.CLIENT_ID;
-        tokenDTO.client_secret = ApiConstants.CLIENT_SECRET;
-        tokenDTO.redirect_uri = ApiConstants.CLIENT_CALLBACK;
+        tokenDTO.client_id = getClient().getApiClient();
+        tokenDTO.client_secret = getClient().getAPiSecret();
+        tokenDTO.redirect_uri = getClient().getApiOauth();
         tokenDTO.code = code;
 
         loginService.requestToken(tokenDTO, this);

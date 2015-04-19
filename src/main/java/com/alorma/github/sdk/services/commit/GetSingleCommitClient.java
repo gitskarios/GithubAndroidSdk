@@ -4,14 +4,14 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.BaseClient;
+import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 22/12/2014.
  */
-public class GetSingleCommitClient extends BaseClient<Commit> {
+public class GetSingleCommitClient extends GithubClient<Commit> {
 	private RepoInfo info;
 	private String sha;
 
