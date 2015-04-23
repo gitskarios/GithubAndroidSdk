@@ -12,7 +12,6 @@ public class Content extends ShaUrl implements Comparable<Content> {
 	public String content;
 	public String path;
 	public String git_url;
-	public String html_url;
 	public Links _links;
 	public String encoding;
 	public ListContents children;

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-public class User implements Parcelable {
+public class User extends ShaUrl implements Parcelable {
 
     public int id;
     public String login;
@@ -25,7 +25,6 @@ public class User implements Parcelable {
 	public String date;
 
     public String location;
-    public String html_url;
     public String followers_url;
     public String following_url;
     public String gists_url;

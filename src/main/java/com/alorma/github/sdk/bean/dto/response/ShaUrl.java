@@ -6,4 +6,5 @@ package com.alorma.github.sdk.bean.dto.response;
 public class ShaUrl {
     public String sha;
     public String url;
+    public String html_url;
 }

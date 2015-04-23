@@ -2,13 +2,11 @@ package com.alorma.github.sdk.bean.dto.response;
 
 import java.util.Date;
 
-public class GistRevision {
+public class GistRevision extends ShaUrl{
 
 	private Date committedAt;
 
 	private GitChangeStatus changeStatus;
-
-	private String url;
 
 	private String version;
 

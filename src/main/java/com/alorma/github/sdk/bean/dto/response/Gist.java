@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Gist {
+public class Gist extends ShaUrl{
 
     @SerializedName("public")
 	public boolean isPublic;
@@ -32,12 +32,7 @@ public class Gist {
     @SerializedName("forks_url")
 	public String forksUrl;
 
-	@SerializedName("html_url")
-	public String htmlUrl;
-
 	public String id;
-
-	public String url;
 
 	public User owner;
 	

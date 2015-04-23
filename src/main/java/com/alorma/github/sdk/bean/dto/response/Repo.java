@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by Bernat on 13/07/2014.
  */
-public class Repo implements Parcelable {
+public class Repo extends ShaUrl implements Parcelable {
 
 	public boolean fork;
 
@@ -39,8 +39,6 @@ public class Repo implements Parcelable {
 
 	public String git_url;
 
-	public String html_url;
-
 	public String language;
 
 	public String default_branch;
@@ -55,8 +53,6 @@ public class Repo implements Parcelable {
 
 	public String svn_url;
 
-	public String url;
-
 	public User owner;
 
 	public int stargazers_count;
@@ -70,7 +66,6 @@ public class Repo implements Parcelable {
 	public boolean has_issues;
 
 	public boolean has_downloads;
-
 
 	public boolean has_wiki;
 

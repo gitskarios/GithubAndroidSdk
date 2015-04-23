@@ -9,7 +9,7 @@ import java.util.Comparator;
 /**
  * Created by Bernat on 18/02/2015.
  */
-public class Notification implements Comparable<Notification>{
+public class Notification extends ShaUrl implements Comparable<Notification>{
 	public long id;
 	public Repo repository;
 	public NotificationSubject subject;
@@ -17,7 +17,6 @@ public class Notification implements Comparable<Notification>{
 	public boolean unread;
 	public String updated_at;
 	public String last_read_at;
-	public String url;
 	
 	public int adapter_repo_parent_id;
 
