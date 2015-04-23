@@ -50,4 +50,9 @@ public class RepoInfo implements Parcelable {
 			return new RepoInfo[size];
 		}
 	};
+
+	@Override
+	public String toString() {
+		return owner + "/" + name;
+	}
 }

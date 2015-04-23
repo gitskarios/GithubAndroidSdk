@@ -54,4 +54,9 @@ public class IssueInfo implements Parcelable {
 			return new IssueInfo[size];
 		}
 	};
+
+	@Override
+	public String toString() {
+		return repo.toString() + " #" + num;
+	}
 }
