@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueComment;
 import com.alorma.github.sdk.bean.dto.response.IssueState;
+import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.ListEvents;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.dto.response.ListIssues;
@@ -62,6 +63,12 @@ public interface IssuesService {
 
     @GET("/repos/{owner}/{name}/milestones")
     void milestones(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Milestone>> callback);
+
+    @GET("/repos/{owner}/{name}/labels")
+    void labels(@Path("owner") String owner, @Path("name") String repo, Callback<List<Label>> callback);
+
+    @GET("/repos/{owner}/{name}/labels")
+    void labels(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Label>> callback);
 
     @POST("/repos/{owner}/{name}/milestones")
     void createMilestone(@Path("owner") String owner, @Path("name") String repo, @Body CreateMilestoneRequestDTO createMilestoneRequestDTO, Callback<Milestone> callback);

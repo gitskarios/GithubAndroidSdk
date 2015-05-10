@@ -10,6 +10,6 @@ public class IssueRequest {
     public String body;
     public String assignee;
     public Integer milestone;
-    public String[] labels;
+    public CharSequence[] labels;
 	public IssueState state;
 }
