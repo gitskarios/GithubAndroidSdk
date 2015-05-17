@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListOrganizations;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.basesdk.client.StoreCredentials;
 
 import retrofit.RestAdapter;
 
@@ -27,6 +28,10 @@ public class GetOrgsClient extends GithubClient<ListOrganizations> {
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
+        StoreCredentials settings = new StoreCredentials(getContext());
+        if (username != null && username.equalsIgnoreCase(settings.getUserName())) {
+            username = null;
+        }
 		OrgsService orgsService = restAdapter.create(OrgsService.class);
 		if (page == -1) {
 			if (username == null) {
