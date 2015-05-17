@@ -12,7 +12,7 @@ public class Issue extends IssueComment{
     public boolean locked;
     public String title;
     public ListLabels labels;
-    public User asignee;
+    public User assignee;
     public Milestone milestone;
     public int comments;
     @SerializedName("pull_request")
