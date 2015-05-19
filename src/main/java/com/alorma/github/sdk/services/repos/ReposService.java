@@ -14,16 +14,16 @@ import retrofit.http.Query;
 public interface ReposService {
 
 	// User repositories
-	@GET("/user/repos?type=all")
+	@GET("/user/repos?type=owner")
 	void userReposList(@Query("sort") String sort, Callback<ListRepos> callback);
 
-	@GET("/user/repos?type=all")
+	@GET("/user/repos?type=owner")
 	void userReposList(@Query("page") int page, @Query("sort") String sort, Callback<ListRepos> callback);
 
-	@GET("/users/{username}/repos?type=all")
+	@GET("/users/{username}/repos?type=owner")
 	void userReposList(@Path("username") String username, @Query("sort") String sort, Callback<ListRepos> callback);
 
-	@GET("/users/{username}/repos?type=all")
+	@GET("/users/{username}/repos?type=owner")
 	void userReposList(@Path("username") String username, @Query("page") int page, @Query("sort") String sort, Callback<ListRepos> callback);
 
 	@GET("/orgs/{org}/repos?type=all")

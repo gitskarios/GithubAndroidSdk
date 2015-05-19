@@ -37,7 +37,7 @@ public abstract class GithubClient<K>  extends BaseClient<K> {
 	}
 
 	public String getAcceptHeader() {
-		return "application/vnd.github.moondragon+json";
+		return "application/vnd.github.v3.json";
 	}
 
 	private int getLinkData(Response r) {

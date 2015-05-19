@@ -275,6 +275,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     @Override
     public String getAcceptHeader() {
-        return "application/vnd.github.VERSION.html+json";
+        return "application/vnd.github.v3.html+json";
     }
 }
