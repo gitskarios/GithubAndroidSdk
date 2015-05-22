@@ -5,26 +5,13 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-public class User extends ShaUrl implements Parcelable {
+public class User extends Organization implements Parcelable {
 
-    public int id;
-    public String login;
-    public String name;
-    public String company;
-
-    public Date created_at;
-    public Date updated_at;
 
     public boolean hireable;
-    public String avatar_url;
-    public String gravatar_id;
-    public String blog;
-    public String bio;
-    public String email;
 	
 	public String date;
 
-    public String location;
     public String followers_url;
     public String following_url;
     public String gists_url;
@@ -35,19 +22,12 @@ public class User extends ShaUrl implements Parcelable {
     public String events_url;
 
     public String received_events_url;
-    public UserType type;
 
-    public boolean site_admin;
-
-    public int public_repos;
-    public int public_gists;
     public int private_gists;
     public int owned_public_repos;
     public int owned_private_repos;
     public int total_public_repos;
     public int total_private_repos;
-    public int followers;
-    public int following;
     public int collaborators;
     public int disk_usage;
 

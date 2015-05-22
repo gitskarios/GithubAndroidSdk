@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Bernat on 04/09/2014.
  */
-public class Organization extends ShaUrl{
+public class Organization extends ShaUrl {
 
 	public int id;
 	public String login;
@@ -13,6 +13,7 @@ public class Organization extends ShaUrl{
 	public String company;
 
 	public Date created_at;
+	public Date updated_at;
 
 	public String avatar_url;
 	public String gravatar_id;
