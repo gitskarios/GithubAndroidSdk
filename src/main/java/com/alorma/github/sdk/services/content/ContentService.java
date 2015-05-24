@@ -15,15 +15,18 @@ import retrofit.http.Query;
  */
 public interface ContentService {
 
-	@POST("/markdown/raw")
-	void markdown(@Body RequestMarkdownDTO readme, Callback<String> callback);
+    @POST("/markdown/raw")
+    void markdown(@Body RequestMarkdownDTO readme, Callback<String> callback);
 
-	@GET("/repos/{owner}/{name}/contents/{path}")
-	void fileContent(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path, Callback<Content> callback);
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    void fileContent(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, Callback<Content> callback);
 
-	@GET("/repos/{owner}/{name}/contents/{path}")
-	void fileContent(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path, @Query("sha") String sha, Callback<Content> callback);
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    void fileContentSha(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, @Query("sha") String sha, Callback<Content> callback);
 
-	@GET("/repos/{owner}/{name}/{file_type}/{path}")
-	void archiveLink(@Path("owner") String owner, @Path("name") String repo, @Path("file_type") String file_type, @Path("path") String path, Callback<Object> callback);
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    void fileContentRef(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, @Query("ref") String ref, Callback<Content> callback);
+
+    @GET("/repos/{owner}/{name}/{file_type}/{path}")
+    void archiveLink(@Path("owner") String owner, @Path("name") String repo, @Path("file_type") String file_type, @Path(value="path", encode = false) String path, Callback<Object> callback);
 }

@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.content;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Content;
+import com.alorma.github.sdk.bean.info.FileInfo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
@@ -13,27 +14,23 @@ import retrofit.RestAdapter;
  */
 public class GetFileContentClient extends GithubClient<Content> {
 
-	private String owner;
-	private String repo;
-	private String path;
-	private String head;
+    private FileInfo fileInfo;
 
-	public GetFileContentClient(Context context, RepoInfo info, String path) {
-		super(context);
-		this.owner = info.owner;
-		this.repo = info.name;
-		this.path = path;
-		this.head = info.branch;
-	}
+    public GetFileContentClient(Context context, FileInfo fileInfo) {
+        super(context);
+        this.fileInfo = fileInfo;
+    }
 
-	@Override
-	protected void executeService(RestAdapter restAdapter) {
-		ContentService contentService = restAdapter.create(ContentService.class);
+    @Override
+    protected void executeService(RestAdapter restAdapter) {
+        ContentService contentService = restAdapter.create(ContentService.class);
 
-		if (head == null) {
-			contentService.fileContent(owner, repo, path, this);
-		} else {
-			contentService.fileContent(owner, repo, path, head, this);
-		}
-	}
+        if (fileInfo.head != null) {
+            contentService.fileContentSha(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, fileInfo.head, this);
+        } else if (fileInfo.repoInfo.branch != null) {
+            contentService.fileContentRef(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, fileInfo.repoInfo.branch, this);
+        } else {
+            contentService.fileContent(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, this);
+        }
+    }
 }
