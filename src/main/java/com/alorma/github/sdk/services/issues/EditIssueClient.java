@@ -28,7 +28,7 @@ public class EditIssueClient extends GithubClient<Issue> {
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(IssuesService.class).editIssue(info.repo.owner, info.repo.name, info.num, editIssueRequestDTO, this);
+        restAdapter.create(IssuesService.class).editIssue(info.repoInfo.owner, info.repoInfo.name, info.num, editIssueRequestDTO, this);
     }
 
     @Override

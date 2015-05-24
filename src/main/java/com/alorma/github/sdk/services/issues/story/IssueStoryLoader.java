@@ -92,7 +92,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         public void execute() {
-            issueStoryService.detail(info.repo.owner, info.repo.name, info.num, this);
+            issueStoryService.detail(info.repoInfo.owner, info.repoInfo.name, info.num, this);
         }
 
         @Override
@@ -125,12 +125,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         public void execute() {
-            issueStoryService.comments(info.repo.owner, info.repo.name, info.num, this);
+            issueStoryService.comments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
         }
 
         @Override
         protected void executePaginated(int nextPage) {
-            issueStoryService.comments(info.repo.owner, info.repo.name, info.num, nextPage, this);
+            issueStoryService.comments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
         }
 
         @Override
@@ -164,12 +164,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         public void execute() {
-            issueStoryService.events(info.repo.owner, info.repo.name, info.num, this);
+            issueStoryService.events(info.repoInfo.owner, info.repoInfo.name, info.num, this);
         }
 
         @Override
         protected void executePaginated(int nextPage) {
-            issueStoryService.events(info.repo.owner, info.repo.name, info.num, nextPage, this);
+            issueStoryService.events(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
         }
 
         @Override

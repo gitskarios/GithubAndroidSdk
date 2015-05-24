@@ -18,8 +18,8 @@ public class GetIssueClient extends GithubClient<Issue> {
 
 	public GetIssueClient(Context context, IssueInfo issueInfo) {
 		super(context);
-		this.owner = issueInfo.repo.owner;
-		this.repo = issueInfo.repo.name;
+		this.owner = issueInfo.repoInfo.owner;
+		this.repo = issueInfo.repoInfo.name;
 		this.number = issueInfo.num;
 	}
 

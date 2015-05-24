@@ -22,8 +22,8 @@ public interface NotificationsService {
 	@GET("/notifications")
 	void getNotifications(Callback<List<Notification>> notifications);
 	
-	@PUT("/repos/{owner}/{repo}/notifications")
-	void markAsReadRepo(@Path("owner") String owner, @Path("repo") String repo, @Body LastDate body, Callback<Response> responseCallback);
+	@PUT("/repos/{owner}/{repoInfo}/notifications")
+	void markAsReadRepo(@Path("owner") String owner, @Path("repoInfo") String repo, @Body LastDate body, Callback<Response> responseCallback);
 	
 	@PATCH("/notifications/threads/{id}")
 	void markThreadAsRead(@Path("id") String id, Callback<Response> callback);

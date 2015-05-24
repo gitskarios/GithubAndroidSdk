@@ -20,8 +20,8 @@ public class NewIssueCommentClient extends GithubClient<IssueComment> {
 	public NewIssueCommentClient(Context context, IssueInfo issueInfo, String body) {
 		super(context);
 		this.body = body;
-		owner = issueInfo.repo.owner;
-		repo = issueInfo.repo.name;
+		owner = issueInfo.repoInfo.owner;
+		repo = issueInfo.repoInfo.name;
 		num = issueInfo.num;
 	}
 

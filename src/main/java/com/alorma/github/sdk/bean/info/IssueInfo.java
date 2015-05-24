@@ -11,34 +11,25 @@ import com.alorma.github.sdk.bean.dto.response.IssueState;
  */
 public class IssueInfo implements Parcelable {
 
-    public RepoInfo repo;
+    public RepoInfo repoInfo;
     public int num;
+    public int commentNum;
     public IssueState state = IssueState.open;
 
     public IssueInfo() {
 
     }
 
-    public IssueInfo(String url) {
-        if (url != null) {
-            repo = new RepoInfo();
-            Uri uri = Uri.parse(url);
-            repo.owner = uri.getPathSegments().get(0);
-            repo.name = uri.getPathSegments().get(1);
-            num = Integer.valueOf(uri.getLastPathSegment());
-        }
-    }
-
     public IssueInfo(RepoInfo repoInfo) {
-        this.repo = repoInfo;
+        this.repoInfo = repoInfo;
     }
 
     protected IssueInfo(Parcel in) {
-        repo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
+        repoInfo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
         num = in.readInt();
+        commentNum = in.readInt();
         int stateValue = in.readInt();
         state = IssueState.fromValue(stateValue);
-
     }
 
     @Override
@@ -48,8 +39,9 @@ public class IssueInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(repo);
+        dest.writeValue(repoInfo);
         dest.writeInt(num);
+        dest.writeInt(commentNum);
         dest.writeInt(state.value);
     }
 
@@ -68,6 +60,6 @@ public class IssueInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return repo.toString() + " #" + num;
+        return repoInfo.toString() + " #" + num;
     }
 }

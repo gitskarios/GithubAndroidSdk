@@ -20,11 +20,11 @@ public class GetIssuesClient extends GithubIssuesClient<ListIssues> {
 
 	@Override
 	protected void executeFirstPage(IssueInfo issueInfo, IssuesService issuesService) {
-		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, String.valueOf(issueInfo.state), this);
+		issuesService.issues(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, String.valueOf(issueInfo.state), this);
 	}
 
 	@Override
 	protected void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService) {
-		issuesService.issues(issueInfo.repo.owner, issueInfo.repo.name, String.valueOf(issueInfo.state), page, this);
+		issuesService.issues(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, String.valueOf(issueInfo.state), page, this);
 	}
 }

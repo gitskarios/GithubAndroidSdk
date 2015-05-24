@@ -20,12 +20,12 @@ public class GetIssueComments extends GithubIssuesClient<ListIssueComments> {
 
 	@Override
 	protected void executeFirstPage(IssueInfo issueInfo, IssuesService issuesService) {
-		issuesService.comments(issueInfo.repo.owner, issueInfo.repo.name, issueInfo.num, this);
+		issuesService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, this);
 	}
 
 	@Override
 	protected void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService) {
-		issuesService.comments(issueInfo.repo.owner, issueInfo.repo.name, issueInfo.num, page, this);
+		issuesService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page, this);
 	}
 
 	@Override
