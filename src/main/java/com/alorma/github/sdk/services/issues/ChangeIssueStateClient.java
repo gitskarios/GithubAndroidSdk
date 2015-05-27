@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueState;
+import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
@@ -12,26 +13,21 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 01/09/2014.
  */
-public class CloseIssueClient extends GithubClient<Issue> {
+public class ChangeIssueStateClient extends GithubClient<Issue> {
 
 	private final IssueRequest issueRequest;
-	private String owner;
-	private String repo;
-	private int num;
+	private IssueInfo info;
 
-	public CloseIssueClient(Context context, String owner, String repo, int num) {
+	public ChangeIssueStateClient(Context context, IssueInfo info, IssueState state) {
 		super(context);
-
-		this.owner = owner;
-		this.repo = repo;
-		this.num = num;
+		this.info = info;
 
 		this.issueRequest = new IssueRequest();
-		issueRequest.state = IssueState.closed;
+		issueRequest.state = state;
 	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(IssuesService.class).closeIssue(owner, repo, num, issueRequest, this);
+		restAdapter.create(IssuesService.class).closeIssue(info.repoInfo.owner, info.repoInfo.name, info.num, issueRequest, this);
 	}
 }
