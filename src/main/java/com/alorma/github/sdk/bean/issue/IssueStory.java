@@ -4,7 +4,6 @@ import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.Issue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

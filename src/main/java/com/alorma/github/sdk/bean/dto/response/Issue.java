@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Bernat on 20/07/2014.
  */
 
-public class Issue extends IssueComment{
+public class Issue extends GithubComment {
     public int number;
     public IssueState state;
     public boolean locked;
@@ -19,5 +19,5 @@ public class Issue extends IssueComment{
     public Issue pullRequest;
     @SerializedName("closed_at")
     public String closedAt;
-	public Repo repository;
+    public Repo repository;
 }

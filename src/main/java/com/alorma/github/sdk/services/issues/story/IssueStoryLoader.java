@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 
+import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
-import com.alorma.github.sdk.bean.dto.response.IssueComment;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
@@ -140,7 +140,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         protected void response(ListIssueComments issueComments) {
-            for (IssueComment comment : issueComments) {
+            for (GithubComment comment : issueComments) {
                 long time = getMilisFromDate(comment.created_at);
                 List<IssueStoryDetail> details = storyDetailMap.get(time);
                 if (details == null) {

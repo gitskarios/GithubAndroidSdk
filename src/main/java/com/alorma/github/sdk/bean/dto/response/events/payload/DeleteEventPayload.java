@@ -5,7 +5,8 @@ import com.alorma.github.sdk.bean.dto.response.UserType;
 /**
  * Created by Bernat on 05/10/2014.
  */
-public class CreatedEventPayload extends DeleteEventPayload {
-	public String master_branch;
-	public String description;
+public class DeleteEventPayload extends GithubEventPayload {
+	public String ref;
+	public String ref_type;
+	public UserType pusher_type;
 }

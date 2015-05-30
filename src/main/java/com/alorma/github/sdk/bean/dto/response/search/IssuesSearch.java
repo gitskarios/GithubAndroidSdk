@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.bean.dto.response.search;
 
 import com.alorma.github.sdk.bean.dto.response.Issue;
-import com.alorma.github.sdk.bean.dto.response.User;
 
 import java.util.List;
 

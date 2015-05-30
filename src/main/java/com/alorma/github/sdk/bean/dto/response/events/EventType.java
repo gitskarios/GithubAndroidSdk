@@ -12,15 +12,15 @@ public enum EventType {
 	ForkEvent,
 	GistEvent,
 	IssueCommentEvent,
-//	IssueEvent,
 	IssuesEvent,
 	MemberEvent,
 	PublicEvent,
 	PullRequestEvent,
 	PullRequestReviewCommentEvent,
 	PushEvent,
-	ReleaseEvent,
 	StatusEvent,
 	TeamAddEvent,
+	DeleteEvent,
+	ReleaseEvent,
 	Unhandled
 }
