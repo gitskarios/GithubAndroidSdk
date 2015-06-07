@@ -14,12 +14,29 @@ import retrofit.RestAdapter;
  */
 public class GetNotificationsClient extends GithubClient<List<Notification>> {
 
+	private String token;
+
 	public GetNotificationsClient(Context context) {
 		super(context);
+	}
+
+	public GetNotificationsClient(Context context, String token) {
+		super(context);
+		this.token = token;
+	}
+
+	@Override
+	public String getToken() {
+		return token != null ? token : super.getToken();
 	}
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
 		restAdapter.create(NotificationsService.class).getNotifications(this);
+	}
+
+	@Override
+	protected List<Notification> executeSync(RestAdapter restAdapter) {
+		return restAdapter.create(NotificationsService.class).getNotifications();
 	}
 }
