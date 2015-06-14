@@ -31,24 +31,30 @@ android {
 
 def getGHId(pro) {
     if (pro) {
+        println(hasProperty('GH_PRO_ID') ? GH_PRO_ID : System.getenv('GH_PRO_ID'))
         return hasProperty('GH_PRO_ID') ? GH_PRO_ID : System.getenv('GH_PRO_ID')
     } else {
+        println(hasProperty('GH_DEV_ID') ? GH_DEV_ID : System.getenv('GH_DEV_ID'))
         return hasProperty('GH_DEV_ID') ? GH_DEV_ID : System.getenv('GH_DEV_ID')
     }
 }
 
 def getGHSecret(pro) {
     if (pro) {
+        println(hasProperty('GH_PRO_SECRET') ? GH_PRO_SECRET : System.getenv('GH_PRO_SECRET'))
         return hasProperty('GH_PRO_SECRET') ? GH_PRO_SECRET : System.getenv('GH_PRO_SECRET')
     } else {
+        println(hasProperty('GH_DEV_SECRET') ? GH_DEV_SECRET : System.getenv('GH_DEV_SECRET'))
         return hasProperty('GH_DEV_SECRET') ? GH_DEV_SECRET : System.getenv('GH_DEV_SECRET')
     }
 }
 
 def getGHCallback(pro) {
     if (pro) {
+        println(hasProperty('GH_PRO_CALLBACK') ? GH_PRO_CALLBACK : System.getenv('GH_PRO_CALLBACK'))
         return hasProperty('GH_PRO_CALLBACK') ? GH_PRO_CALLBACK : System.getenv('GH_PRO_CALLBACK')
     } else {
+        println(hasProperty('GH_DEV_CALLBACK') ? GH_DEV_CALLBACK : System.getenv('GH_DEV_CALLBACK'))
         return hasProperty('GH_DEV_CALLBACK') ? GH_DEV_CALLBACK : System.getenv('GH_DEV_CALLBACK')
     }
 }
