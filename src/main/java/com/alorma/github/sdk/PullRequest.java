@@ -1,5 +1,7 @@
 package com.alorma.github.sdk;
 
+import com.alorma.github.sdk.bean.dto.response.Issue;
+import com.alorma.github.sdk.bean.dto.response.IssueState;
 import com.alorma.github.sdk.bean.dto.response.Links;
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.dto.response.User;
@@ -7,20 +9,18 @@ import com.alorma.github.sdk.bean.dto.response.User;
 /**
  * Created by Bernat on 30/05/2015.
  */
-public class PullRequest {
-    public String patch_url;
+public class PullRequest extends Issue{
+    /*public String patch_url;
 
     public String diff_url;
 
     public String body;
 
-    public String state;
+    public IssueState state;
 
     public String commits_url;
 
     //public Links _links;
-
-    public int deletions;
 
     public String issue_url;
 
@@ -30,7 +30,6 @@ public class PullRequest {
 
     public String mergeable_state;
 
-    public int additions;
 
     public String title;
 
@@ -72,13 +71,17 @@ public class PullRequest {
 
     public String statuses_url;
 
-    public String locked;
-
     public User user;
 
     public String merge_commit_sha;
 
-    public int comments;
+    public int comments;*/
+
+    public int additions;
+
+    public int deletions;
+
+    public int commits;
 
     public boolean merged;
 }
