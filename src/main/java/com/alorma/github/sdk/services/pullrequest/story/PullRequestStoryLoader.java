@@ -1,4 +1,4 @@
-package com.alorma.github.sdk.services.issues.pull.story;
+package com.alorma.github.sdk.services.pullrequest.story;
 
 import android.content.Context;
 import android.util.Log;
