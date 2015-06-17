@@ -49,15 +49,11 @@ public class PullRequest extends Issue{
 
     public String closed_at;
 
-    public Object mergeable;
-
     public String review_comments_url;
 
     public User assignee;
 
     public int number;
-
-    public int changed_files;
 
     public String url;
 
@@ -83,5 +79,9 @@ public class PullRequest extends Issue{
 
     public int commits;
 
+    public int changed_files;
+
     public boolean merged;
+
+    public Boolean mergeable;
 }
