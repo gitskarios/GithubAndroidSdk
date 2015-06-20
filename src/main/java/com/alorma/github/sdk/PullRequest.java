@@ -43,7 +43,6 @@ public class PullRequest extends Issue{
 
     public int review_comments;
 
-    public Head head;
 
     public String merged_at;
 
@@ -63,8 +62,6 @@ public class PullRequest extends Issue{
 
     public User merged_by;
 
-    public Head base;
-
     public String statuses_url;
 
     public User user;
@@ -72,6 +69,10 @@ public class PullRequest extends Issue{
     public String merge_commit_sha;
 
     public int comments;*/
+
+    public Head head;
+
+    public Head base;
 
     public int additions;
 
