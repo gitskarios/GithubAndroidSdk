@@ -2,6 +2,8 @@ package com.alorma.github.sdk.bean.dto.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Bernat on 20/07/2014.
  */
@@ -11,7 +13,7 @@ public class Issue extends GithubComment {
     public IssueState state;
     public boolean locked;
     public String title;
-    public ListLabels labels;
+    public List<Label> labels;
     public User assignee;
     public Milestone milestone;
     public int comments;

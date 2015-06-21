@@ -3,10 +3,13 @@ package com.alorma.github.sdk.services.issues.story;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.bean.issue.ListIssueLabels;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -46,10 +49,10 @@ public interface IssueStoryService {
     void addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body GithubComment comment, Callback<GithubComment> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/labels")
-    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueLabels> issueCallback);
+    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<List<Label>> issueCallback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/labels")
-    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueLabels> issueCallback);
+    void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<Label>> issueCallback);
 
 
 }

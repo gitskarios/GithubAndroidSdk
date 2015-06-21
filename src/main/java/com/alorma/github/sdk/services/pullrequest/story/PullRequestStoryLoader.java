@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
@@ -15,6 +16,7 @@ import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
+import com.alorma.github.sdk.bean.issue.ListIssueLabels;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
@@ -84,14 +86,47 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new IssueCommentsCallback(issueInfo, issueStoryService).execute();
+            new LabelsCallback(issueInfo, issueStoryService).execute();
         }
 
         @Override
         protected void response(PullRequest pullRequest) {
             pullRequestStory.pullRequest = pullRequest;
+            pullRequestStory.pullRequest.labels = new ArrayList<>();
         }
 
+    }
+
+    private class LabelsCallback extends BaseInfiniteCallback<List<Label>> {
+
+        private final IssueInfo info;
+        private final IssueStoryService issueStoryService;
+
+        public LabelsCallback(IssueInfo info, IssueStoryService issueStoryService) {
+            this.info = info;
+            this.issueStoryService = issueStoryService;
+        }
+
+
+        @Override
+        public void execute() {
+            issueStoryService.labels(info.repoInfo.owner, info.repoInfo.name, info.num, this);
+        }
+
+        @Override
+        protected void executePaginated(int nextPage) {
+            issueStoryService.labels(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
+        }
+
+        @Override
+        protected void executeNext() {
+            new IssueCommentsCallback(issueInfo, issueStoryService).execute();
+        }
+
+        @Override
+        protected void response(List<Label> issueLabels) {
+            pullRequestStory.pullRequest.labels.addAll(issueLabels);
+        }
     }
 
     @Override
