@@ -16,7 +16,6 @@ import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
-import com.alorma.github.sdk.bean.issue.ListIssueLabels;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
