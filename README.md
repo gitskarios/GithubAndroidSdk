@@ -1,6 +1,24 @@
 #GithubAndroidSdk
 
+## USAGE
 
+In order to use this sdk, you must enable three metadata keys in your `AndroidManifest.xml`
+
+```
+<meta-data
+    android:name="com.alorma.github.sdk.client"
+    android:value="@string/gh_client_id"/>
+
+<meta-data
+    android:name="com.alorma.github.sdk.secret"
+    android:value="@string/gh_client_secret"/>
+
+<meta-data
+    android:name="com.alorma.github.sdk.oauth"
+    android:value="@string/gh_client_callback"/>
+```
+
+In Gitskarios, this keys are hidden from repository, so you should create your own string files, or place it directly in `value`
 
 ##LICENSE
 
