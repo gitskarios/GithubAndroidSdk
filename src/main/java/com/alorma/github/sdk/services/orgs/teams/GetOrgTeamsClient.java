@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.ListTeams;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.gitskarios.basesdk.client.StoreCredentials;
 
 import retrofit.RestAdapter;
 

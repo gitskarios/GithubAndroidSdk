@@ -3,9 +3,9 @@ package com.alorma.github.sdk.services.content;
 import android.content.Context;
 import android.os.Handler;
 
+import com.alorma.github.basesdk.client.StoreCredentials;
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
 import com.alorma.github.sdk.security.GitHub;
-import com.alorma.gitskarios.basesdk.client.StoreCredentials;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import org.apache.http.HttpResponse;
@@ -67,8 +67,6 @@ public class GetMarkdownClient implements Callback<String>, Client {
 
     @Override
     public Response execute(Request request) throws IOException {
-
-
 		StoreCredentials storeCredentials = new StoreCredentials(context);
 		
         HttpClient httpclient = new DefaultHttpClient();

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.gitskarios.basesdk.client.BaseClient;
 
 import retrofit.RestAdapter;
 

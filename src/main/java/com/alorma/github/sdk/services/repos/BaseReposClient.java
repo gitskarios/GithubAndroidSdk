@@ -5,7 +5,6 @@ import android.content.Context;
 import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.dto.response.ListRepos;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.gitskarios.basesdk.client.BaseClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
 
 import retrofit.RestAdapter;

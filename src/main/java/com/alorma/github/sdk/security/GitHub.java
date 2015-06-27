@@ -6,10 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.alorma.github.sdk.BuildConfig;
-import com.alorma.gitskarios.basesdk.ApiClient;
-
-import java.util.Collection;
+import com.alorma.github.basesdk.ApiClient;
 
 /**
  * Created by Bernat on 08/07/2014.

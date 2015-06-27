@@ -5,7 +5,6 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.RequestTokenDTO;
 import com.alorma.github.sdk.bean.dto.response.Token;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.gitskarios.basesdk.ApiClient;
 
 import retrofit.RestAdapter;
 
