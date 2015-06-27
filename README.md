@@ -2,6 +2,24 @@
 
 ## USAGE
 
+Add repository url in yout rop-level `build.gradle`
+
+``` groovy
+maven {
+    url  "http://dl.bintray.com/alorma/maven"
+}
+```
+
+Add dependency in your project `build.gradle`
+
+``` groovy
+
+
+    compile 'com.github.alorma:github-sdk:1.0.1'
+```
+
+## FORK
+
 In order to use this sdk, you must enable three metadata keys in your `AndroidManifest.xml`
 
 ```
