@@ -30,5 +30,5 @@ dependencies {
     compile 'net.danlew:android.joda:2.6.0'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.4.Final'
 
-    compile 'com.github.Meisolsson:BaseSDK:a81d3e4934'
+    compile project(':sdks:BaseSDK')
 }
