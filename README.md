@@ -4,7 +4,28 @@
 
 ## USAGE
 
-Add repository url in yout rop-level `build.gradle`
+You should be using `jCenter()` as a repository for your libraries, if not, add this to your main `build.gradle`:
+
+``` groovy
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+    classpath 'com.android.tools.build:gradle:1.2.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+```
+
+Or add repository url in your top-level `build.gradle`
 
 ``` groovy
 maven {
