@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.login;
 
 import android.content.Context;
 
+import com.alorma.github.basesdk.client.credentials.GithubDeveloperCredentials;
 import com.alorma.github.sdk.bean.dto.request.RequestTokenDTO;
 import com.alorma.github.sdk.bean.dto.response.Token;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -41,9 +42,9 @@ public class RequestTokenClient extends GithubClient<Token> {
 
 
         RequestTokenDTO tokenDTO = new RequestTokenDTO();
-        tokenDTO.client_id = getClient().getApiClient();
-        tokenDTO.client_secret = getClient().getAPiSecret();
-        tokenDTO.redirect_uri = getClient().getApiOauth();
+        tokenDTO.client_id = GithubDeveloperCredentials.getInstance().getProvider().getApiClient();
+        tokenDTO.client_secret = GithubDeveloperCredentials.getInstance().getProvider().getAPiSecret();
+        tokenDTO.redirect_uri = GithubDeveloperCredentials.getInstance().getProvider().getApiOauth();
         tokenDTO.code = code;
 
         loginService.requestToken(tokenDTO, this);

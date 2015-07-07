@@ -43,7 +43,7 @@ public class GetMarkdownClient implements Callback<String>, Client {
 
     public void execute() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(new GitHub(context).getApiEndpoint())
+                .setEndpoint(new GitHub().getApiEndpoint())
                 .setLogLevel(RestAdapter.LogLevel.HEADERS)
                 .setClient(this)
                 .build();

@@ -21,7 +21,7 @@ import retrofit.client.Response;
 public abstract class GithubClient<K>  extends BaseClient<K> {
 
 	public GithubClient(Context context) {
-		super(context, new GitHub(context));
+		super(context, new GitHub());
 	}
 
 	@Override
