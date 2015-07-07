@@ -11,13 +11,13 @@ import com.alorma.github.basesdk.client.GithubDeveloperCredentialsProvider;
 /**
  * Created by Bernat on 07/07/2015.
  */
-public class MetaDataProvider implements GithubDeveloperCredentialsProvider {
+public class MetaDeveloperCredentialsProvider implements GithubDeveloperCredentialsProvider {
 
     private String apiClient;
     private String apiSecret;
     private String apiOauth;
 
-    public MetaDataProvider(Context context) {
+    public MetaDeveloperCredentialsProvider(Context context) {
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
