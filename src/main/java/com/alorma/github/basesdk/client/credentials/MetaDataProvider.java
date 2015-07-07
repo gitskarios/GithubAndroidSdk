@@ -13,17 +13,17 @@ import com.alorma.github.basesdk.client.GithubDeveloperCredentialsProvider;
  */
 public class MetaDataProvider implements GithubDeveloperCredentialsProvider {
 
-    private String API_CLIENT;
-    private String API_SECRET;
-    private String API_OAUTH;
+    private String apiClient;
+    private String apiSecret;
+    private String apiOauth;
 
     public MetaDataProvider(Context context) {
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
-            API_CLIENT = bundle.getString("com.alorma.github.sdk.client");
-            API_SECRET = bundle.getString("com.alorma.github.sdk.secret");
-            API_OAUTH = bundle.getString("com.alorma.github.sdk.oauth");
+            apiClient = bundle.getString("com.alorma.github.sdk.client");
+            apiSecret = bundle.getString("com.alorma.github.sdk.secret");
+            apiOauth = bundle.getString("com.alorma.github.sdk.oauth");
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("GitHubSdk", "Failed to load meta-data, NameNotFound: " + e.getMessage());
         } catch (NullPointerException e) {
@@ -33,17 +33,17 @@ public class MetaDataProvider implements GithubDeveloperCredentialsProvider {
 
     @Override
     public String getApiClient() {
-        return API_CLIENT;
+        return apiClient;
     }
 
     @Override
     public String getAPiSecret() {
-        return API_SECRET;
+        return apiSecret;
     }
 
     @Override
     public String getApiOauth() {
-        return API_OAUTH;
+        return apiOauth;
     }
 
 }
