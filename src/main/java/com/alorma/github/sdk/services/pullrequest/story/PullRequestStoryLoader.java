@@ -130,7 +130,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
     @Override
     public String getAcceptHeader() {
-        return "application/vnd.github.v3.html+json";
+        return "application/vnd.github.v3.full+json";
     }
 
     private void parseIssueStoryDetails() {
