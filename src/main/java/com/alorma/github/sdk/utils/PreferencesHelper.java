@@ -33,6 +33,14 @@ public class PreferencesHelper {
 		return preferences.getInt(key, defaultValue);
 	}
 
+	protected void saveBooleanSetting(String key, boolean value) {
+		editor.putBoolean(key, value).apply();
+	}
+
+	protected boolean getBooleanSetting(String key, boolean defaultValue) {
+		return preferences.getBoolean(key, defaultValue);
+	}
+
 	public void registerListener(SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
 		preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 	}
