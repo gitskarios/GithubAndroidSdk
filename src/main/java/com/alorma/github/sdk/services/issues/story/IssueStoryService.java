@@ -4,7 +4,6 @@ import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
-import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 
@@ -30,10 +29,10 @@ public interface IssueStoryService {
     void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<Issue> issueCallback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueComments> callback);
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<List<GithubComment>> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<GithubComment>> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/events")
     void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueEvents> callback);

@@ -1,12 +1,14 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.util.List;
+
 public class Commit extends ShaUrl{
 
 	private static final int MAX_COMMIT_LENGHT = 80;
 
     public Commit commit;
     public User author;
-    public ListShaUrl parents;
+    public List<ShaUrl> parents;
 	public GitChangeStatus stats;
     public User committer;
 	public String message;

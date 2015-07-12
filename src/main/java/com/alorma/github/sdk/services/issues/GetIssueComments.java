@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.issues;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
+import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 23/08/2014.
  */
-public class GetIssueComments extends GithubIssuesClient<ListIssueComments> {
+public class GetIssueComments extends GithubIssuesClient<List<GithubComment>> {
 
 	public GetIssueComments(Context context, IssueInfo issueInfo, int page) {
 		super(context, issueInfo, page);

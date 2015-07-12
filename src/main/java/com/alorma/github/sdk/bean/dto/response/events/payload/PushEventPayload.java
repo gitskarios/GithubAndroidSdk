@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.bean.dto.response.events.payload;
 
-import com.alorma.github.sdk.bean.dto.response.ListCommit;
+import com.alorma.github.sdk.bean.dto.response.Commit;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 03/10/2014.
@@ -12,5 +14,5 @@ public class PushEventPayload extends GithubEventPayload{
 	public String ref;
 	public String head;
 	public String before;
-	public ListCommit commits;
+	public List<Commit> commits;
 }

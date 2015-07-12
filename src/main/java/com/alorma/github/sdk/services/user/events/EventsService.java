@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.services.user.events;
 
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
-import com.alorma.github.sdk.bean.dto.response.ListEvents;
 
 import java.util.List;
 

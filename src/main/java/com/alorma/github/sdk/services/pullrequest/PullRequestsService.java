@@ -3,9 +3,6 @@ package com.alorma.github.sdk.services.pullrequest;
 import com.alorma.github.sdk.bean.dto.request.MergeButtonRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitFile;
-import com.alorma.github.sdk.bean.dto.response.ListEvents;
-import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
-import com.alorma.github.sdk.bean.dto.response.ListIssues;
 import com.alorma.github.sdk.bean.dto.response.MergeButtonResponse;
 
 import java.util.List;

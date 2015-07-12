@@ -2,7 +2,6 @@ package com.alorma.github.sdk.services.commit;
 
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
-import com.alorma.github.sdk.bean.dto.response.ListCommit;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import retrofit.http.Query;
 public interface CommitsService {
 
 	@GET("/repos/{owner}/{name}/commits")
-	void commits(@Path("owner") String owner, @Path("name") String repo, Callback<ListCommit> callback);
+	void commits(@Path("owner") String owner, @Path("name") String repo, Callback<List<Commit>> callback);
 
 	@GET("/repos/{owner}/{name}/commits/{sha}")
 	void singleCommit(@Path("owner") String owner, @Path("name") String repo, @Path("sha") String sha, Callback<Commit> callback);
@@ -29,12 +28,12 @@ public interface CommitsService {
 	void singleCommitComments(@Path("owner") String owner, @Path("name") String repo, @Path("sha") String sha, @Query("page") int page, Callback<List<CommitComment>> callback);
 
 	@GET("/repos/{owner}/{name}/commits")
-	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<ListCommit> callback);
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Commit>> callback);
 
 	@GET("/repos/{owner}/{name}/commits")
-	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("sha") String sha, Callback<ListCommit> callback);
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("sha") String sha, Callback<List<Commit>> callback);
 
 	@GET("/repos/{owner}/{name}/commits")
-	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, @Query("sha") String sha, Callback<ListCommit> callback);
+	void commits(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, @Query("sha") String sha, Callback<List<Commit>> callback);
 
 }

@@ -1,8 +1,9 @@
 package com.alorma.github.sdk.services.user;
 
-import com.alorma.github.sdk.bean.dto.response.ListEmails;
-import com.alorma.github.sdk.bean.dto.response.ListUsers;
+import com.alorma.github.sdk.bean.dto.response.Email;
 import com.alorma.github.sdk.bean.dto.response.User;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.DELETE;
@@ -20,33 +21,33 @@ public interface UsersService {
 	void getSingleUser(@Path("user") String user, Callback<User> callback);
 
 	@GET("/user/emails")
-	void userEmails(Callback<ListEmails> callback);
+	void userEmails(Callback<List<Email>> callback);
 
 	// Followers
 	@GET("/user/followers")
-	void followers(Callback<ListUsers> callback);
+	void followers(Callback<List<User>> callback);
 
 	@GET("/users/{username}/followers")
-	void followers(@Path("username") String username, Callback<ListUsers> callback);
+	void followers(@Path("username") String username, Callback<List<User>> callback);
 
 	@GET("/user/followers")
-	void followers(@Query("page") int page, Callback<ListUsers> callback);
+	void followers(@Query("page") int page, Callback<List<User>> callback);
 
 	@GET("/users/{username}/followers")
-	void followers(@Path("username") String username, @Query("page") int page, Callback<ListUsers> callback);
+	void followers(@Path("username") String username, @Query("page") int page, Callback<List<User>> callback);
 
 	// Following
 	@GET("/user/following")
-	void following(Callback<ListUsers> callback);
+	void following(Callback<List<User>> callback);
 
 	@GET("/users/{username}/following")
-	void following(@Path("username") String username, Callback<ListUsers> callback);
+	void following(@Path("username") String username, Callback<List<User>> callback);
 
 	@GET("/user/following")
-	void following(@Query("page") int page, Callback<ListUsers> callback);
+	void following(@Query("page") int page, Callback<List<User>> callback);
 
 	@GET("/users/{username}/following")
-	void following(@Path("username") String username, @Query("page") int page, Callback<ListUsers> callback);
+	void following(@Path("username") String username, @Query("page") int page, Callback<List<User>> callback);
 
 	@GET("/user")
 	void me(Callback<User> userCallback);
@@ -66,8 +67,8 @@ public interface UsersService {
 	//ORGS MEMBERS
 
 	@GET("/orgs/{org}/members")
-	void orgMembers(@Path("org") String org, Callback<ListUsers> callback);
+	void orgMembers(@Path("org") String org, Callback<List<User>> callback);
 
 	@GET("/orgs/{org}/members")
-	void orgMembers(@Path("org") String org, @Query("page") int page, Callback<ListUsers> callback);
+	void orgMembers(@Path("org") String org, @Query("page") int page, Callback<List<User>> callback);
 }

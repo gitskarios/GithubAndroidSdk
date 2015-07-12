@@ -2,8 +2,11 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListIssues;
+import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.search.IssuesSearch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -12,7 +15,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 08/08/2014.
  */
-public class IssuesSearchClient extends GithubSearchClient<ListIssues> {
+public class IssuesSearchClient extends GithubSearchClient<List<Issue>> {
 
     public IssuesSearchClient(Context context, String query) {
         super(context, query);
@@ -36,7 +39,7 @@ public class IssuesSearchClient extends GithubSearchClient<ListIssues> {
         @Override
         public void success(IssuesSearch issuesSearch, Response response) {
             if (getOnResultCallback() != null) {
-                getOnResultCallback().onResponseOk(new ListIssues(issuesSearch.items), response);
+                getOnResultCallback().onResponseOk(new ArrayList<Issue>(issuesSearch.items), response);
             }
         }
 
