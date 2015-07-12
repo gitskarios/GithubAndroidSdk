@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.issues;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListIssues;
+import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 22/08/2014.
  */
-public class GetIssuesClient extends GithubIssuesClient<ListIssues> {
+public class GetIssuesClient extends GithubIssuesClient<List<Issue>> {
 
 	public GetIssuesClient(Context context, IssueInfo issueInfo) {
 		super(context, issueInfo);

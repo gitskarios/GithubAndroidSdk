@@ -3,12 +3,10 @@ package com.alorma.github.sdk.services.issues;
 import com.alorma.github.sdk.bean.dto.request.CreateMilestoneRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
-import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
+import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.Label;
-import com.alorma.github.sdk.bean.dto.response.ListEvents;
-import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
-import com.alorma.github.sdk.bean.dto.response.ListIssues;
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 
 import java.util.List;
@@ -27,10 +25,10 @@ import retrofit.http.Query;
 public interface IssuesService {
 
     @GET("/repos/{owner}/{name}/issues?sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<ListIssues> callback);
+    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<List<Issue>> callback);
 
     @GET("/repos/{owner}/{name}/issues?sort=updated")
-    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page, Callback<ListIssues> callback);
+    void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page, Callback<List<Issue>> callback);
 
     @POST("/repos/{owner}/{name}/issues")
     void create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue, Callback<Issue> callback);
@@ -39,16 +37,16 @@ public interface IssuesService {
     void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<Issue> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueComments> callback);
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<List<GithubComment>> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/comments")
-    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueComments> callback);
+    void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<GithubComment>> callback);
 
 	@GET("/repos/{owner}/{name}/issues/{num}/events")
-	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num,Callback<ListEvents> callback);
+	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num,Callback<List<GithubEvent>> callback);
 
 	@GET("/repos/{owner}/{name}/issues/{num}/events")
-	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListEvents> callback);
+	void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<GithubEvent>> callback);
 
 	@PATCH("/repos/{owner}/{name}/issues/{num}")
 	void closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);

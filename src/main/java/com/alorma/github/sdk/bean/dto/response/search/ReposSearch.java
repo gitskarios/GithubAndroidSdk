@@ -1,9 +1,6 @@
 package com.alorma.github.sdk.bean.dto.response.search;
 
 import com.alorma.github.sdk.bean.dto.response.ListRepos;
-import com.alorma.github.sdk.bean.dto.response.Repo;
-
-import java.util.List;
 
 /**
  * Created by Bernat on 08/08/2014.

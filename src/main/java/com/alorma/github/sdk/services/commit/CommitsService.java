@@ -7,7 +7,6 @@ import com.alorma.github.sdk.bean.dto.response.ListCommit;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;

@@ -7,7 +7,6 @@ import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
-import com.alorma.github.sdk.bean.issue.ListIssueLabels;
 
 import java.util.List;
 
