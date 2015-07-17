@@ -8,6 +8,7 @@ import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
+import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
@@ -16,6 +17,7 @@ import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryCommit;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
+import com.alorma.github.sdk.bean.issue.IssueStoryReviewComment;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -227,7 +229,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new PullCommitsCallbacks(info, pullRequestsService).execute();
+            new IssueReviewCommentsCallbacks(info, pullRequestsService).execute();
         }
 
         @Override
@@ -249,6 +251,45 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             return !(event.equals("mentioned") ||
                     event.equals("subscribed") ||
                     event.equals("unsubscribed"));
+        }
+    }
+
+    private class IssueReviewCommentsCallbacks extends BaseInfiniteCallback<List<ReviewComment>> {
+
+        private IssueInfo info;
+        private PullRequestsService pullRequestsService;
+
+        public IssueReviewCommentsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
+            this.info = info;
+            this.pullRequestsService = pullRequestsService;
+        }
+
+        @Override
+        public void execute() {
+            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
+        }
+
+        @Override
+        protected void executePaginated(int nextPage) {
+            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
+        }
+
+        @Override
+        protected void executeNext() {
+            new PullCommitsCallbacks(info, pullRequestsService).execute();
+        }
+
+        @Override
+        protected void response(List<ReviewComment> reviewComments) {
+            for (ReviewComment reviewComment : reviewComments) {
+                long time = getMilisFromDate(reviewComment.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueStoryReviewComment(reviewComment));
+            }
         }
     }
 

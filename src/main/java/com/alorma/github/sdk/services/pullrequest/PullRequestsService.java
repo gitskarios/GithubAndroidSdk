@@ -4,6 +4,9 @@ import com.alorma.github.sdk.bean.dto.request.MergeButtonRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitFile;
 import com.alorma.github.sdk.bean.dto.response.MergeButtonResponse;
+import com.alorma.github.sdk.bean.dto.response.ReviewComment;
+import com.alorma.github.sdk.bean.issue.IssueEvent;
+import com.alorma.github.sdk.services.pullrequest.story.PullRequestStoryLoader;
 
 import java.util.List;
 
@@ -33,4 +36,10 @@ public interface PullRequestsService {
 
     @PUT("/repos/{owner}/{repo}/pulls/{number}/merge")
     void merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest, Callback<MergeButtonResponse> callback);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
+    void reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, Callback<List<ReviewComment>> callback);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
+    void reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page, Callback<List<ReviewComment>> callback);
 }
