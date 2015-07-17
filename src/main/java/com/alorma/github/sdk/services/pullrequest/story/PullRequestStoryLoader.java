@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.alorma.github.sdk.PullRequest;
+import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.info.IssueInfo;
@@ -12,12 +13,14 @@ import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
+import com.alorma.github.sdk.bean.issue.IssueStoryCommit;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
+import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -53,23 +56,26 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     protected void executeService(RestAdapter adapter) {
         PullRequestStoryService pullRequestStoryService = adapter.create(PullRequestStoryService.class);
         IssueStoryService issueStoryService = adapter.create(IssueStoryService.class);
+        PullRequestsService pullRequestsService = adapter.create(PullRequestsService.class);
 
         pullRequestStory = new PullRequestStory();
         storyDetailMap = new HashMap<>();
 
-        new PullRequestCallback(issueInfo, pullRequestStoryService, issueStoryService).execute();
+        new PullRequestCallback(issueInfo, pullRequestStoryService, issueStoryService, pullRequestsService).execute();
     }
 
     private class PullRequestCallback extends BaseInfiniteCallback<PullRequest> {
 
         private final IssueInfo info;
         private final PullRequestStoryService pullRequestStoryService;
-        private IssueStoryService issueStoryService;
+        private final IssueStoryService issueStoryService;
+        private final PullRequestsService pullRequestsService;
 
-        public PullRequestCallback(IssueInfo info, PullRequestStoryService pullRequestStoryService, IssueStoryService issueStoryService) {
+        public PullRequestCallback(IssueInfo info, PullRequestStoryService pullRequestStoryService, IssueStoryService issueStoryService, PullRequestsService pullRequestsService) {
             this.info = info;
             this.pullRequestStoryService = pullRequestStoryService;
             this.issueStoryService = issueStoryService;
+            this.pullRequestsService = pullRequestsService;
         }
 
         @Override
@@ -84,7 +90,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new LabelsCallback(issueInfo, issueStoryService).execute();
+            new LabelsCallback(issueInfo, issueStoryService, pullRequestsService).execute();
         }
 
         @Override
@@ -99,10 +105,12 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         private final IssueInfo info;
         private final IssueStoryService issueStoryService;
+        private final PullRequestsService pullRequestsService;
 
-        public LabelsCallback(IssueInfo info, IssueStoryService issueStoryService) {
+        public LabelsCallback(IssueInfo info, IssueStoryService issueStoryService, PullRequestsService pullRequestsService) {
             this.info = info;
             this.issueStoryService = issueStoryService;
+            this.pullRequestsService = pullRequestsService;
         }
 
 
@@ -118,7 +126,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new IssueCommentsCallback(issueInfo, issueStoryService).execute();
+            new IssueCommentsCallback(issueInfo, issueStoryService, pullRequestsService).execute();
         }
 
         @Override
@@ -157,10 +165,12 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         private final IssueInfo info;
         private final IssueStoryService issueStoryService;
+        private final PullRequestsService pullRequestsService;
 
-        public IssueCommentsCallback(IssueInfo info, IssueStoryService issueStoryService) {
+        public IssueCommentsCallback(IssueInfo info, IssueStoryService issueStoryService, PullRequestsService pullRequestsService) {
             this.info = info;
             this.issueStoryService = issueStoryService;
+            this.pullRequestsService = pullRequestsService;
         }
 
 
@@ -176,7 +186,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new IssueEventsCallbacks(info, issueStoryService).execute();
+            new IssueEventsCallbacks(info, issueStoryService, pullRequestsService).execute();
         }
 
         @Override
@@ -193,14 +203,16 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         }
     }
 
-    private class IssueEventsCallbacks extends BaseInfiniteCallback<ListIssueEvents> {
+    private class IssueEventsCallbacks extends BaseInfiniteCallback<List<IssueEvent>> {
 
         private IssueInfo info;
         private IssueStoryService issueStoryService;
+        private PullRequestsService pullRequestsService;
 
-        public IssueEventsCallbacks(IssueInfo info, IssueStoryService issueStoryService) {
+        public IssueEventsCallbacks(IssueInfo info, IssueStoryService issueStoryService, PullRequestsService pullRequestsService) {
             this.info = info;
             this.issueStoryService = issueStoryService;
+            this.pullRequestsService = pullRequestsService;
         }
 
         @Override
@@ -215,11 +227,11 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            parseIssueStoryDetails();
+            new PullCommitsCallbacks(info, pullRequestsService).execute();
         }
 
         @Override
-        protected void response(ListIssueEvents issueEvents) {
+        protected void response(List<IssueEvent> issueEvents) {
             for (IssueEvent event : issueEvents) {
                 if (validEvent(event.event)) {
                     long time = getMilisFromDate(event.created_at);
@@ -240,65 +252,48 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         }
     }
 
-    private abstract class BaseCallback<T> implements Callback<T> {
+    private class PullCommitsCallbacks extends BaseInfiniteCallback<List<Commit>> {
 
-        public IssueInfo info;
-        public IssueStoryService issueStoryService;
+        private IssueInfo info;
+        private PullRequestsService pullRequestsService;
 
-        public BaseCallback(IssueInfo info, IssueStoryService issueStoryService) {
+        public PullCommitsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
             this.info = info;
-            this.issueStoryService = issueStoryService;
+            this.pullRequestsService = pullRequestsService;
         }
 
         @Override
-        public void success(T t, Response response) {
-            int nextPage = getLinkData(response);
-            response(t);
-            if (nextPage != -1) {
-                executePaginated(nextPage);
-            } else {
-                executeNext();
-            }
+        public void execute() {
+            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, this);
         }
 
-        protected abstract void executePaginated(int nextPage);
+        @Override
+        protected void executePaginated(int nextPage) {
+            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
+        }
 
-        protected abstract void executeNext();
+        @Override
+        protected void executeNext() {
+            parseIssueStoryDetails();
+        }
 
-        protected abstract void response(T t);
-
-        private int getLinkData(Response r) {
-            List<Header> headers = r.getHeaders();
-            Map<String, String> headersMap = new HashMap<String, String>(headers.size());
-            for (Header header : headers) {
-                headersMap.put(header.getName(), header.getValue());
-            }
-
-            String link = headersMap.get("Link");
-
-            if (link != null) {
-                String[] parts = link.split(",");
-                try {
-                    PaginationLink bottomPaginationLink = new PaginationLink(parts[0]);
-                    if (bottomPaginationLink.rel == RelType.next) {
-                        return bottomPaginationLink.page;
+        @Override
+        protected void response(List<Commit> commits) {
+            for (Commit commit : commits) {
+                if (commit.committer != null) {
+                    String date = commit.commit.committer.date;
+                    if (date != null) {
+                        long time = getMilisFromDate(date);
+                        List<IssueStoryDetail> commitsDetails = storyDetailMap.get(time);
+                        if (commitsDetails == null) {
+                            commitsDetails = new ArrayList<>();
+                            storyDetailMap.put(time, commitsDetails);
+                        }
+                        commitsDetails.add(new IssueStoryCommit(commit));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
-            return -1;
         }
-
-        public abstract void execute();
-
-        @Override
-        public void failure(RetrofitError error) {
-            if (getOnResultCallback() != null) {
-                getOnResultCallback().onFail(error);
-            }
-        }
-
     }
 
     private long getMilisFromDate(String createdAt) {

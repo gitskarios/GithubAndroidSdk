@@ -151,7 +151,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         }
     }
 
-    private class IssueEventsCallbacks extends BaseInfiniteCallback<ListIssueEvents> {
+    private class IssueEventsCallbacks extends BaseInfiniteCallback<List<IssueEvent>> {
 
         private IssueInfo info;
         private IssueStoryService issueStoryService;
@@ -177,7 +177,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         }
 
         @Override
-        protected void response(ListIssueEvents issueEvents) {
+        protected void response(List<IssueEvent> issueEvents) {
             for (IssueEvent event : issueEvents) {
                 if (validEvent(event.event)) {
                     long time = getMilisFromDate(event.created_at);
