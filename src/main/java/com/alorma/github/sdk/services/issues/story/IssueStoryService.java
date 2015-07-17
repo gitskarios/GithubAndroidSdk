@@ -4,6 +4,7 @@ import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
+import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 
@@ -35,10 +36,10 @@ public interface IssueStoryService {
     void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<GithubComment>> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/events")
-    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<ListIssueEvents> callback);
+    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<List<IssueEvent>> callback);
 
     @GET("/repos/{owner}/{name}/issues/{num}/events")
-    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<ListIssueEvents> callback);
+    void events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<IssueEvent>> callback);
 
     @PATCH("/repos/{owner}/{name}/issues/{num}")
     void closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest, Callback<Issue> callback);
