@@ -1,12 +1,14 @@
 package com.alorma.github.sdk.services.repo;
 
-import com.alorma.github.sdk.bean.dto.response.ListBranches;
+import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import java.util.List;
+
 import retrofit.client.Response;
 
-public abstract class BranchesCallback implements GithubClient.OnResultCallback<ListBranches> {
+public abstract class BranchesCallback implements GithubClient.OnResultCallback<List<Branch>> {
 
 	private RepoInfo repoInfo;
 
@@ -15,7 +17,7 @@ public abstract class BranchesCallback implements GithubClient.OnResultCallback<
 	}
 
 	@Override
-	public void onResponseOk(ListBranches branches, Response r) {
+	public void onResponseOk(List<Branch> branches, Response r) {
 		if (branches != null) {
 			String[] names = new String[branches.size()];
 			int selectedIndex = 0;

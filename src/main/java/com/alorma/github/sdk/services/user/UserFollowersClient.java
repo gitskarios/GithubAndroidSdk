@@ -2,12 +2,14 @@ package com.alorma.github.sdk.services.user;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListUsers;
+import com.alorma.github.sdk.bean.dto.response.User;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 14/07/2014.
  */
-public class UserFollowersClient extends GithubUsersClient<ListUsers> {
+public class UserFollowersClient extends GithubUsersClient<List<User>> {
 
     private String username;
     private int page = 0;

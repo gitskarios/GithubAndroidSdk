@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListUsers;
+import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetRepoCollaboratorsClient extends GithubRepoClient<ListUsers> {
+public class GetRepoCollaboratorsClient extends GithubRepoClient<List<User>> {
 
     private int page = 0;
 

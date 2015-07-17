@@ -2,8 +2,10 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListRepos;
+import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.search.ReposSearch;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -12,7 +14,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 08/08/2014.
  */
-public class RepoSearchClient extends GithubSearchClient<ListRepos> {
+public class RepoSearchClient extends GithubSearchClient<List<Repo>> {
 
 	public RepoSearchClient(Context context, String query) {
 		super(context, query);
@@ -34,9 +36,9 @@ public class RepoSearchClient extends GithubSearchClient<ListRepos> {
 
 	public class Callbacks implements Callback<ReposSearch> {
 
-		private Callback<ListRepos> callback;
+		private Callback<List<Repo>> callback;
 
-		public Callbacks(Callback<ListRepos> callback) {
+		public Callbacks(Callback<List<Repo>> callback) {
 			this.callback = callback;
 		}
 

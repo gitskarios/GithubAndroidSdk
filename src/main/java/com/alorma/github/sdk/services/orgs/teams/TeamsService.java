@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.services.orgs.teams;
 
-import com.alorma.github.sdk.bean.dto.response.ListTeams;
+import com.alorma.github.sdk.bean.dto.response.Team;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -13,8 +15,8 @@ import retrofit.http.Query;
 public interface TeamsService {
 
 	@GET("/orgs/{org}/teams")
-	void teams(@Path("org") String org, Callback<ListTeams> callback);
+	void teams(@Path("org") String org, Callback<List<Team>> callback);
 
 	@GET("/orgs/{org}/teams")
-	void teams(@Path("org") String org, @Query("page") int page, Callback<ListTeams> callback);
+	void teams(@Path("org") String org, @Query("page") int page, Callback<List<Team>> callback);
 }

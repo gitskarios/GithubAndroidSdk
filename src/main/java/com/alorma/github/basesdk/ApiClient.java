@@ -5,9 +5,6 @@ package com.alorma.github.basesdk;
  */
 public interface ApiClient {
 
-    String getApiClient();
-    String getAPiSecret();
-    String getApiOauth();
     String getApiOauthUrlEndpoint();
     String getApiEndpoint();
     String getType();

@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.bean.dto.response;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
@@ -14,7 +15,7 @@ public class Content extends ShaUrl implements Comparable<Content> {
 	public String git_url;
 	public Links _links;
 	public String encoding;
-	public ListContents children;
+	public List<Content> children;
 	public Content parent;
 
 	public boolean isDir() {

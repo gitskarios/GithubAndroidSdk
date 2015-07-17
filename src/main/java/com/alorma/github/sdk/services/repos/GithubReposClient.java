@@ -3,16 +3,18 @@ package com.alorma.github.sdk.services.repos;
 import android.content.Context;
 
 import com.alorma.github.sdk.R;
-import com.alorma.github.sdk.bean.dto.response.ListRepos;
+import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
+
+import java.util.List;
 
 import retrofit.RestAdapter;
 
 /**
  * Created by Bernat on 13/07/2014.
  */
-public abstract class GithubReposClient extends GithubClient<ListRepos> {
+public abstract class GithubReposClient extends GithubClient<List<Repo>> {
     private String username;
     private int page;
 

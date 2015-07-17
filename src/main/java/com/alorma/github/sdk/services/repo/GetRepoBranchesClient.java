@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListBranches;
+import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetRepoBranchesClient extends GithubRepoClient<ListBranches> {
+public class GetRepoBranchesClient extends GithubRepoClient<List<Branch>> {
 
 	public GetRepoBranchesClient(Context context, RepoInfo repoInfo) {
 		super(context, repoInfo);

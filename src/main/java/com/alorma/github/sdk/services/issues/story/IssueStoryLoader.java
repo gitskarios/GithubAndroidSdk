@@ -6,7 +6,6 @@ import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
-import com.alorma.github.sdk.bean.dto.response.ListIssueComments;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
@@ -112,7 +111,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     }
 
-    private class IssueCommentsCallback extends BaseInfiniteCallback<ListIssueComments> {
+    private class IssueCommentsCallback extends BaseInfiniteCallback<List<GithubComment>> {
 
         private final IssueInfo info;
         private final IssueStoryService issueStoryService;
@@ -139,7 +138,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         }
 
         @Override
-        protected void response(ListIssueComments issueComments) {
+        protected void response(List<GithubComment> issueComments) {
             for (GithubComment comment : issueComments) {
                 long time = getMilisFromDate(comment.created_at);
                 List<IssueStoryDetail> details = storyDetailMap.get(time);
@@ -275,6 +274,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     @Override
     public String getAcceptHeader() {
-        return "application/vnd.github.v3.html+json";
+        return "application/vnd.github.v3.full+json";
     }
 }

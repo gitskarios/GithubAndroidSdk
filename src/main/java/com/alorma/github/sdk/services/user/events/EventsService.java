@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.services.user.events;
 
-import com.alorma.github.sdk.bean.dto.response.ListEvents;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -13,9 +15,9 @@ import retrofit.http.Query;
 public interface EventsService {
 
 	@GET("/users/{username}/received_events")
-	void events(@Path("username") String username, Callback<ListEvents> eventsCallback);
+	void events(@Path("username") String username, Callback<List<GithubEvent>> eventsCallback);
 
 	@GET("/users/{username}/received_events")
-	void events(@Path("username") String username, @Query("page") int page, Callback<ListEvents> eventsCallback);
+	void events(@Path("username") String username, @Query("page") int page, Callback<List<GithubEvent>> eventsCallback);
 
 }

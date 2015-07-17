@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListContributors;
+import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetRepoContributorsClient extends GithubRepoClient<ListContributors> {
+public class GetRepoContributorsClient extends GithubRepoClient<List<Contributor>> {
 
 	private int page;
 

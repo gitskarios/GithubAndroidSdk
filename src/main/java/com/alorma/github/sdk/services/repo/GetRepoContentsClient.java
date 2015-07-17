@@ -2,13 +2,15 @@ package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListContents;
+import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
+import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class GetRepoContentsClient extends GithubRepoClient<ListContents> {
+public class GetRepoContentsClient extends GithubRepoClient<List<Content>> {
 
 	private String path = null;
 

@@ -2,8 +2,10 @@ package com.alorma.github.sdk.services.search;
 
 import android.content.Context;
 
-import com.alorma.github.sdk.bean.dto.response.ListUsers;
+import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.bean.dto.response.search.UsersSearch;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -12,7 +14,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 08/08/2014.
  */
-public class UsersSearchClient extends GithubSearchClient<ListUsers> {
+public class UsersSearchClient extends GithubSearchClient<List<User>> {
 
 	public UsersSearchClient(Context context, String query) {
 		super(context, query);
@@ -34,9 +36,9 @@ public class UsersSearchClient extends GithubSearchClient<ListUsers> {
 
 	public class Callbacks implements Callback<UsersSearch> {
 
-		private Callback<ListUsers> callback;
+		private Callback<List<User>> callback;
 
-		public Callbacks(Callback<ListUsers> callback) {
+		public Callbacks(Callback<List<User>> callback) {
 			this.callback = callback;
 		}
 
