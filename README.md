@@ -2,6 +2,8 @@
 
 #GithubAndroidSdk
 
+[![Join the chat at https://gitter.im/gitskarios/GithubAndroidSdk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gitskarios/GithubAndroidSdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## USAGE
 
 You should be using `jCenter()` as a repository for your libraries, if not, add this to your main `build.gradle`:
