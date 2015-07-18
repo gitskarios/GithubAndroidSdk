@@ -59,5 +59,10 @@ public interface ReposService {
 	@GET("/users/{username}/subscriptions")
 	void userSubscribedReposList(@Path("username") String username, @Query("page") int page, @Query("sort") String sort, Callback<List<Repo>> callback);
 
-
+	// Member
+	@GET("/user/repos?type=member")
+	void userMemberRepos(Callback<List<Repo>> callback);
+	// Member
+	@GET("/user/repos?type=member")
+	void userMemberRepos(@Query("page") int page, Callback<List<Repo>> callback);
 }
