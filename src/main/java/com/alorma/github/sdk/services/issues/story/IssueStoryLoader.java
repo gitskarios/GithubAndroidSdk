@@ -189,8 +189,10 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                     unlabeledEvents.get(time).add(event.label);
                 } else {
                     IssueStoryEvent issueStoryEvent = new IssueStoryEvent(event);
-                    issueStoryEvent.created_at = time;
-                    details.add(issueStoryEvent);
+                    if (validEvent(issueStoryEvent.getType())) {
+                        issueStoryEvent.created_at = time;
+                        details.add(issueStoryEvent);
+                    }
                 }
             }
 
@@ -205,18 +207,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                 issueLabels.created_at = aLong;
                 details.add(issueLabels);
             }
-
-           /* for (IssueEvent event : issueEvents) {
-                if (validEvent(event.event)) {
-                    long time = getMilisFromDate(event.created_at);
-                    List<IssueStoryDetail> details = storyDetailMap.get(time);
-                    if (details == null) {
-                        details = new ArrayList<>();
-                        storyDetailMap.put(time, details);
-                    }
-                    details.add(new IssueStoryEvent(event));
-                }
-            }*/
 
             storyDetailMap.addAll(details);
         }
