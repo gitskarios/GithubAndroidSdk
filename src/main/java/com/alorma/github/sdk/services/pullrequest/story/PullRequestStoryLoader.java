@@ -10,15 +10,12 @@ import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.bean.info.PaginationLink;
-import com.alorma.github.sdk.bean.info.RelType;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryCommit;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryReviewComment;
-import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
@@ -34,11 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Header;
-import retrofit.client.Response;
 
 /**
  * Created by Bernat on 07/04/2015.
@@ -234,15 +227,33 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void response(List<IssueEvent> issueEvents) {
+            Map<String, List<IssueEvent>> events = new HashMap<>();
             for (IssueEvent event : issueEvents) {
                 if (validEvent(event.event)) {
-                    long time = getMilisFromDate(event.created_at);
-                    List<IssueStoryDetail> details = storyDetailMap.get(time);
-                    if (details == null) {
-                        details = new ArrayList<>();
-                        storyDetailMap.put(time, details);
+                    if (events.get(event.event) == null) {
+                        events.put(event.event, new ArrayList<IssueEvent>());
                     }
-                    details.add(new IssueStoryEvent(event));
+
+                    events.get(event.event).add(event);
+                }
+            }
+
+            Map<String, Map<Long, List<IssueEvent>>> items = new HashMap<>();
+            for (String key : events.keySet()) {
+                items.put(key, new HashMap<Long, List<IssueEvent>>());
+                List<IssueEvent> issueEvents1 = events.get(key);
+                if (issueEvents1 != null) {
+                    for (IssueEvent issueEvent : issueEvents1) {
+                        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+                        DateTime dt = formatter.parseDateTime(issueEvent.created_at);
+                        long time = dt.hourOfDay().roundFloorCopy().getMillis();
+
+                        if (items.get(key).get(time) == null) {
+                            items.get(key).put(time, new ArrayList<IssueEvent>());
+                        }
+                        items.get(key).get(time).add(issueEvent);
+                    }
                 }
             }
         }
