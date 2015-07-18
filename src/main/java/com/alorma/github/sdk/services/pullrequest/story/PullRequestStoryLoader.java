@@ -168,7 +168,6 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             this.pullRequestsService = pullRequestsService;
         }
 
-
         @Override
         public void execute() {
             issueStoryService.comments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
@@ -227,6 +226,23 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void response(List<IssueEvent> issueEvents) {
+
+            List<IssueStoryDetail> details = new ArrayList<>();
+
+            for (IssueEvent event : issueEvents) {
+                if (event.event.equals("labeled")) {
+                    String createdAt = event.created_at;
+                } else {
+                    details.add(new IssueStoryEvent(event));
+                }
+            }
+
+
+
+
+
+
+
             Map<String, List<IssueEvent>> events = new HashMap<>();
             for (IssueEvent event : issueEvents) {
                 if (validEvent(event.event)) {

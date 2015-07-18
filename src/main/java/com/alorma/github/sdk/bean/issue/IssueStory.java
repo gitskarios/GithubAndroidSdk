@@ -11,5 +11,5 @@ import java.util.List;
  */
 public class IssueStory {
     public Issue issue;
-    public List<Pair<Long, IssueStoryDetail>> details;
+    public List<IssueStoryDetail> details;
 }

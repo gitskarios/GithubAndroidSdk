@@ -2,25 +2,24 @@ package com.alorma.github.sdk.bean.issue;
 
 import com.alorma.github.sdk.bean.dto.response.User;
 
-/**
- * Created by Bernat on 07/04/2015.
- */
-public class IssueStoryEvent implements IssueStoryDetail {
-    public IssueEvent event;
-    public long created_at;
+import java.util.ArrayList;
 
-    public IssueStoryEvent(IssueEvent event) {
-        this.event = event;
-    }
+/**
+ * Created by Bernat on 18/07/2015.
+ */
+public class IssueStoryUnlabelList extends ArrayList<IssueLabel> implements IssueStoryDetail {
+
+    public long created_at;
+    public User user;
 
     @Override
     public boolean isList() {
-        return false;
+        return true;
     }
 
     @Override
     public String getType() {
-        return event.event;
+        return "unlabeled";
     }
 
     @Override
@@ -30,6 +29,6 @@ public class IssueStoryEvent implements IssueStoryDetail {
 
     @Override
     public User user() {
-        return event.actor;
+        return user;
     }
 }
