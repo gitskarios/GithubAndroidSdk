@@ -12,5 +12,5 @@ import java.util.List;
  */
 public class PullRequestStory {
     public PullRequest pullRequest;
-    public List<Pair<Long, IssueStoryDetail>> details;
+    public List<IssueStoryDetail> details;
 }
