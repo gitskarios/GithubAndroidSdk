@@ -21,7 +21,7 @@ public class PullRequestStoryCommitsList extends ArrayList<Commit> implements Is
 
     @Override
     public String getType() {
-        return "committed";
+        return "pushed";
     }
 
     @Override

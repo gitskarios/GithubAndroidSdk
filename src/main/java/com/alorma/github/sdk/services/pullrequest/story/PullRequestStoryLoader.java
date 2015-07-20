@@ -10,6 +10,7 @@ import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
+import com.alorma.github.sdk.bean.issue.PullRequestStoryCommit;
 import com.alorma.github.sdk.bean.issue.PullRequestStoryCommitsList;
 import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
@@ -294,7 +295,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
                 if (commit.committer != null) {
                     String date = commit.commit.committer.date;
                     if (date != null) {
-                        long time = getMilisFromDateClearDay(date);
+                        long time = getMilisFromDateClearHour(date);
                         PullRequestStoryCommitsList commitsDetails = commitsEvents.get(time);
                         if (commitsDetails == null) {
                             commitsDetails = new PullRequestStoryCommitsList();
@@ -308,9 +309,16 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             }
 
             for (Long aLong : commitsEvents.keySet()) {
-                PullRequestStoryCommitsList issueLabels = commitsEvents.get(aLong);
-                issueLabels.created_at = aLong;
-                details.add(issueLabels);
+                PullRequestStoryCommitsList commitsList = commitsEvents.get(aLong);
+                commitsList.created_at = aLong;
+                details.add(commitsList);
+
+                for (Commit commit : commitsList) {
+                    PullRequestStoryCommit pullRequestStoryCommit = new PullRequestStoryCommit(commit);
+                    pullRequestStoryCommit.created_at = aLong;
+                    details.add(pullRequestStoryCommit);
+                }
+                commitsList.clear();
             }
 
             storyDetailMap.addAll(details);
@@ -323,6 +331,14 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         DateTime dt = formatter.parseDateTime(createdAt);
 
         return dt.minuteOfDay().roundFloorCopy().getMillis();
+    }
+
+    private long getMilisFromDateClearHour(String createdAt) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+        DateTime dt = formatter.parseDateTime(createdAt);
+
+        return dt.hourOfDay().roundFloorCopy().getMillis();
     }
 
     @Override

@@ -6,12 +6,12 @@ import com.alorma.github.sdk.bean.dto.response.User;
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryCommit implements IssueStoryDetail {
+public class PullRequestStoryCommit implements IssueStoryDetail {
 
     public Commit commit;
     public long created_at;
 
-    public IssueStoryCommit(Commit commit) {
+    public PullRequestStoryCommit(Commit commit) {
         this.commit = commit;
     }
 
