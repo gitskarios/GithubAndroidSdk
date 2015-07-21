@@ -7,9 +7,11 @@ import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
+import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
+import com.alorma.github.sdk.bean.issue.IssueStoryReviewComment;
 import com.alorma.github.sdk.bean.issue.PullRequestStoryCommit;
 import com.alorma.github.sdk.bean.issue.PullRequestStoryCommitsList;
 import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
@@ -282,7 +284,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            parseIssueStoryDetails();
+            new IssueReviewCommentsCallbacks(issueInfo, pullRequestsService).execute();
         }
 
         @Override
@@ -325,6 +327,48 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         }
     }
 
+    private class IssueReviewCommentsCallbacks extends BaseInfiniteCallback<List<ReviewComment>> {
+
+        private IssueInfo info;
+        private PullRequestsService pullRequestsService;
+
+        public IssueReviewCommentsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
+            this.info = info;
+            this.pullRequestsService = pullRequestsService;
+        }
+
+        @Override
+        public void execute() {
+            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
+        }
+
+        @Override
+        protected void executePaginated(int nextPage) {
+            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
+        }
+
+        @Override
+        protected void executeNext() {
+            parseIssueStoryDetails();
+        }
+
+        @Override
+        protected void response(List<ReviewComment> reviewComments) {
+            List<IssueStoryDetail> details = new ArrayList<>();
+            for (ReviewComment reviewComment : reviewComments) {
+                String date = reviewComment.created_at;
+                if (date != null) {
+                    long time = getMilisFromDateClearHour(date);
+                    IssueStoryReviewComment storyReviewComment = new IssueStoryReviewComment(reviewComment);
+                    storyReviewComment.created_at = time;
+                    details.add(storyReviewComment);
+                }
+            }
+
+            storyDetailMap.addAll(details);
+        }
+    }
+
     private long getMilisFromDateClearDay(String createdAt) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -350,48 +394,4 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     public String getAcceptHeader() {
         return "application/vnd.github.v3.full+json";
     }
-
-
-/*
-
-    private class IssueReviewCommentsCallbacks extends BaseInfiniteCallback<List<ReviewComment>> {
-
-        private IssueInfo info;
-        private PullRequestsService pullRequestsService;
-
-        public IssueReviewCommentsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
-            this.info = info;
-            this.pullRequestsService = pullRequestsService;
-        }
-
-        @Override
-        public void execute() {
-            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
-
-        @Override
-        protected void executePaginated(int nextPage) {
-            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
-        }
-
-        @Override
-        protected void executeNext() {
-            new PullCommitsCallbacks(info, pullRequestsService).execute();
-        }
-
-        @Override
-        protected void response(List<ReviewComment> reviewComments) {
-            for (ReviewComment reviewComment : reviewComments) {
-                long time = getMilisFromDate(reviewComment.created_at);
-                List<IssueStoryDetail> details = storyDetailMap.get(time);
-                if (details == null) {
-                    details = new ArrayList<>();
-                    storyDetailMap.put(time, details);
-                }
-                details.add(new IssueStoryReviewComment(reviewComment));
-            }
-        }
-    }
-*/
-
 }

@@ -21,7 +21,7 @@ public class IssueStoryReviewComment implements IssueStoryDetail {
 
     @Override
     public String getType() {
-        return null;
+        return "review_comment";
     }
 
     @Override
@@ -31,6 +31,6 @@ public class IssueStoryReviewComment implements IssueStoryDetail {
 
     @Override
     public User user() {
-        return null;
+        return event.user;
     }
 }
