@@ -14,11 +14,11 @@ import retrofit.RestAdapter;
 /**
  * Created by a557114 on 25/07/2015.
  */
-public class PullRequestReviewComments extends GithubClient<List<ReviewComment>> {
+public class PullRequestReviewCommentsClient extends GithubClient<List<ReviewComment>> {
 
     private IssueInfo info;
 
-    public PullRequestReviewComments(Context context, IssueInfo info) {
+    public PullRequestReviewCommentsClient(Context context, IssueInfo info) {
         super(context);
         this.info = info;
     }
@@ -66,5 +66,10 @@ public class PullRequestReviewComments extends GithubClient<List<ReviewComment>>
         public void execute() {
             pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
         }
+    }
+
+    @Override
+    public String getAcceptHeader() {
+        return "application/vnd.github.v3.full+json";
     }
 }
