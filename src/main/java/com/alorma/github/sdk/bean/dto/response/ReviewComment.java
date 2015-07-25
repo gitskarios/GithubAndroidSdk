@@ -10,7 +10,7 @@ public class ReviewComment {
     public String path;
     public int position;
     public int original_position;
-    public String commit;
+    public String commit_id;
     public String original_commit_id;
     public User user;
     public String body;
