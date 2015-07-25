@@ -205,7 +205,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         @Override
         protected void executeNext() {
-            new PullCommitsCallbacks(issueInfo, pullRequestsService).execute();
+           parseIssueStoryDetails();
         }
 
         @Override
@@ -259,113 +259,6 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             return !(event.equals("mentioned") ||
                     event.equals("subscribed") ||
                     event.equals("unsubscribed"));
-        }
-    }
-
-    private class PullCommitsCallbacks extends BaseInfiniteCallback<List<Commit>> {
-
-        private IssueInfo info;
-        private PullRequestsService pullRequestsService;
-
-        public PullCommitsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
-            this.info = info;
-            this.pullRequestsService = pullRequestsService;
-        }
-
-        @Override
-        public void execute() {
-            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
-
-        @Override
-        protected void executePaginated(int nextPage) {
-            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
-        }
-
-        @Override
-        protected void executeNext() {
-            new IssueReviewCommentsCallbacks(issueInfo, pullRequestsService).execute();
-        }
-
-        @Override
-        protected void response(List<Commit> commits) {
-            List<IssueStoryDetail> details = new ArrayList<>();
-
-            Map<Long, PullRequestStoryCommitsList> commitsEvents = new HashMap<>();
-
-            for (Commit commit : commits) {
-                if (commit.committer != null) {
-                    String date = commit.commit.committer.date;
-                    if (date != null) {
-                        long time = getMilisFromDateClearHour(date);
-                        PullRequestStoryCommitsList commitsDetails = commitsEvents.get(time);
-                        if (commitsDetails == null) {
-                            commitsDetails = new PullRequestStoryCommitsList();
-                            commitsDetails.created_at = time;
-                            commitsDetails.user = commit.committer;
-                            commitsEvents.put(time, commitsDetails);
-                        }
-                        commitsDetails.add(commit);
-                    }
-                }
-            }
-
-            for (Long aLong : commitsEvents.keySet()) {
-                PullRequestStoryCommitsList commitsList = commitsEvents.get(aLong);
-                commitsList.created_at = aLong;
-                details.add(commitsList);
-
-                for (Commit commit : commitsList) {
-                    PullRequestStoryCommit pullRequestStoryCommit = new PullRequestStoryCommit(commit);
-                    pullRequestStoryCommit.created_at = aLong;
-                    details.add(pullRequestStoryCommit);
-                }
-                commitsList.clear();
-            }
-
-            storyDetailMap.addAll(details);
-        }
-    }
-
-    private class IssueReviewCommentsCallbacks extends BaseInfiniteCallback<List<ReviewComment>> {
-
-        private IssueInfo info;
-        private PullRequestsService pullRequestsService;
-
-        public IssueReviewCommentsCallbacks(IssueInfo info, PullRequestsService pullRequestsService) {
-            this.info = info;
-            this.pullRequestsService = pullRequestsService;
-        }
-
-        @Override
-        public void execute() {
-            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
-
-        @Override
-        protected void executePaginated(int nextPage) {
-            pullRequestsService.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
-        }
-
-        @Override
-        protected void executeNext() {
-            parseIssueStoryDetails();
-        }
-
-        @Override
-        protected void response(List<ReviewComment> reviewComments) {
-            List<IssueStoryDetail> details = new ArrayList<>();
-            for (ReviewComment reviewComment : reviewComments) {
-                String date = reviewComment.created_at;
-                if (date != null) {
-                    long time = getMilisFromDateClearHour(date);
-                    IssueStoryReviewComment storyReviewComment = new IssueStoryReviewComment(reviewComment);
-                    storyReviewComment.created_at = time;
-                    details.add(storyReviewComment);
-                }
-            }
-
-            storyDetailMap.addAll(details);
         }
     }
 
