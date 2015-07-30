@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.repo;
 import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
+import com.alorma.github.sdk.bean.dto.response.Release;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.User;
 
@@ -53,4 +54,13 @@ public interface RepoService {
 
     @GET("/repos/{owner}/{name}/collaborators")
     void collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<User>> callback);
+
+    @GET("/repos/{owner}/{name}/releases")
+    void releases(@Path("owner") String owner, @Path("name") String repo, Callback<List<Release>> callback);
+
+    @GET("/repos/{owner}/{name}/releases")
+    void releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Release>> callback);
+
+    @GET("/repos/{owner}/{name}/releases/latest")
+    void lastRelease(@Path("owner") String owner, @Path("name") String repo, Callback<Release> callback);
 }
