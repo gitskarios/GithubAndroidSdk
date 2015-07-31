@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.repo;
 
 import com.alorma.github.sdk.bean.dto.response.Branch;
+import com.alorma.github.sdk.bean.dto.response.CompareCommit;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.dto.response.Release;
@@ -63,4 +64,7 @@ public interface RepoService {
 
     @GET("/repos/{owner}/{name}/releases/latest")
     void lastRelease(@Path("owner") String owner, @Path("name") String repo, Callback<Release> callback);
+
+    @GET("/repos/{owner}/{name}/compare/{base}...{head}")
+    void compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
 }
