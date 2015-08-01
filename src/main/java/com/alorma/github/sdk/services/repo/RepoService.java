@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.services.repo;
 
+import com.alorma.github.sdk.bean.dto.request.RepoRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.CompareCommit;
 import com.alorma.github.sdk.bean.dto.response.Content;
@@ -11,7 +12,11 @@ import com.alorma.github.sdk.bean.dto.response.User;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.client.Response;
+import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -67,4 +72,10 @@ public interface RepoService {
 
     @GET("/repos/{owner}/{name}/compare/{base}...{head}")
     void compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
+
+    @DELETE("/repos/{owner}/{name}")
+    void delete(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
+
+    @PATCH("/repos/{owner}/{name}")
+    void edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
 }
