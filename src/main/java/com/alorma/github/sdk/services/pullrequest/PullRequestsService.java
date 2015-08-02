@@ -1,8 +1,10 @@
 package com.alorma.github.sdk.services.pullrequest;
 
+import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.request.MergeButtonRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitFile;
+import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.MergeButtonResponse;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
@@ -21,6 +23,13 @@ import retrofit.http.Query;
  * Created by Bernat on 22/08/2014.
  */
 public interface PullRequestsService {
+
+
+    @GET("/repos/{owner}/{name}/pulls?sort=updated")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<List<PullRequest>> callback);
+
+    @GET("/repos/{owner}/{name}/pulls?sort=updated")
+    void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page, Callback<List<PullRequest>> callback);
 
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     void commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, Callback<List<Commit>> callback);
