@@ -38,10 +38,4 @@ public abstract class GithubRepoClient<K> extends GithubClient<K> {
 	public String getBranch() {
 		return repoInfo.branch;
 	}
-
-
-	@Override
-	public String getAcceptHeader() {
-		return "application/vnd.github.quicksilver-preview+json";
-	}
 }
