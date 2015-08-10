@@ -27,6 +27,12 @@ public interface ReposService {
 	@GET("/users/{username}/repos?type=owner")
 	void userReposList(@Path("username") String username, @Query("page") int page, @Query("sort") String sort, Callback<List<Repo>> callback);
 
+	@GET("/user/repos?affiliation=organization_member")
+	void userReposListFromOrgs(@Query("sort") String sort, Callback<List<Repo>> callback);
+
+	@GET("/user/repos?affiliation=organization_member")
+	void userReposListFromOrgs(@Query("page") int page, @Query("sort") String sort, Callback<List<Repo>> callback);
+
 	@GET("/orgs/{org}/repos?type=all")
 	void orgsReposList(@Path("org") String org, @Query("sort") String sort, Callback<List<Repo>> callback);
 
