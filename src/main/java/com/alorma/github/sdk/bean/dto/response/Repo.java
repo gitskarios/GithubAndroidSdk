@@ -71,6 +71,8 @@ public class Repo extends ShaUrl implements Parcelable {
 
 	public Permissions permissions;
 
+	public License license;
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Repo{");
