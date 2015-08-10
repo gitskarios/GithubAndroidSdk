@@ -15,6 +15,7 @@ public class Commit extends ShaUrl {
     public boolean distinct;
     public GitCommitFiles files;
     public int days;
+    public int comment_count;
 
     @Override
     public String toString() {
