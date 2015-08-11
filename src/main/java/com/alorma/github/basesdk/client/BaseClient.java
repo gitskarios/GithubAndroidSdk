@@ -57,12 +57,8 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 
     public K executeSync() {
         if (getToken() != null) {
-            return executeSync(getRestAdapter());
+            return executeServiceSync(getRestAdapter());
         }
-        return null;
-    }
-
-    protected K executeSync(RestAdapter restAdapter) {
         return null;
     }
 
@@ -71,6 +67,8 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
     }
 
     protected abstract void executeService(RestAdapter restAdapter);
+
+    protected abstract K executeServiceSync(RestAdapter restAdapter);
 
     @Override
     public void success(final K k, final Response response) {

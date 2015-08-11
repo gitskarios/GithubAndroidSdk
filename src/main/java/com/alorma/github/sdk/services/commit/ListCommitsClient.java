@@ -64,4 +64,38 @@ public class ListCommitsClient extends GithubClient<List<Commit>> {
             }
         }
     }
+
+    @Override
+    protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
+        CommitsService commitsService = restAdapter.create(CommitsService.class);
+        if (path == null) {
+            if (info.branch == null) {
+                if (page == 0) {
+                    return  commitsService.commits(info.owner, info.name);
+                } else {
+                    return  commitsService.commits(info.owner, info.name, page);
+                }
+            } else {
+                if (page == 0) {
+                    return commitsService.commits(info.owner, info.name, info.branch);
+                } else {
+                    return commitsService.commits(info.owner, info.name, page, info.branch);
+                }
+            }
+        } else {
+            if (info.branch == null) {
+                if (page == 0) {
+                    return commitsService.commitsByPath(info.owner, info.name, path);
+                } else {
+                    return commitsService.commitsByPath(info.owner, info.name, path, page);
+                }
+            } else {
+                if (page == 0) {
+                    return commitsService.commitsByPath(info.owner, info.name, path, info.branch);
+                } else {
+                    return commitsService.commitsByPath(info.owner, info.name, path, info.branch, page);
+                }
+            }
+        }
+    }
 }
