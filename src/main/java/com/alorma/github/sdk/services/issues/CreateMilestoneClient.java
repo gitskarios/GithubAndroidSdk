@@ -26,4 +26,9 @@ public class CreateMilestoneClient extends GithubClient<Milestone> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(IssuesService.class).createMilestone(repoInfo.owner, repoInfo.name, createMilestoneRequestDTO, this);
     }
+
+    @Override
+    protected Milestone executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(IssuesService.class).createMilestone(repoInfo.owner, repoInfo.name, createMilestoneRequestDTO);
+    }
 }

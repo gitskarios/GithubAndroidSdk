@@ -10,7 +10,9 @@ import com.alorma.github.sdk.services.client.GithubClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.converter.Converter;
 
 /**
  * Created by Bernat on 14/04/2015.
@@ -28,6 +30,16 @@ public class GetMilestonesClient extends GithubClient<List<Milestone>> {
     protected void executeService(RestAdapter restAdapter) {
         IssuesService issueStoryService = restAdapter.create(IssuesService.class);
         new IssueMilestonesCallback(repoInfo, issueStoryService).execute();
+    }
+
+    @Override
+    protected List<Milestone> executeServiceSync(RestAdapter restAdapter) {
+        IssuesService issueStoryService = restAdapter.create(IssuesService.class);
+        List<Milestone> milestones = new ArrayList<>();
+        boolean hasMore = true;
+        while(hasMore)
+            hasMore = milestones.addAll(issueStoryService.milestones(repoInfo.owner, repoInfo.name));
+        return milestones;
     }
 
     private class IssueMilestonesCallback extends BaseInfiniteCallback<List<Milestone>> {

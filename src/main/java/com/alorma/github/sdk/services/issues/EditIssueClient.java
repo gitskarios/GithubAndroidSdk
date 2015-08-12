@@ -32,6 +32,11 @@ public class EditIssueClient extends GithubClient<Issue> {
     }
 
     @Override
+    protected Issue executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(IssuesService.class).editIssue(info.repoInfo.owner, info.repoInfo.name, info.num, editIssueRequestDTO);
+    }
+
+    @Override
     protected Converter customConverter() {
         Gson gson = new GsonBuilder()
                 .serializeNulls()

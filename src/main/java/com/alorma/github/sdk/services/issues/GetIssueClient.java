@@ -27,4 +27,9 @@ public class GetIssueClient extends GithubClient<Issue> {
 	protected void executeService(RestAdapter restAdapter) {
 		restAdapter.create(IssuesService.class).detail(owner, repo, number, this);
 	}
+
+	@Override
+	protected Issue executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(IssuesService.class).detail(owner, repo, number);
+	}
 }
