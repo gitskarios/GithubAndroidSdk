@@ -1,21 +1,26 @@
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
+        classpath 'com.novoda:bintray-release:0.3.0'
     }
 }
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
     }
+
+    publishNonDefault true
 
     lintOptions {
         abortOnError false
@@ -43,4 +48,15 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 
     compile 'com.android.support:support-v4:22.2.0'
+}
+
+publish {
+    userOrg = 'alorma'
+    groupId = 'com.github.alorma'
+    artifactId = 'github-sdk'
+    version = '1.0.1'
+    description = 'A SDK for GitHub implemented in Android'
+    website = 'https://github.com/gitskarios/GithubAndroidSdk'
+    issueTracker = "${website}/issues"
+    repository = "${website}.git"
 }

@@ -28,6 +28,11 @@ public abstract class GithubSearchClient<K> extends GithubClient<K> {
         executeSearch(restAdapter.create(SearchClient.class));
     }
 
+    @Override
+    protected K executeServiceSync(RestAdapter restAdapter) {
+        return executeSearchSync(restAdapter.create(SearchClient.class));
+    }
+
     protected void executeSearch(SearchClient searchClient) {
         if (page == 0) {
             executeFirst(searchClient, query);
@@ -39,6 +44,18 @@ public abstract class GithubSearchClient<K> extends GithubClient<K> {
     protected abstract void executeFirst(SearchClient searchClient, String query);
 
     protected abstract void executePaginated(SearchClient searchClient, String query, int page);
+
+    protected K executeSearchSync(SearchClient searchClient) {
+        if (page == 0) {
+            return executeFirstSync(searchClient, query);
+        } else {
+            return executePaginatedSync(searchClient, query, page);
+        }
+    }
+
+    protected abstract K executeFirstSync(SearchClient searchClient, String query);
+
+    protected abstract K executePaginatedSync(SearchClient searchClient, String query, int page);
 
 
 }
