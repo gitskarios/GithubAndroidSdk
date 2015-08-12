@@ -49,4 +49,26 @@ public class GetOrgsClient extends GithubClient<List<Organization>> {
 			}
 		}
 	}
+
+	@Override
+	protected List<Organization> executeServiceSync(RestAdapter restAdapter) {
+		StoreCredentials settings = new StoreCredentials(getContext());
+		if (username != null && username.equalsIgnoreCase(settings.getUserName())) {
+			username = null;
+		}
+		OrgsService orgsService = restAdapter.create(OrgsService.class);
+		if (page == -1) {
+			if (username == null) {
+				return orgsService.orgs();
+			} else {
+				return orgsService.orgsByUser(username);
+			}
+		} else {
+			if (username == null) {
+				return orgsService.orgs(page);
+			} else {
+				return orgsService.orgsByUser(username, page);
+			}
+		}
+	}
 }
