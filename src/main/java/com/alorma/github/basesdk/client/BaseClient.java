@@ -27,11 +27,6 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
         this.client = client;
         this.context = context.getApplicationContext();
         storeCredentials = new StoreCredentials(context);
-        try {
-            handler = new Handler();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private RestAdapter getRestAdapter() {
@@ -50,6 +45,11 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
     }
 
     public void execute() {
+        try {
+            handler = new Handler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (getToken() != null) {
             executeService(getRestAdapter());
         }
