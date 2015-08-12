@@ -22,4 +22,9 @@ public class PublishGistClient extends GithubClient<Gist> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(GistsService.class).publish(gist, this);
     }
+
+    @Override
+    protected Gist executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(GistsService.class).publish(gist);
+    }
 }

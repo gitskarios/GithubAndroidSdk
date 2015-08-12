@@ -48,6 +48,16 @@ public class UserStarredGistsClient extends GithubClient<List<Gist>> {
 	}
 
 	@Override
+	protected List<Gist> executeServiceSync(RestAdapter restAdapter) {
+		GistsService gistsService = restAdapter.create(GistsService.class);
+		if (page == 0) {
+			return gistsService.userStarredGistsList();
+		} else {
+			return gistsService.userStarredGistsList(page);
+		}
+	}
+
+	@Override
 	public String getAcceptHeader() {
 		return "application/vnd.github.v3.raw";
 	}
