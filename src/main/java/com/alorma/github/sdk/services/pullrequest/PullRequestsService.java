@@ -19,6 +19,7 @@ import retrofit.http.Query;
  */
 public interface PullRequestsService {
 
+    //Async
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     void commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, Callback<List<Commit>> callback);
 
@@ -33,4 +34,20 @@ public interface PullRequestsService {
 
     @PUT("/repos/{owner}/{repo}/pulls/{number}/merge")
     void merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest, Callback<MergeButtonResponse> callback);
+
+    //Sync
+    @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
+    List<Commit> commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
+    List<Commit> commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/files")
+    List<CommitFile> files(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/files")
+    List<CommitFile> files(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page);
+
+    @PUT("/repos/{owner}/{repo}/pulls/{number}/merge")
+    MergeButtonResponse merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest);
 }

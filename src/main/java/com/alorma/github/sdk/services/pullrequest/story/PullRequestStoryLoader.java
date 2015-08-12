@@ -64,6 +64,90 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         new PullRequestCallback(issueInfo, pullRequestStoryService, issueStoryService, pullRequestsService).execute();
     }
 
+    @Override
+    protected PullRequestStory executeServiceSync(RestAdapter restAdapter) {
+        PullRequestStoryService pullRequestStoryService = restAdapter.create(PullRequestStoryService.class);
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
+        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
+
+        pullRequestStory = new PullRequestStory();
+        storyDetailMap = new HashMap<>();
+        int page = 1;
+        boolean hasMore = true;
+
+        pullRequestStory.pullRequest = pullRequestStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+
+        while(hasMore){
+            List<Label> issueLabels = issueStoryService.labels(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = pullRequestStory.pullRequest.labels.addAll(issueLabels);
+            page++;
+        }
+
+        page = 1;
+
+        while(true){
+            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueComments != null && !issueComments.isEmpty();
+            if (!hasMore) break;
+            for (GithubComment comment : issueComments) {
+                long time = getMilisFromDate(comment.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueStoryComment(comment));
+            }
+            page++;
+        }
+
+        page = 1;
+
+        while(true){
+            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueEvents != null && !issueEvents.isEmpty();
+            if (!hasMore) break;
+            for (IssueEvent event : issueEvents) {
+                if (validEvent(event.event)) {
+                    long time = getMilisFromDate(event.created_at);
+                    List<IssueStoryDetail> details = storyDetailMap.get(time);
+                    if (details == null) {
+                        details = new ArrayList<>();
+                        storyDetailMap.put(time, details);
+                    }
+                    details.add(new IssueStoryEvent(event));
+                }
+            }
+            page++;
+        }
+
+        page = 1;
+
+        while(true){
+            List<Commit> commits = pullRequestsService.commits(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = commits != null && !commits.isEmpty();
+            if (!hasMore) break;
+            for (Commit commit : commits) {
+                if (commit.committer != null) {
+                    String date = commit.commit.committer.date;
+                    if (date != null) {
+                        long time = getMilisFromDate(date);
+                        List<IssueStoryDetail> commitsDetails = storyDetailMap.get(time);
+                        if (commitsDetails == null) {
+                            commitsDetails = new ArrayList<>();
+                            storyDetailMap.put(time, commitsDetails);
+                        }
+                        commitsDetails.add(new IssueStoryCommit(commit));
+                    }
+                }
+            }
+            page++;
+        }
+
+
+        return parseIssueStoryDetails();
+    }
+
     private class PullRequestCallback extends BaseInfiniteCallback<PullRequest> {
 
         private final IssueInfo info;
@@ -132,32 +216,6 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         @Override
         protected void response(List<Label> issueLabels) {
             pullRequestStory.pullRequest.labels.addAll(issueLabels);
-        }
-    }
-
-    @Override
-    public String getAcceptHeader() {
-        return "application/vnd.github.v3.full+json";
-    }
-
-    private void parseIssueStoryDetails() {
-        List<Long> times = new ArrayList<>(storyDetailMap.keySet());
-
-        Collections.sort(times);
-
-        List<Pair<Long, IssueStoryDetail>> details = new ArrayList<>();
-
-        for (Long time : times) {
-            List<IssueStoryDetail> detailsRow = storyDetailMap.get(time);
-            for (IssueStoryDetail issueStoryDetail : detailsRow) {
-                details.add(new Pair<>(time, issueStoryDetail));
-            }
-        }
-
-        pullRequestStory.details = details;
-
-        if (getOnResultCallback() != null) {
-            getOnResultCallback().onResponseOk(pullRequestStory, null);
         }
     }
 
@@ -244,12 +302,6 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
                 }
             }
         }
-
-        private boolean validEvent(String event) {
-            return !(event.equals("mentioned") ||
-                    event.equals("subscribed") ||
-                    event.equals("unsubscribed"));
-        }
     }
 
     private class PullCommitsCallbacks extends BaseInfiniteCallback<List<Commit>> {
@@ -309,5 +361,38 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         Log.i("IssueStoryLoader", message);
     }
 
+    private boolean validEvent(String event) {
+        return !(event.equals("mentioned") ||
+                event.equals("subscribed") ||
+                event.equals("unsubscribed"));
+    }
+
+    @Override
+    public String getAcceptHeader() {
+        return "application/vnd.github.v3.full+json";
+    }
+
+    private PullRequestStory parseIssueStoryDetails() {
+        List<Long> times = new ArrayList<>(storyDetailMap.keySet());
+
+        Collections.sort(times);
+
+        List<Pair<Long, IssueStoryDetail>> details = new ArrayList<>();
+
+        for (Long time : times) {
+            List<IssueStoryDetail> detailsRow = storyDetailMap.get(time);
+            for (IssueStoryDetail issueStoryDetail : detailsRow) {
+                details.add(new Pair<>(time, issueStoryDetail));
+            }
+        }
+
+        pullRequestStory.details = details;
+
+        if (getOnResultCallback() != null) {
+            getOnResultCallback().onResponseOk(pullRequestStory, null);
+        }
+
+        return pullRequestStory;
+    }
 
 }

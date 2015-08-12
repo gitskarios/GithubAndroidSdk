@@ -39,4 +39,14 @@ public class GetPullRequestCommits extends GithubClient<List<Commit>> {
         }
     }
 
+    @Override
+    protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
+        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
+        if (page == 0) {
+            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num);
+        } else {
+            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page);
+        }
+    }
+
 }
