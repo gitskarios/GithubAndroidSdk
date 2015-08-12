@@ -17,6 +17,7 @@ import retrofit.http.Query;
  */
 public interface UsersService {
 
+	//Async
 	@GET("/users/{user}")
 	void getSingleUser(@Path("user") String user, Callback<User> callback);
 
@@ -62,7 +63,7 @@ public interface UsersService {
 
 	@DELETE("/user/following/{username}")
 	void unfollowUser(@Path("username") String username, Callback<Object> callback);
-	
+
 
 	//ORGS MEMBERS
 
@@ -71,4 +72,61 @@ public interface UsersService {
 
 	@GET("/orgs/{org}/members")
 	void orgMembers(@Path("org") String org, @Query("page") int page, Callback<List<User>> callback);
+
+
+	//Sync
+	@GET("/users/{user}")
+	User getSingleUser(@Path("user") String user);
+
+	@GET("/user/emails")
+	List<Email> userEmails();
+
+	// Followers
+	@GET("/user/followers")
+	List<User> followers();
+
+	@GET("/users/{username}/followers")
+	List<User> followers(@Path("username") String username);
+
+	@GET("/user/followers")
+	List<User> followers(@Query("page") int page);
+
+	@GET("/users/{username}/followers")
+	List<User> followers(@Path("username") String username, @Query("page") int page);
+
+	// Following
+	@GET("/user/following")
+	List<User> following();
+
+	@GET("/users/{username}/following")
+	List<User> following(@Path("username") String username);
+
+	@GET("/user/following")
+	List<User> following(@Query("page") int page);
+
+	@GET("/users/{username}/following")
+	List<User> following(@Path("username") String username, @Query("page") int page);
+
+	@GET("/user")
+	User me();
+
+	// FOLLOWING USER
+
+	@GET("/user/following/{username}")
+	Object checkFollowing(@Path("username") String username);
+
+	@PUT("/user/following/{username}")
+	Object followUser(@Path("username") String username);
+
+	@DELETE("/user/following/{username}")
+	Object unfollowUser(@Path("username") String username);
+
+
+	//ORGS MEMBERS
+
+	@GET("/orgs/{org}/members")
+	List<User> orgMembers(@Path("org") String org);
+
+	@GET("/orgs/{org}/members")
+	List<User> orgMembers(@Path("org") String org, @Query("page") int page);
 }
