@@ -19,4 +19,9 @@ public class GitIgnoreClient extends GithubClient<GitIgnoreTemplates> {
 	protected void executeService(RestAdapter restAdapter) {
 		restAdapter.create(GitIgnoreService.class).list(this);
 	}
+
+	@Override
+	protected GitIgnoreTemplates executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(GitIgnoreService.class).list();
+	}
 }
