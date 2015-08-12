@@ -39,4 +39,21 @@ public class GetRepoContentsClient extends GithubRepoClient<List<Content>> {
 			}
 		}
 	}
+
+	@Override
+	protected List<Content> executeServiceSync(RepoService repoService) {
+		if (path == null) {
+			if (getBranch() == null) {
+				return repoService.contents(getOwner(), getRepo());
+			} else {
+				return repoService.contentsByRef(getOwner(), getRepo(), getBranch());
+			}
+		} else {
+			if (getBranch() == null) {
+				return repoService.contents(getOwner(), getRepo(), path);
+			} else {
+				return repoService.contentsByRef(getOwner(), getRepo(), path, getBranch());
+			}
+		}
+	}
 }

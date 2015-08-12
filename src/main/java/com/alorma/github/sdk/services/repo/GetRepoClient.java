@@ -18,4 +18,9 @@ public class GetRepoClient extends GithubRepoClient<Repo> {
     protected void executeService(RepoService repoService) {
         repoService.get(getOwner(), getRepo(), this);
     }
+
+	@Override
+	protected Repo executeServiceSync(RepoService repoService) {
+		return  repoService.get(getOwner(), getRepo());
+	}
 }
