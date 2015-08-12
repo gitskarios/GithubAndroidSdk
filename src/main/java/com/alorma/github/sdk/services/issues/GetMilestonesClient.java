@@ -37,8 +37,11 @@ public class GetMilestonesClient extends GithubClient<List<Milestone>> {
         IssuesService issueStoryService = restAdapter.create(IssuesService.class);
         List<Milestone> milestones = new ArrayList<>();
         boolean hasMore = true;
-        while(hasMore)
-            hasMore = milestones.addAll(issueStoryService.milestones(repoInfo.owner, repoInfo.name));
+        int page = 1;
+        while(hasMore) {
+            hasMore = milestones.addAll(issueStoryService.milestones(repoInfo.owner, repoInfo.name, page));
+            page++;
+        }
         return milestones;
     }
 

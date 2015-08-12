@@ -34,8 +34,11 @@ public class GithubIssueLabelsClient extends GithubClient<List<Label>> {
         IssuesService issueStoryService = restAdapter.create(IssuesService.class);
         List<Label> labels = new ArrayList<>();
         boolean hasMore = true;
-        while(hasMore)
-            hasMore = labels.addAll(issueStoryService.labels(repoInfo.owner, repoInfo.name));
+        int page = 1;
+        while(hasMore) {
+            hasMore = labels.addAll(issueStoryService.labels(repoInfo.owner, repoInfo.name, page));
+            page++;
+        }
         return labels;
     }
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
@@ -48,9 +49,9 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     @Override
-    protected void executeService(RestAdapter adapter) {
+    protected void executeService(RestAdapter restAdapter) {
 
-        IssueStoryService issueStoryService = adapter.create(IssueStoryService.class);
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
 
         issueStory = new IssueStory();
         storyDetailMap = new HashMap<>();
@@ -58,7 +59,58 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         new IssueCallback(issueInfo, issueStoryService).execute();
     }
 
-    private void parseIssueStoryDetails() {
+    @Override
+    protected IssueStory executeServiceSync(RestAdapter restAdapter) {
+        issueStory = new IssueStory();
+        storyDetailMap = new HashMap<>();
+
+        int page = 1;
+        boolean hasMore;
+
+
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
+        issueStory.issue = issueStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+
+        while(true){
+            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueComments != null && !issueComments.isEmpty();
+            if (!hasMore) break;
+            for (GithubComment comment : issueComments) {
+                long time = getMilisFromDate(comment.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueStoryComment(comment));
+            }
+            page++;
+        }
+
+        page = 1;
+
+        while(true){
+            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueEvents != null && !issueEvents.isEmpty();
+            if (!hasMore) break;
+            for (IssueEvent event : issueEvents) {
+                if (validEvent(event.event)) {
+                    long time = getMilisFromDate(event.created_at);
+                    List<IssueStoryDetail> details = storyDetailMap.get(time);
+                    if (details == null) {
+                        details = new ArrayList<>();
+                        storyDetailMap.put(time, details);
+                    }
+                    details.add(new IssueStoryEvent(event));
+                }
+            }
+            page++;
+        }
+
+        return parseIssueStoryDetails();
+    }
+
+    private IssueStory parseIssueStoryDetails() {
         List<Long> times = new ArrayList<>(storyDetailMap.keySet());
 
         Collections.sort(times);
@@ -77,6 +129,8 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         if (getOnResultCallback() != null) {
             getOnResultCallback().onResponseOk(issueStory, null);
         }
+
+        return issueStory;
     }
 
     private class IssueCallback extends BaseInfiniteCallback<Issue> {
@@ -190,73 +244,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                 }
             }
         }
-
-        private boolean validEvent(String event) {
-            return !(event.equals("mentioned") ||
-                    event.equals("subscribed") ||
-                    event.equals("unsubscribed"));
-        }
-    }
-
-    private abstract class BaseCallback<T> implements Callback<T> {
-
-        public IssueInfo info;
-        public IssueStoryService issueStoryService;
-
-        public BaseCallback(IssueInfo info, IssueStoryService issueStoryService) {
-            this.info = info;
-            this.issueStoryService = issueStoryService;
-        }
-
-        @Override
-        public void success(T t, Response response) {
-            int nextPage = getLinkData(response);
-            response(t);
-            if (nextPage != -1) {
-                executePaginated(nextPage);
-            } else {
-                executeNext();
-            }
-        }
-
-        protected abstract void executePaginated(int nextPage);
-
-        protected abstract void executeNext();
-
-        protected abstract void response(T t);
-
-        private int getLinkData(Response r) {
-            List<Header> headers = r.getHeaders();
-            Map<String, String> headersMap = new HashMap<String, String>(headers.size());
-            for (Header header : headers) {
-                headersMap.put(header.getName(), header.getValue());
-            }
-
-            String link = headersMap.get("Link");
-
-            if (link != null) {
-                String[] parts = link.split(",");
-                try {
-                    PaginationLink bottomPaginationLink = new PaginationLink(parts[0]);
-                    if (bottomPaginationLink.rel == RelType.next) {
-                        return bottomPaginationLink.page;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return -1;
-        }
-
-        public abstract void execute();
-
-        @Override
-        public void failure(RetrofitError error) {
-            if (getOnResultCallback() != null) {
-                getOnResultCallback().onFail(error);
-            }
-        }
-
     }
 
     private long getMilisFromDate(String createdAt) {
@@ -265,6 +252,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         DateTime dt = formatter.parseDateTime(createdAt);
 
         return dt.getMillis();
+    }
+
+    private boolean validEvent(String event) {
+        return !(event.equals("mentioned") ||
+                event.equals("subscribed") ||
+                event.equals("unsubscribed"));
     }
 
     @Override
