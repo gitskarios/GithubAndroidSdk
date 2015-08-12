@@ -12,7 +12,10 @@ import retrofit.http.POST;
  */
 public interface LoginService {
 
+    //Async
     @POST("/login/oauth/access_token")
     void requestToken(@Body RequestTokenDTO requestTokenDTO, Callback<Token> callback);
 
+    //Sync
+    Token requestToken(@Body RequestTokenDTO requestTokenDTO);
 }
