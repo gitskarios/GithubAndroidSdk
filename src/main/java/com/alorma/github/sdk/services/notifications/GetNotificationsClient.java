@@ -36,7 +36,7 @@ public class GetNotificationsClient extends GithubClient<List<Notification>> {
 	}
 
 	@Override
-	protected List<Notification> executeSync(RestAdapter restAdapter) {
-		return restAdapter.create(NotificationsService.class).getNotifications();
+	protected List<Notification> executeServiceSync(RestAdapter restAdapter) {
+		return  restAdapter.create(NotificationsService.class).getNotifications();
 	}
 }

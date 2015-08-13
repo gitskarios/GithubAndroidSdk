@@ -34,6 +34,16 @@ public class RepoSearchClient extends GithubSearchClient<List<Repo>> {
 		searchClient.reposPaginated(query, page, new Callbacks(this));
 	}
 
+	@Override
+	protected List<Repo> executeFirstSync(SearchClient searchClient, String query) {
+		return searchClient.repos(query).items;
+	}
+
+	@Override
+	protected List<Repo> executePaginatedSync(SearchClient searchClient, String query, int page) {
+		return searchClient.reposPaginated(query, page).items;
+	}
+
 	public class Callbacks implements Callback<ReposSearch> {
 
 		private Callback<List<Repo>> callback;

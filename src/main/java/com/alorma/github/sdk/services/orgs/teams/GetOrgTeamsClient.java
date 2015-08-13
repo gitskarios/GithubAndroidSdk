@@ -36,4 +36,14 @@ public class GetOrgTeamsClient extends GithubClient<List<Team>> {
             orgsService.teams(org, page, this);
         }
     }
+
+    @Override
+    protected List<Team> executeServiceSync(RestAdapter restAdapter) {
+        TeamsService orgsService = restAdapter.create(TeamsService.class);
+        if (page == -1) {
+            return orgsService.teams(org);
+        } else {
+            return orgsService.teams(org, page);
+        }
+    }
 }

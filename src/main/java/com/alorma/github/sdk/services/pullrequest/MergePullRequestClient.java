@@ -28,4 +28,12 @@ public class MergePullRequestClient extends GithubClient<MergeButtonResponse> {
             restAdapter.create(PullRequestsService.class).merge(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, mergeButtonRequest, this);
         }
     }
+
+    @Override
+    protected MergeButtonResponse executeServiceSync(RestAdapter restAdapter) {
+        if (issueInfo != null && mergeButtonRequest != null) {
+            return restAdapter.create(PullRequestsService.class).merge(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, mergeButtonRequest);
+        }
+        return null;
+    }
 }

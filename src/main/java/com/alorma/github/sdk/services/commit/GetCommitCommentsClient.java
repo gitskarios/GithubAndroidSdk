@@ -39,6 +39,15 @@ public class GetCommitCommentsClient extends GithubClient<List<CommitComment>> {
 		}
 	}
 
+	@Override
+	protected List<CommitComment> executeServiceSync(RestAdapter restAdapter) {
+		if (page == 0) {
+			return restAdapter.create(CommitsService.class).singleCommitComments(info.repoInfo.owner, info.repoInfo.name, info.sha);
+		} else {
+			return restAdapter.create(CommitsService.class).singleCommitComments(info.repoInfo.owner, info.repoInfo.name, info.sha, page);
+		}
+	}
+
 
 	@Override
 	public String getAcceptHeader() {

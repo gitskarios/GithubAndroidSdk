@@ -34,4 +34,13 @@ public class GetUserEventsClient extends GithubClient<List<GithubEvent>> {
 			restAdapter.create(EventsService.class).events(username, page, this);
 		}
 	}
+
+	@Override
+	protected List<GithubEvent> executeServiceSync(RestAdapter restAdapter) {
+		if (page == 0) {
+			return restAdapter.create(EventsService.class).events(username);
+		} else {
+			return restAdapter.create(EventsService.class).events(username, page);
+		}
+	}
 }

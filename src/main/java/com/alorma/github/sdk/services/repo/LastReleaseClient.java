@@ -23,4 +23,9 @@ public class LastReleaseClient extends GithubClient<Release> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(RepoService.class).lastRelease(info.owner, info.name, this);
     }
+
+    @Override
+    protected Release executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class).lastRelease(info.owner, info.name);
+    }
 }

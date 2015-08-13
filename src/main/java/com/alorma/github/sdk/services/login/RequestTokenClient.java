@@ -49,4 +49,18 @@ public class RequestTokenClient extends GithubClient<Token> {
 
         loginService.requestToken(tokenDTO, this);
     }
+
+    @Override
+    protected Token executeServiceSync(RestAdapter restAdapter) {
+        LoginService loginService = restAdapter.create(LoginService.class);
+
+
+        RequestTokenDTO tokenDTO = new RequestTokenDTO();
+        tokenDTO.client_id = GithubDeveloperCredentials.getInstance().getProvider().getApiClient();
+        tokenDTO.client_secret = GithubDeveloperCredentials.getInstance().getProvider().getAPiSecret();
+        tokenDTO.redirect_uri = GithubDeveloperCredentials.getInstance().getProvider().getApiOauth();
+        tokenDTO.code = code;
+
+        return loginService.requestToken(tokenDTO);
+    }
 }

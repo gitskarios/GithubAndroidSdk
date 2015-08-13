@@ -31,6 +31,16 @@ public class GetIssueComments extends GithubIssuesClient<List<GithubComment>> {
 	}
 
 	@Override
+	protected List<GithubComment> executeFirstPageSync(IssueInfo issueInfo, IssuesService issuesService) {
+		return issuesService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+	}
+
+	@Override
+	protected List<GithubComment> executePaginatedSync(IssueInfo issueInfo, int page, IssuesService issuesService) {
+		return issuesService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+	}
+
+	@Override
 	public String getAcceptHeader() {
 		return "application/vnd.github.v3.html+json";
 	}

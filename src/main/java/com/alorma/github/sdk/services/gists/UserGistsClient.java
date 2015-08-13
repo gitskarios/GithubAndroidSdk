@@ -54,7 +54,25 @@ public class UserGistsClient extends GithubClient<List<Gist>> {
         }
     }
 
-	@Override
+    @Override
+    protected List<Gist> executeServiceSync(RestAdapter restAdapter) {
+        GistsService gistsService = restAdapter.create(GistsService.class);
+        if (page == 0) {
+            if (username == null) {
+                return gistsService.userGistsList();
+            } else {
+                return gistsService.userGistsList(username);
+            }
+        } else {
+            if (username == null) {
+                return gistsService.userGistsList(page);
+            } else {
+                return gistsService.userGistsList(username, page);
+            }
+        }
+    }
+
+    @Override
 	public String getAcceptHeader() {
 		return "application/vnd.github.v3.raw";
 	}

@@ -16,6 +16,7 @@ import retrofit.http.Query;
  */
 public interface GistsService {
 
+	//Async
 	@GET("/gists")
 	void userGistsList(Callback<List<Gist>> callback);
 
@@ -39,4 +40,30 @@ public interface GistsService {
 
 	@POST("/gists")
 	void publish(@Body Gist gist, Callback<Gist> gistCallback);
+
+
+	//Sync
+	@GET("/gists")
+	List<Gist> userGistsList();
+
+	@GET("/gists")
+	List<Gist> userGistsList(@Query("page") int page);
+
+	@GET("/users/{username}/gists")
+	List<Gist> userGistsList(@Path("username") String username);
+
+	@GET("/users/{username}/gists")
+	List<Gist> userGistsList(@Path("username") String username, @Query("page") int page);
+
+	@GET("/gists/starred")
+	List<Gist> userStarredGistsList();
+
+	@GET("/gists/starred")
+	List<Gist> userStarredGistsList(@Query("page") int page);
+
+	@GET("/gists/{id}")
+	Gist gistDetail(@Path("id") String id);
+
+	@POST("/gists")
+	Gist publish(@Body Gist gist);
 }

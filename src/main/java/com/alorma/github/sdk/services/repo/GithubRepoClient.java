@@ -25,7 +25,15 @@ public abstract class GithubRepoClient<K> extends GithubClient<K> {
 		executeService(repoService);
 	}
 
+	@Override
+	protected K executeServiceSync(RestAdapter restAdapter) {
+		RepoService repoService = restAdapter.create(RepoService.class);
+		return executeServiceSync(repoService);
+	}
+
 	protected abstract void executeService(RepoService repoService);
+
+	protected abstract K executeServiceSync(RepoService repoService);
 
 	public String getOwner() {
 		return repoInfo.owner;

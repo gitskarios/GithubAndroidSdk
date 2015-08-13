@@ -24,6 +24,11 @@ public class GetAuthUserClient extends GithubUsersClient<User> {
     }
 
     @Override
+    protected User executeServiceSync(UsersService usersService) {
+        return usersService.me();
+    }
+
+    @Override
     protected String getToken() {
         if (accessToken != null) {
             return accessToken;

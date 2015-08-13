@@ -23,6 +23,7 @@ import retrofit.http.Query;
  */
 public interface IssueStoryService {
 
+    //Async
     @POST("/repos/{owner}/{name}/issues")
     void create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue, Callback<IssueStory> callback);
 
@@ -54,4 +55,34 @@ public interface IssueStoryService {
     void labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page, Callback<List<Label>> issueCallback);
 
 
+    //Sync
+    @POST("/repos/{owner}/{name}/issues")
+    IssueStory create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue);
+
+    @GET("/repos/{owner}/{name}/issues/{num}")
+    Issue detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    List<GithubComment> comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    List<GithubComment> comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/events")
+    List<IssueEvent> events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/events")
+    List<IssueEvent> events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+    @PATCH("/repos/{owner}/{name}/issues/{num}")
+    Issue closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest);
+
+    @POST("/repos/{owner}/{name}/issues/{num}/comments")
+    GithubComment addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body GithubComment comment);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/labels")
+    List<Label> labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/labels")
+    List<Label> labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
 }

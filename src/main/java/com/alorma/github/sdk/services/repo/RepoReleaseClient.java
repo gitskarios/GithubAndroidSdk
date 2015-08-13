@@ -31,4 +31,13 @@ public class RepoReleaseClient extends GithubClient<List<Release>> {
             restAdapter.create(RepoService.class).releases(info.owner, info.name, page, this);
         }
     }
+
+    @Override
+    protected List<Release> executeServiceSync(RestAdapter restAdapter) {
+        if (page == 0) {
+            return restAdapter.create(RepoService.class).releases(info.owner, info.name);
+        } else {
+            return restAdapter.create(RepoService.class).releases(info.owner, info.name, page);
+        }
+    }
 }

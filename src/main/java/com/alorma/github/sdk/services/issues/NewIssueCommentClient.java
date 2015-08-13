@@ -33,4 +33,13 @@ public class NewIssueCommentClient extends GithubClient<GithubComment> {
 		IssuesService service = restAdapter.create(IssuesService.class);
 		service.addComment(owner, repo, num, comment, this);
 	}
+
+	@Override
+	protected GithubComment executeServiceSync(RestAdapter restAdapter) {
+		GithubComment comment = new GithubComment();
+		comment.body = body;
+
+		IssuesService service = restAdapter.create(IssuesService.class);
+		return service.addComment(owner, repo, num, comment);
+	}
 }
