@@ -27,4 +27,9 @@ public class CompareCommitsClient extends GithubClient<CompareCommit> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(RepoService.class).compareCommits(repoInfo.owner, repoInfo.name, base, head, this);
     }
+
+    @Override
+    protected CompareCommit executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class).compareCommits(repoInfo.owner, repoInfo.name, base, head);
+    }
 }

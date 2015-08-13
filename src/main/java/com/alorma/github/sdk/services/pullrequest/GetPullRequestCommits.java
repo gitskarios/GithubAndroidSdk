@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.alorma.github.basesdk.client.BaseClient;
 import com.alorma.github.sdk.bean.dto.response.Commit;
+import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.issues.IssuesService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,20 @@ public class GetPullRequestCommits extends GithubClient<List<Commit>> {
     protected void executeService(RestAdapter restAdapter) {
         PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
         pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, new CommitsCallback(context, info, pullRequestsService, getOnResultCallback()));
+    }
+
+
+    @Override
+    protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
+        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
+        List<Commit> commits = new ArrayList<>();
+        boolean hasMore = true;
+        int page = this.page != 0 ? this.page : 1;
+        while(hasMore) {
+            hasMore = commits.addAll(pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page));
+            page++;
+        }
+        return commits;
     }
 
     private class CommitsCallback extends BaseInfiniteCallback<List<Commit>> {
@@ -72,19 +88,11 @@ public class GetPullRequestCommits extends GithubClient<List<Commit>> {
 
         @Override
         public void execute() {
-            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        } else {
-            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page, this);
-        }
-    }
-
-    @Override
-    protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
-        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
-        if (page == 0) {
-            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num);
-        } else {
-            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page);
+            if (page == 0) {
+                pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, this);
+            } else {
+                pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page, this);
+            }
         }
     }
 

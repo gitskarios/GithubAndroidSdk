@@ -66,6 +66,13 @@ public interface ReposService {
 	@GET("/users/{username}/subscriptions")
 	void userSubscribedReposList(@Path("username") String username, @Query("page") int page, @Query("sort") String sort, Callback<List<Repo>> callback);
 
+	// Member
+	@GET("/user/repos?type=member")
+	void userMemberRepos(Callback<List<Repo>> callback);
+	// Member
+	@GET("/user/repos?type=member")
+	void userMemberRepos(@Query("page") int page, Callback<List<Repo>> callback);
+
 
 	//Sync
 	// User repositories
@@ -86,6 +93,12 @@ public interface ReposService {
 
 	@GET("/orgs/{org}/repos?type=all")
 	List<Repo> orgsReposList(@Path("org") String org, @Query("page") int page, @Query("sort") String sort);
+
+	@GET("/user/repos?affiliation=organization_member")
+	List<Repo> userReposListFromOrgs(@Query("sort") String sort);
+
+	@GET("/user/repos?affiliation=organization_member")
+	List<Repo> userReposListFromOrgs(@Query("page") int page, @Query("sort") String sort);
 
 	// Starred repos
 	@GET("/user/starred?sort=updated")
@@ -115,8 +128,8 @@ public interface ReposService {
 
 	// Member
 	@GET("/user/repos?type=member")
-	void userMemberRepos(Callback<List<Repo>> callback);
+	List<Repo> userMemberRepos();
 	// Member
 	@GET("/user/repos?type=member")
-	void userMemberRepos(@Query("page") int page, Callback<List<Repo>> callback);
+	List<Repo> userMemberRepos(@Query("page") int page);
 }

@@ -22,4 +22,9 @@ public class EditRepoClient extends GithubRepoClient<Repo> {
     protected void executeService(RepoService repoService) {
         repoService.edit(getOwner(), getRepo(), repoRequestDTO, this);
     }
+
+    @Override
+    protected Repo executeServiceSync(RepoService repoService) {
+        return repoService.edit(getOwner(), getRepo(), repoRequestDTO);
+    }
 }

@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.services.repo;
 
+import com.alorma.github.sdk.bean.dto.request.RepoRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Branch;
+import com.alorma.github.sdk.bean.dto.response.CompareCommit;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.dto.response.Release;
@@ -59,6 +61,24 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/collaborators")
     void collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<User>> callback);
 
+    @GET("/repos/{owner}/{name}/releases")
+    void releases(@Path("owner") String owner, @Path("name") String repo, Callback<List<Release>> callback);
+
+    @GET("/repos/{owner}/{name}/releases")
+    void releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Release>> callback);
+
+    @GET("/repos/{owner}/{name}/releases/latest")
+    void lastRelease(@Path("owner") String owner, @Path("name") String repo, Callback<Release> callback);
+
+    @GET("/repos/{owner}/{name}/compare/{base}...{head}")
+    void compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
+
+    @DELETE("/repos/{owner}/{name}")
+    void delete(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
+
+    @PATCH("/repos/{owner}/{name}")
+    void edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
+
     //Sync
     @GET("/repos/{owner}/{name}")
     Repo get(@Path("owner") String owner, @Path("name") String repo);
@@ -97,20 +117,21 @@ public interface RepoService {
     List<User> collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/releases")
-    void releases(@Path("owner") String owner, @Path("name") String repo, Callback<List<Release>> callback);
+    List<Release> releases(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/repos/{owner}/{name}/releases")
-    void releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Release>> callback);
+    List<Release> releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/releases/latest")
-    void lastRelease(@Path("owner") String owner, @Path("name") String repo, Callback<Release> callback);
+    Release lastRelease(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/repos/{owner}/{name}/compare/{base}...{head}")
-    void compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
+    CompareCommit compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head);
 
     @DELETE("/repos/{owner}/{name}")
-    void delete(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
+    Response delete(@Path("owner") String owner, @Path("name") String repo);
 
     @PATCH("/repos/{owner}/{name}")
-    void edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
+    Repo edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO);
+
 }

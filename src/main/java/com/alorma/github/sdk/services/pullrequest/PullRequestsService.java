@@ -25,7 +25,6 @@ import retrofit.http.Query;
 public interface PullRequestsService {
 
     //Async
-
     @GET("/repos/{owner}/{name}/pulls?sort=updated")
     void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<List<PullRequest>> callback);
 
@@ -54,6 +53,12 @@ public interface PullRequestsService {
     void reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page, Callback<List<ReviewComment>> callback);
 
     //Sync
+    @GET("/repos/{owner}/{name}/pulls?sort=updated")
+    List<PullRequest> pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state);
+
+    @GET("/repos/{owner}/{name}/pulls?sort=updated")
+    List<PullRequest> pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page);
+
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     List<Commit> commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);
 
@@ -68,4 +73,10 @@ public interface PullRequestsService {
 
     @PUT("/repos/{owner}/{repo}/pulls/{number}/merge")
     MergeButtonResponse merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
+    List<ReviewComment> reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);
+
+    @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
+    List<ReviewComment> reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page);
 }
