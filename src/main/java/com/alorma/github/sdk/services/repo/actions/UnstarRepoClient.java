@@ -24,4 +24,9 @@ public class UnstarRepoClient extends GithubClient<Object> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(ActionsService.class).unstarRepo(owner, repo, this);
     }
+
+    @Override
+    protected Object executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(ActionsService.class).unstarRepo(owner, repo);
+    }
 }

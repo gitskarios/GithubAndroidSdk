@@ -73,6 +73,19 @@ public class GetPullRequestCommits extends GithubClient<List<Commit>> {
         @Override
         public void execute() {
             pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, this);
+        } else {
+            pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page, this);
         }
     }
+
+    @Override
+    protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
+        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
+        if (page == 0) {
+            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num);
+        } else {
+            return pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page);
+        }
+    }
+
 }

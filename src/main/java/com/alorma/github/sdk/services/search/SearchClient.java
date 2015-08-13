@@ -13,6 +13,7 @@ import retrofit.http.Query;
  */
 public interface SearchClient {
 
+    //Async
     @GET("/search/repositories")
     void repos(@Query("q") String query, Callback<ReposSearch> callback);
 
@@ -30,5 +31,24 @@ public interface SearchClient {
 	
 	@GET("/search/repositories")
 	void usersPaginated(@Query("q") String query, @Query("page") int page, Callback<UsersSearch> callback);
+
+    //Sync
+    @GET("/search/repositories")
+    ReposSearch repos(@Query("q") String query);
+
+    @GET("/search/repositories")
+    ReposSearch reposPaginated(@Query("q") String query, @Query("page") int page);
+
+    @GET("/search/issues")
+    IssuesSearch issues(@Query("q") String query);
+
+    @GET("/search/issues")
+    IssuesSearch issuesPaginated(@Query("q") String query, @Query("page") int page);
+
+    @GET("/search/users")
+    UsersSearch users(@Query("q") String query);
+
+    @GET("/search/repositories")
+    UsersSearch usersPaginated(@Query("q") String query, @Query("page") int page);
 
 }

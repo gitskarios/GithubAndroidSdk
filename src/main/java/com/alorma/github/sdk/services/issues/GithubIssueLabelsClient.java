@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.issues;
 import android.content.Context;
 
 import com.alorma.github.sdk.bean.dto.response.Label;
+import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
@@ -26,6 +27,19 @@ public class GithubIssueLabelsClient extends GithubClient<List<Label>> {
     protected void executeService(RestAdapter restAdapter) {
         IssuesService issueStoryService = restAdapter.create(IssuesService.class);
         new IssueLabelsCallback(repoInfo, issueStoryService).execute();
+    }
+
+    @Override
+    protected List<Label> executeServiceSync(RestAdapter restAdapter) {
+        IssuesService issueStoryService = restAdapter.create(IssuesService.class);
+        List<Label> labels = new ArrayList<>();
+        boolean hasMore = true;
+        int page = 1;
+        while(hasMore) {
+            hasMore = labels.addAll(issueStoryService.labels(repoInfo.owner, repoInfo.name, page));
+            page++;
+        }
+        return labels;
     }
 
     private class IssueLabelsCallback extends BaseInfiniteCallback<List<Label>> {

@@ -41,4 +41,21 @@ public class UserFollowingClient extends GithubUsersClient<List<User>> {
             }
         }
     }
+
+    @Override
+    protected List<User> executeServiceSync(UsersService usersService) {
+        if (page == 0) {
+            if (username == null) {
+                return usersService.following();
+            } else {
+                return usersService.following(username);
+            }
+        } else {
+            if (username == null) {
+                return usersService.following(page);
+            } else {
+                return usersService.following(username, page);
+            }
+        }
+    }
 }

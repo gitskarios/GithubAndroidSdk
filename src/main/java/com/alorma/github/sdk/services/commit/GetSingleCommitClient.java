@@ -25,4 +25,9 @@ public class GetSingleCommitClient extends GithubClient<Commit> {
 	protected void executeService(RestAdapter restAdapter) {
 		restAdapter.create(CommitsService.class).singleCommit(info.repoInfo.owner, info.repoInfo.name, info.sha, this);
 	}
+
+	@Override
+	protected Commit executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(CommitsService.class).singleCommit(info.repoInfo.owner, info.repoInfo.name, info.sha);
+	}
 }

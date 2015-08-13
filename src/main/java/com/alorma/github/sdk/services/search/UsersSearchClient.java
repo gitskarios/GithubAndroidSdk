@@ -34,6 +34,16 @@ public class UsersSearchClient extends GithubSearchClient<List<User>> {
 		searchClient.usersPaginated(query, page, new Callbacks(this));
 	}
 
+	@Override
+	protected List<User> executeFirstSync(SearchClient searchClient, String query) {
+		return searchClient.users(query).items;
+	}
+
+	@Override
+	protected List<User> executePaginatedSync(SearchClient searchClient, String query, int page) {
+		return searchClient.usersPaginated(query, page).items;
+	}
+
 	public class Callbacks implements Callback<UsersSearch> {
 
 		private Callback<List<User>> callback;

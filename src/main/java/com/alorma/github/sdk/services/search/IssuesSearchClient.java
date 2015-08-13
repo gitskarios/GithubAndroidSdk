@@ -27,15 +27,25 @@ public class IssuesSearchClient extends GithubSearchClient<List<Issue>> {
 
     @Override
     protected void executeFirst(SearchClient searchClient, String query) {
-        searchClient.issues(query, new SearcCallback());
+        searchClient.issues(query, new SearchCallback());
     }
 
     @Override
     protected void executePaginated(SearchClient searchClient, String query, int page) {
-        searchClient.issuesPaginated(query, page, new SearcCallback());
+        searchClient.issuesPaginated(query, page, new SearchCallback());
     }
 
-    private class SearcCallback implements Callback<IssuesSearch> {
+    @Override
+    protected List<Issue> executeFirstSync(SearchClient searchClient, String query) {
+        return searchClient.issues(query).items;
+    }
+
+    @Override
+    protected List<Issue> executePaginatedSync(SearchClient searchClient, String query, int page) {
+        return searchClient.issuesPaginated(query, page).items;
+    }
+
+    private class SearchCallback implements Callback<IssuesSearch> {
         @Override
         public void success(IssuesSearch issuesSearch, Response response) {
             if (getOnResultCallback() != null) {

@@ -9,6 +9,12 @@ import retrofit.http.GET;
  * Created by Bernat on 28/09/2014.
  */
 public interface GitIgnoreService {
+
+	//Async
 	@GET("/gitignore/templates")
 	void list(Callback<GitIgnoreTemplates> callback);
+
+	//Sync
+	@GET("/gitignore/templates")
+	GitIgnoreTemplates list();
 }

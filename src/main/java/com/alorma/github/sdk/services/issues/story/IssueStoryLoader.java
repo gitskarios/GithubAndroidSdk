@@ -5,18 +5,16 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
-import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
-import com.alorma.github.sdk.bean.issue.IssueStoryLabelList;
-import com.alorma.github.sdk.bean.issue.IssueStoryUnlabelList;
 import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.services.client.GithubClient;
 
@@ -42,7 +40,7 @@ import retrofit.client.Response;
 public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     private final IssueInfo issueInfo;
-    private List<IssueStoryDetail> storyDetailMap;
+    private Map<Long, List<IssueStoryDetail>> storyDetailMap;
     private IssueStory issueStory;
 
     public IssueStoryLoader(Context context, IssueInfo info) {
@@ -51,23 +49,88 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     @Override
-    protected void executeService(RestAdapter adapter) {
+    protected void executeService(RestAdapter restAdapter) {
 
-        IssueStoryService issueStoryService = adapter.create(IssueStoryService.class);
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
 
         issueStory = new IssueStory();
-        storyDetailMap = new ArrayList<>();
+        storyDetailMap = new HashMap<>();
 
         new IssueCallback(issueInfo, issueStoryService).execute();
     }
 
-    private void parseIssueStoryDetails() {
-        Collections.sort(storyDetailMap, IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
-        issueStory.details = storyDetailMap;
+    @Override
+    protected IssueStory executeServiceSync(RestAdapter restAdapter) {
+        issueStory = new IssueStory();
+        storyDetailMap = new HashMap<>();
+
+        int page = 1;
+        boolean hasMore;
+
+
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
+        issueStory.issue = issueStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+
+        while(true){
+            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueComments != null && !issueComments.isEmpty();
+            if (!hasMore) break;
+            for (GithubComment comment : issueComments) {
+                long time = getMilisFromDate(comment.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueStoryComment(comment));
+            }
+            page++;
+        }
+
+        page = 1;
+
+        while(true){
+            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueEvents != null && !issueEvents.isEmpty();
+            if (!hasMore) break;
+            for (IssueEvent event : issueEvents) {
+                if (validEvent(event.event)) {
+                    long time = getMilisFromDate(event.created_at);
+                    List<IssueStoryDetail> details = storyDetailMap.get(time);
+                    if (details == null) {
+                        details = new ArrayList<>();
+                        storyDetailMap.put(time, details);
+                    }
+                    details.add(new IssueStoryEvent(event));
+                }
+            }
+            page++;
+        }
+
+        return parseIssueStoryDetails();
+    }
+
+    private IssueStory parseIssueStoryDetails() {
+        List<Long> times = new ArrayList<>(storyDetailMap.keySet());
+
+        Collections.sort(times);
+
+        List<Pair<Long, IssueStoryDetail>> details = new ArrayList<>();
+
+        for (Long time : times) {
+            List<IssueStoryDetail> detailsRow = storyDetailMap.get(time);
+            for (IssueStoryDetail issueStoryDetail : detailsRow) {
+                details.add(new Pair<>(time, issueStoryDetail));
+            }
+        }
+
+        issueStory.details = details;
 
         if (getOnResultCallback() != null) {
             getOnResultCallback().onResponseOk(issueStory, null);
         }
+
+        return issueStory;
     }
 
     private class IssueCallback extends BaseInfiniteCallback<Issue> {
@@ -131,10 +194,13 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         @Override
         protected void response(List<GithubComment> issueComments) {
             for (GithubComment comment : issueComments) {
-                long time = getMilisFromDateClearDay(comment.created_at);
-                IssueStoryComment detail = new IssueStoryComment(comment);
-                detail.created_at = time;
-                storyDetailMap.add(detail);
+                long time = getMilisFromDate(comment.created_at);
+                List<IssueStoryDetail> details = storyDetailMap.get(time);
+                if (details == null) {
+                    details = new ArrayList<>();
+                    storyDetailMap.put(time, details);
+                }
+                details.add(new IssueStoryComment(comment));
             }
         }
     }
@@ -166,64 +232,32 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         protected void response(List<IssueEvent> issueEvents) {
-            List<IssueStoryDetail> details = new ArrayList<>();
-
-            Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
-            Map<Long, IssueStoryUnlabelList> unlabeledEvents = new HashMap<>();
             for (IssueEvent event : issueEvents) {
-                String createdAt = event.created_at;
-                long time = getMilisFromDateClearDay(createdAt);
-                if (event.event.equals("labeled")) {
-                    if (labeledEvents.get(time) == null) {
-                        labeledEvents.put(time, new IssueStoryLabelList());
-                        labeledEvents.get(time).created_at = time;
-                        labeledEvents.get(time).user = event.actor;
+                if (validEvent(event.event)) {
+                    long time = getMilisFromDate(event.created_at);
+                    List<IssueStoryDetail> details = storyDetailMap.get(time);
+                    if (details == null) {
+                        details = new ArrayList<>();
+                        storyDetailMap.put(time, details);
                     }
-                    labeledEvents.get(time).add(event.label);
-                } else if (event.event.equals("unlabeled")) {
-                    if (unlabeledEvents.get(time) == null) {
-                        unlabeledEvents.put(time, new IssueStoryUnlabelList());
-                        unlabeledEvents.get(time).created_at = time;
-                        unlabeledEvents.get(time).user = event.actor;
-                    }
-                    unlabeledEvents.get(time).add(event.label);
-                } else {
-                    IssueStoryEvent issueStoryEvent = new IssueStoryEvent(event);
-                    if (validEvent(issueStoryEvent.getType())) {
-                        issueStoryEvent.created_at = time;
-                        details.add(issueStoryEvent);
-                    }
+                    details.add(new IssueStoryEvent(event));
                 }
             }
-
-            for (Long aLong : labeledEvents.keySet()) {
-                IssueStoryLabelList issueLabels = labeledEvents.get(aLong);
-                issueLabels.created_at = aLong;
-                details.add(issueLabels);
-            }
-
-            for (Long aLong : unlabeledEvents.keySet()) {
-                IssueStoryUnlabelList issueLabels = unlabeledEvents.get(aLong);
-                issueLabels.created_at = aLong;
-                details.add(issueLabels);
-            }
-
-            storyDetailMap.addAll(details);
-        }
-
-        private boolean validEvent(String event) {
-            return !(event.equals("mentioned") ||
-                    event.equals("subscribed") ||
-                    event.equals("unsubscribed"));
         }
     }
 
-    private long getMilisFromDateClearDay(String createdAt) {
+    private long getMilisFromDate(String createdAt) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         DateTime dt = formatter.parseDateTime(createdAt);
 
-        return dt.minuteOfDay().roundFloorCopy().getMillis();
+        return dt.getMillis();
+    }
+
+    private boolean validEvent(String event) {
+        return !(event.equals("mentioned") ||
+                event.equals("subscribed") ||
+                event.equals("unsubscribed"));
     }
 
     @Override

@@ -22,4 +22,9 @@ public class GetGistDetailClient extends GithubClient<Gist> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(GistsService.class).gistDetail(id, this);
     }
+
+    @Override
+    protected Gist executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(GistsService.class).gistDetail(id);
+    }
 }

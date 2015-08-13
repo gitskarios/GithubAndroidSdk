@@ -1,8 +1,6 @@
 package com.alorma.github.sdk.services.repo;
 
-import com.alorma.github.sdk.bean.dto.request.RepoRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Branch;
-import com.alorma.github.sdk.bean.dto.response.CompareCommit;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.dto.response.Release;
@@ -60,6 +58,43 @@ public interface RepoService {
 
     @GET("/repos/{owner}/{name}/collaborators")
     void collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<User>> callback);
+
+    //Sync
+    @GET("/repos/{owner}/{name}")
+    Repo get(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/branches")
+    List<Branch> branches(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/contents")
+    List<Content> contents(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/contents")
+    List<Content> contentsByRef(@Path("owner") String owner, @Path("name") String repo, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/readme")
+    Content readme(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/readme")
+    Content readme(@Path("owner") String owner, @Path("name") String repo, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    List<Content> contents(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    List<Content> contentsByRef(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/stats/contributors")
+    List<Contributor> contributors(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/stats/contributors")
+    List<Contributor> contributors(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/collaborators")
+    List<User> collaborators(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/collaborators")
+    List<User> collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/releases")
     void releases(@Path("owner") String owner, @Path("name") String repo, Callback<List<Release>> callback);

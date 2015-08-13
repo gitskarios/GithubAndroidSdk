@@ -35,9 +35,23 @@ public abstract class GithubIssuesClient<K> extends GithubClient<K> {
 		}
 	}
 
+	@Override
+	protected K executeServiceSync(RestAdapter restAdapter) {
+		IssuesService issuesService = restAdapter.create(IssuesService.class);
+		if (page == 0) {
+			return executeFirstPageSync(issueInfo, issuesService);
+		} else {
+			return executePaginatedSync(issueInfo, page, issuesService);
+		}
+	}
+
 	protected abstract void executeFirstPage(IssueInfo issueInfo, IssuesService issuesService);
 
 	protected abstract void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService);
+
+	protected abstract K executeFirstPageSync(IssueInfo issueInfo, IssuesService issuesService);
+
+	protected abstract K executePaginatedSync(IssueInfo issueInfo, int page, IssuesService issuesService);
 
 	@Override
 	public String getAcceptHeader() {
