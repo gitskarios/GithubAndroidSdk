@@ -7,6 +7,7 @@ public class GithubComment extends ShaUrl {
 
     private static final int MAX_MESSAGE_LENGHT = 146;
 
+    public String id;
     public String body;
     public String body_html;
     public User user;

@@ -6,7 +6,7 @@ public class Commit extends ShaUrl {
 
     private static final int MAX_COMMIT_LENGHT = 80;
 
-    public Commit commit;
+    public GitCommit commit;
     public User author;
     public List<ShaUrl> parents;
     public GitChangeStatus stats;

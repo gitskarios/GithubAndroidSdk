@@ -1,5 +1,7 @@
 package com.alorma.github.sdk;
 
+import android.os.Parcel;
+
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.IssueState;
 import com.alorma.github.sdk.bean.dto.response.Links;
@@ -9,7 +11,7 @@ import com.alorma.github.sdk.bean.dto.response.User;
 /**
  * Created by Bernat on 30/05/2015.
  */
-public class PullRequest extends Issue{
+public  class PullRequest extends Issue{
     /*public String patch_url;
 
     public String diff_url;
@@ -85,4 +87,8 @@ public class PullRequest extends Issue{
     public boolean merged;
 
     public Boolean mergeable;
+
+    protected PullRequest(Parcel in) {
+        super(in);
+    }
 }
