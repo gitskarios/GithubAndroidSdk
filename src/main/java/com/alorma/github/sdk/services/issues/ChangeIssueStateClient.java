@@ -30,4 +30,9 @@ public class ChangeIssueStateClient extends GithubClient<Issue> {
 	protected void executeService(RestAdapter restAdapter) {
 		restAdapter.create(IssuesService.class).closeIssue(info.repoInfo.owner, info.repoInfo.name, info.num, issueRequest, this);
 	}
+
+	@Override
+	protected Issue executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(IssuesService.class).closeIssue(info.repoInfo.owner, info.repoInfo.name, info.num, issueRequest);
+	}
 }

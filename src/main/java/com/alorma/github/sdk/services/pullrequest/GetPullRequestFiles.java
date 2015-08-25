@@ -40,4 +40,14 @@ public class GetPullRequestFiles extends GithubClient<List<CommitFile>> {
         }
     }
 
+    @Override
+    protected List<CommitFile> executeServiceSync(RestAdapter restAdapter) {
+        PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
+        if (page == 0) {
+            return pullRequestsService.files(info.repoInfo.owner, info.repoInfo.name, info.num);
+        } else {
+            return pullRequestsService.files(info.repoInfo.owner, info.repoInfo.name, info.num, page);
+        }
+    }
+
 }

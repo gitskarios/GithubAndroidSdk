@@ -18,12 +18,10 @@ import retrofit.http.Query;
  * Created by Bernat on 18/02/2015.
  */
 public interface NotificationsService {
-	
+
+	//Async
 	@GET("/notifications")
 	void getNotifications(Callback<List<Notification>> notifications);
-
-	@GET("/notifications")
-	List<Notification> getNotifications();
 	
 	@PUT("/repos/{owner}/{repoInfo}/notifications")
 	void markAsReadRepo(@Path("owner") String owner, @Path("repoInfo") String repo, @Body LastDate body, Callback<Response> responseCallback);
@@ -36,4 +34,20 @@ public interface NotificationsService {
 
 	@PATCH("/notifications/threads/{id}/subscription")
 	void unsubscribeThread(@Path("id") String id, Callback<Response> callback);
+
+	//Sync
+	@GET("/notifications")
+	List<Notification> getNotifications();
+
+	@PUT("/repos/{owner}/{repoInfo}/notifications")
+	Response markAsReadRepo(@Path("owner") String owner, @Path("repoInfo") String repo, @Body LastDate body);
+
+	@PATCH("/notifications/threads/{id}")
+	Response markThreadAsRead(@Path("id") String id);
+
+	@PUT("/notifications/threads/{id}/subscription")
+	Response subscribeThread(@Path("id") String id, @Query("subscribed") boolean subscribed, @Query("ignored") boolean ignored);
+
+	@PATCH("/notifications/threads/{id}/subscription")
+	Response unsubscribeThread(@Path("id") String id);
 }

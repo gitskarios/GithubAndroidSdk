@@ -78,4 +78,60 @@ public interface RepoService {
 
     @PATCH("/repos/{owner}/{name}")
     void edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
+
+    //Sync
+    @GET("/repos/{owner}/{name}")
+    Repo get(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/branches")
+    List<Branch> branches(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/contents")
+    List<Content> contents(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/contents")
+    List<Content> contentsByRef(@Path("owner") String owner, @Path("name") String repo, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/readme")
+    Content readme(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/readme")
+    Content readme(@Path("owner") String owner, @Path("name") String repo, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    List<Content> contents(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    List<Content> contentsByRef(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/stats/contributors")
+    List<Contributor> contributors(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/stats/contributors")
+    List<Contributor> contributors(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/collaborators")
+    List<User> collaborators(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/collaborators")
+    List<User> collaborators(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/releases")
+    List<Release> releases(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/releases")
+    List<Release> releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/releases/latest")
+    Release lastRelease(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/compare/{base}...{head}")
+    CompareCommit compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head);
+
+    @DELETE("/repos/{owner}/{name}")
+    Response delete(@Path("owner") String owner, @Path("name") String repo);
+
+    @PATCH("/repos/{owner}/{name}")
+    Repo edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO);
+
 }

@@ -24,4 +24,9 @@ public class StarRepoClient extends GithubClient<Object> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(ActionsService.class).starRepo(owner, repo, this);
     }
+
+    @Override
+    protected Object executeServiceSync(RestAdapter restAdapter) {
+        return  restAdapter.create(ActionsService.class).starRepo(owner, repo);
+    }
 }

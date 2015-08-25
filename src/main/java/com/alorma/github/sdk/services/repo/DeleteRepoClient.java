@@ -19,4 +19,9 @@ public class DeleteRepoClient extends GithubRepoClient<Response> {
     protected void executeService(RepoService repoService) {
         repoService.delete(getOwner(), getRepo(), this);
     }
+
+    @Override
+    protected Response executeServiceSync(RepoService repoService) {
+        return repoService.delete(getOwner(), getRepo());
+    }
 }

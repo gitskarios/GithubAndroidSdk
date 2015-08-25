@@ -24,6 +24,7 @@ import retrofit.http.Query;
  */
 public interface IssuesService {
 
+    //Async
     @GET("/repos/{owner}/{name}/issues?sort=updated")
     void issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, Callback<List<Issue>> callback);
 
@@ -71,4 +72,54 @@ public interface IssuesService {
 
     @PATCH("/repos/{owner}/{name}/issues/{number}")
     void editIssue(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number, @Body EditIssueRequestDTO editIssueRequestDTO, Callback<Issue> callback);
+
+
+    //Sync
+    @GET("/repos/{owner}/{name}/issues?sort=updated")
+    List<Issue> issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state);
+
+    @GET("/repos/{owner}/{name}/issues?sort=updated")
+    List<Issue> issues(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page);
+
+    @POST("/repos/{owner}/{name}/issues")
+    Issue create(@Path("owner") String owner, @Path("name") String repo, @Body IssueRequest issue);
+
+    @GET("/repos/{owner}/{name}/issues/{num}")
+    Issue detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    List<GithubComment> comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    List<GithubComment> comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/events")
+    List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/events")
+    List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+    @PATCH("/repos/{owner}/{name}/issues/{num}")
+    Issue closeIssue(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body IssueRequest issueRequest);
+
+    @POST("/repos/{owner}/{name}/issues/{num}/comments")
+    GithubComment addComment(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Body GithubComment comment);
+
+    @GET("/repos/{owner}/{name}/milestones")
+    List<Milestone> milestones(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/milestones")
+    List<Milestone> milestones(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/labels")
+    List<Label> labels(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/labels")
+    List<Label> labels(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+
+    @POST("/repos/{owner}/{name}/milestones")
+    Milestone createMilestone(@Path("owner") String owner, @Path("name") String repo, @Body CreateMilestoneRequestDTO createMilestoneRequestDTO);
+
+    @PATCH("/repos/{owner}/{name}/issues/{number}")
+    Issue editIssue(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number, @Body EditIssueRequestDTO editIssueRequestDTO);
 }

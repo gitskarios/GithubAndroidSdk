@@ -37,6 +37,30 @@ public class GetReadmeContentsClient extends GithubRepoClient<String> {
         }
     }
 
+    @Override
+    protected String executeServiceSync(RepoService repoService) {
+        Content content;
+        if (getBranch() == null) {
+            content = repoService.readme(getOwner(), getRepo());
+        } else {
+            content = repoService.readme(getOwner(), getRepo(), getBranch());
+        }
+
+        RequestMarkdownDTO requestMarkdownDTO = new RequestMarkdownDTO();
+        if ("base64".equals(content.encoding)) {
+            byte[] data = Base64.decode(content.content, Base64.DEFAULT);
+            try {
+                content.content = new String(data, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        requestMarkdownDTO.text = content.content;
+        GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO, handler);
+        return markdownClient.executeSync();
+    }
+
     public void setCallback(OnResultCallback<String> callback) {
         this.callback = callback;
     }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.alorma.github.sdk.R;
+import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.utils.GitskariosSettings;
@@ -71,6 +72,14 @@ public class GetArchiveLinkService extends GithubClient {
 				}
 			}
 		});
+	}
+
+	@Override
+	protected Object executeServiceSync(RestAdapter restAdapter) {
+		GitskariosSettings settings = new GitskariosSettings(context);
+		String zipBall = context.getString(R.string.download_zip_value);
+		String fileType = settings.getDownloadFileType(zipBall);
+		return restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch);
 	}
 
 	public void setOnDownloadServiceListener(OnDownloadServiceListener onDownloadServiceListener) {

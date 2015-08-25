@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.PaginationLink;
@@ -51,9 +52,9 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     @Override
-    protected void executeService(RestAdapter adapter) {
+    protected void executeService(RestAdapter restAdapter) {
 
-        IssueStoryService issueStoryService = adapter.create(IssueStoryService.class);
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
 
         issueStory = new IssueStory();
         storyDetailMap = new ArrayList<>();
@@ -61,13 +62,51 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         new IssueCallback(issueInfo, issueStoryService).execute();
     }
 
-    private void parseIssueStoryDetails() {
+    @Override
+    protected IssueStory executeServiceSync(RestAdapter restAdapter) {
+        issueStory = new IssueStory();
+        storyDetailMap = new ArrayList<>();
+
+        int page = 1;
+        boolean hasMore;
+
+
+        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
+        issueStory.issue = issueStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+
+        while(true){
+            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = issueComments != null && !issueComments.isEmpty();
+            if (!hasMore) break;
+            for (GithubComment comment : issueComments) {
+                long time = getMilisFromDateClearDay(comment.created_at);
+                IssueStoryComment detail = new IssueStoryComment(comment);
+                detail.created_at = time;
+                storyDetailMap.add(detail);
+            }
+            page++;
+        }
+
+        page = 1;
+        hasMore = true;
+
+        while(hasMore){
+            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
+            hasMore = addEvents(issueEvents);
+            page++;
+        }
+
+        return parseIssueStoryDetails();
+    }
+
+    private IssueStory parseIssueStoryDetails() {
         Collections.sort(storyDetailMap, IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
         issueStory.details = storyDetailMap;
 
         if (getOnResultCallback() != null) {
             getOnResultCallback().onResponseOk(issueStory, null);
         }
+        return issueStory;
     }
 
     private class IssueCallback extends BaseInfiniteCallback<Issue> {
@@ -166,56 +205,54 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
         @Override
         protected void response(List<IssueEvent> issueEvents) {
-            List<IssueStoryDetail> details = new ArrayList<>();
+            addEvents(issueEvents);
+        }
+    }
 
-            Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
-            Map<Long, IssueStoryUnlabelList> unlabeledEvents = new HashMap<>();
-            for (IssueEvent event : issueEvents) {
-                String createdAt = event.created_at;
-                long time = getMilisFromDateClearDay(createdAt);
-                if (event.event.equals("labeled")) {
-                    if (labeledEvents.get(time) == null) {
-                        labeledEvents.put(time, new IssueStoryLabelList());
-                        labeledEvents.get(time).created_at = time;
-                        labeledEvents.get(time).user = event.actor;
-                    }
-                    labeledEvents.get(time).add(event.label);
-                } else if (event.event.equals("unlabeled")) {
-                    if (unlabeledEvents.get(time) == null) {
-                        unlabeledEvents.put(time, new IssueStoryUnlabelList());
-                        unlabeledEvents.get(time).created_at = time;
-                        unlabeledEvents.get(time).user = event.actor;
-                    }
-                    unlabeledEvents.get(time).add(event.label);
-                } else {
-                    IssueStoryEvent issueStoryEvent = new IssueStoryEvent(event);
-                    if (validEvent(issueStoryEvent.getType())) {
-                        issueStoryEvent.created_at = time;
-                        details.add(issueStoryEvent);
-                    }
+    private boolean addEvents(List<IssueEvent> issueEvents){
+        List<IssueStoryDetail> details = new ArrayList<>();
+
+        Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
+        Map<Long, IssueStoryUnlabelList> unlabeledEvents = new HashMap<>();
+        for (IssueEvent event : issueEvents) {
+            String createdAt = event.created_at;
+            long time = getMilisFromDateClearDay(createdAt);
+            if (event.event.equals("labeled")) {
+                if (labeledEvents.get(time) == null) {
+                    labeledEvents.put(time, new IssueStoryLabelList());
+                    labeledEvents.get(time).created_at = time;
+                    labeledEvents.get(time).user = event.actor;
+                }
+                labeledEvents.get(time).add(event.label);
+            } else if (event.event.equals("unlabeled")) {
+                if (unlabeledEvents.get(time) == null) {
+                    unlabeledEvents.put(time, new IssueStoryUnlabelList());
+                    unlabeledEvents.get(time).created_at = time;
+                    unlabeledEvents.get(time).user = event.actor;
+                }
+                unlabeledEvents.get(time).add(event.label);
+            } else {
+                IssueStoryEvent issueStoryEvent = new IssueStoryEvent(event);
+                if (validEvent(issueStoryEvent.getType())) {
+                    issueStoryEvent.created_at = time;
+                    details.add(issueStoryEvent);
                 }
             }
-
-            for (Long aLong : labeledEvents.keySet()) {
-                IssueStoryLabelList issueLabels = labeledEvents.get(aLong);
-                issueLabels.created_at = aLong;
-                details.add(issueLabels);
-            }
-
-            for (Long aLong : unlabeledEvents.keySet()) {
-                IssueStoryUnlabelList issueLabels = unlabeledEvents.get(aLong);
-                issueLabels.created_at = aLong;
-                details.add(issueLabels);
-            }
-
-            storyDetailMap.addAll(details);
         }
 
-        private boolean validEvent(String event) {
-            return !(event.equals("mentioned") ||
-                    event.equals("subscribed") ||
-                    event.equals("unsubscribed"));
+        for (Long aLong : labeledEvents.keySet()) {
+            IssueStoryLabelList issueLabels = labeledEvents.get(aLong);
+            issueLabels.created_at = aLong;
+            details.add(issueLabels);
         }
+
+        for (Long aLong : unlabeledEvents.keySet()) {
+            IssueStoryUnlabelList issueLabels = unlabeledEvents.get(aLong);
+            issueLabels.created_at = aLong;
+            details.add(issueLabels);
+        }
+
+        return storyDetailMap.addAll(details);
     }
 
     private long getMilisFromDateClearDay(String createdAt) {
@@ -224,6 +261,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         DateTime dt = formatter.parseDateTime(createdAt);
 
         return dt.minuteOfDay().roundFloorCopy().getMillis();
+    }
+
+    private boolean validEvent(String event) {
+        return !(event.equals("mentioned") ||
+                event.equals("subscribed") ||
+                event.equals("unsubscribed"));
     }
 
     @Override

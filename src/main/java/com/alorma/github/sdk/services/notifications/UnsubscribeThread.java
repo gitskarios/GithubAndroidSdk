@@ -24,4 +24,9 @@ public class UnsubscribeThread extends GithubClient<Response> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(NotificationsService.class).unsubscribeThread(String.valueOf(notification.id), this);
     }
+
+    @Override
+    protected Response executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(NotificationsService.class).unsubscribeThread(String.valueOf(notification.id));
+    }
 }

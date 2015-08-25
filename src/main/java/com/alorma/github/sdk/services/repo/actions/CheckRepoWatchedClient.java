@@ -21,7 +21,11 @@ public class CheckRepoWatchedClient extends GithubClient<Object> {
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        ActionsService actionsService = restAdapter.create(ActionsService.class);
-        actionsService.checkIfRepoIsWatched(owner, repo, this);
+        restAdapter.create(ActionsService.class).checkIfRepoIsWatched(owner, repo, this);
+    }
+
+    @Override
+    protected Object executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(ActionsService.class).checkIfRepoIsWatched(owner, repo);
     }
 }

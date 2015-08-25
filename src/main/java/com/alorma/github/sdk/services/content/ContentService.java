@@ -15,6 +15,7 @@ import retrofit.http.Query;
  */
 public interface ContentService {
 
+    //Async
     @POST("/markdown/raw")
     void markdown(@Body RequestMarkdownDTO readme, Callback<String> callback);
 
@@ -29,4 +30,20 @@ public interface ContentService {
 
     @GET("/repos/{owner}/{name}/{file_type}/{path}")
     void archiveLink(@Path("owner") String owner, @Path("name") String repo, @Path("file_type") String file_type, @Path(value="path", encode = false) String path, Callback<Object> callback);
+
+    //Sync
+    @POST("/markdown/raw")
+    String markdown(@Body RequestMarkdownDTO readme);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    Content fileContent(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    Content fileContentSha(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, @Query("sha") String sha);
+
+    @GET("/repos/{owner}/{name}/contents/{path}")
+    Content fileContentRef(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, @Query("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/{file_type}/{path}")
+    Object archiveLink(@Path("owner") String owner, @Path("name") String repo, @Path("file_type") String file_type, @Path(value="path", encode = false) String path);
 }

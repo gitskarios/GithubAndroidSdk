@@ -29,6 +29,11 @@ public class UnfollowUserClient extends GithubClient<Object> implements GithubCl
 	}
 
 	@Override
+	protected Object executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(UsersService.class).unfollowUser(username);
+	}
+
+	@Override
 	public void onResponseOk(Object o, Response r) {
 		if (r != null && r.getStatus() == 204) {
 			if (onCheckFollowingUser != null) {

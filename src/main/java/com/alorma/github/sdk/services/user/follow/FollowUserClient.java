@@ -29,6 +29,11 @@ public class FollowUserClient extends GithubClient<Object> implements GithubClie
 	}
 
 	@Override
+	protected Object executeServiceSync(RestAdapter restAdapter) {
+		return restAdapter.create(UsersService.class).followUser(username);
+	}
+
+	@Override
 	public void onResponseOk(Object o, Response r) {
 		if (r != null && r.getStatus() == 204) {
 			if (onCheckFollowingUser != null) {

@@ -2,6 +2,10 @@ package com.alorma.github.sdk.services.repos;
 
 import android.content.Context;
 
+import com.alorma.github.sdk.bean.dto.response.Repo;
+
+import java.util.List;
+
 public class UserReposFromOrganizationClient extends GithubReposClient {
 
     public UserReposFromOrganizationClient(Context context) {
@@ -30,6 +34,26 @@ public class UserReposFromOrganizationClient extends GithubReposClient {
     @Override
     protected void executePaginatedByUsername(String username, int page, String sort, ReposService usersService) {
 
+    }
+
+    @Override
+    protected List<Repo> executeUserFirstPageSync(String sort, ReposService usersService) {
+        return usersService.userReposListFromOrgs(sort);
+    }
+
+    @Override
+    protected List<Repo> executeFirstPageByUsernameSync(String username, String sort, ReposService usersService) {
+        return null;
+    }
+
+    @Override
+    protected List<Repo> executeUserPaginatedSync(int page, String sort, ReposService usersService) {
+        return usersService.userReposListFromOrgs(page, sort);
+    }
+
+    @Override
+    protected List<Repo> executePaginatedByUsernameSync(String username, int page, String sort, ReposService usersService) {
+        return null;
     }
 
     @Override

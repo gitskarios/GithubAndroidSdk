@@ -34,6 +34,15 @@ public class PostNewIssueClient extends GithubClient<Issue> {
     }
 
     @Override
+    protected Issue executeServiceSync(RestAdapter restAdapter) {
+        if (issue == null || issue.title == null) {
+            throw new RuntimeException("Issue or Issue title can not be null");
+        }
+        IssuesService service = restAdapter.create(IssuesService.class);
+        return service.create(repoInfo.owner, repoInfo.name, issue);
+    }
+
+    @Override
     public String getAcceptHeader() {
         return "application/vnd.github.v3.text+json";
     }

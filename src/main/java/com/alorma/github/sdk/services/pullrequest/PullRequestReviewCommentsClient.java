@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.pullrequest;
 
 import android.content.Context;
 
+import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -27,6 +28,19 @@ public class PullRequestReviewCommentsClient extends GithubClient<List<ReviewCom
     protected void executeService(RestAdapter restAdapter) {
         PullRequestsService service = restAdapter.create(PullRequestsService.class);
         new ReviewCommentsCallback(context, info, service, getOnResultCallback()).execute();
+    }
+
+    @Override
+    protected List<ReviewComment> executeServiceSync(RestAdapter restAdapter) {
+        PullRequestsService service = restAdapter.create(PullRequestsService.class);
+        List<ReviewComment> comments = new ArrayList<>();
+        boolean hasMore = true;
+        int page = 1;
+        while(hasMore) {
+            hasMore = comments.addAll(service.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, page));
+            page++;
+        }
+        return comments;
     }
 
     private class ReviewCommentsCallback extends BaseInfiniteCallback<List<ReviewComment>> {
