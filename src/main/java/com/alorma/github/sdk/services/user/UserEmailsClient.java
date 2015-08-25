@@ -19,4 +19,9 @@ public class UserEmailsClient extends GithubUsersClient<List<Email>> {
         usersService.userEmails(this);
     }
 
+    @Override
+    protected List<Email> executeServiceSync(UsersService usersService) {
+        return usersService.userEmails();
+    }
+
 }

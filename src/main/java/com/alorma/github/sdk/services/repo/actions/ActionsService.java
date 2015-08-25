@@ -12,6 +12,7 @@ import retrofit.http.Path;
  */
 public interface ActionsService {
 
+    //Async
     @GET("/user/starred/{owner}/{name}")
     void checkIfRepoIsStarred(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
 
@@ -31,5 +32,27 @@ public interface ActionsService {
 
     @DELETE("/user/subscriptions/{owner}/{name}")
     void unwatchRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
+
+
+    //Sync
+    @GET("/user/starred/{owner}/{name}")
+    Object checkIfRepoIsStarred(@Path("owner") String owner, @Path("name") String repo);
+
+    @Headers("Content-Length: 0")
+    @PUT("/user/starred/{owner}/{name}")
+    Object starRepo(@Path("owner") String owner, @Path("name") String repo);
+
+    @DELETE("/user/starred/{owner}/{name}")
+    Object unstarRepo(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/user/subscriptions/{owner}/{name}")
+    Object checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo);
+
+    @Headers("Content-Length: 0")
+    @PUT("/user/subscriptions/{owner}/{name}")
+    Object watchRepo(@Path("owner") String owner, @Path("name") String repo);
+
+    @DELETE("/user/subscriptions/{owner}/{name}")
+    Object unwatchRepo(@Path("owner") String owner, @Path("name") String repo);
 
 }

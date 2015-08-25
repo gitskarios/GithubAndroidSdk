@@ -30,4 +30,13 @@ public class GetRepoContributorsClient extends GithubRepoClient<List<Contributor
 			repoService.contributors(getOwner(), getRepo(), page, this);
 		}
     }
+
+	@Override
+	protected List<Contributor> executeServiceSync(RepoService repoService) {
+		if (page == 0) {
+			return repoService.contributors(getOwner(), getRepo());
+		} else {
+			return repoService.contributors(getOwner(), getRepo(), page);
+		}
+	}
 }

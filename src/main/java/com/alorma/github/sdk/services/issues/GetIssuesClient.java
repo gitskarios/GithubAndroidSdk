@@ -29,4 +29,14 @@ public class GetIssuesClient extends GithubIssuesClient<List<Issue>> {
 	protected void executePaginated(IssueInfo issueInfo, int page, IssuesService issuesService) {
 		issuesService.issues(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, String.valueOf(issueInfo.state), page, this);
 	}
+
+	@Override
+	protected List<Issue> executeFirstPageSync(IssueInfo issueInfo, IssuesService issuesService) {
+		return issuesService.issues(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, String.valueOf(issueInfo.state));
+	}
+
+	@Override
+	protected List<Issue> executePaginatedSync(IssueInfo issueInfo, int page, IssuesService issuesService) {
+		return issuesService.issues(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, String.valueOf(issueInfo.state), page);
+	}
 }

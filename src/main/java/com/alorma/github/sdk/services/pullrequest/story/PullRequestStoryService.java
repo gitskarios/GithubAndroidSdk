@@ -11,8 +11,12 @@ import retrofit.http.Path;
  */
 public interface PullRequestStoryService {
 
+    //Async
     @GET("/repos/{owner}/{name}/pulls/{num}")
     void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<PullRequest> issueCallback);
 
+    //Sync
+    @GET("/repos/{owner}/{name}/pulls/{num}")
+    PullRequest detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
 
 }

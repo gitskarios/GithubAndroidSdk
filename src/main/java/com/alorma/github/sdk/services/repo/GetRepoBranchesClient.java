@@ -20,4 +20,9 @@ public class GetRepoBranchesClient extends GithubRepoClient<List<Branch>> {
 	protected void executeService(RepoService repoService) {
 		repoService.branches(getOwner(), getRepo(), this);
 	}
+
+	@Override
+	protected List<Branch> executeServiceSync(RepoService repoService) {
+		return repoService.branches(getOwner(), getRepo());
+	}
 }

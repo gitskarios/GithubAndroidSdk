@@ -33,6 +33,14 @@ public class MarkRepoNotificationsRead extends GithubClient<Response> {
 	}
 
 	@Override
+	protected Response executeServiceSync(RestAdapter restAdapter) {
+		DateTime dateTime = DateTime.now().withZone(DateTimeZone.UTC);
+		String date = ISODateTimeFormat.date().print(dateTime);
+		LastDate lastDate = new LastDate(date);
+		return restAdapter.create(NotificationsService.class).markAsReadRepo(repoInfo.owner, repoInfo.name, lastDate);
+	}
+
+	@Override
 	public String getAcceptHeader() {
 		return "application/json";
 	}

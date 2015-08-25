@@ -21,7 +21,11 @@ public class CheckRepoStarredClient extends GithubClient<Object> {
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        ActionsService actionsService = restAdapter.create(ActionsService.class);
-        actionsService.checkIfRepoIsStarred(owner, repo, this);
+        restAdapter.create(ActionsService.class).checkIfRepoIsStarred(owner, repo, this);
+    }
+
+    @Override
+    protected Object executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(ActionsService.class).checkIfRepoIsStarred(owner, repo);
     }
 }

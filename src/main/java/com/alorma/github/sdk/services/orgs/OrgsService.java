@@ -14,6 +14,7 @@ import retrofit.http.Query;
  */
 public interface OrgsService {
 
+	//Async
 	@GET("/user/orgs")
 	void orgs(Callback<List<Organization>> callback);
 
@@ -25,5 +26,18 @@ public interface OrgsService {
 
 	@GET("/users/{username}/orgs")
 	void orgsByUser(@Path("username") String username, @Query("page") int page, Callback<List<Organization>> callback);
+
+	//Sync
+	@GET("/user/orgs")
+	List<Organization> orgs();
+
+	@GET("/users/{username}/orgs")
+	List<Organization> orgsByUser(@Path("username") String username);
+
+	@GET("/user/orgs")
+	List<Organization> orgs(@Query("page") int page);
+
+	@GET("/users/{username}/orgs")
+	List<Organization> orgsByUser(@Path("username") String username, @Query("page") int page);
 
 }

@@ -31,4 +31,13 @@ public class GetRepoCollaboratorsClient extends GithubRepoClient<List<User>> {
             repoService.collaborators(getOwner(), getRepo(), page, this);
         }
     }
+
+    @Override
+    protected List<User> executeServiceSync(RepoService repoService) {
+        if (page == 0) {
+            return repoService.collaborators(getOwner(), getRepo());
+        } else {
+            return repoService.collaborators(getOwner(), getRepo(), page);
+        }
+    }
 }

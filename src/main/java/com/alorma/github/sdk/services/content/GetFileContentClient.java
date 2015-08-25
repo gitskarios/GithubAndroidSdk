@@ -33,4 +33,17 @@ public class GetFileContentClient extends GithubClient<Content> {
             contentService.fileContent(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, this);
         }
     }
+
+    @Override
+    protected Content executeServiceSync(RestAdapter restAdapter) {
+        ContentService contentService = restAdapter.create(ContentService.class);
+
+        if (fileInfo.head != null) {
+            return contentService.fileContentSha(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, fileInfo.head);
+        } else if (fileInfo.repoInfo.branch != null) {
+            return contentService.fileContentRef(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path, fileInfo.repoInfo.branch);
+        } else {
+            return contentService.fileContent(fileInfo.repoInfo.owner, fileInfo.repoInfo.name, fileInfo.path);
+        }
+    }
 }

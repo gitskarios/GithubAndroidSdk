@@ -24,4 +24,9 @@ public class MarkNotificationAsRead extends GithubClient<Response> {
     protected void executeService(RestAdapter restAdapter) {
         restAdapter.create(NotificationsService.class).markThreadAsRead(String.valueOf(notification.id), this);
     }
+
+    @Override
+    protected Response executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(NotificationsService.class).markThreadAsRead(String.valueOf(notification.id));
+    }
 }

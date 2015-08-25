@@ -21,6 +21,14 @@ public abstract class GithubUsersClient<K> extends GithubClient<K> {
         executeService(usersService);
     }
 
+    @Override
+    protected K executeServiceSync(RestAdapter restAdapter) {
+        UsersService usersService = restAdapter.create(UsersService.class);
+        return executeServiceSync(usersService);
+    }
+
     protected abstract void executeService(UsersService usersService);
+
+    protected abstract K executeServiceSync(UsersService usersService);
 
 }
