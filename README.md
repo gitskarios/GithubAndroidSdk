@@ -15,7 +15,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-    classpath 'com.android.tools.build:gradle:1.2.3'
+    classpath 'com.android.tools.build:gradle:X.X.X'
     }
 }
 
@@ -40,7 +40,7 @@ Add dependency in your project `build.gradle`
 ``` groovy
 
 
-    compile 'com.github.alorma:github-sdk:1.0.1'
+    compile 'com.github.alorma:github-sdk:1.1.0'
 ```
 
 ## FORK
