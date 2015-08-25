@@ -15,11 +15,11 @@ import retrofit.RestAdapter;
 /**
  * Created by a557114 on 25/07/2015.
  */
-public class PullRequestReviewCommentsCLient extends GithubClient<List<ReviewComment>> {
+public class PullRequestReviewCommentsClient extends GithubClient<List<ReviewComment>> {
 
     private IssueInfo info;
 
-    public PullRequestReviewCommentsCLient(Context context, IssueInfo info) {
+    public PullRequestReviewCommentsClient(Context context, IssueInfo info) {
         super(context);
         this.info = info;
     }
