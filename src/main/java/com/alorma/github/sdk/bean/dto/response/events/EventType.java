@@ -11,6 +11,7 @@ public enum EventType {
 	FollowEvent,
 	ForkEvent,
 	GistEvent,
+	GollumEvent,
 	IssueCommentEvent,
 	IssuesEvent,
 	MemberEvent,

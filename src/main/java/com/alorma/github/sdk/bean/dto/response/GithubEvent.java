@@ -11,6 +11,7 @@ public class GithubEvent {
 	public EventType type = EventType.Unhandled;
 	public String name;
 	public User actor;
+	public User org;
 	public Repo repo;
 	public Object payload;
 
