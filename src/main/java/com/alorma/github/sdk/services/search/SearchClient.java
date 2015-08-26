@@ -29,7 +29,7 @@ public interface SearchClient {
     @GET("/search/users")
     void users(@Query("q") String query, Callback<UsersSearch> callback);
 	
-	@GET("/search/repositories")
+	@GET("/search/users")
 	void usersPaginated(@Query("q") String query, @Query("page") int page, Callback<UsersSearch> callback);
 
     //Sync
@@ -48,7 +48,7 @@ public interface SearchClient {
     @GET("/search/users")
     UsersSearch users(@Query("q") String query);
 
-    @GET("/search/repositories")
+    @GET("/search/users")
     UsersSearch usersPaginated(@Query("q") String query, @Query("page") int page);
 
 }
