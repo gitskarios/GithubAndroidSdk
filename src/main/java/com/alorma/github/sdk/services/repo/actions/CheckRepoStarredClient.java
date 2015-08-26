@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alorma.github.basesdk.client.BaseClient;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.github.sdk.services.user.follow.OnCheckFollowingUser;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -13,7 +12,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 07/08/2014.
  */
-public class CheckRepoStarredClient extends GithubClient<Object> implements BaseClient.OnResultCallback<Object> {
+public class CheckRepoStarredClient extends GithubClient<Response> implements BaseClient.OnResultCallback<Response> {
     private String repo;
     private String owner;
     private OnCheckStarredRepo onCheckStarredRepo;
@@ -27,16 +26,16 @@ public class CheckRepoStarredClient extends GithubClient<Object> implements Base
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(ActionsService.class).checkIfRepoIsStarred(owner, repo, this);
+        restAdapter.create(RepoActionsService.class).checkIfRepoIsStarred(owner, repo, this);
     }
 
     @Override
-    protected Object executeServiceSync(RestAdapter restAdapter) {
-        return restAdapter.create(ActionsService.class).checkIfRepoIsStarred(owner, repo);
+    protected Response executeServiceSync(RestAdapter restAdapter) {
+        return restAdapter.create(RepoActionsService.class).checkIfRepoIsStarred(owner, repo);
     }
 
     @Override
-    public void onResponseOk(Object o, Response r) {
+    public void onResponseOk(Response o, Response r) {
         if (r != null && r.getStatus() == 204) {
             if (onCheckStarredRepo != null) {
                 onCheckStarredRepo.onCheckStarredRepo(repo, true);

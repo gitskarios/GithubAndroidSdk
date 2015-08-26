@@ -5,6 +5,10 @@ import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.dto.response.CompareCommit;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
+import com.alorma.github.sdk.bean.dto.response.Label;
+import com.alorma.github.sdk.bean.dto.response.Milestone;
+import com.alorma.github.sdk.bean.dto.response.MilestoneState;
 import com.alorma.github.sdk.bean.dto.response.Release;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.User;
@@ -25,6 +29,7 @@ import retrofit.http.Query;
  */
 public interface RepoService {
 
+    //Async
     @GET("/repos/{owner}/{name}")
     void get(@Path("owner") String owner, @Path("name") String repo, Callback<Repo> callback);
 
@@ -78,6 +83,12 @@ public interface RepoService {
 
     @PATCH("/repos/{owner}/{name}")
     void edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
+
+    @GET("/repos/{owner}/{name}/events")
+    void events(@Path("owner") String owner, @Path("name") String repo, Callback<List<GithubEvent>> eventsCallback);
+
+    @GET("/repos/{owner}/{name}/events")
+    void events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<GithubEvent>> eventsCallback);
 
     //Sync
     @GET("/repos/{owner}/{name}")
@@ -133,5 +144,11 @@ public interface RepoService {
 
     @PATCH("/repos/{owner}/{name}")
     Repo edit(@Path("owner") String owner, @Path("name") String repo, @Body RepoRequestDTO repoRequestDTO);
+
+    @GET("/repos/{owner}/{name}/events")
+    List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/events")
+    List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
 }

@@ -22,11 +22,11 @@ public class UnwatchRepoClient extends GithubClient<Object> {
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(ActionsService.class).unwatchRepo(owner, repo, this);
+        restAdapter.create(RepoActionsService.class).unwatchRepo(owner, repo, this);
     }
 
     @Override
     protected Object executeServiceSync(RestAdapter restAdapter) {
-        return restAdapter.create(ActionsService.class).unwatchRepo(owner, repo);
+        return restAdapter.create(RepoActionsService.class).unwatchRepo(owner, repo);
     }
 }
