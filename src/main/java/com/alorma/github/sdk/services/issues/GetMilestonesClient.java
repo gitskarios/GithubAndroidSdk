@@ -20,28 +20,30 @@ import retrofit.converter.Converter;
 public class GetMilestonesClient extends GithubClient<List<Milestone>> {
 
     private RepoInfo repoInfo;
+    private String state;
 
-    public GetMilestonesClient(Context context, RepoInfo repoInfo) {
+    public GetMilestonesClient(Context context, RepoInfo repoInfo, String state) {
         super(context);
         this.repoInfo = repoInfo;
+        this.state = state;
     }
 
     @Override
     protected void executeService(RestAdapter restAdapter) {
-        IssuesService issueStoryService = restAdapter.create(IssuesService.class);
-        new IssueMilestonesCallback(repoInfo, issueStoryService).execute();
+        IssuesService issuesService = restAdapter.create(IssuesService.class);
+        new IssueMilestonesCallback(repoInfo, issuesService).execute();
     }
 
     @Override
     protected List<Milestone> executeServiceSync(RestAdapter restAdapter) {
-        IssuesService issueStoryService = restAdapter.create(IssuesService.class);
+        IssuesService issuesService = restAdapter.create(IssuesService.class);
         List<Milestone> milestones = new ArrayList<>();
-        boolean hasMore = true;
-        int page = 1;
-        while(hasMore) {
-            hasMore = milestones.addAll(issueStoryService.milestones(repoInfo.owner, repoInfo.name, page));
-            page++;
-        }
+
+        milestones.addAll(issuesService.milestones(repoInfo.owner, repoInfo.name, state, 1));
+
+        for (int i = nextPage; i < lastPage; i++)
+            milestones.addAll(issuesService.milestones(repoInfo.owner, repoInfo.name, state, i));
+
         return milestones;
     }
 
@@ -59,12 +61,12 @@ public class GetMilestonesClient extends GithubClient<List<Milestone>> {
 
         @Override
         public void execute() {
-            service.milestones(repoInfo.owner, repoInfo.name, this);
+            service.milestones(repoInfo.owner, repoInfo.name, state, this);
         }
 
         @Override
         protected void executePaginated(int nextPage) {
-            service.milestones(repoInfo.owner, repoInfo.name, nextPage, this);
+            service.milestones(repoInfo.owner, repoInfo.name, state, nextPage, this);
         }
 
         @Override
