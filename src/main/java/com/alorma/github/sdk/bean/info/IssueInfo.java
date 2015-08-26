@@ -25,7 +25,7 @@ public class IssueInfo implements Parcelable {
     }
 
     protected IssueInfo(Parcel in) {
-        repoInfo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
+        repoInfo = in.readParcelable(RepoInfo.class.getClassLoader());
         num = in.readInt();
         commentNum = in.readInt();
         int stateValue = in.readInt();
@@ -39,7 +39,7 @@ public class IssueInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(repoInfo);
+        dest.writeParcelable(repoInfo, flags);
         dest.writeInt(num);
         dest.writeInt(commentNum);
         dest.writeInt(state.value);

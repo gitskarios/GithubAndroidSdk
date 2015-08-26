@@ -34,12 +34,12 @@ public class PullRequestReviewCommentsClient extends GithubClient<List<ReviewCom
     protected List<ReviewComment> executeServiceSync(RestAdapter restAdapter) {
         PullRequestsService service = restAdapter.create(PullRequestsService.class);
         List<ReviewComment> comments = new ArrayList<>();
-        boolean hasMore = true;
-        int page = 1;
-        while(hasMore) {
-            hasMore = comments.addAll(service.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, page));
-            page++;
-        }
+
+        comments.addAll(service.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, 1));
+
+        for (int i = nextPage; i < lastPage; i++)
+            comments.addAll(service.reviewComments(info.repoInfo.owner, info.repoInfo.name, info.num, i));
+
         return comments;
     }
 

@@ -1,5 +1,7 @@
 package com.alorma.github.sdk.services.orgs;
 
+import com.alorma.github.sdk.bean.dto.response.GithubComment;
+import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Organization;
 
 import java.util.List;
@@ -27,6 +29,12 @@ public interface OrgsService {
 	@GET("/users/{username}/orgs")
 	void orgsByUser(@Path("username") String username, @Query("page") int page, Callback<List<Organization>> callback);
 
+	@GET("/users/{username}/events/orgs/{org}")
+	void events(@Path("username")String username, @Path("org") String org, Callback<List<GithubEvent>> callback);
+
+	@GET("/users/{username}/events/orgs/{org}")
+	void events(@Path("username")String username, @Path("org") String org, @Query("page") int page, Callback<List<GithubEvent>> callback);
+
 	//Sync
 	@GET("/user/orgs")
 	List<Organization> orgs();
@@ -40,4 +48,9 @@ public interface OrgsService {
 	@GET("/users/{username}/orgs")
 	List<Organization> orgsByUser(@Path("username") String username, @Query("page") int page);
 
+	@GET("/users/{username}/events/orgs/{org}")
+	List<GithubEvent> events(@Path("username")String username, @Path("org") String org);
+
+	@GET("/users/{username}/events/orgs/{org}")
+	List<GithubEvent> events(@Path("username")String username, @Path("org") String org, @Query("page") int page);
 }

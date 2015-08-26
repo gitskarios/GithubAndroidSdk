@@ -22,7 +22,7 @@ public class RepoInfo implements Parcelable {
 		owner = in.readString();
 		name = in.readString();
 		branch = in.readString();
-		permissions = (Permissions) in.readValue(Permissions.class.getClassLoader());
+		permissions = in.readParcelable(Permissions.class.getClassLoader());
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class RepoInfo implements Parcelable {
 		dest.writeString(owner);
 		dest.writeString(name);
 		dest.writeString(branch);
-		dest.writeValue(permissions);
+		dest.writeParcelable(permissions, flags);
 	}
 
 	@SuppressWarnings("unused")

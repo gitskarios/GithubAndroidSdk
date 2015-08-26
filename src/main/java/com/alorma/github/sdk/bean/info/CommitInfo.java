@@ -15,7 +15,7 @@ public class CommitInfo implements Parcelable {
     }
 
     protected CommitInfo(Parcel in) {
-        repoInfo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
+        repoInfo = in.readParcelable(RepoInfo.class.getClassLoader());
         sha = in.readString();
     }
 
@@ -26,7 +26,7 @@ public class CommitInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(repoInfo);
+        dest.writeParcelable(repoInfo, flags);
         dest.writeString(sha);
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.user.UsersService;
 
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -25,12 +26,12 @@ public class FollowUserClient extends GithubClient<Object> implements GithubClie
 
 	@Override
 	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(UsersService.class).followUser(username, this);
+		restAdapter.create(UsersService.class).followUser("", username, this);
 	}
 
 	@Override
 	protected Object executeServiceSync(RestAdapter restAdapter) {
-		return restAdapter.create(UsersService.class).followUser(username);
+		return restAdapter.create(UsersService.class).followUser("", username);
 	}
 
 	@Override
@@ -55,4 +56,9 @@ public class FollowUserClient extends GithubClient<Object> implements GithubClie
 		this.onCheckFollowingUser = onCheckFollowingUser;
 	}
 
+	@Override
+	public void intercept(RequestFacade request) {
+		super.intercept(request);
+		request.addHeader("Content-Length", "0");
+	}
 }

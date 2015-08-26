@@ -5,8 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-public class User extends Organization implements Parcelable {
-
+public class User extends Organization {
 
     public boolean hireable;
 	
@@ -34,26 +33,12 @@ public class User extends Organization implements Parcelable {
     public UserPlan plan;
 
     public User() {
-
+        super();
     }
 
     protected User(Parcel in) {
-        id = in.readInt();
-        login = in.readString();
-        name = in.readString();
-        company = in.readString();
-        long tmpCreated_at = in.readLong();
-        created_at = tmpCreated_at != -1 ? new Date(tmpCreated_at) : null;
-        long tmpUpdated_at = in.readLong();
-        updated_at = tmpUpdated_at != -1 ? new Date(tmpUpdated_at) : null;
+        super(in);
         hireable = in.readByte() != 0x00;
-        avatar_url = in.readString();
-        gravatar_id = in.readString();
-        blog = in.readString();
-        bio = in.readString();
-        email = in.readString();
-        location = in.readString();
-        html_url = in.readString();
         followers_url = in.readString();
         following_url = in.readString();
         gists_url = in.readString();
@@ -64,43 +49,25 @@ public class User extends Organization implements Parcelable {
         events_url = in.readString();
         date = in.readString();
         received_events_url = in.readString();
-        type = (UserType) in.readValue(UserType.class.getClassLoader());
-        site_admin = in.readByte() != 0x00;
-        public_repos = in.readInt();
-        public_gists = in.readInt();
 		private_gists = in.readInt();
         owned_public_repos = in.readInt();
         owned_private_repos = in.readInt();
         total_public_repos = in.readInt();
         total_private_repos = in.readInt();
-        followers = in.readInt();
-        following = in.readInt();
         collaborators = in.readInt();
         disk_usage = in.readInt();
-        plan = (UserPlan) in.readValue(UserPlan.class.getClassLoader());
+        plan = in.readParcelable(UserPlan.class.getClassLoader());
     }
 
     @Override
     public int describeContents() {
-        return 0;
+        return super.describeContents();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(login);
-        dest.writeString(name);
-        dest.writeString(company);
-        dest.writeLong(created_at != null ? created_at.getTime() : -1L);
-        dest.writeLong(updated_at != null ? updated_at.getTime() : -1L);
+        super.writeToParcel(dest, flags);
         dest.writeByte((byte) (hireable ? 0x01 : 0x00));
-        dest.writeString(avatar_url);
-        dest.writeString(gravatar_id);
-        dest.writeString(blog);
-        dest.writeString(bio);
-        dest.writeString(email);
-        dest.writeString(location);
-        dest.writeString(html_url);
         dest.writeString(followers_url);
         dest.writeString(following_url);
         dest.writeString(gists_url);
@@ -111,20 +78,14 @@ public class User extends Organization implements Parcelable {
         dest.writeString(events_url);
         dest.writeString(date);
         dest.writeString(received_events_url);
-        dest.writeValue(type);
-        dest.writeByte((byte) (site_admin ? 0x01 : 0x00));
-        dest.writeInt(public_repos);
-        dest.writeInt(public_gists);
         dest.writeInt(private_gists);
         dest.writeInt(owned_public_repos);
         dest.writeInt(owned_private_repos);
         dest.writeInt(total_public_repos);
         dest.writeInt(total_private_repos);
-        dest.writeInt(followers);
-        dest.writeInt(following);
         dest.writeInt(collaborators);
         dest.writeInt(disk_usage);
-        dest.writeValue(plan);
+        dest.writeParcelable(plan, flags);
     }
 
     @SuppressWarnings("unused")

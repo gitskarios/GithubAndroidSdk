@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import android.os.BadParcelableException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 /**
  * Created by Bernat on 13/07/2014.
  */
-public class Repo extends ShaUrl implements Parcelable {
+public class Repo extends ShaUrl {
 
 	public boolean fork;
 
@@ -123,10 +124,11 @@ public class Repo extends ShaUrl implements Parcelable {
 	}
 
 	public Repo() {
-
+		super();
 	}
 
 	protected Repo(Parcel in) {
+		super(in);
 		fork = in.readByte() != 0x00;
 		isPrivate = in.readByte() != 0x00;
 		long tmpCreated_at = in.readLong();
@@ -137,8 +139,8 @@ public class Repo extends ShaUrl implements Parcelable {
 		updated_at = tmpUpdated_at != -1 ? new Date(tmpUpdated_at) : null;
 		forks_count = in.readInt();
 		id = in.readLong();
-		parent = (Repo) in.readValue(Repo.class.getClassLoader());
-		source = (Repo) in.readValue(Repo.class.getClassLoader());
+		parent = in.readParcelable(Repo.class.getClassLoader());
+		source = in.readParcelable(Repo.class.getClassLoader());
 		clone_url = in.readString();
 		description = in.readString();
 		homepage = in.readString();
@@ -152,7 +154,7 @@ public class Repo extends ShaUrl implements Parcelable {
 		ssh_url = in.readString();
 		svn_url = in.readString();
 		url = in.readString();
-		owner = (User) in.readValue(User.class.getClassLoader());
+		owner = in.readParcelable(User.class.getClassLoader());
 		stargazers_count = in.readInt();
 		watchers_count = in.readInt();
 		size = in.readInt();
@@ -160,16 +162,17 @@ public class Repo extends ShaUrl implements Parcelable {
 		has_issues = in.readByte() != 0x00;
 		has_downloads = in.readByte() != 0x00;
 		has_wiki = in.readByte() != 0x00;
-		permissions = (Permissions) in.readValue(Permissions.class.getClassLoader());
+		permissions = in.readParcelable(Permissions.class.getClassLoader());
 	}
 
 	@Override
 	public int describeContents() {
-		return 0;
+		return super.describeContents();
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		super.writeToParcel(dest, flags);
 		dest.writeByte((byte) (fork ? 0x01 : 0x00));
 		dest.writeByte((byte) (isPrivate ? 0x01 : 0x00));
 		dest.writeLong(created_at != null ? created_at.getTime() : -1L);
@@ -177,8 +180,8 @@ public class Repo extends ShaUrl implements Parcelable {
 		dest.writeLong(updated_at != null ? updated_at.getTime() : -1L);
 		dest.writeInt(forks_count);
 		dest.writeLong(id);
-		dest.writeValue(parent);
-		dest.writeValue(source);
+		dest.writeParcelable(parent, flags);
+		dest.writeParcelable(source, flags);
 		dest.writeString(clone_url);
 		dest.writeString(description);
 		dest.writeString(homepage);
@@ -192,7 +195,7 @@ public class Repo extends ShaUrl implements Parcelable {
 		dest.writeString(ssh_url);
 		dest.writeString(svn_url);
 		dest.writeString(url);
-		dest.writeValue(owner);
+		dest.writeParcelable(owner, flags);
 		dest.writeInt(stargazers_count);
 		dest.writeInt(watchers_count);
 		dest.writeInt(size);
@@ -200,7 +203,7 @@ public class Repo extends ShaUrl implements Parcelable {
 		dest.writeByte((byte) (has_issues ? 0x01 : 0x00));
 		dest.writeByte((byte) (has_downloads ? 0x01 : 0x00));
 		dest.writeByte((byte) (has_wiki ? 0x01 : 0x00));
-		dest.writeValue(permissions);
+		dest.writeParcelable(permissions, flags);
 	}
 
 	@SuppressWarnings("unused")

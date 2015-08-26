@@ -67,34 +67,21 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         issueStory = new IssueStory();
         storyDetailMap = new ArrayList<>();
 
-        int page = 1;
-        boolean hasMore;
-
 
         IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
         issueStory.issue = issueStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
 
-        while(true){
-            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
-            hasMore = issueComments != null && !issueComments.isEmpty();
-            if (!hasMore) break;
-            for (GithubComment comment : issueComments) {
-                long time = getMilisFromDateClearDay(comment.created_at);
-                IssueStoryComment detail = new IssueStoryComment(comment);
-                detail.created_at = time;
-                storyDetailMap.add(detail);
-            }
-            page++;
-        }
+        addComments(issueStoryService.comments(issueInfo.repoInfo.owner,
+                issueInfo.repoInfo.name, issueInfo.num, 1));
 
-        page = 1;
-        hasMore = true;
+        for (int i = nextPage; i < lastPage; i++)
+            addComments(issueStoryService.comments(issueInfo.repoInfo.owner,
+                    issueInfo.repoInfo.name, issueInfo.num, i));
 
-        while(hasMore){
-            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
-            hasMore = addEvents(issueEvents);
-            page++;
-        }
+        addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, 1));
+
+        for (int i = nextPage; i < lastPage; i++)
+            addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, i));
 
         return parseIssueStoryDetails();
     }
@@ -209,7 +196,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         }
     }
 
-    private boolean addEvents(List<IssueEvent> issueEvents){
+    private void addEvents(List<IssueEvent> issueEvents){
         List<IssueStoryDetail> details = new ArrayList<>();
 
         Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
@@ -251,8 +238,16 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
             issueLabels.created_at = aLong;
             details.add(issueLabels);
         }
+        storyDetailMap.addAll(details);
+    }
 
-        return storyDetailMap.addAll(details);
+    private void addComments(List<GithubComment> issueComments){
+        for (GithubComment comment : issueComments) {
+            long time = getMilisFromDateClearDay(comment.created_at);
+            IssueStoryComment detail = new IssueStoryComment(comment);
+            detail.created_at = time;
+            storyDetailMap.add(detail);
+        }
     }
 
     private long getMilisFromDateClearDay(String createdAt) {

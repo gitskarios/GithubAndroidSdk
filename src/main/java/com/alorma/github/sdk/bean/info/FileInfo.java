@@ -18,7 +18,7 @@ public class FileInfo implements Parcelable {
     }
 
     protected FileInfo(Parcel in) {
-        repoInfo = (RepoInfo) in.readValue(RepoInfo.class.getClassLoader());
+        repoInfo = in.readParcelable(RepoInfo.class.getClassLoader());
         path = in.readString();
         content = in.readString();
         name = in.readString();
@@ -32,7 +32,7 @@ public class FileInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(repoInfo);
+        dest.writeParcelable(repoInfo, flags);
         dest.writeString(path);
         dest.writeString(content);
         dest.writeString(name);

@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.orgs.teams;
 
 import com.alorma.github.sdk.bean.dto.response.Team;
+import com.alorma.github.sdk.bean.dto.response.User;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ public interface TeamsService {
 	@GET("/orgs/{org}/teams")
 	void teams(@Path("org") String org, @Query("page") int page, Callback<List<Team>> callback);
 
+	@GET("/teams/{id}/members")
+	void members(@Path("id") String id, Callback<List<User>> callback);
+
+	@GET("/teams/{id}/members")
+	void members(@Path("id") String id, @Query("page") int page, Callback<List<User>> callback);
+
 
 	//Sync
 	@GET("/orgs/{org}/teams")
@@ -28,4 +35,10 @@ public interface TeamsService {
 
 	@GET("/orgs/{org}/teams")
 	List<Team> teams(@Path("org") String org, @Query("page") int page);
+
+	@GET("/teams/{id}/members")
+	List<User> members(@Path("id") String id);
+
+	@GET("/teams/{id}/members")
+	List<User> members(@Path("id") String id, @Query("page") int page);
 }
