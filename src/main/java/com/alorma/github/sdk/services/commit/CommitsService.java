@@ -1,12 +1,15 @@
 package com.alorma.github.sdk.services.commit;
 
+import com.alorma.github.sdk.bean.dto.request.CommitCommentRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
 
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -48,7 +51,12 @@ public interface CommitsService {
     void commitsByPath(@Path("owner") String owner, @Path("name") String repo, @Query("path") String path, @Query("sha") String sha, Callback<List<Commit>> callback);
 
     @GET("/repos/{owner}/{name}/commits")
-    void commitsByPath(@Path("owner") String owner, @Path("name") String repo, @Query("path") String path, @Query("sha") String sha, @Query("page") int page, Callback<List<Commit>> callback);
+    void commitsByPath(@Path("owner") String owner, @Path("name") String repo, @Query("path") String path, @Query("sha") String sha, @Query("page") int page,
+                       Callback<List<Commit>> callback);
+
+    @POST("/repos/{owner}/{name}/commits/{sha}/comments")
+    void publishComment(@Path("owner") String owner, @Path("name") String repo, @Path("sha") String sha, @Body CommitCommentRequest request,
+                        Callback<CommitComment> callback);
 
 
     //Sync
@@ -85,4 +93,8 @@ public interface CommitsService {
 
     @GET("/repos/{owner}/{name}/commits")
     List<Commit> commitsByPath(@Path("owner") String owner, @Path("name") String repo, @Query("path") String path, @Query("sha") String sha, @Query("page") int page);
+
+    @POST("/repos/{owner}/{name}/commits/{sha}/comments")
+    CommitComment publishComment(@Path("owner") String owner, @Path("name") String repo, @Path("sha") String sha, @Body CommitCommentRequest request);
+
 }
