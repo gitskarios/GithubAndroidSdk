@@ -17,7 +17,7 @@ public interface ContentService {
 
     //Async
     @POST("/markdown/raw")
-    void markdown(@Body RequestMarkdownDTO readme, Callback<String> callback);
+    void markdown(@Body String readme, Callback<String> callback);
 
     @GET("/repos/{owner}/{name}/contents/{path}")
     void fileContent(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path, Callback<Content> callback);
@@ -33,7 +33,7 @@ public interface ContentService {
 
     //Sync
     @POST("/markdown/raw")
-    String markdown(@Body RequestMarkdownDTO readme);
+    String markdown(@Body String readme);
 
     @GET("/repos/{owner}/{name}/contents/{path}")
     Content fileContent(@Path("owner") String owner, @Path("name") String repo, @Path(value="path", encode = false) String path);
