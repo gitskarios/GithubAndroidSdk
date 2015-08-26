@@ -36,7 +36,7 @@ public class ReleaseAsset implements Parcelable {
         download_count = in.readInt();
         created_at = in.readString();
         updated_at = in.readString();
-        uploader = (User) in.readValue(User.class.getClassLoader());
+        uploader = in.readParcelable(User.class.getClassLoader());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ReleaseAsset implements Parcelable {
         dest.writeInt(download_count);
         dest.writeString(created_at);
         dest.writeString(updated_at);
-        dest.writeValue(uploader);
+        dest.writeParcelable(uploader, flags);
     }
 
     @SuppressWarnings("unused")

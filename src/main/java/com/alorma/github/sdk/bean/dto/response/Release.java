@@ -50,7 +50,7 @@ public class Release implements Parcelable {
             assets = null;
         }
         draft = in.readByte() != 0x00;
-        author = (User) in.readValue(User.class.getClassLoader());
+        author = in.readParcelable(User.class.getClassLoader());
         zipball_url = in.readString();
         prerelease = in.readByte() != 0x00;
         tarball_url = in.readString();
@@ -82,7 +82,7 @@ public class Release implements Parcelable {
             dest.writeList(assets);
         }
         dest.writeByte((byte) (draft ? 0x01 : 0x00));
-        dest.writeValue(author);
+        dest.writeParcelable(author, flags);
         dest.writeString(zipball_url);
         dest.writeByte((byte) (prerelease ? 0x01 : 0x00));
         dest.writeString(tarball_url);

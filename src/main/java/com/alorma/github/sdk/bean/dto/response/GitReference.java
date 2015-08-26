@@ -7,11 +7,12 @@ public class GitReference implements Parcelable {
 
     public String ref;
     public String url;
-    public GitObject object;
+    public GitReferenceEntry object;
 
     protected GitReference(Parcel in) {
         ref = in.readString();
         url = in.readString();
+        object = in.readParcelable(GitReferenceEntry.class.getClassLoader());
     }
 
     public GitReference(){
@@ -39,5 +40,6 @@ public class GitReference implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(ref);
         dest.writeString(url);
+        dest.writeParcelable(object, flags);
     }
 }
