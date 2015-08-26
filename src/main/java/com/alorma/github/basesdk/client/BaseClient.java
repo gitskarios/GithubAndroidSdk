@@ -1,6 +1,7 @@
 package com.alorma.github.basesdk.client;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -23,6 +24,11 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
     protected Handler handler;
     private ApiClient client;
 
+    public Uri last;
+    public Uri next;
+    public int lastPage;
+    public int nextPage;
+
     public BaseClient(Context context, ApiClient client) {
         this.client = client;
         this.context = context.getApplicationContext();
@@ -31,7 +37,7 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
 
     private RestAdapter getRestAdapter() {
         RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder()
-                .setClient(new OkClient())
+                .setClient(new InterceptingOkClient(this))
                 .setEndpoint(client.getApiEndpoint())
                 .setRequestInterceptor(this)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -145,5 +151,4 @@ public abstract class BaseClient<K> implements Callback<K>, RequestInterceptor, 
     public void setStoreCredentials(StoreCredentials storeCredentials) {
         this.storeCredentials = storeCredentials;
     }
-
 }

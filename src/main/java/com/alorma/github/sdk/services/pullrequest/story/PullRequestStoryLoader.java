@@ -70,41 +70,29 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
         pullRequestStory = new PullRequestStory();
         storyDetailMap = new ArrayList<>();
-        int page = 1;
-        boolean hasMore = true;
 
-        pullRequestStory.pullRequest = pullRequestStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
+        pullRequestStory.pullRequest = pullRequestStoryService.detail(issueInfo.repoInfo.owner,
+                issueInfo.repoInfo.name, issueInfo.num);
         pullRequestStory.pullRequest.labels = new ArrayList<>();
 
-        while(hasMore){
-            List<Label> issueLabels = issueStoryService.labels(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
-            hasMore = pullRequestStory.pullRequest.labels.addAll(issueLabels);
-            page++;
+        pullRequestStory.pullRequest.labels.addAll(issueStoryService.labels(issueInfo.repoInfo.owner,
+                issueInfo.repoInfo.name, issueInfo.num, 1));
+
+        for (int i = nextPage; i < lastPage; i++) {
+            List<Label> issueLabels = issueStoryService.labels(issueInfo.repoInfo.owner,
+                    issueInfo.repoInfo.name, issueInfo.num, i);
+            pullRequestStory.pullRequest.labels.addAll(issueLabels);
         }
 
-        page = 1;
+        addComments(issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, 1));
 
-        while(true){
-            List<GithubComment> issueComments = issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
-            hasMore = issueComments != null && !issueComments.isEmpty();
-            if (!hasMore) break;
-            for (GithubComment comment : issueComments) {
-                long time = getMilisFromDateClearDay(comment.created_at);
-                IssueStoryComment detail = new IssueStoryComment(comment);
-                detail.created_at = time;
-                storyDetailMap.add(detail);
-            }
-            page++;
-        }
+        for (int i = nextPage; i < lastPage; i++)
+            addComments(issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, i));
 
-        page = 1;
-        hasMore = true;
+        addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, 1));
 
-        while(hasMore){
-            List<IssueEvent> issueEvents = issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, page);
-            hasMore = addEvents(issueEvents);
-            page++;
-        }
+        for (int i = nextPage; i < lastPage; i++)
+            addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, i));
 
 
         return parseIssueStoryDetails();
@@ -262,7 +250,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         }
     }
 
-    private boolean addEvents(List<IssueEvent> issueEvents){
+    private void addEvents(List<IssueEvent> issueEvents){
         List<IssueStoryDetail> details = new ArrayList<>();
 
         Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
@@ -305,7 +293,16 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             details.add(issueLabels);
         }
 
-        return storyDetailMap.addAll(details);
+        storyDetailMap.addAll(details);
+    }
+
+    private void addComments(List<GithubComment> issueComments){
+        for (GithubComment comment : issueComments) {
+            long time = getMilisFromDateClearDay(comment.created_at);
+            IssueStoryComment detail = new IssueStoryComment(comment);
+            detail.created_at = time;
+            storyDetailMap.add(detail);
+        }
     }
 
     private long getMilisFromDateClearDay(String createdAt) {

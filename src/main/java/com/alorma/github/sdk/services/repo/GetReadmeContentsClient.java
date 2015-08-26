@@ -19,13 +19,11 @@ import retrofit.client.Response;
  * Created by Bernat on 20/07/2014.
  */
 public class GetReadmeContentsClient extends GithubRepoClient<String> {
-
-	private final Handler handler;
+    
 	private OnResultCallback<String> callback;
 
     public GetReadmeContentsClient(Context context, RepoInfo info) {
         super(context, info);
-		handler = new Handler();
     }
 
     @Override
@@ -57,7 +55,7 @@ public class GetReadmeContentsClient extends GithubRepoClient<String> {
         }
 
         requestMarkdownDTO.text = content.content;
-        GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO, handler);
+        GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO);
         return markdownClient.executeSync();
     }
 
@@ -80,7 +78,7 @@ public class GetReadmeContentsClient extends GithubRepoClient<String> {
             }
 
             requestMarkdownDTO.text = content.content;
-            GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO, handler);
+            GetMarkdownClient markdownClient = new GetMarkdownClient(context, requestMarkdownDTO);
             markdownClient.setOnResultCallback(callback);
             markdownClient.execute();
         }

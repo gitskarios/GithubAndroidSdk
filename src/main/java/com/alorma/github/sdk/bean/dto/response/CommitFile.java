@@ -12,6 +12,7 @@ public class CommitFile extends GitChangeStatus{
 	public String raw_url;
 	public String blob_url;
 	public String patch;
+	public String sha;
 
 	public String getFileName() {
 		if (filename != null) {

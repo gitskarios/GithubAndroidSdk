@@ -6,6 +6,7 @@ import com.alorma.github.sdk.bean.dto.response.User;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.PUT;
@@ -59,7 +60,7 @@ public interface UsersService {
 	void checkFollowing(@Path("username") String username, Callback<Object> callback);
 
 	@PUT("/user/following/{username}")
-	void followUser(@Path("username") String username, Callback<Object> callback);
+	void followUser(@Body String empty, @Path("username") String username, Callback<Object> callback);
 
 	@DELETE("/user/following/{username}")
 	void unfollowUser(@Path("username") String username, Callback<Object> callback);
@@ -116,7 +117,7 @@ public interface UsersService {
 	Object checkFollowing(@Path("username") String username);
 
 	@PUT("/user/following/{username}")
-	Object followUser(@Path("username") String username);
+	Object followUser(@Body String empty, @Path("username") String username);
 
 	@DELETE("/user/following/{username}")
 	Object unfollowUser(@Path("username") String username);

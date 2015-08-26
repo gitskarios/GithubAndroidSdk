@@ -31,6 +31,9 @@ public interface PullRequestsService {
     @GET("/repos/{owner}/{name}/pulls?sort=updated")
     void pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page, Callback<List<PullRequest>> callback);
 
+    @GET("/repos/{owner}/{name}/pulls/{number}")
+    void pull(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number, Callback<PullRequest> callback);
+
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     void commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, Callback<List<Commit>> callback);
 
@@ -58,6 +61,9 @@ public interface PullRequestsService {
 
     @GET("/repos/{owner}/{name}/pulls?sort=updated")
     List<PullRequest> pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/pulls/{number}")
+    PullRequest pull(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number);
 
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     List<Commit> commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);

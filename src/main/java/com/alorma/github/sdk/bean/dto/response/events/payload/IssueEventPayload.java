@@ -5,7 +5,7 @@ import com.alorma.github.sdk.bean.dto.response.Issue;
 /**
  * Created by Bernat on 28/05/2015.
  */
-public class IssueEventPayload extends GithubEventPayload{
+public class IssueEventPayload extends ActionEventPayload{
     public Issue issue;
     /*
     0 = {LinkedTreeMap$Node@4742} "url" -> "https://api.github.com/repos/afollestad/material-dialogs/issues/542"

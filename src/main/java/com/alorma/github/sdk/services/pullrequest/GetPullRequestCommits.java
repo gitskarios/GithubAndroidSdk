@@ -45,12 +45,12 @@ public class GetPullRequestCommits extends GithubClient<List<Commit>> {
     protected List<Commit> executeServiceSync(RestAdapter restAdapter) {
         PullRequestsService pullRequestsService = restAdapter.create(PullRequestsService.class);
         List<Commit> commits = new ArrayList<>();
-        boolean hasMore = true;
-        int page = this.page != 0 ? this.page : 1;
-        while(hasMore) {
-            hasMore = commits.addAll(pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page));
-            page++;
-        }
+
+        commits.addAll(pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, page != 0 ? page : 1));
+
+        for (int i = nextPage; i < lastPage; i++)
+            commits.addAll(pullRequestsService.commits(info.repoInfo.owner, info.repoInfo.name, info.num, i));
+
         return commits;
     }
 
