@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.services.issues;
 
+import com.alorma.github.sdk.bean.dto.request.CommentRequest;
 import com.alorma.github.sdk.bean.dto.request.CreateMilestoneRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
@@ -95,7 +96,7 @@ public interface IssuesService {
     void deleteComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id, Callback<Response> callback);
 
     @PATCH("/repos/{owner}/{name}/issues/comments/{id}")
-    void editComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id, @Field("body") String body, Callback<GithubComment> callback);
+    void editComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id, @Body CommentRequest body, Callback<GithubComment> callback);
 
 
     //Sync
@@ -163,5 +164,5 @@ public interface IssuesService {
     Response deleteComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id);
 
     @PATCH("/repos/{owner}/{name}/issues/comments/{id}")
-    GithubComment editComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id, @Field("body") String body);
+    GithubComment editComment(@Path("owner") String owner, @Path("name") String name, @Path("id") String id, @Body CommentRequest body);
 }

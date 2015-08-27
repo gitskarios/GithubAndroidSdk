@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.gists;
 
 import android.content.Context;
 
+import com.alorma.github.sdk.bean.dto.request.CommentRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.services.client.GithubClient;
 
@@ -10,10 +11,10 @@ import retrofit.RestAdapter;
 public class EditGistCommentClient extends GithubClient<GithubComment> {
 
     private String gistId;
-    private String body;
+    private CommentRequest body;
     private String commentId;
 
-    public EditGistCommentClient(Context context, String gistId, String commentId, String body) {
+    public EditGistCommentClient(Context context, String gistId, String commentId, CommentRequest body) {
         super(context);
         this.gistId = gistId;
         this.body = body;

@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.services.gists;
 
+import com.alorma.github.sdk.bean.dto.request.CommentRequest;
 import com.alorma.github.sdk.bean.dto.request.EditGistRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
@@ -48,7 +49,7 @@ public interface GistsService {
 	void publish(@Body Gist gist, Callback<Gist> gistCallback);
 
 	@POST("/gists/{id}/comments")
-	void publishComment(@Path("id") String id, @Field("body") String comment, Callback<GithubComment> gistCallback);
+	void publishComment(@Path("id") String id, @Body CommentRequest body, Callback<GithubComment> gistCallback);
 
 	@PATCH("/gists/{id}")
 	void edit(@Path("id") String id, @Body EditGistRequestDTO editGistRequestDTO, Callback<Gist> callback);
@@ -63,7 +64,7 @@ public interface GistsService {
 	void deleteComment(@Path("id") String id, @Path("comment_id") String commentId, Callback<Response> callback);
 
 	@POST("/gists/{id}/comments/{comment_id}")
-	void editComment(@Path("id") String gistId, @Path("comment_id") String commentId, @Field("body") String body, Callback<GithubComment> callback);
+	void editComment(@Path("id") String gistId, @Path("comment_id") String commentId, @Body CommentRequest body, Callback<GithubComment> callback);
 
 	@GET("/gists/public")
 	void publicGistsList(Callback<List<Gist>> callback);
@@ -98,7 +99,7 @@ public interface GistsService {
 	Gist publish(@Body Gist gist);
 
 	@POST("/gists/{id}/comments")
-	GithubComment publishComment(@Path("id") String id, @Field("body") String comment);
+	GithubComment publishComment(@Path("id") String id, @Body CommentRequest body);
 
 	@PATCH("/gists/{id}")
 	Gist edit(@Path("id") String id, @Body EditGistRequestDTO editGistRequestDTO);
@@ -113,7 +114,7 @@ public interface GistsService {
 	Response deleteComment(@Path("id") String id, @Path("comment_id") String commentId);
 
 	@POST("/gists/{id}/comments/{comment_id}")
-	GithubComment editComment(@Path("id") String gistId, @Path("comment_id") String commentId, @Field("body") String body);
+	GithubComment editComment(@Path("id") String gistId, @Path("comment_id") String commentId, @Body CommentRequest body);
 
 	@GET("/gists/public")
 	List<Gist> publicGistsList();
