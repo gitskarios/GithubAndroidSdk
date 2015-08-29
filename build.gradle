@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.3.0'
+        classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
@@ -54,7 +54,7 @@ publish {
     userOrg = 'alorma'
     groupId = 'com.github.alorma'
     artifactId = 'github-sdk'
-    version = '1.1.0'
+    version = '1.2.0'
     description = 'A SDK for GitHub implemented in Android'
     website = 'https://github.com/gitskarios/GithubAndroidSdk'
     issueTracker = "${website}/issues"
