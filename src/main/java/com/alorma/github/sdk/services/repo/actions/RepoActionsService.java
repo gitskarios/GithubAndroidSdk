@@ -24,20 +24,20 @@ public interface RepoActionsService {
 
     @Headers("Content-Length: 0")
     @PUT("/user/starred/{owner}/{name}")
-    void starRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty, Callback<Object> callback);
+    void starRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty, Callback<Response> callback);
 
     @DELETE("/user/starred/{owner}/{name}")
-    void unstarRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
+    void unstarRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
 
     @GET("/user/subscriptions/{owner}/{name}")
-    void checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
+    void checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
 
     @Headers("Content-Length: 0")
     @PUT("/user/subscriptions/{owner}/{name}")
     void watchRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty, Callback<Object> callback);
 
     @DELETE("/user/subscriptions/{owner}/{name}")
-    void unwatchRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Object> callback);
+    void unwatchRepo(@Path("owner") String owner, @Path("name") String repo, Callback<Response> callback);
 
     @Headers("Content-Length: 0")
     @POST("/repos/{owner}/{name}/forks")
@@ -54,20 +54,20 @@ public interface RepoActionsService {
 
     @Headers("Content-Length: 0")
     @PUT("/user/starred/{owner}/{name}")
-    Object starRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty);
+    Response starRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty);
 
     @DELETE("/user/starred/{owner}/{name}")
-    Object unstarRepo(@Path("owner") String owner, @Path("name") String repo);
+    Response unstarRepo(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/user/subscriptions/{owner}/{name}")
-    Object checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo);
+    Response checkIfRepoIsWatched(@Path("owner") String owner, @Path("name") String repo);
 
     @Headers("Content-Length: 0")
     @PUT("/user/subscriptions/{owner}/{name}")
-    Object watchRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty);
+    Response watchRepo(@Path("owner") String owner, @Path("name") String repo, @Body String empty);
 
     @DELETE("/user/subscriptions/{owner}/{name}")
-    Object unwatchRepo(@Path("owner") String owner, @Path("name") String repo);
+    Response unwatchRepo(@Path("owner") String owner, @Path("name") String repo);
 
     @Headers("Content-Length: 0")
     @POST("/repos/{owner}/{name}/forks")

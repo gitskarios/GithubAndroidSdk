@@ -5,11 +5,12 @@ import android.content.Context;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import retrofit.client.Response;
 
 /**
  * Created by Bernat on 07/08/2014.
  */
-public class CheckRepoWatchedClient extends GithubClient<Object> {
+public class CheckRepoWatchedClient extends GithubClient<Response> {
     private String repo;
     private String owner;
 
@@ -25,7 +26,7 @@ public class CheckRepoWatchedClient extends GithubClient<Object> {
     }
 
     @Override
-    protected Object executeServiceSync(RestAdapter restAdapter) {
+    protected Response executeServiceSync(RestAdapter restAdapter) {
         return restAdapter.create(RepoActionsService.class).checkIfRepoIsWatched(owner, repo);
     }
 }

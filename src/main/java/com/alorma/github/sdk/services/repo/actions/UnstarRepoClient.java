@@ -5,11 +5,12 @@ import android.content.Context;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import retrofit.client.Response;
 
 /**
  * Created by Bernat on 07/08/2014.
  */
-public class UnstarRepoClient extends GithubClient<Object> {
+public class UnstarRepoClient extends GithubClient<Response> {
 
     private final String owner;
     private final String repo;
@@ -26,7 +27,7 @@ public class UnstarRepoClient extends GithubClient<Object> {
     }
 
     @Override
-    protected Object executeServiceSync(RestAdapter restAdapter) {
+    protected Response executeServiceSync(RestAdapter restAdapter) {
         return restAdapter.create(RepoActionsService.class).unstarRepo(owner, repo);
     }
 }
