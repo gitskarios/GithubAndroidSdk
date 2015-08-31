@@ -11,6 +11,7 @@ import com.alorma.github.sdk.security.GitHub;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -28,6 +29,7 @@ public abstract class GithubClient<K>  extends BaseClient<K> {
 	public void intercept(RequestFacade request) {
 		request.addHeader("Accept", getAcceptHeader());
 		request.addHeader("User-Agent", "Gitskarios");
+		request.addHeader("Time-Zone", Locale.getDefault().getDisplayName());
 		request.addHeader("Authorization", "token " + getToken());
 	}
 
