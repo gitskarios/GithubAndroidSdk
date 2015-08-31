@@ -63,6 +63,21 @@ In order to use this sdk, you must enable three metadata keys in your `AndroidMa
 
 In Gitskarios, this keys are hidden from repository, so you should create your own string files, or place it directly in `value`
 
+## EXAMPLE
+
+Get repositories list:
+``` java
+GithubReposClient client = new UserReposClient(getActivity(), username);
+client.setOnResultCallback(callback);
+client.execute();
+```
+
+Paginated:
+``` Java
+UserReposClient client = new UserReposClient(getActivity(), username, page);
+client.executeSync();
+```
+
 ##LICENSE
 
 The MIT License (MIT)
