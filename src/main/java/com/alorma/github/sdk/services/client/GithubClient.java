@@ -29,7 +29,6 @@ public abstract class GithubClient<K>  extends BaseClient<K> {
 	public void intercept(RequestFacade request) {
 		request.addHeader("Accept", getAcceptHeader());
 		request.addHeader("User-Agent", "Gitskarios");
-		request.addHeader("Time-Zone", Locale.getDefault().getDisplayName());
 		request.addHeader("Authorization", "token " + getToken());
 	}
 
