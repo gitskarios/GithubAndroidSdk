@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
-
-    compile 'com.android.support:support-annotations:23.0.0'
+    compile 'com.android.support:support-annotations:23.0.1'
+    compile 'com.android.support:support-v4:23.0.1'
 
     compile 'net.danlew:android.joda:2.6.0'
 
@@ -46,7 +46,6 @@ dependencies {
 
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 
-    compile 'com.android.support:support-v4:23.0.0'
 }
 
 publish {
