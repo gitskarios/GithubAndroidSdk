@@ -92,10 +92,10 @@ public interface RepoService {
     void events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<GithubEvent>> eventsCallback);
 
     @GET("/repos/{owner}/{name}/forks")
-    void listForks(@Path("owner") String owner, @Path("name") String repo, Callback<List<Repo>> callback);
+    void listForks(@Path("owner") String owner, @Path("name") String repo, @Query("sort") String sort, Callback<List<Repo>> callback);
 
     @GET("/repos/{owner}/{name}/forks")
-    void listForks(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Repo>> callback);
+    void listForks(@Path("owner") String owner, @Path("name") String repo, @Query("sort") String sort, @Query("page") int page, Callback<List<Repo>> callback);
 
     //Sync
     @GET("/repos/{owner}/{name}")
@@ -159,8 +159,8 @@ public interface RepoService {
     List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/forks")
-    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo);
+    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo, @Query("sort") String sort);
 
     @GET("/repos/{owner}/{name}/forks")
-    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
+    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo, @Query("sort") String sort, @Query("page") int page);
 }
