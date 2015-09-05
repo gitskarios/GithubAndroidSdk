@@ -20,6 +20,7 @@ import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.PATCH;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -90,6 +91,12 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/events")
     void events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<GithubEvent>> eventsCallback);
 
+    @GET("/repos/{owner}/{name}/forks")
+    void listForks(@Path("owner") String owner, @Path("name") String repo, Callback<List<Repo>> callback);
+
+    @GET("/repos/{owner}/{name}/forks")
+    void listForks(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Repo>> callback);
+
     //Sync
     @GET("/repos/{owner}/{name}")
     Repo get(@Path("owner") String owner, @Path("name") String repo);
@@ -151,4 +158,9 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/events")
     List<GithubEvent> events(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 
+    @GET("/repos/{owner}/{name}/forks")
+    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/forks")
+    List<Repo> listForks(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page);
 }
