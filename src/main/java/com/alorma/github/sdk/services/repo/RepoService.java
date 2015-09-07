@@ -77,6 +77,9 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/releases/latest")
     void lastRelease(@Path("owner") String owner, @Path("name") String repo, Callback<Release> callback);
 
+    @GET("/repos/{owner}/{name}/releases/{id}")
+    void release(@Path("owner") String owner, @Path("name") String repo, @Path("id") String id, Callback<Release> callback);
+
     @GET("/repos/{owner}/{name}/compare/{base}...{head}")
     void compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
 
@@ -149,6 +152,9 @@ public interface RepoService {
 
     @GET("/repos/{owner}/{name}/releases/latest")
     Release lastRelease(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/releases/{id}")
+    Release release(@Path("owner") String owner, @Path("name") String repo, @Path("id") String id);
 
     @GET("/repos/{owner}/{name}/compare/{base}...{head}")
     CompareCommit compareCommits(@Path("owner") String owner, @Path("name") String repo, @Path("base") String base, @Path("head") String head);
