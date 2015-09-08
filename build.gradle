@@ -36,13 +36,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:23.0.1'
-    compile 'com.android.support:support-v4:23.0.1'
-    compile 'net.danlew:android.joda:2.8.2'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
-
+    compile project(':sdks:gitskarios-core')
 }
 
 publish {
