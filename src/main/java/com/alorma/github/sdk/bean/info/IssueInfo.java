@@ -60,6 +60,6 @@ public class IssueInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return repoInfo.toString() + " #" + num;
+        return repoInfo.toString() + "#" + num;
     }
 }
