@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.alorma.github.sdk.utils.GitskariosSettings;
+import com.alorma.gitskarios.core.ApiClient;
 import com.alorma.gitskarios.core.client.BaseClient;
 import com.alorma.github.sdk.bean.info.PaginationLink;
 import com.alorma.github.sdk.bean.info.RelType;
 
 import com.alorma.github.sdk.security.GitHub;
 import com.alorma.github.sdk.security.InterceptingOkClient;
+import com.alorma.gitskarios.core.client.StoreCredentials;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.HashMap;
@@ -24,7 +27,12 @@ import retrofit.client.Response;
 public abstract class GithubClient<K>  extends BaseClient<K> {
 
 	public GithubClient(Context context) {
-		super(context, new GitHub());
+		super(context, getApiClient(context));
+	}
+
+	private static ApiClient getApiClient(Context context) {
+		String url = new StoreCredentials(context).getUrl();
+		return new GitHub(url);
 	}
 
 	@Override
