@@ -13,6 +13,7 @@ public class AccountsHelper {
     public static final String USER_PIC = "USER_PIC";
     private static final String USER_MAIL = "USER_MAIL";
     private static final String USER_NAME = "USER_NAME";
+    public static final String USER_URL = "USER_URL";
 
     public static Bundle buildBundle(String name, String mail, String avatar, String scope) {
         Bundle userData = new Bundle();
@@ -33,6 +34,11 @@ public class AccountsHelper {
     public static String getUserMail(Context context, Account account) {
         AccountManager manager = AccountManager.get(context);
         return manager.getUserData(account, USER_MAIL);
+    }
+
+    public static String getUrl(Context context, Account account) {
+        AccountManager manager = AccountManager.get(context);
+        return manager.getUserData(account, USER_URL);
     }
 
     public static String getUserName(Context context, Account account) {
