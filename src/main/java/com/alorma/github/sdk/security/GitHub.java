@@ -12,15 +12,10 @@ public class GitHub implements ApiClient {
     private String hostname;
 
     public GitHub() {
-        if (GithubDeveloperCredentials.getInstance().getProvider() == null) {
-            throw new IllegalArgumentException("Credentials provider cannot be null");
-        }
+
     }
 
     public GitHub(String hostname) {
-        if (GithubDeveloperCredentials.getInstance().getProvider() == null) {
-            throw new IllegalArgumentException("Credentials provider cannot be null");
-        }
         if (hostname != null) {
             Uri parse = Uri.parse(hostname);
             if (parse.getScheme() == null) {
