@@ -40,9 +40,15 @@ Add dependency in your project `build.gradle`
 ``` groovy
 
 
-    compile 'com.github.alorma:github-sdk:1.2.1'
+    compile 'com.github.alorma:github-sdk:1.3.0'
 ```
 
+Or grab it via maven
+``` xml
+<groupId>com.github.alorma</groupId>
+<artifactId>github-sdk</artifactId>
+<version>1.3.0</version>
+```
 ## FORK
 
 In order to use this sdk, you must enable three metadata keys in your `AndroidManifest.xml`
