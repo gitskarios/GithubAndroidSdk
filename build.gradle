@@ -43,7 +43,7 @@ publish {
     userOrg = 'alorma'
     groupId = 'com.github.alorma'
     artifactId = 'github-sdk'
-    version = '1.2.3'
+    version = '1.3.0'
     description = 'A SDK for GitHub implemented in Android'
     website = 'https://github.com/gitskarios/GithubAndroidSdk'
     issueTracker = "${website}/issues"
