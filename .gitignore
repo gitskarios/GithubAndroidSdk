@@ -28,3 +28,4 @@ gradle.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+target/
