@@ -1,6 +1,0 @@
-int string download_tar_value 0x7f020005
-int string download_zip_value 0x7f020004
-int string sort_created_value 0x7f020000
-int string sort_full_name_value 0x7f020003
-int string sort_pushed_value 0x7f020002
-int string sort_updated_value 0x7f020001
