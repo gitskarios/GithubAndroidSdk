@@ -20,45 +20,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>android.support</groupId>
-            <artifactId>compatibility-v4</artifactId>
-            <version>23.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.android.support</groupId>
-            <artifactId>support-annotations</artifactId>
-            <version>23.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.8.2</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.alorma</groupId>
             <artifactId>gitskarios-core</artifactId>
             <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ocpsoft.prettytime</groupId>
-            <artifactId>prettytime</artifactId>
-            <version>3.2.4.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.retrofit</groupId>
-            <artifactId>retrofit</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>2.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp-urlconnection</artifactId>
-            <version>2.5.0</version>
         </dependency>
 
     </dependencies>
