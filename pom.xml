@@ -23,6 +23,13 @@
             <groupId>com.github.alorma</groupId>
             <artifactId>gitskarios-core</artifactId>
             <version>1.0.0</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.alorma</groupId>
+            <artifactId>gitskarios-core</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
         </dependency>
 
     </dependencies>
