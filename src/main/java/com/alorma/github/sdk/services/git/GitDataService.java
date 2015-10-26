@@ -8,7 +8,6 @@ import com.alorma.github.sdk.bean.dto.response.GitTree;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.http.EncodedPath;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
