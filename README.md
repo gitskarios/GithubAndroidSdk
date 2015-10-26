@@ -45,9 +45,20 @@ Add dependency in your project `build.gradle`
 
 Or grab it via maven
 ``` xml
-<groupId>com.github.alorma</groupId>
-<artifactId>github-sdk</artifactId>
-<version>1.3.1</version>
+<dependency>
+    <groupId>com.github.alorma</groupId>
+    <artifactId>github-sdk</artifactId>
+    <version>1.3.1</version>
+    <type>apklib</type>
+    <scope>compile</scope>
+</dependency>
+<dependency>
+    <groupId>com.github.alorma</groupId>
+    <artifactId>github-sdk</artifactId>
+    <version>1.3.1</version>
+    <type>jar</type>
+    <scope>provided</scope>
+</dependency>
 ```
 ## FORK
 
@@ -73,7 +84,7 @@ In Gitskarios, this keys are hidden from repository, so you should create your o
 
 Get repositories list:
 ``` java
-GithubReposClient client = new UserReposClient(getActivity(), username);
+GithubReposClient client = new UserReposClient(this, username);
 client.setOnResultCallback(callback);
 client.execute();
 ```
