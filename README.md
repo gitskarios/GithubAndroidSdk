@@ -84,7 +84,7 @@ In Gitskarios, this keys are hidden from repository, so you should create your o
 
 Get repositories list:
 ``` java
-GithubReposClient client = new UserReposClient(this, username);
+GithubReposClient client = new UserReposClient(getActivity(), username);
 client.setOnResultCallback(callback);
 client.execute();
 ```
