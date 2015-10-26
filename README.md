@@ -45,9 +45,20 @@ Add dependency in your project `build.gradle`
 
 Or grab it via maven
 ``` xml
-<groupId>com.github.alorma</groupId>
-<artifactId>github-sdk</artifactId>
-<version>1.3.1</version>
+<dependency>
+    <groupId>com.github.alorma</groupId>
+    <artifactId>github-sdk</artifactId>
+    <version>1.3.1</version>
+    <type>apklib</type>
+    <scope>compile</scope>
+</dependency>
+<dependency>
+    <groupId>com.github.alorma</groupId>
+    <artifactId>github-sdk</artifactId>
+    <version>1.3.1</version>
+    <type>jar</type>
+    <scope>provided</scope>
+</dependency>
 ```
 ## FORK
 
