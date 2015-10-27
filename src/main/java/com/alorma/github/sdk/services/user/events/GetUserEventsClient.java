@@ -8,6 +8,7 @@ import com.alorma.github.sdk.services.client.GithubClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 /**
  * Created by Bernat on 03/10/2014.
