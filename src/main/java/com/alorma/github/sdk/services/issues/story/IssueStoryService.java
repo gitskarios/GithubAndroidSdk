@@ -17,6 +17,7 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import rx.Observable;
 
 /**
  * Created by Bernat on 22/08/2014.
@@ -85,4 +86,18 @@ public interface IssueStoryService {
 
     @GET("/repos/{owner}/{name}/issues/{num}/labels")
     List<Label> labels(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+
+    // Observable
+
+    @GET("/repos/{owner}/{name}/issues/{num}")
+    Observable<Issue> detailObs(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    Observable<List<GithubComment>> commentsObs(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    @GET("/repos/{owner}/{name}/issues/{num}/comments")
+    Observable<List<GithubComment>> commentsObs(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, @Query("page") int page);
+
+
 }
