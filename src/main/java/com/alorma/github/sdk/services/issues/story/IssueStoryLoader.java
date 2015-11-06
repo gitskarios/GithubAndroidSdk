@@ -16,6 +16,7 @@ import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -54,11 +55,13 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     issueStoryService = getRestAdapter().create(IssueStoryService.class);
   }
 
+  @RxLogObservable
   public Observable<IssueStory> create() {
     return getIssueStory().observeOn(AndroidSchedulers.mainThread());
   }
 
   @Override
+  @RxLogObservable
   public Observable<Pair<IssueStory, Response>> observable() {
     return create().map(new Func1<IssueStory, Pair<IssueStory, Response>>() {
       @Override
@@ -69,6 +72,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
+  @RxLogObservable
   private Observable<IssueStory> getIssueStory() {
     return Observable.zip(getIssueObservable(), getIssueDetailsObservable(),
         new Func2<Issue, List<IssueStoryDetail>, IssueStory>() {
@@ -84,22 +88,33 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         });
   }
 
+  @RxLogObservable
   private Observable<Issue> getIssueObservable() {
     return issueStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
   }
 
+  @RxLogObservable
   private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
-    return Observable.merge(getCommentsDetailsObs(), getEventDetailsObs());
+    return Observable.zip(getCommentsDetailsObs(), getEventDetailsObs()
+        , new Func2<List<IssueStoryDetail>
+        , List<IssueStoryDetail>, List<IssueStoryDetail>>() {
+      @Override
+      public List<IssueStoryDetail> call(List<IssueStoryDetail> details, List<IssueStoryDetail> details2) {
+        List<IssueStoryDetail> finalDetails = new ArrayList<>();
+        finalDetails.addAll(details);
+        finalDetails.addAll(details2);
+        return finalDetails;
+      }
+    });
   }
 
   @NonNull
+  @RxLogObservable
   private Observable<List<GithubComment>> getCommentsObs() {
     return Observable.create(new Observable.OnSubscribe<List<GithubComment>>() {
       @Override
       public void call(final Subscriber<? super List<GithubComment>> subscriber) {
         new BaseInfiniteCallback<List<GithubComment>>() {
-
-          List<GithubComment> comments;
 
           @Override
           public void execute() {
@@ -115,23 +130,19 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
           @Override
           protected void executeNext() {
-            subscriber.onNext(comments);
             subscriber.onCompleted();
           }
 
           @Override
           protected void response(List<GithubComment> githubComments) {
-            if (comments == null) {
-              comments = githubComments;
-            } else {
-              comments.addAll(githubComments);
-            }
+            subscriber.onNext(githubComments);
           }
         }.execute();
       }
     });
   }
 
+  @RxLogObservable
   private Observable<List<IssueStoryDetail>> getCommentsDetailsObs() {
     return getCommentsObs().subscribeOn(Schedulers.io())
         .flatMap(new Func1<List<GithubComment>, Observable<List<IssueStoryDetail>>>() {
@@ -153,13 +164,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
+  @RxLogObservable
   private Observable<List<IssueEvent>> getEventsObs() {
     return Observable.create(new Observable.OnSubscribe<List<IssueEvent>>() {
       @Override
       public void call(final Subscriber<? super List<IssueEvent>> subscriber) {
         new BaseInfiniteCallback<List<IssueEvent>>() {
-
-          List<IssueEvent> events;
 
           @Override
           public void execute() {
@@ -175,17 +185,12 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
           @Override
           protected void executeNext() {
-            subscriber.onNext(events);
             subscriber.onCompleted();
           }
 
           @Override
           protected void response(List<IssueEvent> issueEvents) {
-            if (events == null) {
-              events = issueEvents;
-            } else {
-              events.addAll(issueEvents);
-            }
+            subscriber.onNext(issueEvents);
           }
         }.execute();
       }
@@ -193,9 +198,9 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
+  @RxLogObservable
   private Observable<List<IssueStoryDetail>> getEventDetailsObs() {
     return getEventsObs().subscribeOn(Schedulers.io())
-        .observeOn(Schedulers.computation())
         .flatMap(new Func1<List<IssueEvent>, Observable<List<IssueStoryDetail>>>() {
           @Override
           public Observable<List<IssueStoryDetail>> call(List<IssueEvent> issueEvents) {
