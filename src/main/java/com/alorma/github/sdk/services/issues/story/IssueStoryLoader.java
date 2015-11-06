@@ -77,6 +77,8 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
             IssueStory issueStory = new IssueStory();
             issueStory.issue = issue;
             issueStory.details = details;
+            Collections.sort(issueStory.details,
+                IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
             return issueStory;
           }
         });
@@ -87,13 +89,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
-    return Observable.merge(getCommentsDetailsObs().subscribeOn(Schedulers.computation()),
-        getEventDetailsObs().doOnNext(new Action1<List<IssueStoryDetail>>() {
-          @Override
-          public void call(List<IssueStoryDetail> details) {
-            Collections.sort(details, IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
-          }
-        }).subscribeOn(Schedulers.computation()));
+    return Observable.merge(getCommentsDetailsObs(), getEventDetailsObs());
   }
 
   @NonNull
@@ -243,12 +239,11 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   private boolean validEvent(String event) {
-    return true;
-    /*
     return !(event.equals("mentioned") ||
         event.equals("subscribed") ||
-        event.equals("unsubscribed"));
-        */
+        event.equals("unsubscribed") ||
+        event.equals("labeled") ||
+        event.equals("unlabeled"));
   }
 
   @Override
