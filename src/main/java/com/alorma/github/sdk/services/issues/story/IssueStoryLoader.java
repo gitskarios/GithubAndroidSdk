@@ -17,7 +17,6 @@ import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import com.fernandocejas.frodo.annotation.RxLogObservable;
-import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -30,7 +29,6 @@ import retrofit.client.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -95,17 +93,9 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
   @RxLogObservable
   private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
-    return Observable.zip(getCommentsDetailsObs(), getEventDetailsObs()
-        , new Func2<List<IssueStoryDetail>
-        , List<IssueStoryDetail>, List<IssueStoryDetail>>() {
-      @Override
-      public List<IssueStoryDetail> call(List<IssueStoryDetail> details, List<IssueStoryDetail> details2) {
-        List<IssueStoryDetail> finalDetails = new ArrayList<>();
-        finalDetails.addAll(details);
-        finalDetails.addAll(details2);
-        return finalDetails;
-      }
-    });
+    Observable<IssueStoryDetail> commentsDetailsObs = getCommentsDetailsObs();
+    Observable<IssueStoryDetail> eventDetailsObs = getEventDetailsObs();
+    return Observable.mergeDelayError(commentsDetailsObs, eventDetailsObs).toList();
   }
 
   @NonNull
@@ -143,11 +133,11 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @RxLogObservable
-  private Observable<List<IssueStoryDetail>> getCommentsDetailsObs() {
+  private Observable<IssueStoryDetail> getCommentsDetailsObs() {
     return getCommentsObs().subscribeOn(Schedulers.io())
-        .flatMap(new Func1<List<GithubComment>, Observable<List<IssueStoryDetail>>>() {
+        .flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
           @Override
-          public Observable<List<IssueStoryDetail>> call(List<GithubComment> githubComments) {
+          public Observable<IssueStoryDetail> call(List<GithubComment> githubComments) {
             return Observable.from(githubComments)
                 .map(new Func1<GithubComment, IssueStoryDetail>() {
                   @Override
@@ -157,8 +147,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                     detail.created_at = time;
                     return detail;
                   }
-                })
-                .toList();
+                });
           }
         });
   }
@@ -199,11 +188,11 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
   @NonNull
   @RxLogObservable
-  private Observable<List<IssueStoryDetail>> getEventDetailsObs() {
+  private Observable<IssueStoryDetail> getEventDetailsObs() {
     return getEventsObs().subscribeOn(Schedulers.io())
-        .flatMap(new Func1<List<IssueEvent>, Observable<List<IssueStoryDetail>>>() {
+        .flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
           @Override
-          public Observable<List<IssueStoryDetail>> call(List<IssueEvent> issueEvents) {
+          public Observable<IssueStoryDetail> call(List<IssueEvent> issueEvents) {
             return Observable.from(issueEvents).filter(new Func1<IssueEvent, Boolean>() {
               @Override
               public Boolean call(IssueEvent issueEvent) {
@@ -217,7 +206,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                 detail.created_at = time;
                 return detail;
               }
-            }).toList();
+            });
           }
         });
   }
