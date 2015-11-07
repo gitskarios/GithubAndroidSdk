@@ -28,7 +28,6 @@ import retrofit.RestAdapter;
 import retrofit.client.Response;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -55,7 +54,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
   @RxLogObservable
   public Observable<IssueStory> create() {
-    return getIssueStory().observeOn(AndroidSchedulers.mainThread());
+    return getIssueStory();
   }
 
   @Override
@@ -66,7 +65,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
       public Pair<IssueStory, Response> call(IssueStory issueStory) {
         return new Pair<>(issueStory, null);
       }
-    }).observeOn(AndroidSchedulers.mainThread());
+    });
   }
 
   @NonNull

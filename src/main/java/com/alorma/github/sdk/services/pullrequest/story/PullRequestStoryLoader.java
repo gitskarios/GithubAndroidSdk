@@ -6,7 +6,6 @@ import android.util.Log;
 import android.util.Pair;
 import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
-import com.alorma.github.sdk.bean.dto.response.GithubStatusResponse;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
@@ -17,7 +16,6 @@ import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
-import com.alorma.github.sdk.services.repo.GetShaCombinedStatus;
 import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.Collections;
 import java.util.List;
@@ -28,10 +26,8 @@ import retrofit.RestAdapter;
 import retrofit.client.Response;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,7 +54,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   @RxLogObservable
   public Observable<PullRequestStory> create() {
-    return getPullrequestStory().observeOn(AndroidSchedulers.mainThread());
+    return getPullrequestStory();
   }
 
   @Override
@@ -69,7 +65,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
       public Pair<PullRequestStory, Response> call(PullRequestStory issueStory) {
         return new Pair<>(issueStory, null);
       }
-    }).observeOn(AndroidSchedulers.mainThread());
+    });
   }
 
   @NonNull
