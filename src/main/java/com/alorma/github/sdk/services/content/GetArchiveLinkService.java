@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+import android.os.Handler;
 import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
@@ -21,6 +22,7 @@ import retrofit.client.Response;
  */
 public class GetArchiveLinkService extends GithubClient {
 
+	private final Handler handler;
 	private OnDownloadServiceListener onDownloadServiceListener;
 
 	private RepoInfo repoInfo;
@@ -28,6 +30,7 @@ public class GetArchiveLinkService extends GithubClient {
 	public GetArchiveLinkService(Context context, RepoInfo repoInfo) {
 		super(context);
 		this.repoInfo = repoInfo;
+		handler = new Handler();
 	}
 
 	@Override
