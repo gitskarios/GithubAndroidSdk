@@ -4,6 +4,7 @@ import android.os.BadParcelableException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -228,4 +229,13 @@ public class Repo extends ShaUrl {
 			return new Repo[size];
 		}
 	};
+
+	public RepoInfo toInfo() {
+		RepoInfo repoInfo = new RepoInfo();
+		repoInfo.owner = owner.login;
+		repoInfo.name = name;
+		repoInfo.permissions = permissions;
+		repoInfo.branch = default_branch;
+		return repoInfo;
+	}
 }

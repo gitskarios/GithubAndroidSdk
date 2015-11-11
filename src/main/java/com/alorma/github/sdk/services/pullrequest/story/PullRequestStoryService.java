@@ -5,6 +5,7 @@ import com.alorma.github.sdk.PullRequest;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import rx.Observable;
 
 /**
  * Created by Bernat on 22/08/2014.
@@ -18,5 +19,9 @@ public interface PullRequestStoryService {
     //Sync
     @GET("/repos/{owner}/{name}/pulls/{num}")
     PullRequest detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+
+    //Obs
+    @GET("/repos/{owner}/{name}/pulls/{num}")
+    Observable<PullRequest> detailObs(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
 
 }

@@ -1,276 +1,251 @@
 package com.alorma.github.sdk.services.issues.story;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
-import android.util.Pair;
 
+import android.util.Pair;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
-import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
-import com.alorma.github.sdk.bean.info.PaginationLink;
-import com.alorma.github.sdk.bean.info.RelType;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
-import com.alorma.github.sdk.bean.issue.IssueStoryLabelList;
-import com.alorma.github.sdk.bean.issue.IssueStoryUnlabelList;
-import com.alorma.github.sdk.bean.issue.ListIssueEvents;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Header;
 import retrofit.client.Response;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Bernat on 07/04/2015.
  */
 public class IssueStoryLoader extends GithubClient<IssueStory> {
 
-    private final IssueInfo issueInfo;
-    private List<IssueStoryDetail> storyDetailMap;
-    private IssueStory issueStory;
+  private final IssueInfo issueInfo;
+  private final String owner;
+  private final String repo;
+  private final int num;
+  private IssueStoryService issueStoryService;
 
-    public IssueStoryLoader(Context context, IssueInfo info) {
-        super(context);
-        this.issueInfo = info;
-    }
+  public IssueStoryLoader(Context context, IssueInfo info) {
+    super(context);
+    this.issueInfo = info;
+    this.owner = issueInfo.repoInfo.owner;
+    this.repo = issueInfo.repoInfo.name;
+    this.num = issueInfo.num;
+    issueStoryService = getRestAdapter().create(IssueStoryService.class);
+  }
 
-    @Override
-    protected void executeService(RestAdapter restAdapter) {
+  @RxLogObservable
+  public Observable<IssueStory> create() {
+    return getIssueStory();
+  }
 
-        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
+  @Override
+  @RxLogObservable
+  public Observable<Pair<IssueStory, Response>> observable() {
+    return create().map(new Func1<IssueStory, Pair<IssueStory, Response>>() {
+      @Override
+      public Pair<IssueStory, Response> call(IssueStory issueStory) {
+        return new Pair<>(issueStory, null);
+      }
+    });
+  }
 
-        issueStory = new IssueStory();
-        storyDetailMap = new ArrayList<>();
-
-        new IssueCallback(issueInfo, issueStoryService).execute();
-    }
-
-    @Override
-    protected IssueStory executeServiceSync(RestAdapter restAdapter) {
-        issueStory = new IssueStory();
-        storyDetailMap = new ArrayList<>();
-
-
-        IssueStoryService issueStoryService = restAdapter.create(IssueStoryService.class);
-        issueStory.issue = issueStoryService.detail(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num);
-
-        addComments(issueStoryService.comments(issueInfo.repoInfo.owner,
-                issueInfo.repoInfo.name, issueInfo.num, 1));
-
-        for (int i = nextPage; i < lastPage; i++)
-            addComments(issueStoryService.comments(issueInfo.repoInfo.owner,
-                    issueInfo.repoInfo.name, issueInfo.num, i));
-
-        addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, 1));
-
-        for (int i = nextPage; i < lastPage; i++)
-            addEvents(issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, i));
-
-        return parseIssueStoryDetails();
-    }
-
-    private IssueStory parseIssueStoryDetails() {
-        Collections.sort(storyDetailMap, IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
-        issueStory.details = storyDetailMap;
-
-        if (getOnResultCallback() != null) {
-            getOnResultCallback().onResponseOk(issueStory, null);
-        }
-        return issueStory;
-    }
-
-    private class IssueCallback extends BaseInfiniteCallback<Issue> {
-
-        private final IssueInfo info;
-        private final IssueStoryService issueStoryService;
-
-        public IssueCallback(IssueInfo info, IssueStoryService issueStoryService) {
-            this.info = info;
-            this.issueStoryService = issueStoryService;
-        }
-
-        @Override
-        public void execute() {
-            issueStoryService.detail(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
-
-        @Override
-        protected void executePaginated(int nextPage) {
-
-        }
-
-        @Override
-        protected void executeNext() {
-            new IssueCommentsCallback(info, issueStoryService).execute();
-        }
-
-        @Override
-        protected void response(Issue issue) {
+  @NonNull
+  @RxLogObservable
+  private Observable<IssueStory> getIssueStory() {
+    return Observable.zip(getIssueObservable(), getIssueDetailsObservable(),
+        new Func2<Issue, List<IssueStoryDetail>, IssueStory>() {
+          @Override
+          public IssueStory call(Issue issue, List<IssueStoryDetail> details) {
+            IssueStory issueStory = new IssueStory();
             issueStory.issue = issue;
-        }
+            issueStory.details = details;
+            Collections.sort(issueStory.details,
+                IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
+            return issueStory;
+          }
+        });
+  }
 
-    }
+  @RxLogObservable
+  private Observable<Issue> getIssueObservable() {
+    return issueStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
+  }
 
-    private class IssueCommentsCallback extends BaseInfiniteCallback<List<GithubComment>> {
+  @RxLogObservable
+  private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
+    Observable<IssueStoryDetail> commentsDetailsObs = getCommentsDetailsObs();
+    Observable<IssueStoryDetail> eventDetailsObs = getEventDetailsObs();
+    return Observable.mergeDelayError(commentsDetailsObs, eventDetailsObs).toList();
+  }
 
-        private final IssueInfo info;
-        private final IssueStoryService issueStoryService;
+  @NonNull
+  @RxLogObservable
+  private Observable<List<GithubComment>> getCommentsObs() {
+    return Observable.create(new Observable.OnSubscribe<List<GithubComment>>() {
+      @Override
+      public void call(final Subscriber<? super List<GithubComment>> subscriber) {
+        new BaseInfiniteCallback<List<GithubComment>>() {
 
-        public IssueCommentsCallback(IssueInfo info, IssueStoryService issueStoryService) {
-            this.info = info;
-            this.issueStoryService = issueStoryService;
-        }
+          @Override
+          public void execute() {
+            issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                issueInfo.num, this);
+          }
 
+          @Override
+          protected void executePaginated(int nextPage) {
+            issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                issueInfo.num, nextPage, this);
+          }
 
-        @Override
-        public void execute() {
-            issueStoryService.comments(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
+          @Override
+          protected void executeNext() {
+            subscriber.onCompleted();
+          }
 
-        @Override
-        protected void executePaginated(int nextPage) {
-            issueStoryService.comments(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
-        }
+          @Override
+          protected void response(List<GithubComment> githubComments) {
+            subscriber.onNext(githubComments);
+          }
+        }.execute();
+      }
+    });
+  }
 
-        @Override
-        protected void executeNext() {
-            new IssueEventsCallbacks(info, issueStoryService).execute();
-        }
+  @RxLogObservable
+  private Observable<IssueStoryDetail> getCommentsDetailsObs() {
+    return getCommentsObs().subscribeOn(Schedulers.io())
+        .flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
+          @Override
+          public Observable<IssueStoryDetail> call(List<GithubComment> githubComments) {
+            return Observable.from(githubComments)
+                .map(new Func1<GithubComment, IssueStoryDetail>() {
+                  @Override
+                  public IssueStoryDetail call(GithubComment githubComment) {
+                    long time = getMilisFromDateClearDay(githubComment.created_at);
+                    IssueStoryComment detail = new IssueStoryComment(githubComment);
+                    detail.created_at = time;
+                    return detail;
+                  }
+                });
+          }
+        });
+  }
 
-        @Override
-        protected void response(List<GithubComment> issueComments) {
-            for (GithubComment comment : issueComments) {
-                long time = getMilisFromDateClearDay(comment.created_at);
-                IssueStoryComment detail = new IssueStoryComment(comment);
+  @NonNull
+  @RxLogObservable
+  private Observable<List<IssueEvent>> getEventsObs() {
+    return Observable.create(new Observable.OnSubscribe<List<IssueEvent>>() {
+      @Override
+      public void call(final Subscriber<? super List<IssueEvent>> subscriber) {
+        new BaseInfiniteCallback<List<IssueEvent>>() {
+
+          @Override
+          public void execute() {
+            issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                issueInfo.num, this);
+          }
+
+          @Override
+          protected void executePaginated(int nextPage) {
+            issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                issueInfo.num, nextPage, this);
+          }
+
+          @Override
+          protected void executeNext() {
+            subscriber.onCompleted();
+          }
+
+          @Override
+          protected void response(List<IssueEvent> issueEvents) {
+            subscriber.onNext(issueEvents);
+          }
+        }.execute();
+      }
+    });
+  }
+
+  @NonNull
+  @RxLogObservable
+  private Observable<IssueStoryDetail> getEventDetailsObs() {
+    return getEventsObs().subscribeOn(Schedulers.io())
+        .flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
+          @Override
+          public Observable<IssueStoryDetail> call(List<IssueEvent> issueEvents) {
+            return Observable.from(issueEvents).filter(new Func1<IssueEvent, Boolean>() {
+              @Override
+              public Boolean call(IssueEvent issueEvent) {
+                return validEvent(issueEvent.event);
+              }
+            }).map(new Func1<IssueEvent, IssueStoryDetail>() {
+              @Override
+              public IssueStoryDetail call(IssueEvent issueEvent) {
+                long time = getMilisFromDateClearDay(issueEvent.created_at);
+                IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
                 detail.created_at = time;
-                storyDetailMap.add(detail);
-            }
-        }
+                return detail;
+              }
+            });
+          }
+        });
+  }
+
+  @Override
+  protected void executeService(RestAdapter restAdapter) {
+    IssueStory issueStory = executeServiceSync(restAdapter);
+    if (getOnResultCallback() != null) {
+      getOnResultCallback().onResponseOk(issueStory, null);
     }
+  }
 
-    private class IssueEventsCallbacks extends BaseInfiniteCallback<List<IssueEvent>> {
+  @Override
+  protected IssueStory executeServiceSync(RestAdapter restAdapter) {
+    return observable().toBlocking().single().first;
+  }
 
-        private IssueInfo info;
-        private IssueStoryService issueStoryService;
+  private long getMilisFromDateClearDay(String createdAt) {
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-        public IssueEventsCallbacks(IssueInfo info, IssueStoryService issueStoryService) {
-            this.info = info;
-            this.issueStoryService = issueStoryService;
-        }
+    DateTime dt = formatter.parseDateTime(createdAt);
 
-        @Override
-        public void execute() {
-            issueStoryService.events(info.repoInfo.owner, info.repoInfo.name, info.num, this);
-        }
+    return dt.minuteOfDay().roundFloorCopy().getMillis();
+  }
 
-        @Override
-        protected void executePaginated(int nextPage) {
-            issueStoryService.events(info.repoInfo.owner, info.repoInfo.name, info.num, nextPage, this);
-        }
+  private boolean validEvent(String event) {
+    return !(event.equals("mentioned") ||
+        event.equals("subscribed") ||
+        event.equals("unsubscribed") ||
+        event.equals("labeled") ||
+        event.equals("unlabeled"));
+  }
 
-        @Override
-        protected void executeNext() {
-            parseIssueStoryDetails();
-        }
+  @Override
+  public void log(String message) {
+    Log.i("IssueStoryLoader", message);
+  }
 
-        @Override
-        protected void response(List<IssueEvent> issueEvents) {
-            addEvents(issueEvents);
-        }
-    }
-
-    private void addEvents(List<IssueEvent> issueEvents){
-        List<IssueStoryDetail> details = new ArrayList<>();
-
-        Map<Long, IssueStoryLabelList> labeledEvents = new HashMap<>();
-        Map<Long, IssueStoryUnlabelList> unlabeledEvents = new HashMap<>();
-        for (IssueEvent event : issueEvents) {
-            String createdAt = event.created_at;
-            long time = getMilisFromDateClearDay(createdAt);
-            if (event.event.equals("labeled")) {
-                if (labeledEvents.get(time) == null) {
-                    labeledEvents.put(time, new IssueStoryLabelList());
-                    labeledEvents.get(time).created_at = time;
-                    labeledEvents.get(time).user = event.actor;
-                }
-                labeledEvents.get(time).add(event.label);
-            } else if (event.event.equals("unlabeled")) {
-                if (unlabeledEvents.get(time) == null) {
-                    unlabeledEvents.put(time, new IssueStoryUnlabelList());
-                    unlabeledEvents.get(time).created_at = time;
-                    unlabeledEvents.get(time).user = event.actor;
-                }
-                unlabeledEvents.get(time).add(event.label);
-            } else {
-                IssueStoryEvent issueStoryEvent = new IssueStoryEvent(event);
-                if (validEvent(issueStoryEvent.getType())) {
-                    issueStoryEvent.created_at = time;
-                    details.add(issueStoryEvent);
-                }
-            }
-        }
-
-        for (Long aLong : labeledEvents.keySet()) {
-            IssueStoryLabelList issueLabels = labeledEvents.get(aLong);
-            issueLabels.created_at = aLong;
-            details.add(issueLabels);
-        }
-
-        for (Long aLong : unlabeledEvents.keySet()) {
-            IssueStoryUnlabelList issueLabels = unlabeledEvents.get(aLong);
-            issueLabels.created_at = aLong;
-            details.add(issueLabels);
-        }
-        storyDetailMap.addAll(details);
-    }
-
-    private void addComments(List<GithubComment> issueComments){
-        for (GithubComment comment : issueComments) {
-            long time = getMilisFromDateClearDay(comment.created_at);
-            IssueStoryComment detail = new IssueStoryComment(comment);
-            detail.created_at = time;
-            storyDetailMap.add(detail);
-        }
-    }
-
-    private long getMilisFromDateClearDay(String createdAt) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-        DateTime dt = formatter.parseDateTime(createdAt);
-
-        return dt.minuteOfDay().roundFloorCopy().getMillis();
-    }
-
-    private boolean validEvent(String event) {
-        return !(event.equals("mentioned") ||
-                event.equals("subscribed") ||
-                event.equals("unsubscribed"));
-    }
-
-    @Override
-    public void log(String message) {
-        Log.i("IssueStoryLoader", message);
-    }
-
-    @Override
-    public String getAcceptHeader() {
-        return "application/vnd.github.v3.full+json";
-    }
+  @Override
+  public String getAcceptHeader() {
+    return "application/vnd.github.v3.full+json";
+  }
 }

@@ -29,6 +29,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.fernandocejas.frodo'
 
 buildscript {
     repositories {
@@ -36,6 +37,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.novoda:bintray-release:0.3.4'
+        classpath "com.fernandocejas.frodo:frodo-plugin:0.8.1"
     }
 }
 
@@ -63,7 +65,8 @@ android {
 }
 
 dependencies {
-    compile project(':GitskariosCore')
+    debugCompile project(path: ':GitskariosCore', configuration: 'debug')
+    releaseCompile project(path: ':GitskariosCore', configuration: 'release')
 }
 
 publish {
