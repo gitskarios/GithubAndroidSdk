@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-    compile project(':sdks:GithubAndroidSdk:GitskariosCore')
+    debugCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore', configuration: 'debug')
+    releaseCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore', configuration: 'release')
 }
 
 publish {
