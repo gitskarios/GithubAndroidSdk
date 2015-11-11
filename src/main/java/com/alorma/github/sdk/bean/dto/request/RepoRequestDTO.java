@@ -24,6 +24,8 @@ public class RepoRequestDTO implements Parcelable {
 	public String gitignore_template;
 	public String license_template;
 
+	public int team_id;
+
 	public RepoRequestDTO() {
 
 	}
@@ -40,6 +42,7 @@ public class RepoRequestDTO implements Parcelable {
 		auto_init = in.readByte() != 0x00;
 		gitignore_template = in.readString();
 		license_template = in.readString();
+		team_id = in.readInt();
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class RepoRequestDTO implements Parcelable {
 		dest.writeByte((byte) (auto_init ? 0x01 : 0x00));
 		dest.writeString(gitignore_template);
 		dest.writeString(license_template);
+		dest.writeInt(team_id);
 	}
 
 	@SuppressWarnings("unused")
@@ -74,4 +78,12 @@ public class RepoRequestDTO implements Parcelable {
 			return new RepoRequestDTO[size];
 		}
 	};
+
+	public boolean isValid() {
+		return !isEmpty(name);
+	}
+
+	private boolean isEmpty(String s) {
+		return s == null || s.isEmpty();
+	}
 }

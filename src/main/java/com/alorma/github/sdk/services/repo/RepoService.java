@@ -23,8 +23,10 @@ import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.PATCH;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import rx.Observable;
 
 /**
  * Created by Bernat on 17/07/2014.
@@ -107,6 +109,10 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
     void combinedStatus(@Path("owner") String owner, @Path("name") String repo, @Path("ref") String ref, @Query("page") int page, Callback<GithubStatusResponse> callback);
 
+    @POST("/user/repos")
+    void create(@Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
+
+
     //Sync
     @GET("/repos/{owner}/{name}")
     Repo get(@Path("owner") String owner, @Path("name") String repo);
@@ -183,4 +189,9 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
     GithubStatusResponse combinedStatus(@Path("owner") String owner, @Path("name") String repo, @Path("ref") String ref, @Query("page") int page);
 
+    @POST("/user/repos")
+    Repo create(@Body RepoRequestDTO repoRequestDTO);
+
+    @POST("/user/repos")
+    Observable<Repo> createObs(@Body RepoRequestDTO repoRequestDTO);
 }
