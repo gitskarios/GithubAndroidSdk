@@ -40,14 +40,14 @@ Add dependency in your project `build.gradle`
 ``` groovy
 
 
-    compile 'com.github.alorma:github-sdk:1.3.1'
+    compile 'com.github.alorma:github-sdk:1.3.3'
 ```
 
 Or grab it via maven
 ``` xml
 <groupId>com.github.alorma</groupId>
 <artifactId>github-sdk</artifactId>
-<version>1.3.1</version>
+<version>1.3.3</version>
 ```
 ## FORK
 
