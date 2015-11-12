@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gitskarios/GithubAndroidSdk.svg)](https://travis-ci.org/gitskarios/GithubAndroidSdk)
+
 [ ![Download](https://api.bintray.com/packages/alorma/maven/github-sdk/images/download.svg) ](https://bintray.com/alorma/maven/github-sdk/_latestVersion)
 
 #GithubAndroidSdk
