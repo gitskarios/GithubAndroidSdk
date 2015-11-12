@@ -56,15 +56,36 @@ android {
     abortOnError false
   }
 
+  productFlavors {
+    library {}
+    travis {}
+  }
+
   buildTypes {
     debug {}
     release {}
   }
 }
 
+configurations {
+  libraryDebugCompile
+  libraryReleaseCompile
+  travisDebugCompile
+  travisReleaseCompile
+}
+
 dependencies {
-  debugCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore', configuration: 'debug')
-  releaseCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore', configuration: 'release')
+  try {
+    libraryDebugCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore',
+        configuration: 'debug')
+    libraryReleaseCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore',
+        configuration: 'release')
+  } catch (Exception e) {}
+
+  try {
+    travisDebugCompile project(path: ':GitskariosCore', configuration: 'debug')
+    travisReleaseCompile project(path: ':GitskariosCore', configuration: 'release')
+  } catch (Exception e) {}
 }
 
 publish {
