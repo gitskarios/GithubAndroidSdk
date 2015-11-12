@@ -10,7 +10,6 @@ android:
 
 branches:
   only:
-   - develop
    - master
 
 script: ./gradlew assembleDebug
