@@ -8,6 +8,7 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 /**
  * Created by a557114 on 29/07/2015.
@@ -21,12 +22,8 @@ public class GetReleaseClient extends GithubClient<Release> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(RepoService.class).release(info.repoInfo.owner, info.repoInfo.name, String.valueOf(info.num), this);
-    }
-
-    @Override
-    protected Release executeServiceSync(RestAdapter restAdapter) {
-        return restAdapter.create(RepoService.class).release(info.repoInfo.owner, info.repoInfo.name, String.valueOf(info.num));
+    protected Observable<Release> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class)
+            .release(info.repoInfo.owner, info.repoInfo.name, String.valueOf(info.num));
     }
 }

@@ -7,21 +7,15 @@ import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.GithubStatusResponse;
-import com.alorma.github.sdk.bean.dto.response.Label;
-import com.alorma.github.sdk.bean.dto.response.Milestone;
-import com.alorma.github.sdk.bean.dto.response.MilestoneState;
 import com.alorma.github.sdk.bean.dto.response.Release;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.User;
-
 import java.util.List;
-
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
-import retrofit.http.Headers;
 import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -33,14 +27,6 @@ import rx.Observable;
  */
 public interface RepoService {
 
-    //Async
-    @GET("/repos/{owner}/{name}")
-    void get(@Path("owner") String owner, @Path("name") String repo, Callback<Repo> callback);
-
-    @GET("/repos/{owner}/{name}/branches")
-    void branches(@Path("owner") String owner, @Path("name") String repo,
-        Callback<List<Branch>> callback);
-
     @GET("/repos/{owner}/{name}/contents")
     void contents(@Path("owner") String owner, @Path("name") String repo,
         Callback<List<Content>> callback);
@@ -48,13 +34,6 @@ public interface RepoService {
     @GET("/repos/{owner}/{name}/contents")
     void contentsByRef(@Path("owner") String owner, @Path("name") String repo,
         @Query("ref") String ref, Callback<List<Content>> callback);
-
-    @GET("/repos/{owner}/{name}/readme")
-    void readme(@Path("owner") String owner, @Path("name") String repo, Callback<Content> callback);
-
-    @GET("/repos/{owner}/{name}/readme")
-    void readme(@Path("owner") String owner, @Path("name") String repo, @Query("ref") String ref,
-        Callback<Content> callback);
 
     @GET("/repos/{owner}/{name}/contents/{path}")
     void contents(@Path("owner") String owner, @Path("name") String repo, @Path("path") String path,
@@ -88,26 +67,6 @@ public interface RepoService {
     void releases(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page,
         Callback<List<Release>> callback);
 
-    @GET("/repos/{owner}/{name}/releases/latest")
-    void lastRelease(@Path("owner") String owner, @Path("name") String repo,
-        Callback<Release> callback);
-
-    @GET("/repos/{owner}/{name}/releases/{id}")
-    void release(@Path("owner") String owner, @Path("name") String repo, @Path("id") String id,
-        Callback<Release> callback);
-
-    @GET("/repos/{owner}/{name}/compare/{base}...{head}")
-    void compareCommits(@Path("owner") String owner, @Path("name") String repo,
-        @Path("base") String base, @Path("head") String head, Callback<CompareCommit> callback);
-
-    @DELETE("/repos/{owner}/{name}")
-    void delete(@Path("owner") String owner, @Path("name") String repo,
-        Callback<Response> callback);
-
-    @PATCH("/repos/{owner}/{name}")
-    void edit(@Path("owner") String owner, @Path("name") String repo,
-        @Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
-
     @GET("/repos/{owner}/{name}/events")
     void events(@Path("owner") String owner, @Path("name") String repo,
         Callback<List<GithubEvent>> eventsCallback);
@@ -124,23 +83,18 @@ public interface RepoService {
     void listForks(@Path("owner") String owner, @Path("name") String repo,
         @Query("sort") String sort, @Query("page") int page, Callback<List<Repo>> callback);
 
+
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
-    void combinedStatus(@Path("owner") String owner, @Path("name") String repo,
+    void combinedStatusASync(@Path("owner") String owner, @Path("name") String repo,
         @Path("ref") String ref, Callback<GithubStatusResponse> callback);
 
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
-    void combinedStatus(@Path("owner") String owner, @Path("name") String repo,
+    void combinedStatusASync(@Path("owner") String owner, @Path("name") String repo,
         @Path("ref") String ref, @Query("page") int page, Callback<GithubStatusResponse> callback);
-
-    @POST("/user/repos")
-    void create(@Body RepoRequestDTO repoRequestDTO, Callback<Repo> callback);
 
     //Sync
     @GET("/repos/{owner}/{name}")
-    Repo get(@Path("owner") String owner, @Path("name") String repo);
-
-    @GET("/repos/{owner}/{name}/branches")
-    List<Branch> branches(@Path("owner") String owner, @Path("name") String repo);
+    Observable<Repo> get(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/repos/{owner}/{name}/contents")
     List<Content> contents(@Path("owner") String owner, @Path("name") String repo);
@@ -150,10 +104,10 @@ public interface RepoService {
         @Query("ref") String ref);
 
     @GET("/repos/{owner}/{name}/readme")
-    Content readme(@Path("owner") String owner, @Path("name") String repo);
+    Observable<Content> readme(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/repos/{owner}/{name}/readme")
-    Content readme(@Path("owner") String owner, @Path("name") String repo,
+    Observable<Content> readme(@Path("owner") String owner, @Path("name") String repo,
         @Query("ref") String ref);
 
     @GET("/repos/{owner}/{name}/contents/{path}")
@@ -186,20 +140,20 @@ public interface RepoService {
         @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/releases/latest")
-    Release lastRelease(@Path("owner") String owner, @Path("name") String repo);
+    Observable<Release> lastRelease(@Path("owner") String owner, @Path("name") String repo);
 
     @GET("/repos/{owner}/{name}/releases/{id}")
-    Release release(@Path("owner") String owner, @Path("name") String repo, @Path("id") String id);
+    Observable<Release> release(@Path("owner") String owner, @Path("name") String repo, @Path("id") String id);
 
     @GET("/repos/{owner}/{name}/compare/{base}...{head}")
-    CompareCommit compareCommits(@Path("owner") String owner, @Path("name") String repo,
+    Observable<CompareCommit> compareCommits(@Path("owner") String owner, @Path("name") String repo,
         @Path("base") String base, @Path("head") String head);
 
     @DELETE("/repos/{owner}/{name}")
-    Response delete(@Path("owner") String owner, @Path("name") String repo);
+    Observable<Response> delete(@Path("owner") String owner, @Path("name") String repo);
 
     @PATCH("/repos/{owner}/{name}")
-    Repo edit(@Path("owner") String owner, @Path("name") String repo,
+    Observable<Repo> edit(@Path("owner") String owner, @Path("name") String repo,
         @Body RepoRequestDTO repoRequestDTO);
 
     @GET("/repos/{owner}/{name}/events")
@@ -218,21 +172,28 @@ public interface RepoService {
         @Query("sort") String sort, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
-    GithubStatusResponse combinedStatus(@Path("owner") String owner, @Path("name") String repo,
+    Observable<GithubStatusResponse> combinedStatus(@Path("owner") String owner, @Path("name") String repo,
         @Path("ref") String ref);
 
     @GET("/repos/{owner}/{name}/commits/{ref}/status")
-    GithubStatusResponse combinedStatus(@Path("owner") String owner, @Path("name") String repo,
+    Observable<GithubStatusResponse> combinedStatus(@Path("owner") String owner, @Path("name") String repo,
+        @Path("ref") String ref, @Query("page") int page);
+
+    @GET("/repos/{owner}/{name}/commits/{ref}/status")
+    GithubStatusResponse combinedStatusSync(@Path("owner") String owner, @Path("name") String repo,
+        @Path("ref") String ref);
+
+    @GET("/repos/{owner}/{name}/commits/{ref}/status")
+    GithubStatusResponse combinedStatusSync(@Path("owner") String owner, @Path("name") String repo,
         @Path("ref") String ref, @Query("page") int page);
 
     @POST("/user/repos")
-    Repo create(@Body RepoRequestDTO repoRequestDTO);
-
-    // Observable
-    @POST("/user/repos")
-    Observable<Repo> createObs(@Body RepoRequestDTO repoRequestDTO);
+    Observable<Repo> create(@Body RepoRequestDTO repoRequestDTO);
 
     //Async
     @GET("/repos/{owner}/{name}")
     Observable<Repo> getObs(@Path("owner") String owner, @Path("name") String repo);
+
+    @GET("/repos/{owner}/{name}/branches")
+    Observable<List<Branch>> branches(@Path("owner") String owner, @Path("name") String repo);
 }

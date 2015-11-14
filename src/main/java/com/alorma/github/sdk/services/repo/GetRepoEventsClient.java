@@ -5,24 +5,25 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.client.GithubListClient;
 import com.alorma.github.sdk.services.user.events.EventsService;
 
 import java.util.List;
 
 import retrofit.RestAdapter;
 
-public class GetRepoEventsClient extends GithubClient<List<GithubEvent>> {
+public class GetRepoEventsClient extends GithubListClient<List<GithubEvent>> {
 
     private int page;
     private RepoInfo info;
 
     public GetRepoEventsClient(Context context, RepoInfo info) {
-        super(context);
-        this.info = info;
+        this(context, info, 0);
     }
 
     public GetRepoEventsClient(Context context, RepoInfo info, int page) {
-        this(context, info);
+        super(context);
+        this.info = info;
         this.page = page;
     }
 

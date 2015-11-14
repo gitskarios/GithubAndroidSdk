@@ -2,25 +2,37 @@ package com.alorma.github.sdk.services.repo;
 
 import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-import com.alorma.github.sdk.services.client.GithubClient;
-
+import java.util.ArrayList;
 import java.util.List;
+import rx.Subscriber;
 
-import retrofit.client.Response;
-
-public abstract class BranchesCallback implements GithubClient.OnResultCallback<List<Branch>> {
+public abstract class BranchesCallback extends Subscriber<List<Branch>> {
 
 	private RepoInfo repoInfo;
+	List<String> names;
+	private int selectedIndex = 0;
 
 	public BranchesCallback(RepoInfo repoInfo) {
 		this.repoInfo = repoInfo;
+		names = new ArrayList<>();
+	}
+
+
+	@Override
+	public void onCompleted() {
+		showBranches(names.toArray(new String[names.size()]), selectedIndex);
 	}
 
 	@Override
-	public void onResponseOk(List<Branch> branches, Response r) {
+	public void onError(Throwable e) {
+
+	}
+
+	@Override
+	public void onNext(List<Branch> branches) {
 		if (branches != null) {
+
 			String[] names = new String[branches.size()];
-			int selectedIndex = 0;
 			for (int i = 0; i < branches.size(); i++) {
 				String branchName = branches.get(i).name;
 				names[i] = branchName;
@@ -28,14 +40,8 @@ public abstract class BranchesCallback implements GithubClient.OnResultCallback<
 					selectedIndex = i;
 				}
 			}
-
-			showBranches(names, selectedIndex);
 		}
 	}
 
 	protected abstract void showBranches(String[] branches, int defaultBranchPosition);
-
-	public RepoInfo getRepoInfo() {
-		return repoInfo;
-	}
 }
