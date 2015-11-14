@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 /**
  * Created by Bernat on 13/09/2014.
@@ -24,12 +25,7 @@ public class GetIssueClient extends GithubClient<Issue> {
 	}
 
 	@Override
-	protected void executeService(RestAdapter restAdapter) {
-		restAdapter.create(IssuesService.class).detail(owner, repo, number, this);
-	}
-
-	@Override
-	protected Issue executeServiceSync(RestAdapter restAdapter) {
+	protected Observable<Issue> getApiObservable(RestAdapter restAdapter) {
 		return restAdapter.create(IssuesService.class).detail(owner, repo, number);
 	}
 }

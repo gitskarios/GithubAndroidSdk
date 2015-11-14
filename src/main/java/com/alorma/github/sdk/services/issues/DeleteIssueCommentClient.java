@@ -7,6 +7,7 @@ import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
 import retrofit.client.Response;
+import rx.Observable;
 
 public class DeleteIssueCommentClient extends GithubClient<Response>{
 
@@ -20,12 +21,7 @@ public class DeleteIssueCommentClient extends GithubClient<Response>{
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(IssuesService.class).deleteComment(info.owner, info.name, id, this);
-    }
-
-    @Override
-    protected Response executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<Response> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(IssuesService.class).deleteComment(info.owner, info.name, id);
     }
 }

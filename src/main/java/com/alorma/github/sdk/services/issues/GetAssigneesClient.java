@@ -6,12 +6,14 @@ import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 public class GetAssigneesClient extends GithubClient<List<User>> {
 
@@ -23,55 +25,17 @@ public class GetAssigneesClient extends GithubClient<List<User>> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        IssuesService service = restAdapter.create(IssuesService.class);
-        new AssigneesCallback(repoInfo, service).execute();
-    }
-
-    @Override
-    protected List<User> executeServiceSync(RestAdapter restAdapter) {
-        IssuesService issuesService = restAdapter.create(IssuesService.class);
-        List<User> assignees = new ArrayList<>();
-
-        assignees.addAll(issuesService.assignees(repoInfo.owner, repoInfo.name, 1));
-
-        for (int i = nextPage; i < lastPage; i++)
-            assignees.addAll(issuesService.assignees(repoInfo.owner, repoInfo.name, i));
-        return assignees;
-    }
-
-    private class AssigneesCallback extends BaseInfiniteCallback<List<User>> {
-
-        private List<User> assignees;
-        private RepoInfo repoInfo;
-        private IssuesService service;
-
-        public AssigneesCallback(RepoInfo repoInfo, IssuesService service) {
-            this.repoInfo = repoInfo;
-            this.service = service;
-            assignees = new ArrayList<>();
-        }
-
-        @Override
-        public void execute() {
-            service.assignees(repoInfo.owner, repoInfo.name, this);
-        }
-
-        @Override
-        protected void executePaginated(int nextPage) {
-            service.assignees(repoInfo.owner, repoInfo.name, nextPage, this);
-        }
-
-        @Override
-        protected void executeNext() {
-            if (getOnResultCallback() != null) {
-                getOnResultCallback().onResponseOk(assignees, null);
+    protected Observable<List<User>> getApiObservable(final RestAdapter restAdapter) {
+        return Observable.create(new BaseInfiniteCallback<List<User>>() {
+            @Override
+            public void execute() {
+                restAdapter.create(IssuesService.class).assignees(repoInfo.owner, repoInfo.name, this);
             }
-        }
 
-        @Override
-        protected void response(List<User> assignees) {
-            this.assignees.addAll(assignees);
-        }
+            @Override
+            protected void executePaginated(int nextPage) {
+                restAdapter.create(IssuesService.class).assignees(repoInfo.owner, repoInfo.name, nextPage, this);
+            }
+        });
     }
 }

@@ -3,28 +3,32 @@ package com.alorma.github.sdk.services.issues.story;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
-import android.util.Pair;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
-import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
-import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
+import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
+import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
+import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
-
+import com.alorma.github.sdk.services.client.GithubListClient;
+import com.alorma.gitskarios.core.client.PaginationLink;
+import com.alorma.gitskarios.core.client.RelType;
 import com.fernandocejas.frodo.annotation.RxLogObservable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import java.util.Collections;
-import java.util.List;
-
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Header;
 import retrofit.client.Response;
 import rx.Observable;
 import rx.Subscriber;
@@ -52,20 +56,9 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         issueStoryService = getRestAdapter().create(IssueStoryService.class);
     }
 
-    @RxLogObservable
-    public Observable<IssueStory> create() {
-        return getIssueStory();
-    }
-
     @Override
-    @RxLogObservable
-    public Observable<IssueStory> observable() {
-        return create().map(new Func1<IssueStory, IssueStory>() {
-            @Override
-            public IssueStory call(IssueStory issueStory) {
-                return issueStory;
-            }
-        });
+    protected Observable<IssueStory> getApiObservable(RestAdapter restAdapter) {
+        return getIssueStory();
     }
 
     @NonNull
@@ -100,34 +93,20 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     @NonNull
     @RxLogObservable
     private Observable<List<GithubComment>> getCommentsObs() {
-        return Observable.create(new Observable.OnSubscribe<List<GithubComment>>() {
+        return Observable.create(new BaseInfiniteCallback<List<GithubComment>>() {
+
             @Override
-            public void call(final Subscriber<? super List<GithubComment>> subscriber) {
-                new BaseInfiniteCallback<List<GithubComment>>() {
-
-                    @Override
-                    public void execute() {
-                        issueStoryService.comments(issueInfo.repoInfo.owner,
-                            issueInfo.repoInfo.name, issueInfo.num, this);
-                    }
-
-                    @Override
-                    protected void executePaginated(int nextPage) {
-                        issueStoryService.comments(issueInfo.repoInfo.owner,
-                            issueInfo.repoInfo.name, issueInfo.num, nextPage, this);
-                    }
-
-                    @Override
-                    protected void executeNext() {
-                        subscriber.onCompleted();
-                    }
-
-                    @Override
-                    protected void response(List<GithubComment> githubComments) {
-                        subscriber.onNext(githubComments);
-                    }
-                }.execute();
+            public void execute() {
+                issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                    issueInfo.num, this);
             }
+
+            @Override
+            protected void executePaginated(int nextPage) {
+                issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                    issueInfo.num, this);
+            }
+
         });
     }
 
@@ -154,33 +133,17 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     @NonNull
     @RxLogObservable
     private Observable<List<IssueEvent>> getEventsObs() {
-        return Observable.create(new Observable.OnSubscribe<List<IssueEvent>>() {
+        return Observable.create(new BaseInfiniteCallback<List<IssueEvent>>() {
             @Override
-            public void call(final Subscriber<? super List<IssueEvent>> subscriber) {
-                new BaseInfiniteCallback<List<IssueEvent>>() {
+            public void execute() {
+                issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                    issueInfo.num, this);
+            }
 
-                    @Override
-                    public void execute() {
-                        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
-                            issueInfo.num, this);
-                    }
-
-                    @Override
-                    protected void executePaginated(int nextPage) {
-                        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
-                            issueInfo.num, nextPage, this);
-                    }
-
-                    @Override
-                    protected void executeNext() {
-                        subscriber.onCompleted();
-                    }
-
-                    @Override
-                    protected void response(List<IssueEvent> issueEvents) {
-                        subscriber.onNext(issueEvents);
-                    }
-                }.execute();
+            @Override
+            protected void executePaginated(int nextPage) {
+                issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+                    issueInfo.num, nextPage, this);
             }
         });
     }
@@ -208,19 +171,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
                     });
                 }
             });
-    }
-
-    @Override
-    protected void executeService(RestAdapter restAdapter) {
-        IssueStory issueStory = executeServiceSync(restAdapter);
-        if (getOnResultCallback() != null) {
-            getOnResultCallback().onResponseOk(issueStory, null);
-        }
-    }
-
-    @Override
-    protected IssueStory executeServiceSync(RestAdapter restAdapter) {
-        return observable().toBlocking().single();
     }
 
     private long getMilisFromDateClearDay(String createdAt) {

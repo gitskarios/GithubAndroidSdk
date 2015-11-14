@@ -6,9 +6,8 @@ import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.github.sdk.services.issues.GithubIssuesClient;
-import com.alorma.github.sdk.services.issues.IssuesService;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -16,7 +15,7 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 22/08/2014.
  */
-public class GetPullsClient extends GithubClient<List<PullRequest>> {
+public class GetPullsClient extends GithubListClient<List<PullRequest>> {
 
     private final IssueInfo issueInfo;
     private int page = 0;
