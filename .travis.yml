@@ -10,6 +10,7 @@ android:
 
 branches:
   only:
+   - develop
    - master
 
 script: ./gradlew assembleTravisDebug
