@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
-
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 
@@ -12,6 +11,7 @@ public class GetRepoClient extends GithubRepoClient<Repo> {
 
 	public GetRepoClient(Context context, RepoInfo repoInfo) {
 		super(context, repoInfo);
+		setApiObservable(getRestAdapter().create(RepoService.class).getObs(getOwner(), getRepo()));
 	}
 
 	@Override

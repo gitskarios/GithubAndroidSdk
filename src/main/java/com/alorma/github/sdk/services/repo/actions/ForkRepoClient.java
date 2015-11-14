@@ -1,15 +1,11 @@
 package com.alorma.github.sdk.services.repo.actions;
 
 import android.content.Context;
-
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
-
-import java.util.Objects;
-
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import rx.Observable;
 
 public class ForkRepoClient extends GithubClient<Repo> {
 
@@ -27,18 +23,13 @@ public class ForkRepoClient extends GithubClient<Repo> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        if(org == null)
-            restAdapter.create(RepoActionsService.class).forkRepo(repoInfo.owner, repoInfo.name, new Object(), this);
-        else
-            restAdapter.create(RepoActionsService.class).forkRepo(repoInfo.owner, repoInfo.name, org, new Object(), this);
-    }
-
-    @Override
-    protected Repo executeServiceSync(RestAdapter restAdapter) {
-        if(org == null)
-            return restAdapter.create(RepoActionsService.class).forkRepo(repoInfo.owner, repoInfo.name, new Object());
-        else
-            return restAdapter.create(RepoActionsService.class).forkRepo(repoInfo.owner, repoInfo.name, org, new Object());
+    protected Observable<Repo> getApiObservable(RestAdapter restAdapter) {
+        if (org == null) {
+            return restAdapter.create(RepoActionsService.class)
+                .forkRepo(repoInfo.owner, repoInfo.name, new Object());
+        } else {
+            return restAdapter.create(RepoActionsService.class)
+                .forkRepo(repoInfo.owner, repoInfo.name, org, new Object());
+        }
     }
 }

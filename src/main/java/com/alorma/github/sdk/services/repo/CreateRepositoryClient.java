@@ -23,14 +23,8 @@ public class CreateRepositoryClient extends GithubClient<Repo> {
   }
 
   @Override
-  public Observable<Pair<Repo, Response>> observable() {
-    return getRestAdapter().create(RepoService.class).createObs(repoRequestDTO).map(
-        new Func1<Repo, Pair<Repo, Response>>() {
-          @Override
-          public Pair<Repo, Response> call(Repo repo) {
-            return new Pair<>(repo, null);
-          }
-        });
+  public Observable<? extends Repo> getApiObservable() {
+    return getRestAdapter().create(RepoService.class).createObs(repoRequestDTO);
   }
 
   @Override

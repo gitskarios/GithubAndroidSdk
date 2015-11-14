@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -12,7 +13,7 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 08/07/2014.
  */
-public class UserGistsClient extends GithubClient<List<Gist>> {
+public class UserGistsClient extends GithubListClient<List<Gist>> {
 
     private String username;
     private int page = 0;
@@ -41,15 +42,15 @@ public class UserGistsClient extends GithubClient<List<Gist>> {
         GistsService gistsService = restAdapter.create(GistsService.class);
         if (page == 0) {
             if (username == null) {
-                gistsService.userGistsList(this);
+                gistsService.userGistsListAsync(this);
             } else {
-                gistsService.userGistsList(username, this);
+                gistsService.userGistsListAsync(username, this);
             }
         } else {
             if (username == null) {
-                gistsService.userGistsList(page, this);
+                gistsService.userGistsListAsync(page, this);
             } else {
-                gistsService.userGistsList(username, page, this);
+                gistsService.userGistsListAsync(username, page, this);
             }
         }
     }

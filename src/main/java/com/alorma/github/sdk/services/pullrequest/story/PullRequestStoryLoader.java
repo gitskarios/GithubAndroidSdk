@@ -59,11 +59,11 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   @Override
   @RxLogObservable
-  public Observable<Pair<PullRequestStory, Response>> observable() {
-    return create().map(new Func1<PullRequestStory, Pair<PullRequestStory, Response>>() {
+  public Observable<PullRequestStory> observable() {
+    return create().map(new Func1<PullRequestStory, PullRequestStory>() {
       @Override
-      public Pair<PullRequestStory, Response> call(PullRequestStory issueStory) {
-        return new Pair<>(issueStory, null);
+      public PullRequestStory call(PullRequestStory issueStory) {
+        return issueStory;
       }
     });
   }
@@ -262,7 +262,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   @Override
   protected PullRequestStory executeServiceSync(RestAdapter restAdapter) {
-    return observable().toBlocking().single().first;
+    return observable().toBlocking().single();
   }
 
   private long getMilisFromDateClearDay(String createdAt) {

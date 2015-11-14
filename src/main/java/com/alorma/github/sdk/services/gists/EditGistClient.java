@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 public class EditGistClient extends GithubClient<Gist> {
 
@@ -20,12 +21,7 @@ public class EditGistClient extends GithubClient<Gist> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(GistsService.class).edit(id, editGistRequestDTO, this);
-    }
-
-    @Override
-    protected Gist executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(GistsService.class).edit(id, editGistRequestDTO);
     }
 }

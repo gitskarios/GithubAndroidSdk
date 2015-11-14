@@ -18,17 +18,7 @@ import rx.schedulers.Schedulers;
 public class GitIgnoreClient extends GithubClient<GitIgnoreTemplates> {
 	public GitIgnoreClient(Context context) {
 		super(context);
-	}
-
-	@Override
-	public Observable<Pair<GitIgnoreTemplates, Response>> observable() {
-		return getRestAdapter().create(GitIgnoreService.class).listObs().subscribeOn(Schedulers.io()).map(
-				new Func1<GitIgnoreTemplates, Pair<GitIgnoreTemplates, Response>>() {
-					@Override
-					public Pair<GitIgnoreTemplates, Response> call(GitIgnoreTemplates strings) {
-						return new Pair<>(strings, null);
-					}
-				});
+		setApiObservable(getRestAdapter().create(GitIgnoreService.class).listObs());
 	}
 
 	@Override

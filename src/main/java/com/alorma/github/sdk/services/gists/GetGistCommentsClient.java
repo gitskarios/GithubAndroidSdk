@@ -6,6 +6,7 @@ import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.client.GithubListClient;
 import com.alorma.github.sdk.services.issues.IssuesService;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 
-public class GetGistCommentsClient extends GithubClient<List<GithubComment>> {
+public class GetGistCommentsClient extends GithubListClient<List<GithubComment>> {
 
     private String id;
 
