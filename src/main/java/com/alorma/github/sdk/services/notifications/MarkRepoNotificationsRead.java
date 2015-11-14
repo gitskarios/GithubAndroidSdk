@@ -12,6 +12,7 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import retrofit.RestAdapter;
 import retrofit.client.Response;
+import rx.Observable;
 
 /**
  * Created by Bernat on 01/03/2015.
@@ -25,15 +26,7 @@ public class MarkRepoNotificationsRead extends GithubClient<Response> {
 	}
 
 	@Override
-	protected void executeService(RestAdapter restAdapter) {
-		DateTime dateTime = DateTime.now().withZone(DateTimeZone.UTC);
-		String date = ISODateTimeFormat.dateTime().print(dateTime);
-		LastDate lastDate = new LastDate(date);
-		restAdapter.create(NotificationsService.class).markAsReadRepo(repoInfo.owner, repoInfo.name, lastDate, this);
-	}
-
-	@Override
-	protected Response executeServiceSync(RestAdapter restAdapter) {
+	protected Observable<Response> getApiObservable(RestAdapter restAdapter) {
 		DateTime dateTime = DateTime.now().withZone(DateTimeZone.UTC);
 		String date = ISODateTimeFormat.dateTime().print(dateTime);
 		LastDate lastDate = new LastDate(date);

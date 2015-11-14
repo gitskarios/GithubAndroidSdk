@@ -15,6 +15,7 @@ import retrofit.converter.Converter;
 import retrofit.mime.TypedInput;
 import retrofit.mime.TypedOutput;
 import retrofit.mime.TypedString;
+import rx.Observable;
 
 /**
  * Created by Bernat on 22/07/2014.
@@ -29,12 +30,7 @@ public class GetMarkdownClient extends GithubClient<String> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(ContentService.class).markdown(readme.text, this);
-    }
-
-    @Override
-    protected String executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<String> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(ContentService.class).markdown(readme.text);
     }
 

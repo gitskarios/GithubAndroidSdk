@@ -8,6 +8,7 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 public class GetGitBlobClient extends GithubClient<GitBlob> {
 
@@ -19,12 +20,7 @@ public class GetGitBlobClient extends GithubClient<GitBlob> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(GitDataService.class).repoBlob(info.repoInfo.owner, info.repoInfo.name, info.sha, this);
-    }
-
-    @Override
-    protected GitBlob executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<GitBlob> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(GitDataService.class).repoBlob(info.repoInfo.owner, info.repoInfo.name, info.sha);
     }
 }

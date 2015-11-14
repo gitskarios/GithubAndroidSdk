@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.Team;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.client.GithubListClient;
 import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 
-public class GetTeamMembersClient extends GithubClient<List<User>> {
+public class GetTeamMembersClient extends GithubListClient<List<User>> {
 
     private final String id;
     private final int page;
