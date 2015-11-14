@@ -52,9 +52,9 @@ public class UserStarredGistsClient extends GithubListClient<List<Gist>> {
 	protected List<Gist> executeServiceSync(RestAdapter restAdapter) {
 		GistsService gistsService = restAdapter.create(GistsService.class);
 		if (page == 0) {
-			return gistsService.userStarredGistsList();
+			return gistsService.userStarredGistsListSync();
 		} else {
-			return gistsService.userStarredGistsList(page);
+			return gistsService.userStarredGistsListSync(page);
 		}
 	}
 

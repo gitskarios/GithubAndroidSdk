@@ -5,23 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import com.alorma.github.sdk.security.GitHub;
 import com.alorma.github.sdk.security.InterceptingListOkClient;
-import com.alorma.github.sdk.security.InterceptingOkClient;
 import com.alorma.gitskarios.core.ApiClient;
-import com.alorma.gitskarios.core.client.BaseClient;
 import com.alorma.gitskarios.core.client.BaseListClient;
-import com.alorma.gitskarios.core.client.PaginationLink;
-import com.alorma.gitskarios.core.client.RelType;
 import com.alorma.gitskarios.core.client.StoreCredentials;
 import com.squareup.okhttp.OkHttpClient;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Header;
-import retrofit.client.Response;
-import rx.Observable;
-import rx.Subscriber;
 
 public abstract class GithubListClient<K> extends BaseListClient<K> {
 

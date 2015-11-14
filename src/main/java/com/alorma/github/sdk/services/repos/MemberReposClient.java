@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -12,7 +13,7 @@ import retrofit.RestAdapter;
 /**
  * Created by Bernat on 18/07/2015.
  */
-public class MemberReposClient extends GithubClient<List<Repo>> {
+public class MemberReposClient extends GithubListClient<List<Repo>> {
 
     private int page;
 

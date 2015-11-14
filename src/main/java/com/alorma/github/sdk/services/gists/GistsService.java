@@ -56,8 +56,11 @@ public interface GistsService {
 	void publicGistsList(@Query("page") int page, Callback<List<Gist>> callback);
 
 
+	@GET("/gists/starred")
+	List<Gist> userStarredGistsListSync();
 
-
+	@GET("/gists/starred")
+	List<Gist> userStarredGistsListSync(@Query("page") int page);
 
 	@GET("/gists/{id}/comments")
 	List<GithubComment> comments(@Path("id") String id);
