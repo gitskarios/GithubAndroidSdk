@@ -22,6 +22,17 @@ public class RequestTokenClient extends GithubClient<Token> {
     }
 
     @Override
+    protected RestAdapter getRestAdapter() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+            .setEndpoint(getClient().getApiOauthUrlEndpoint())
+            .setRequestInterceptor(this)
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .build();
+
+        return restAdapter;
+    }
+
+    @Override
     public void intercept(RequestFacade request) {
         request.addHeader("Accept", "application/json");
     }
