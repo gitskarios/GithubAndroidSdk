@@ -6,6 +6,7 @@ import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 /**
  * Created by Bernat on 02/04/2015.
@@ -19,12 +20,7 @@ public class GetGistDetailClient extends GithubClient<Gist> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(GistsService.class).gistDetail(id, this);
-    }
-
-    @Override
-    protected Gist executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(GistsService.class).gistDetail(id);
     }
 }

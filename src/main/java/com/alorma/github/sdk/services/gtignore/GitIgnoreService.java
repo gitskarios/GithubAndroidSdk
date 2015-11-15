@@ -11,15 +11,8 @@ import rx.Observable;
  */
 public interface GitIgnoreService {
 
-	//Async
-	@GET("/gitignore/templates")
-	void list(Callback<GitIgnoreTemplates> callback);
-
 	//Sync
 	@GET("/gitignore/templates")
-	GitIgnoreTemplates list();
+	Observable<GitIgnoreTemplates> list();
 
-	//Observable
-	@GET("/gitignore/templates")
-	Observable<GitIgnoreTemplates> listObs();
 }

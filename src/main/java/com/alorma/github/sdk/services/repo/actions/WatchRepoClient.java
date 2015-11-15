@@ -1,15 +1,16 @@
 package com.alorma.github.sdk.services.repo.actions;
 
 import android.content.Context;
-
 import com.alorma.github.sdk.services.client.GithubClient;
-
 import retrofit.RestAdapter;
+import retrofit.client.Response;
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created by Bernat on 07/08/2014.
  */
-public class WatchRepoClient extends GithubClient<Object> {
+public class WatchRepoClient extends GithubClient<Boolean> {
 
     private final String owner;
     private final String repo;
@@ -21,12 +22,14 @@ public class WatchRepoClient extends GithubClient<Object> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(RepoActionsService.class).watchRepo(owner, repo, "", this);
-    }
-
-    @Override
-    protected Object executeServiceSync(RestAdapter restAdapter) {
-        return restAdapter.create(RepoActionsService.class).watchRepo(owner, repo, "");
+    protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(RepoActionsService.class)
+            .watchRepo(owner, repo, "")
+            .map(new Func1<Response, Boolean>() {
+                @Override
+                public Boolean call(Response r) {
+                    return r != null && r.getStatus() == 204;
+                }
+            });
     }
 }

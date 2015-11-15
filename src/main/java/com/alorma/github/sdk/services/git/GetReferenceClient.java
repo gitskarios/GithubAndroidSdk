@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 public class GetReferenceClient extends GithubClient<GitReference> {
 
@@ -18,12 +19,7 @@ public class GetReferenceClient extends GithubClient<GitReference> {
     }
 
     @Override
-    protected void executeService(RestAdapter restAdapter) {
-        restAdapter.create(GitDataService.class).repoReference(info.owner, info.name, info.branch, this);
-    }
-
-    @Override
-    protected GitReference executeServiceSync(RestAdapter restAdapter) {
+    protected Observable<GitReference> getApiObservable(RestAdapter restAdapter) {
         return restAdapter.create(GitDataService.class).repoReference(info.owner, info.name, info.branch);
     }
 }

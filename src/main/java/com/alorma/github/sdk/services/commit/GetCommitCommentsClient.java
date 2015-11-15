@@ -7,6 +7,7 @@ import com.alorma.github.sdk.bean.dto.response.CommitComment;
 import com.alorma.github.sdk.bean.info.CommitInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -15,7 +16,7 @@ import retrofit.client.Response;
 /**
  * Created by Bernat on 22/12/2014.
  */
-public class GetCommitCommentsClient extends GithubClient<List<CommitComment>> {
+public class GetCommitCommentsClient extends GithubListClient<List<CommitComment>> {
 
 	private CommitInfo info;
 	private int page = 0;

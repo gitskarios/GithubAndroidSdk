@@ -18,6 +18,7 @@ import retrofit.http.GET;
 import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import rx.Observable;
 
 /**
  * Created by Bernat on 22/08/2014.
@@ -63,7 +64,7 @@ public interface PullRequestsService {
     List<PullRequest> pulls(@Path("owner") String owner, @Path("name") String repo, @Query("state") String state, @Query("page") int page);
 
     @GET("/repos/{owner}/{name}/pulls/{number}")
-    PullRequest pull(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number);
+    Observable<PullRequest> pull(@Path("owner") String owner, @Path("name") String repo, @Path("number") int number);
 
     @GET("/repos/{owner}/{repo}/pulls/{number}/commits")
     List<Commit> commits(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);
@@ -78,7 +79,7 @@ public interface PullRequestsService {
     List<CommitFile> files(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Query("page") int page);
 
     @PUT("/repos/{owner}/{repo}/pulls/{number}/merge")
-    MergeButtonResponse merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest);
+    Observable<MergeButtonResponse> merge(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number, @Body MergeButtonRequest mergeButtonRequest);
 
     @GET("/repos/{owner}/{repo}/pulls/{number}/comments")
     List<ReviewComment> reviewComments(@Path("owner") String owner, @Path("repo") String repo, @Path("number") int number);

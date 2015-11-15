@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -13,7 +14,7 @@ import rx.Observable;
 /**
  * Created by Bernat on 03/10/2014.
  */
-public class GetUserEventsClient extends GithubClient<List<GithubEvent>> {
+public class GetUserEventsClient extends GithubListClient<List<GithubEvent>> {
 	private String username;
 	private int page = 0;
 

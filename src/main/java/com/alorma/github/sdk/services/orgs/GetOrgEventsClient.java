@@ -5,11 +5,12 @@ import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.services.client.GithubClient;
 
+import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
 
-public class GetOrgEventsClient extends GithubClient<List<GithubEvent>> {
+public class GetOrgEventsClient extends GithubListClient<List<GithubEvent>> {
 
     private String username;
     private String org;
