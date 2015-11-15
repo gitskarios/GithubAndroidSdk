@@ -23,6 +23,7 @@ public class PublishCommitCommentClient extends GithubClient<CommitComment>{
 
     @Override
     protected Observable<CommitComment> getApiObservable(RestAdapter restAdapter) {
-        return restAdapter.create(CommitsService.class).publishComment(info.repoInfo.owner, info.repoInfo.name, info.sha, request);
+        return restAdapter.create(CommitsService.class)
+            .publishComment(info.repoInfo.owner, info.repoInfo.name, info.sha, request);
     }
 }
