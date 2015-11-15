@@ -17,6 +17,9 @@ public abstract class BranchesCallback extends Subscriber<List<Branch>> {
 		names = new ArrayList<>();
 	}
 
+	public RepoInfo getRepoInfo() {
+		return repoInfo;
+	}
 
 	@Override
 	public void onCompleted() {

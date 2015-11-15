@@ -18,8 +18,14 @@ public class GetPullRequestCommits extends GithubListClient<List<Commit>> {
     private int page;
 
     public GetPullRequestCommits(Context context, IssueInfo info) {
+        this(context, info, 0);
+    }
+
+
+    public GetPullRequestCommits(Context context, IssueInfo info, int page) {
         super(context);
         this.info = info;
+        this.page = page;
     }
 
     @Override

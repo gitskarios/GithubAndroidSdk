@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.pullrequest;
 
 import android.content.Context;
 
+import android.util.Pair;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitFile;
 import com.alorma.github.sdk.bean.info.IssueInfo;
@@ -11,6 +12,7 @@ import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import rx.Observable;
 
 /**
  * Created by Bernat on 17/06/2015.
