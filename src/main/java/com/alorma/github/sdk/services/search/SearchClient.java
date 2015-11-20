@@ -3,7 +3,6 @@ package com.alorma.github.sdk.services.search;
 import com.alorma.github.sdk.bean.dto.response.search.IssuesSearch;
 import com.alorma.github.sdk.bean.dto.response.search.ReposSearch;
 import com.alorma.github.sdk.bean.dto.response.search.UsersSearch;
-
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
