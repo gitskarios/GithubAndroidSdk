@@ -29,8 +29,8 @@ public abstract class BaseInfiniteCallback<K> implements Observable.OnSubscribe<
     @Override
     public void success(K k, Response response) {
         int nextPage = getLinkData(response);
+        subscriber.onNext(k);
         if (nextPage != -1) {
-            subscriber.onNext(k);
             executePaginated(nextPage);
         } else {
             subscriber.onCompleted();
