@@ -1,5 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alorma.github.sdk">
+<manifest
+    package="com.alorma.github.sdk"
+    >
 
-    <application />
+  <application/>
 </manifest>

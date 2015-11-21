@@ -2,7 +2,6 @@ package com.alorma.github.sdk.bean.info;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.alorma.github.sdk.bean.dto.response.Permissions;
 
 /**
@@ -10,49 +9,47 @@ import com.alorma.github.sdk.bean.dto.response.Permissions;
  */
 public class RepoInfo implements Parcelable {
 
-	public String owner;
-	public String name;
-	public String branch;
-	public Permissions permissions = new Permissions();
+  @SuppressWarnings("unused") public static final Parcelable.Creator<RepoInfo> CREATOR = new Parcelable.Creator<RepoInfo>() {
+    @Override
+    public RepoInfo createFromParcel(Parcel in) {
+      return new RepoInfo(in);
+    }
 
-	public RepoInfo() {
-	}
+    @Override
+    public RepoInfo[] newArray(int size) {
+      return new RepoInfo[size];
+    }
+  };
+  public String owner;
+  public String name;
+  public String branch;
+  public Permissions permissions = new Permissions();
 
-	protected RepoInfo(Parcel in) {
-		owner = in.readString();
-		name = in.readString();
-		branch = in.readString();
-		permissions = in.readParcelable(Permissions.class.getClassLoader());
-	}
+  public RepoInfo() {
+  }
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
+  protected RepoInfo(Parcel in) {
+    owner = in.readString();
+    name = in.readString();
+    branch = in.readString();
+    permissions = in.readParcelable(Permissions.class.getClassLoader());
+  }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(owner);
-		dest.writeString(name);
-		dest.writeString(branch);
-		dest.writeParcelable(permissions, flags);
-	}
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-	@SuppressWarnings("unused")
-	public static final Parcelable.Creator<RepoInfo> CREATOR = new Parcelable.Creator<RepoInfo>() {
-		@Override
-		public RepoInfo createFromParcel(Parcel in) {
-			return new RepoInfo(in);
-		}
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(owner);
+    dest.writeString(name);
+    dest.writeString(branch);
+    dest.writeParcelable(permissions, flags);
+  }
 
-		@Override
-		public RepoInfo[] newArray(int size) {
-			return new RepoInfo[size];
-		}
-	};
-
-	@Override
-	public String toString() {
-		return owner + "/" + name;
-	}
+  @Override
+  public String toString() {
+    return owner + "/" + name;
+  }
 }

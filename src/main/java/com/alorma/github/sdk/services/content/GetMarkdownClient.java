@@ -19,41 +19,41 @@ import rx.Observable;
  */
 public class GetMarkdownClient extends GithubClient<String> {
 
-	private RequestMarkdownDTO readme;
+  private RequestMarkdownDTO readme;
 
-    public GetMarkdownClient(Context context, RequestMarkdownDTO readme) {
-        super(context);
-		this.readme = readme;
-    }
+  public GetMarkdownClient(Context context, RequestMarkdownDTO readme) {
+    super(context);
+    this.readme = readme;
+  }
 
-    @Override
-    protected Observable<String> getApiObservable(RestAdapter restAdapter) {
-        return restAdapter.create(ContentService.class).markdown(readme.text);
-    }
+  @Override
+  protected Observable<String> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(ContentService.class).markdown(readme.text);
+  }
 
-    @Override
-    public void intercept(RequestFacade request) {
-        super.intercept(request);
-        request.addHeader("Content-type", "text/plain");
-    }
+  @Override
+  public void intercept(RequestFacade request) {
+    super.intercept(request);
+    request.addHeader("Content-type", "text/plain");
+  }
 
-    @Override
-    protected Converter customConverter() {
-        return new Converter() {
-            @Override
-            public Object fromBody(TypedInput body, Type type) throws ConversionException {
-                try {
-                    return new Scanner(body.in(),"UTF-8").useDelimiter("\\A").next();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
+  @Override
+  protected Converter customConverter() {
+    return new Converter() {
+      @Override
+      public Object fromBody(TypedInput body, Type type) throws ConversionException {
+        try {
+          return new Scanner(body.in(), "UTF-8").useDelimiter("\\A").next();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        return null;
+      }
 
-            @Override
-            public TypedOutput toBody(Object object) {
-                return new TypedString((String) object);
-            }
-        };
-    }
+      @Override
+      public TypedOutput toBody(Object object) {
+        return new TypedString((String) object);
+      }
+    };
+  }
 }

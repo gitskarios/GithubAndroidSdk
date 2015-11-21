@@ -5,6 +5,6 @@ import com.alorma.github.sdk.bean.dto.response.User;
 
 public class PublicEventPayload extends GithubEventPayload {
 
-    public Repo repository;
-    public User sender;
+  public Repo repository;
+  public User sender;
 }

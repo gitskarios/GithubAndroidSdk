@@ -7,12 +7,12 @@ import com.alorma.github.sdk.bean.dto.response.IssueState;
  */
 public class CreateMilestoneRequestDTO {
 
-    public String title;
-    public String description;
-    public String due_on;
-    public IssueState state;
+  public String title;
+  public String description;
+  public String due_on;
+  public IssueState state;
 
-    public CreateMilestoneRequestDTO(String title) {
-        this.title = title;
-    }
+  public CreateMilestoneRequestDTO(String title) {
+    this.title = title;
+  }
 }

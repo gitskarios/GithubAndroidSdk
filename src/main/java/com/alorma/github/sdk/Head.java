@@ -1,7 +1,6 @@
 package com.alorma.github.sdk;
 
 import android.os.Parcel;
-
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.ShaUrl;
 import com.alorma.github.sdk.bean.dto.response.User;
@@ -11,49 +10,45 @@ import com.alorma.github.sdk.bean.dto.response.User;
  */
 public class Head extends ShaUrl {
 
-    public String ref;
-
-    public Repo repo;
-
-    public String label;
-
-    public User user;
-
-    public Head(Parcel in) {
-        super(in);
-        ref = in.readString();
-        repo = in.readParcelable(Repo.class.getClassLoader());
-        label = in.readString();
-        user = in.readParcelable(User.class.getClassLoader());
-    }
-
-    public Head() {
-        super();
-    }
-
-    public static final Creator<Head> CREATOR = new Creator<Head>() {
-        @Override
-        public Head createFromParcel(Parcel in) {
-            return new Head(in);
-        }
-
-        @Override
-        public Head[] newArray(int size) {
-            return new Head[size];
-        }
-    };
-
+  public static final Creator<Head> CREATOR = new Creator<Head>() {
     @Override
-    public int describeContents() {
-        return super.describeContents();
+    public Head createFromParcel(Parcel in) {
+      return new Head(in);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(ref);
-        dest.writeParcelable(repo, flags);
-        dest.writeString(label);
-        dest.writeParcelable(user, flags);
+    public Head[] newArray(int size) {
+      return new Head[size];
     }
+  };
+  public String ref;
+  public Repo repo;
+  public String label;
+  public User user;
+
+  public Head(Parcel in) {
+    super(in);
+    ref = in.readString();
+    repo = in.readParcelable(Repo.class.getClassLoader());
+    label = in.readString();
+    user = in.readParcelable(User.class.getClassLoader());
+  }
+
+  public Head() {
+    super();
+  }
+
+  @Override
+  public int describeContents() {
+    return super.describeContents();
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    super.writeToParcel(dest, flags);
+    dest.writeString(ref);
+    dest.writeParcelable(repo, flags);
+    dest.writeString(label);
+    dest.writeParcelable(user, flags);
+  }
 }

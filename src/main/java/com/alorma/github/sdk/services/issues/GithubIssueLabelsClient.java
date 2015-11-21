@@ -13,27 +13,27 @@ import rx.Observable;
  * Created by Bernat on 10/05/2015.
  */
 public class GithubIssueLabelsClient extends GithubClient<List<Label>> {
-    private RepoInfo repoInfo;
+  private RepoInfo repoInfo;
 
-    public GithubIssueLabelsClient(Context context, RepoInfo repoInfo) {
-        super(context);
-        this.repoInfo = repoInfo;
-    }
+  public GithubIssueLabelsClient(Context context, RepoInfo repoInfo) {
+    super(context);
+    this.repoInfo = repoInfo;
+  }
 
-    @Override
-    protected Observable<List<Label>> getApiObservable(final RestAdapter restAdapter) {
-        return Observable.create(new BaseInfiniteCallback<List<Label>>() {
-            @Override
-            public void execute() {
-                IssuesService issueService = restAdapter.create(IssuesService.class);
-                issueService.labels(repoInfo.owner, repoInfo.name, this);
-            }
+  @Override
+  protected Observable<List<Label>> getApiObservable(final RestAdapter restAdapter) {
+    return Observable.create(new BaseInfiniteCallback<List<Label>>() {
+      @Override
+      public void execute() {
+        IssuesService issueService = restAdapter.create(IssuesService.class);
+        issueService.labels(repoInfo.owner, repoInfo.name, this);
+      }
 
-            @Override
-            protected void executePaginated(int nextPage) {
-                IssuesService issueService = restAdapter.create(IssuesService.class);
-                issueService.labels(repoInfo.owner, repoInfo.name, nextPage, this);
-            }
-        });
-    }
+      @Override
+      protected void executePaginated(int nextPage) {
+        IssuesService issueService = restAdapter.create(IssuesService.class);
+        issueService.labels(repoInfo.owner, repoInfo.name, nextPage, this);
+      }
+    });
+  }
 }

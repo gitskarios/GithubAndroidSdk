@@ -8,7 +8,7 @@ import com.alorma.github.sdk.bean.dto.response.User;
  * Created by Bernat on 05/10/2014.
  */
 public class CommitCommentEventPayload extends ActionEventPayload {
-	public CommitComment comment;
-	public Repo repository;
-	public User sender;
+  public CommitComment comment;
+  public Repo repository;
+  public User sender;
 }

@@ -1,15 +1,10 @@
 package com.alorma.github.sdk.services.repo;
 
 import android.content.Context;
-
-import android.util.Pair;
-import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.info.RepoInfo;
-
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 import retrofit.RestAdapter;
 import rx.Observable;
@@ -19,41 +14,41 @@ import rx.Observable;
  */
 public class GetRepoContributorsClient extends GithubClient<List<Contributor>> {
 
-	private final RepoInfo repoInfo;
-	private int page;
+  private final RepoInfo repoInfo;
+  private int page;
 
-	public GetRepoContributorsClient(Context context, RepoInfo repoInfo) {
-		this(context, repoInfo, 0);
-	}
+  public GetRepoContributorsClient(Context context, RepoInfo repoInfo) {
+    this(context, repoInfo, 0);
+  }
 
-	public GetRepoContributorsClient(Context context, RepoInfo repoInfo, int page) {
-		super(context);
-		this.repoInfo = repoInfo;
-		this.page = page;
-	}
+  public GetRepoContributorsClient(Context context, RepoInfo repoInfo, int page) {
+    super(context);
+    this.repoInfo = repoInfo;
+    this.page = page;
+  }
 
-	@Override
-	protected Observable<List<Contributor>> getApiObservable(RestAdapter restAdapter) {
-		return Observable.create(new BaseInfiniteCallback<List<Contributor>>() {
-			@Override
-			public void execute() {
-				RepoService repoService = getRestAdapter().create(RepoService.class);
-				repoService.contributors(getOwner(), getRepo(), this);
-			}
+  @Override
+  protected Observable<List<Contributor>> getApiObservable(RestAdapter restAdapter) {
+    return Observable.create(new BaseInfiniteCallback<List<Contributor>>() {
+      @Override
+      public void execute() {
+        RepoService repoService = getRestAdapter().create(RepoService.class);
+        repoService.contributors(getOwner(), getRepo(), this);
+      }
 
-			@Override
-			protected void executePaginated(int nextPage) {
-				RepoService repoService = getRestAdapter().create(RepoService.class);
-				repoService.contributors(getOwner(), getRepo(), page, this);
-			}
-		});
-	}
+      @Override
+      protected void executePaginated(int nextPage) {
+        RepoService repoService = getRestAdapter().create(RepoService.class);
+        repoService.contributors(getOwner(), getRepo(), page, this);
+      }
+    });
+  }
 
-	private String getOwner() {
-		return repoInfo.owner;
-	}
+  private String getOwner() {
+    return repoInfo.owner;
+  }
 
-	private String getRepo() {
-		return repoInfo.name;
-	}
+  private String getRepo() {
+    return repoInfo.name;
+  }
 }

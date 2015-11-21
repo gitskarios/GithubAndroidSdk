@@ -1,13 +1,9 @@
 package com.alorma.github.sdk.services.user.follow;
 
 import android.content.Context;
-
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.user.UsersService;
-
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.Response;
 import rx.Observable;
 import rx.functions.Func1;
@@ -15,29 +11,28 @@ import rx.functions.Func1;
 /**
  * Created by Bernat on 27/12/2014.
  */
-public class FollowUserClient extends GithubClient<Boolean>{
+public class FollowUserClient extends GithubClient<Boolean> {
 
-	private String username;
+  private String username;
 
-	public FollowUserClient(Context context, String username) {
-		super(context);
-		this.username = username;
-	}
+  public FollowUserClient(Context context, String username) {
+    super(context);
+    this.username = username;
+  }
 
-	@Override
-	protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
-		return restAdapter.create(UsersService.class).followUser("", username).map(new Func1<Response, Boolean>() {
-			@Override
-			public Boolean call(Response r) {
-				return r != null && r.getStatus() == 204;
-			}
-		});
-	}
+  @Override
+  protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(UsersService.class).followUser("", username).map(new Func1<Response, Boolean>() {
+      @Override
+      public Boolean call(Response r) {
+        return r != null && r.getStatus() == 204;
+      }
+    });
+  }
 
-
-	@Override
-	public void intercept(RequestFacade request) {
-		super.intercept(request);
-		request.addHeader("Content-Length", "0");
-	}
+  @Override
+  public void intercept(RequestFacade request) {
+    super.intercept(request);
+    request.addHeader("Content-Length", "0");
+  }
 }

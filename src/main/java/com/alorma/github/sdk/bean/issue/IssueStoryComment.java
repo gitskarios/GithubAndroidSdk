@@ -6,33 +6,33 @@ import com.alorma.github.sdk.bean.dto.response.User;
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryComment implements IssueStoryDetail{
+public class IssueStoryComment implements IssueStoryDetail {
 
-    public GithubComment comment;
-    public long created_at;
+  public GithubComment comment;
+  public long created_at;
 
-    public IssueStoryComment(GithubComment comment) {
+  public IssueStoryComment(GithubComment comment) {
 
-        this.comment = comment;
-    }
+    this.comment = comment;
+  }
 
-    @Override
-    public boolean isList() {
-        return false;
-    }
+  @Override
+  public boolean isList() {
+    return false;
+  }
 
-    @Override
-    public String getType() {
-        return "commented";
-    }
+  @Override
+  public String getType() {
+    return "commented";
+  }
 
-    @Override
-    public long createdAt() {
-        return created_at;
-    }
+  @Override
+  public long createdAt() {
+    return created_at;
+  }
 
-    @Override
-    public User user() {
-        return comment.user;
-    }
+  @Override
+  public User user() {
+    return comment.user;
+  }
 }

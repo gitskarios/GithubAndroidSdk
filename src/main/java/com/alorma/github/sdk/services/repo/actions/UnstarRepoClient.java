@@ -12,24 +12,22 @@ import rx.functions.Func1;
  */
 public class UnstarRepoClient extends GithubClient<Boolean> {
 
-    private final String owner;
-    private final String repo;
+  private final String owner;
+  private final String repo;
 
-    public UnstarRepoClient(Context context, String owner, String repo) {
-        super(context);
-        this.owner = owner;
-        this.repo = repo;
-    }
+  public UnstarRepoClient(Context context, String owner, String repo) {
+    super(context);
+    this.owner = owner;
+    this.repo = repo;
+  }
 
-    @Override
-    protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
-        return restAdapter.create(RepoActionsService.class)
-            .unstarRepo(owner, repo)
-            .map(new Func1<Response, Boolean>() {
-                @Override
-                public Boolean call(Response r) {
-                    return r != null && r.getStatus() == 204;
-                }
-            });
-    }
+  @Override
+  protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(RepoActionsService.class).unstarRepo(owner, repo).map(new Func1<Response, Boolean>() {
+      @Override
+      public Boolean call(Response r) {
+        return r != null && r.getStatus() == 204;
+      }
+    });
+  }
 }

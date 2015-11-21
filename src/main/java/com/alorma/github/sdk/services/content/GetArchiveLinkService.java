@@ -19,67 +19,66 @@ import rx.functions.Action1;
  */
 public class GetArchiveLinkService extends GithubClient {
 
-	private final Handler handler;
-	private OnDownloadServiceListener onDownloadServiceListener;
+  private final Handler handler;
+  private OnDownloadServiceListener onDownloadServiceListener;
 
-	private RepoInfo repoInfo;
+  private RepoInfo repoInfo;
 
-	public GetArchiveLinkService(Context context, RepoInfo repoInfo) {
-		super(context);
-		this.repoInfo = repoInfo;
-		handler = new Handler();
-	}
+  public GetArchiveLinkService(Context context, RepoInfo repoInfo) {
+    super(context);
+    this.repoInfo = repoInfo;
+    handler = new Handler();
+  }
 
-	@Override
-	protected Observable getApiObservable(RestAdapter restAdapter) {GitskariosSettings settings = new GitskariosSettings(context);
-		String zipBall = context.getString(R.string.download_zip_value);
-		String fileType = settings.getDownloadFileType(zipBall);
+  @Override
+  protected Observable getApiObservable(RestAdapter restAdapter) {
+    GitskariosSettings settings = new GitskariosSettings(context);
+    String zipBall = context.getString(R.string.download_zip_value);
+    String fileType = settings.getDownloadFileType(zipBall);
 
-		Observable<Object> observable = restAdapter.create(ContentService.class)
-			.archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch);
+    Observable<Object> observable =
+        restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch);
 
+    observable.doOnError(new Action1<Throwable>() {
+      @Override
+      public void call(Throwable error) {
+        if (error != null && error instanceof RetrofitError) {
+          String url = ((RetrofitError) error).getResponse().getUrl();
+          DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+          DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
-		observable.doOnError(new Action1<Throwable>() {
-			@Override
-			public void call(Throwable error) {
-				if (error != null && error instanceof RetrofitError) {
-				String url = ((RetrofitError) error).getResponse().getUrl();
-				DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-				DownloadManager.Request request = new DownloadManager.Request(
-					Uri.parse(url));
+          GitskariosSettings settings = new GitskariosSettings(context);
 
-				GitskariosSettings settings = new GitskariosSettings(context);
+          String zipBall = context.getString(R.string.download_zip_value);
+          String fileType = settings.getDownloadFileType(zipBall);
 
-				String zipBall = context.getString(R.string.download_zip_value);
-				String fileType = settings.getDownloadFileType(zipBall);
+          String fileName = repoInfo.name + "_" + repoInfo.branch + "_" + "." + (fileType.equalsIgnoreCase(zipBall) ? "zip" : "tar");
+          request.setTitle(fileName);
+          request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "gitskarios/" + fileName);
+          request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+          request.allowScanningByMediaScanner();
+          final long enqueue = dm.enqueue(request);
 
-				String fileName = repoInfo.name + "_" + repoInfo.branch + "_" + "." + (fileType.equalsIgnoreCase(zipBall) ? "zip" : "tar");
-				request.setTitle(fileName);
-				request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "gitskarios/" + fileName);
-				request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-				request.allowScanningByMediaScanner();
-				final long enqueue = dm.enqueue(request);
+          handler.post(new Runnable() {
+            @Override
+            public void run() {
+              if (onDownloadServiceListener != null) {
+                onDownloadServiceListener.onDownloadEnqueded(enqueue);
+              }
+            }
+          });
+        }
+      }
+    });
 
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						if (onDownloadServiceListener != null) {
-							onDownloadServiceListener.onDownloadEnqueded(enqueue);
-						}
-					}
-				});
-			}
-			}
-		});
+    return observable;
+  }
 
-		return observable;
-	}
+  public void setOnDownloadServiceListener(OnDownloadServiceListener onDownloadServiceListener) {
+    this.onDownloadServiceListener = onDownloadServiceListener;
+  }
 
-	public void setOnDownloadServiceListener(OnDownloadServiceListener onDownloadServiceListener) {
-		this.onDownloadServiceListener = onDownloadServiceListener;
-	}
-
-	public interface OnDownloadServiceListener {
-		void onDownloadEnqueded(long id);
-	}
+  public interface OnDownloadServiceListener {
+    void onDownloadEnqueded(long id);
+  }
 }

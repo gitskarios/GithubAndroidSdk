@@ -2,93 +2,88 @@ package com.alorma.github.sdk.bean.dto.response;
 
 import java.util.Date;
 
-public class GistRevision extends ShaUrl{
+public class GistRevision extends ShaUrl {
 
-	private Date committedAt;
+  private Date committedAt;
 
-	private GitChangeStatus changeStatus;
+  private GitChangeStatus changeStatus;
 
-	private String version;
+  private String version;
 
-	private User user;
+  private User user;
 
-	/**
-	 * @return committedAt
-	 */
-	public Date getCommittedAt() {
-		return committedAt;
-	}
+  /**
+   * @return committedAt
+   */
+  public Date getCommittedAt() {
+    return committedAt;
+  }
 
-	/**
-	 * @param committedAt
-	 * @return this gist revision
-	 */
-	public GistRevision setCommittedAt(Date committedAt) {
-		this.committedAt = committedAt;
-		return this;
-	}
+  /**
+   * @return this gist revision
+   */
+  public GistRevision setCommittedAt(Date committedAt) {
+    this.committedAt = committedAt;
+    return this;
+  }
 
-	/**
-	 * @return changeStatus
-	 */
-	public GitChangeStatus getChangeStatus() {
-		return changeStatus;
-	}
+  /**
+   * @return changeStatus
+   */
+  public GitChangeStatus getChangeStatus() {
+    return changeStatus;
+  }
 
-	/**
-	 * @param changeStatus
-	 * @return this gist revision
-	 */
-	public GistRevision setChangeStatus(GitChangeStatus changeStatus) {
-		this.changeStatus = changeStatus;
-		return this;
-	}
+  /**
+   * @return this gist revision
+   */
+  public GistRevision setChangeStatus(GitChangeStatus changeStatus) {
+    this.changeStatus = changeStatus;
+    return this;
+  }
 
-	/**
-	 * @return url
-	 */
-	public String getUrl() {
-		return url;
-	}
+  /**
+   * @return url
+   */
+  public String getUrl() {
+    return url;
+  }
 
-	/**
-	 * @param url
-	 * @return this gist revision
-	 */
-	public GistRevision setUrl(String url) {
-		this.url = url;
-		return this;
-	}
+  /**
+   * @return this gist revision
+   */
+  public GistRevision setUrl(String url) {
+    this.url = url;
+    return this;
+  }
 
-	/**
-	 * @return version
-	 */
-	public String getVersion() {
-		return version;
-	}
+  /**
+   * @return version
+   */
+  public String getVersion() {
+    return version;
+  }
 
-	/**
-	 * @param version
-	 * @return this gist revision
-	 */
-	public GistRevision setVersion(String version) {
-		this.version = version;
-		return this;
-	}
+  /**
+   * @return this gist revision
+   */
+  public GistRevision setVersion(String version) {
+    this.version = version;
+    return this;
+  }
 
-	/**
-	 * @return user
-	 */
-	public User getUser() {
-		return user;
-	}
+  /**
+   * @return user
+   */
+  public User getUser() {
+    return user;
+  }
 
-	/**
-	 * @param user
-	 * @return this gist revision
-	 */
-	public GistRevision setUser(User user) {
-		this.user = user;
-		return this;
-	}
+  /**
+   * @return this gist revision
+   */
+  public GistRevision setUser(User user) {
+    this.user = user;
+    return this;
+  }
 }

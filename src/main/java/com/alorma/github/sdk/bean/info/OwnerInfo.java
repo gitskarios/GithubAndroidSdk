@@ -8,35 +8,34 @@ import android.os.Parcelable;
  */
 public class OwnerInfo implements Parcelable {
 
-	public String owner;
+  public static final Parcelable.Creator<OwnerInfo> CREATOR = new Parcelable.Creator<OwnerInfo>() {
+    @Override
+    public OwnerInfo createFromParcel(Parcel in) {
+      return new OwnerInfo(in);
+    }
 
-	public OwnerInfo() {
+    @Override
+    public OwnerInfo[] newArray(int size) {
+      return new OwnerInfo[size];
+    }
+  };
+  public String owner;
 
-	}
+  public OwnerInfo() {
 
-	public OwnerInfo(Parcel in) {
-		owner = in.readString();
-	}
+  }
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
+  public OwnerInfo(Parcel in) {
+    owner = in.readString();
+  }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(owner);
-	}
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-	public static final Parcelable.Creator<OwnerInfo> CREATOR = new Parcelable.Creator<OwnerInfo>() {
-		@Override
-		public OwnerInfo createFromParcel(Parcel in) {
-			return new OwnerInfo(in);
-		}
-
-		@Override
-		public OwnerInfo[] newArray(int size) {
-			return new OwnerInfo[size];
-		}
-	};
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(owner);
+  }
 }

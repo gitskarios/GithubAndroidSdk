@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.security;
 
 import android.net.Uri;
-
 import com.alorma.gitskarios.core.ApiClient;
 
 /**
@@ -9,47 +8,46 @@ import com.alorma.gitskarios.core.ApiClient;
  */
 public class GitHub implements ApiClient {
 
-    private String hostname;
+  private String hostname;
 
-    public GitHub() {
+  public GitHub() {
 
+  }
+
+  public GitHub(String hostname) {
+    if (hostname != null) {
+      Uri parse = Uri.parse(hostname);
+      if (parse.getScheme() == null) {
+        parse = parse.buildUpon().scheme("https").build();
+      }
+      hostname = parse.toString();
+      this.hostname = hostname;
+    }
+  }
+
+  @Override
+  public String getApiOauthUrlEndpoint() {
+    return hostname == null ? "https://github.com" : hostname;
+  }
+
+  @Override
+  public String getApiEndpoint() {
+    String hostname = "https://api.github.com";
+
+    if (this.hostname != null) {
+      hostname = this.hostname;
+      if (!hostname.endsWith("/")) {
+        hostname = hostname + "/";
+      }
+
+      hostname = hostname + "api/v3/";
     }
 
-    public GitHub(String hostname) {
-        if (hostname != null) {
-            Uri parse = Uri.parse(hostname);
-            if (parse.getScheme() == null) {
-                parse = parse.buildUpon().scheme("https").build();
-            }
-            hostname = parse.toString();
-            this.hostname = hostname;
-        }
-    }
+    return hostname;
+  }
 
-    @Override
-    public String getApiOauthUrlEndpoint() {
-        return hostname == null ? "https://github.com": hostname;
-    }
-
-    @Override
-    public String getApiEndpoint() {
-        String hostname = "https://api.github.com";
-
-        if (this.hostname != null) {
-            hostname = this.hostname;
-            if (!hostname.endsWith("/")) {
-                hostname = hostname + "/";
-            }
-
-            hostname = hostname + "api/v3/";
-        }
-
-        return hostname;
-    }
-
-    @Override
-    public String getType() {
-        return "github";
-    }
-
+  @Override
+  public String getType() {
+    return "github";
+  }
 }

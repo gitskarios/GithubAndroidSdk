@@ -3,7 +3,6 @@ package com.alorma.github.sdk.services.pullrequest.story;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.util.Pair;
 import com.alorma.github.sdk.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
@@ -24,9 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import retrofit.RestAdapter;
-import retrofit.client.Response;
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -68,8 +65,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
             PullRequestStory pullRequestStory = new PullRequestStory();
             pullRequestStory.pullRequest = pullRequest;
             pullRequestStory.details = details;
-            Collections.sort(pullRequestStory.details,
-                IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
+            Collections.sort(pullRequestStory.details, IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
             return pullRequestStory;
           }
         });
@@ -77,11 +73,9 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   @RxLogObservable
   private Observable<PullRequest> getPullRequestObs() {
-    Observable<PullRequest> pullRequestObservable =
-        pullRequestStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
+    Observable<PullRequest> pullRequestObservable = pullRequestStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
 
-    return Observable.zip(pullRequestObservable, getLabelsObs(),
-        new Func2<PullRequest, List<Label>, PullRequest>() {
+    return Observable.zip(pullRequestObservable, getLabelsObs(), new Func2<PullRequest, List<Label>, PullRequest>() {
           @Override
           public PullRequest call(PullRequest pullRequest, List<Label> labels) {
             pullRequest.labels = labels;
@@ -103,36 +97,32 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     return Observable.create(new BaseInfiniteCallback<List<GithubComment>>() {
       @Override
       public void execute() {
-        issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
-            this);
+        issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, this);
       }
 
       @Override
       protected void executePaginated(int nextPage) {
-        issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
-            nextPage, this);
+        issueStoryService.comments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, nextPage, this);
       }
     });
   }
 
   @RxLogObservable
   private Observable<IssueStoryDetail> getCommentsDetailsObs() {
-    return getCommentsObs().subscribeOn(Schedulers.io())
-        .flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
+    return getCommentsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
+      @Override
+      public Observable<IssueStoryDetail> call(List<GithubComment> githubComments) {
+        return Observable.from(githubComments).map(new Func1<GithubComment, IssueStoryDetail>() {
           @Override
-          public Observable<IssueStoryDetail> call(List<GithubComment> githubComments) {
-            return Observable.from(githubComments)
-                .map(new Func1<GithubComment, IssueStoryDetail>() {
-                  @Override
-                  public IssueStoryDetail call(GithubComment githubComment) {
-                    long time = getMilisFromDateClearDay(githubComment.created_at);
-                    IssueStoryComment detail = new IssueStoryComment(githubComment);
-                    detail.created_at = time;
-                    return detail;
-                  }
-                });
+          public IssueStoryDetail call(GithubComment githubComment) {
+            long time = getMilisFromDateClearDay(githubComment.created_at);
+            IssueStoryComment detail = new IssueStoryComment(githubComment);
+            detail.created_at = time;
+            return detail;
           }
         });
+      }
+    });
   }
 
   @NonNull
@@ -142,14 +132,12 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
       @Override
       public void execute() {
-        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
-            this);
+        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, this);
       }
 
       @Override
       protected void executePaginated(int nextPage) {
-        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
-            nextPage, this);
+        issueStoryService.events(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, nextPage, this);
       }
     });
   }
@@ -157,26 +145,25 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
   @NonNull
   @RxLogObservable
   private Observable<IssueStoryDetail> getEventDetailsObs() {
-    return getEventsObs().subscribeOn(Schedulers.io())
-        .flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
+    return getEventsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
+      @Override
+      public Observable<IssueStoryDetail> call(List<IssueEvent> issueEvents) {
+        return Observable.from(issueEvents).filter(new Func1<IssueEvent, Boolean>() {
           @Override
-          public Observable<IssueStoryDetail> call(List<IssueEvent> issueEvents) {
-            return Observable.from(issueEvents).filter(new Func1<IssueEvent, Boolean>() {
-              @Override
-              public Boolean call(IssueEvent issueEvent) {
-                return validEvent(issueEvent.event);
-              }
-            }).map(new Func1<IssueEvent, IssueStoryDetail>() {
-              @Override
-              public IssueStoryDetail call(IssueEvent issueEvent) {
-                long time = getMilisFromDateClearDay(issueEvent.created_at);
-                IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
-                detail.created_at = time;
-                return detail;
-              }
-            });
+          public Boolean call(IssueEvent issueEvent) {
+            return validEvent(issueEvent.event);
+          }
+        }).map(new Func1<IssueEvent, IssueStoryDetail>() {
+          @Override
+          public IssueStoryDetail call(IssueEvent issueEvent) {
+            long time = getMilisFromDateClearDay(issueEvent.created_at);
+            IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
+            detail.created_at = time;
+            return detail;
           }
         });
+      }
+    });
   }
 
   @NonNull

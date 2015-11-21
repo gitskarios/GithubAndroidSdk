@@ -11,12 +11,12 @@ import rx.Observable;
  */
 public class GitIgnoreClient extends GithubClient<GitIgnoreTemplates> {
 
-	public GitIgnoreClient(Context context) {
-		super(context);
-	}
+  public GitIgnoreClient(Context context) {
+    super(context);
+  }
 
-	@Override
-	protected Observable<GitIgnoreTemplates> getApiObservable(RestAdapter restAdapter) {
-		return restAdapter.create(GitIgnoreService.class).list();
-	}
+  @Override
+  protected Observable<GitIgnoreTemplates> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(GitIgnoreService.class).list();
+  }
 }

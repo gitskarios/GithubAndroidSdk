@@ -12,18 +12,17 @@ import rx.Observable;
  * Created by Bernat on 24/09/2015.
  */
 public class GetLanguagesClient extends GithubClient<List<String>> {
-    private boolean allLanguages;
+  private boolean allLanguages;
 
-    public GetLanguagesClient(Context context, boolean allLanguages) {
-        super(context);
-        this.allLanguages = allLanguages;
-    }
+  public GetLanguagesClient(Context context, boolean allLanguages) {
+    super(context);
+    this.allLanguages = allLanguages;
+  }
 
-    @Override
-    protected Observable<List<String>> getApiObservable(RestAdapter restAdapter) {
-        String[] languages = getContext().getResources()
-            .getStringArray(allLanguages ? R.array.available_languages : R.array.default_languages);
+  @Override
+  protected Observable<List<String>> getApiObservable(RestAdapter restAdapter) {
+    String[] languages = getContext().getResources().getStringArray(allLanguages ? R.array.available_languages : R.array.default_languages);
 
-        return Observable.just(Arrays.asList(languages));
-    }
+    return Observable.just(Arrays.asList(languages));
+  }
 }

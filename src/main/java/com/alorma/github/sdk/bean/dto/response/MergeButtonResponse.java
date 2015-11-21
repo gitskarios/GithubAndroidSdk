@@ -5,6 +5,6 @@ package com.alorma.github.sdk.bean.dto.response;
  */
 public class MergeButtonResponse extends ShaUrl {
 
-    public Boolean merged;
-    public String message;
+  public Boolean merged;
+  public String message;
 }

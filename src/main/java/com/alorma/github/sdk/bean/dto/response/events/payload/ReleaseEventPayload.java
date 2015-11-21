@@ -9,9 +9,8 @@ import com.alorma.github.sdk.bean.dto.response.User;
  */
 public class ReleaseEventPayload extends GithubEventPayload {
 
-    public String action;
-    public Release release;
-    public Repo repository;
-    public User sender;
-
+  public String action;
+  public Release release;
+  public Repo repository;
+  public User sender;
 }

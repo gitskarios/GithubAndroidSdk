@@ -80,15 +80,18 @@ dependencies {
         configuration: 'debug')
     libraryReleaseCompile project(path: ':sdks:GithubAndroidSdk:GitskariosCore',
         configuration: 'release')
-  } catch (Exception e) {}
+  } catch (Exception e) {
+  }
 
   try {
     travisDebugCompile project(path: ':GitskariosCore', configuration: 'debug')
     travisReleaseCompile project(path: ':GitskariosCore', configuration: 'release')
-  } catch (Exception e) {}
+  } catch (Exception e) {
+  }
   try {
     compile project(path: ':GitskariosCore', configuration: 'release')
-  } catch (Exception e) {}
+  } catch (Exception e) {
+  }
 }
 
 publish {

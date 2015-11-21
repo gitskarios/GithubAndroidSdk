@@ -5,8 +5,8 @@ import com.alorma.github.sdk.bean.dto.response.Issue;
 /**
  * Created by Bernat on 28/05/2015.
  */
-public class IssueEventPayload extends ActionEventPayload{
-    public Issue issue;
+public class IssueEventPayload extends ActionEventPayload {
+  public Issue issue;
     /*
     0 = {LinkedTreeMap$Node@4742} "url" -> "https://api.github.com/repos/afollestad/material-dialogs/issues/542"
 1 = {LinkedTreeMap$Node@4743} "labels_url" -> "https://api.github.com/repos/afollestad/material-dialogs/issues/542/labels{/name}"
@@ -28,7 +28,4 @@ public class IssueEventPayload extends ActionEventPayload{
 17 = {LinkedTreeMap$Node@4759} "closed_at" -> "2015-05-26T22:59:57Z"
 18 = {LinkedTreeMap$Node@4760} "body" -> "When trying to use `MaterialListPreference` in a preference activity derived from `PreferenceActivity` (not appcompat), the unselected option buttons are not visible. Tested in Android 5.1 and 4.1.\r\n\r\n![image](https://cloud.githubusercontent.com/assets/1407837/7815928/fa898824-03fd-11e5-9b33-0042a750c6d0.png)"
      */
-
-
-
 }

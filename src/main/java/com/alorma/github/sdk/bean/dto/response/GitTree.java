@@ -4,6 +4,6 @@ import java.util.List;
 
 public class GitTree extends ShaUrl {
 
-    public List<GitTreeEntry> tree;
-    public boolean truncated;
+  public List<GitTreeEntry> tree;
+  public boolean truncated;
 }

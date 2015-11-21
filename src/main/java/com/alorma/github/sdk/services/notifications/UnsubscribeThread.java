@@ -1,10 +1,8 @@
 package com.alorma.github.sdk.services.notifications;
 
 import android.content.Context;
-
 import com.alorma.github.sdk.bean.dto.response.Notification;
 import com.alorma.github.sdk.services.client.GithubClient;
-
 import retrofit.RestAdapter;
 import retrofit.client.Response;
 import rx.Observable;
@@ -15,21 +13,22 @@ import rx.functions.Func1;
  */
 public class UnsubscribeThread extends GithubClient<Boolean> {
 
-    private Notification notification;
+  private Notification notification;
 
-    public UnsubscribeThread(Context context, Notification notification) {
-        super(context);
-        this.notification = notification;
-    }
+  public UnsubscribeThread(Context context, Notification notification) {
+    super(context);
+    this.notification = notification;
+  }
 
-    @Override
-    protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
-        return restAdapter.create(NotificationsService.class).unsubscribeThread(String.valueOf(notification.id))
-            .map(new Func1<Response, Boolean>() {
-                @Override
-                public Boolean call(Response response) {
-                    return response != null && response.getStatus() == 204;
-                }
-            });
-    }
+  @Override
+  protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(NotificationsService.class)
+        .unsubscribeThread(String.valueOf(notification.id))
+        .map(new Func1<Response, Boolean>() {
+          @Override
+          public Boolean call(Response response) {
+            return response != null && response.getStatus() == 204;
+          }
+        });
+  }
 }

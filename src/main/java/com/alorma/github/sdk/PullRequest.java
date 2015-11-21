@@ -1,18 +1,12 @@
 package com.alorma.github.sdk;
 
 import android.os.Parcel;
-
 import com.alorma.github.sdk.bean.dto.response.Issue;
-import com.alorma.github.sdk.bean.dto.response.IssueState;
-import com.alorma.github.sdk.bean.dto.response.Links;
-import com.alorma.github.sdk.bean.dto.response.Milestone;
-import com.alorma.github.sdk.bean.dto.response.Repo;
-import com.alorma.github.sdk.bean.dto.response.User;
 
 /**
  * Created by Bernat on 30/05/2015.
  */
-public class PullRequest extends Issue{
+public class PullRequest extends Issue {
 
     /*public String body;
 
@@ -70,73 +64,63 @@ public class PullRequest extends Issue{
 
     public int comments;*/
 
-    public Head head;
-
-    public Head base;
-
-    public int additions;
-
-    public int deletions;
-
-    public int commits;
-
-    public int changed_files;
-
-    public boolean merged;
-
-    public Boolean mergeable;
-
-    public String patch_url;
-
-    public String diff_url;
-
-    public PullRequest(Parcel in) {
-        super(in);
-        head = in.readParcelable(Head.class.getClassLoader());
-        base = in.readParcelable(Head.class.getClassLoader());
-        additions = in.readInt();
-        deletions = in.readInt();
-        commits = in.readInt();
-        changed_files = in.readInt();
-        merged = in.readByte() != 0x00;
-        mergeable = in.readByte() != 0x00;
-        patch_url = in.readString();
-        diff_url = in.readString();
-    }
-
-    public PullRequest() {
-        super();
-    }
-
-    public static final Creator<PullRequest> CREATOR = new Creator<PullRequest>() {
-        @Override
-        public PullRequest createFromParcel(Parcel in) {
-            return new PullRequest(in);
-        }
-
-        @Override
-        public PullRequest[] newArray(int size) {
-            return new PullRequest[size];
-        }
-    };
-
+  public static final Creator<PullRequest> CREATOR = new Creator<PullRequest>() {
     @Override
-    public int describeContents() {
-        return super.describeContents();
+    public PullRequest createFromParcel(Parcel in) {
+      return new PullRequest(in);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(head, flags);
-        dest.writeParcelable(base, flags);
-        dest.writeInt(additions);
-        dest.writeInt(deletions);
-        dest.writeInt(commits);
-        dest.writeInt(changed_files);
-        dest.writeByte((byte) (merged ? 0x01 : 0x00));
-        dest.writeByte((byte) (mergeable ? 0x01 : 0x00));
-        dest.writeString(patch_url);
-        dest.writeString(diff_url);
+    public PullRequest[] newArray(int size) {
+      return new PullRequest[size];
     }
+  };
+  public Head head;
+  public Head base;
+  public int additions;
+  public int deletions;
+  public int commits;
+  public int changed_files;
+  public boolean merged;
+  public Boolean mergeable;
+  public String patch_url;
+  public String diff_url;
+
+  public PullRequest(Parcel in) {
+    super(in);
+    head = in.readParcelable(Head.class.getClassLoader());
+    base = in.readParcelable(Head.class.getClassLoader());
+    additions = in.readInt();
+    deletions = in.readInt();
+    commits = in.readInt();
+    changed_files = in.readInt();
+    merged = in.readByte() != 0x00;
+    mergeable = in.readByte() != 0x00;
+    patch_url = in.readString();
+    diff_url = in.readString();
+  }
+
+  public PullRequest() {
+    super();
+  }
+
+  @Override
+  public int describeContents() {
+    return super.describeContents();
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    super.writeToParcel(dest, flags);
+    dest.writeParcelable(head, flags);
+    dest.writeParcelable(base, flags);
+    dest.writeInt(additions);
+    dest.writeInt(deletions);
+    dest.writeInt(commits);
+    dest.writeInt(changed_files);
+    dest.writeByte((byte) (merged ? 0x01 : 0x00));
+    dest.writeByte((byte) (mergeable ? 0x01 : 0x00));
+    dest.writeString(patch_url);
+    dest.writeString(diff_url);
+  }
 }

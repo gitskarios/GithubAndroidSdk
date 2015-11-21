@@ -7,25 +7,25 @@ import com.alorma.gitskarios.core.client.credentials.DeveloperCredentialsProvide
  */
 public class GithubDeveloperCredentials {
 
-    private static GithubDeveloperCredentials githubDeveloperCredentials;
-    private DeveloperCredentialsProvider provider;
+  private static GithubDeveloperCredentials githubDeveloperCredentials;
+  private DeveloperCredentialsProvider provider;
 
-    public static void init(DeveloperCredentialsProvider provider) {
-        getInstance().provider = provider;
+  private GithubDeveloperCredentials() {
+
+  }
+
+  public static void init(DeveloperCredentialsProvider provider) {
+    getInstance().provider = provider;
+  }
+
+  public static GithubDeveloperCredentials getInstance() {
+    if (githubDeveloperCredentials == null) {
+      githubDeveloperCredentials = new GithubDeveloperCredentials();
     }
+    return githubDeveloperCredentials;
+  }
 
-    public static GithubDeveloperCredentials getInstance() {
-        if (githubDeveloperCredentials == null) {
-            githubDeveloperCredentials = new GithubDeveloperCredentials();
-        }
-        return githubDeveloperCredentials;
-    }
-
-    private GithubDeveloperCredentials() {
-
-    }
-
-    public DeveloperCredentialsProvider getProvider() {
-        return provider;
-    }
+  public DeveloperCredentialsProvider getProvider() {
+    return provider;
+  }
 }

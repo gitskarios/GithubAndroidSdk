@@ -11,12 +11,12 @@ import rx.Observable;
  */
 public class GetRepoClient extends GithubRepoClient<Repo> {
 
-	public GetRepoClient(Context context, RepoInfo repoInfo) {
-		super(context, repoInfo);
-	}
+  public GetRepoClient(Context context, RepoInfo repoInfo) {
+    super(context, repoInfo);
+  }
 
-	@Override
-	protected Observable<Repo> getApiObservable(RestAdapter restAdapter) {
-		return restAdapter.create(RepoService.class).get(getOwner(), getRepo());
-	}
+  @Override
+  protected Observable<Repo> getApiObservable(RestAdapter restAdapter) {
+    return restAdapter.create(RepoService.class).get(getOwner(), getRepo());
+  }
 }

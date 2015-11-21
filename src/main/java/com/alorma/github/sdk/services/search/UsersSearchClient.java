@@ -13,39 +13,39 @@ import retrofit.client.Response;
  */
 public class UsersSearchClient extends GithubSearchClient<UsersSearch, List<User>> {
 
-	public UsersSearchClient(Context context, String query) {
-		super(context, query);
-	}
+  public UsersSearchClient(Context context, String query) {
+    super(context, query);
+  }
 
-	public UsersSearchClient(Context context, String query, int page) {
-		super(context, query, page);
-	}
+  public UsersSearchClient(Context context, String query, int page) {
+    super(context, query, page);
+  }
 
-	@Override
-	protected ApiSubscriber getApiObservable(RestAdapter restAdapter) {
-		return new ApiSubscriber() {
+  @Override
+  protected ApiSubscriber getApiObservable(RestAdapter restAdapter) {
+    return new ApiSubscriber() {
 
-			@Override
-			protected void call(RestAdapter restAdapter) {
-				SearchClient searchClient = restAdapter.create(SearchClient.class);
-				if (getPage() == 0) {
-					searchClient.users(query, new SearchUsersCallback(this));
-				} else {
-					searchClient.users(query, getPage(), new SearchUsersCallback(this));
-				}
-			}
-		};
-	}
+      @Override
+      protected void call(RestAdapter restAdapter) {
+        SearchClient searchClient = restAdapter.create(SearchClient.class);
+        if (getPage() == 0) {
+          searchClient.users(query, new SearchUsersCallback(this));
+        } else {
+          searchClient.users(query, getPage(), new SearchUsersCallback(this));
+        }
+      }
+    };
+  }
 
-	private class SearchUsersCallback extends SearchCallback {
+  private class SearchUsersCallback extends SearchCallback {
 
-		public SearchUsersCallback(Callback<List<User>> callback) {
-			super(callback);
-		}
+    public SearchUsersCallback(Callback<List<User>> callback) {
+      super(callback);
+    }
 
-		@Override
-		public void success(UsersSearch usersSearch, Response response) {
-			callback.success(usersSearch.items, response);
-		}
-	}
+    @Override
+    public void success(UsersSearch usersSearch, Response response) {
+      callback.success(usersSearch.items, response);
+    }
+  }
 }

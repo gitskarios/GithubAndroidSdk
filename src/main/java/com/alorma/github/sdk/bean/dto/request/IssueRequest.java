@@ -6,10 +6,10 @@ import com.alorma.github.sdk.bean.dto.response.IssueState;
  * Created by Bernat on 23/08/2014.
  */
 public class IssueRequest extends EditIssueRequestDTO {
-    public String title;
-    public String body;
-    public String assignee;
-    public Integer milestone;
-    public CharSequence[] labels;
-	public IssueState state;
+  public String title;
+  public String body;
+  public String assignee;
+  public Integer milestone;
+  public CharSequence[] labels;
+  public IssueState state;
 }
