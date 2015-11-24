@@ -25,7 +25,7 @@ public class UnfollowUserClient extends GithubClient<Boolean> {
     return restAdapter.create(UsersService.class).unfollowUser(username).map(new Func1<Response, Boolean>() {
       @Override
       public Boolean call(Response r) {
-        return r != null && r.getStatus() == 204;
+        return !(r != null && r.getStatus() == 204);
       }
     });
   }
