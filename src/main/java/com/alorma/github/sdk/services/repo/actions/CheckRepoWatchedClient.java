@@ -35,7 +35,7 @@ public class CheckRepoWatchedClient extends GithubClient<Boolean> {
         }).map(new Func1<Response, Boolean>() {
       @Override
       public Boolean call(Response r) {
-        return r != null && r.getStatus() == 204;
+        return r != null && r.getStatus() == 200;
       }
     });
   }

@@ -54,16 +54,16 @@ public interface ReposService {
 
   // Wathched repos
   @GET("/user/subscriptions")
-  void userSubscribedReposList(@Query("sort") String sort, Callback<List<Repo>> callback);
+  void userSubscribedReposList(Callback<List<Repo>> callback);
 
   @GET("/user/subscriptions")
-  void userSubscribedReposList(@Query("page") int page, @Query("sort") String sort, Callback<List<Repo>> callback);
+  void userSubscribedReposList(@Query("page") int page, Callback<List<Repo>> callback);
 
   @GET("/users/{username}/subscriptions")
-  void userSubscribedReposList(@Path("username") String username, @Query("sort") String sort, Callback<List<Repo>> callback);
+  void userSubscribedReposList(@Path("username") String username, Callback<List<Repo>> callback);
 
   @GET("/users/{username}/subscriptions")
-  void userSubscribedReposList(@Path("username") String username, @Query("page") int page, @Query("sort") String sort,
+  void userSubscribedReposList(@Path("username") String username, @Query("page") int page,
       Callback<List<Repo>> callback);
 
   // Member
