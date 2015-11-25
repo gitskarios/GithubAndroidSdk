@@ -5,7 +5,7 @@ import android.os.Parcel;
 /**
  * Created by Bernat on 22/08/2014.
  */
-public class Label extends ShaUrl {
+public class Label extends ShaUrl implements Comparable<Label>{
   public static final Creator<Label> CREATOR = new Creator<Label>() {
     @Override
     public Label createFromParcel(Parcel in) {
@@ -40,5 +40,10 @@ public class Label extends ShaUrl {
     super.writeToParcel(dest, flags);
     dest.writeString(name);
     dest.writeString(color);
+  }
+
+  @Override
+  public int compareTo(Label another) {
+    return name.toLowerCase().compareTo(another.name.toLowerCase());
   }
 }

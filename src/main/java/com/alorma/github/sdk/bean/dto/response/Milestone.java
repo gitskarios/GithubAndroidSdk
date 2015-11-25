@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Bernat on 22/08/2014.
  */
-public class Milestone extends ShaUrl {
+public class Milestone extends ShaUrl implements Comparable<Milestone>{
   public static final Creator<Milestone> CREATOR = new Creator<Milestone>() {
     @Override
     public Milestone createFromParcel(Parcel in) {
@@ -69,5 +69,10 @@ public class Milestone extends ShaUrl {
     dest.writeString(createdAt);
     dest.writeString(updatedAt);
     dest.writeString(dueOn);
+  }
+
+  @Override
+  public int compareTo(Milestone another) {
+    return title.toLowerCase().compareTo(another.title.toLowerCase());
   }
 }
