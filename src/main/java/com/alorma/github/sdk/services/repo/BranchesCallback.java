@@ -43,6 +43,7 @@ public abstract class BranchesCallback extends Subscriber<List<Branch>> {
           selectedIndex = i;
         }
       }
+      showBranches(names, selectedIndex);
     }
   }
 
