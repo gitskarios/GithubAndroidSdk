@@ -40,7 +40,7 @@ maven {
 Add dependency in your project `build.gradle`
 
 ``` groovy
-    compile 'com.github.alorma:github-sdk:1.5.0'
+    compile 'com.github.alorma:github-sdk:2.1.0'
 ```
 
 Or grab it via maven
@@ -48,49 +48,29 @@ Or grab it via maven
 <dependency>
     <groupId>com.github.alorma</groupId>
     <artifactId>github-sdk</artifactId>
-    <version>1.5.0</version>
+    <version>2.1.0</version>
     <type>apklib</type>
     <scope>compile</scope>
 </dependency>
 <dependency>
     <groupId>com.github.alorma</groupId>
     <artifactId>github-sdk</artifactId>
-    <version>1.5.0</version>
+    <version>2.1.0</version>
     <type>jar</type>
     <scope>provided</scope>
 </dependency>
 ```
-## FORK
-
-In order to use this sdk, you must enable three metadata keys in your `AndroidManifest.xml`
-
-```
-<meta-data
-    android:name="com.alorma.github.sdk.client"
-    android:value="@string/gh_client_id"/>
-
-<meta-data
-    android:name="com.alorma.github.sdk.secret"
-    android:value="@string/gh_client_secret"/>
-
-<meta-data
-    android:name="com.alorma.github.sdk.oauth"
-    android:value="@string/gh_client_callback"/>
-```
-
-In Gitskarios, this keys are hidden from repository, so you should create your own string files, or place it directly in `value`
-
 ## EXAMPLE
 
 Get repositories list:
-``` java
+```java
 GithubReposClient client = new UserReposClient(getActivity(), username);
 client.setOnResultCallback(callback);
 client.execute();
 ```
 
 Paginated:
-``` Java
+```java
 UserReposClient client = new UserReposClient(getActivity(), username, page);
 client.executeSync();
 ```
