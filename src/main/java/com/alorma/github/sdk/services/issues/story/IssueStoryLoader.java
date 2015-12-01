@@ -14,7 +14,6 @@ import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
-import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.Collections;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -49,7 +48,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
-  @RxLogObservable
   private Observable<IssueStory> getIssueStory() {
     return Observable.zip(getIssueObservable(), getIssueDetailsObservable(), new Func2<Issue, List<IssueStoryDetail>, IssueStory>() {
           @Override
@@ -63,12 +61,10 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         });
   }
 
-  @RxLogObservable
   private Observable<Issue> getIssueObservable() {
     return issueStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
   }
 
-  @RxLogObservable
   private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
     Observable<IssueStoryDetail> commentsDetailsObs = getCommentsDetailsObs();
     Observable<IssueStoryDetail> eventDetailsObs = getEventDetailsObs();
@@ -76,7 +72,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
-  @RxLogObservable
   private Observable<List<GithubComment>> getCommentsObs() {
     return Observable.create(new BaseInfiniteCallback<List<GithubComment>>() {
 
@@ -92,7 +87,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     });
   }
 
-  @RxLogObservable
   private Observable<IssueStoryDetail> getCommentsDetailsObs() {
     return getCommentsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
       @Override
@@ -111,7 +105,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
-  @RxLogObservable
   private Observable<List<IssueEvent>> getEventsObs() {
     return Observable.create(new BaseInfiniteCallback<List<IssueEvent>>() {
       @Override
@@ -127,7 +120,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   @NonNull
-  @RxLogObservable
   private Observable<IssueStoryDetail> getEventDetailsObs() {
     return getEventsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
       @Override

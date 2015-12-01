@@ -9,7 +9,6 @@ buildscript {
     classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
     classpath 'io.fabric.tools:gradle:1.19.2'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
-    classpath "com.fernandocejas.frodo:frodo-plugin:0.8.1"
   }
 }
 
@@ -27,9 +26,7 @@ allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.fernandocejas.frodo'
 
 buildscript {
   repositories {
@@ -64,6 +61,11 @@ android {
   buildTypes {
     debug {}
     release {}
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
   }
 }
 
