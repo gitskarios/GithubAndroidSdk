@@ -8,7 +8,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
     classpath 'io.fabric.tools:gradle:1.19.2'
-    classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+    classpath 'com.novoda:bintray-release:0.3.4'
   }
 }
 
@@ -23,20 +23,8 @@ allprojects {
   }
 }
 
-
 apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'
-apply plugin: 'com.github.ben-manes.versions'
-
-buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.novoda:bintray-release:0.3.4'
-    classpath "com.fernandocejas.frodo:frodo-plugin:0.8.1"
-  }
-}
+apply plugin: 'com.novoda.bintray-release'
 
 android {
   compileSdkVersion 23
@@ -100,7 +88,7 @@ publish {
   userOrg = 'alorma'
   groupId = 'com.github.alorma'
   artifactId = 'github-sdk'
-  version = '2.1.0'
+  version = '2.1.1'
   description = 'A SDK for GitHub implemented in Android'
   website = 'https://github.com/gitskarios/GithubAndroidSdk'
   issueTracker = "${website}/issues"
