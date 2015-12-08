@@ -14,4 +14,4 @@ branches:
    - develop
    - master
 
-script: ./gradlew assembleTravisDebug
+script: ./gradlew assembleLibraryDebug
