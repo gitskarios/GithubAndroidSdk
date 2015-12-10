@@ -78,8 +78,4 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
   public ApiClient getClient() {
     return client;
   }
-
-  public void setStoreCredentials(StoreCredentials storeCredentials) {
-    this.storeCredentials = storeCredentials;
-  }
 }

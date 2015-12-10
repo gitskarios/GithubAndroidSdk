@@ -18,7 +18,7 @@ public class StoreCredentials {
   private final SharedPreferences preferences;
 
   public StoreCredentials(Context context) {
-    preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     editor = preferences.edit();
   }
 
@@ -50,6 +50,7 @@ public class StoreCredentials {
   }
 
   public void clear() {
+    editor.remove(KEY_URL);
     editor.remove(USER_NAME);
     editor.remove(USER_TOKEN);
     editor.remove(USER_SCOPES);
