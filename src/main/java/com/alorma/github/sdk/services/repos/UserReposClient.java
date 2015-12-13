@@ -12,6 +12,9 @@ public class UserReposClient extends GithubReposClient {
     super(context, username);
   }
 
+  public UserReposClient(Context context, int page) {
+    super(context, null, page);
+  }
   public UserReposClient(Context context, String username, int page) {
     super(context, username, page);
   }
