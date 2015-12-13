@@ -35,6 +35,7 @@ public class User extends Organization {
   public int collaborators;
   public int disk_usage;
   public UserPlan plan;
+  public int organizations;
 
   public User() {
     super();
@@ -60,6 +61,7 @@ public class User extends Organization {
     total_private_repos = in.readInt();
     collaborators = in.readInt();
     disk_usage = in.readInt();
+    organizations = in.readInt();
     plan = in.readParcelable(UserPlan.class.getClassLoader());
   }
 
@@ -89,6 +91,7 @@ public class User extends Organization {
     dest.writeInt(total_private_repos);
     dest.writeInt(collaborators);
     dest.writeInt(disk_usage);
+    dest.writeInt(organizations);
     dest.writeParcelable(plan, flags);
   }
 
