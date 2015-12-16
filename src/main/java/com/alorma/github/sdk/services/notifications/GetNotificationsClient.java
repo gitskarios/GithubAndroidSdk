@@ -13,6 +13,8 @@ import rx.Observable;
 public class GetNotificationsClient extends GithubClient<List<Notification>> {
 
   private String token;
+  private boolean participating = false;
+  private boolean all = false;
 
   public GetNotificationsClient(Context context) {
     super(context);
@@ -23,6 +25,14 @@ public class GetNotificationsClient extends GithubClient<List<Notification>> {
     this.token = token;
   }
 
+  public void setParticipating(boolean participating) {
+    this.participating = participating;
+  }
+
+  public void setAll(boolean all) {
+    this.all = all;
+  }
+
   @Override
   public String getToken() {
     return token != null ? token : super.getToken();
@@ -30,6 +40,6 @@ public class GetNotificationsClient extends GithubClient<List<Notification>> {
 
   @Override
   protected Observable<List<Notification>> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(NotificationsService.class).getNotifications();
+    return restAdapter.create(NotificationsService.class).getNotifications(all, participating);
   }
 }

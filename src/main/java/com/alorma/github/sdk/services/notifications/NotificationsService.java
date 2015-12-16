@@ -20,7 +20,7 @@ public interface NotificationsService {
 
   //obs
   @GET("/notifications")
-  Observable<List<Notification>> getNotifications();
+  Observable<List<Notification>> getNotifications(@Query("all") boolean all, @Query("participating") boolean participating);
 
   @PUT("/repos/{owner}/{name}/notifications")
   Observable<Response> markAsReadRepo(@Path("owner") String owner, @Path("name") String repo);
