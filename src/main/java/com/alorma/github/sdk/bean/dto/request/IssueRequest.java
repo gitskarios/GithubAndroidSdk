@@ -10,6 +10,7 @@ public class IssueRequest extends EditIssueRequestDTO {
   public String body;
   public String assignee;
   public Integer milestone;
+  public String milestoneName;
   public CharSequence[] labels;
   public IssueState state;
 }
