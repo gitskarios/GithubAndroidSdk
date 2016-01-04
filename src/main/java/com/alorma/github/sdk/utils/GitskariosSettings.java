@@ -11,6 +11,7 @@ public class GitskariosSettings extends PreferencesHelper {
   public static final String KEY_ISSUE_EDIT = "KEY_ISSUE_EDIT";
   public static final String KEY_VERSION = "KEY_VERSION";
   public static final String KEY_DOWNLOAD_FILE_TYPE = "KEY_DOWNLOAD_FILE_TYPE";
+  private static final String KEY_SHOW_ENTERPRISE = "KEY_SHOW_ENTERPRISE";
 
   public GitskariosSettings(Context context) {
     super(context);
@@ -54,5 +55,13 @@ public class GitskariosSettings extends PreferencesHelper {
 
   public boolean markAsRead() {
     return getBooleanSetting(KEY_MARK_AS_READ, false);
+  }
+
+  public boolean getShowEnterprise() {
+      return getBooleanSetting(KEY_SHOW_ENTERPRISE, true);
+  }
+
+  public void setShowEnterpriseVisited() {
+    saveBooleanSetting(KEY_SHOW_ENTERPRISE, false);
   }
 }
