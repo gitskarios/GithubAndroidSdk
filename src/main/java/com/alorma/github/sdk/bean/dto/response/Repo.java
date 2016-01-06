@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Bernat on 13/07/2014.
@@ -54,6 +55,7 @@ public class Repo extends ShaUrl {
   public boolean has_wiki;
   public Permissions permissions;
   public License license;
+  public List<Branch> branches;
 
   public Repo() {
     super();
