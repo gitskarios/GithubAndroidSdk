@@ -14,19 +14,10 @@ import rx.functions.Func2;
 
 public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.Log {
 
-  protected StoreCredentials storeCredentials;
-
-  //protected Context context;
   private ApiClient client;
 
   public BaseClient(Context context, ApiClient client) {
     this.client = client;
-    /*
-    if (context != null) {
-      this.context = context.getApplicationContext();
-    }
-    */
-    storeCredentials = new StoreCredentials(context);
   }
 
   protected RestAdapter getRestAdapter() {
@@ -70,7 +61,7 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
   }
 
   protected String getToken() {
-    return storeCredentials.token();
+    return TokenProvider.getInstance().getToken();
   }
 
   /*
