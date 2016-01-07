@@ -14,18 +14,20 @@ import retrofit.RestAdapter;
 public abstract class GithubReposClient extends GithubListClient<List<Repo>> {
   private String username;
   private int page;
+  private String sort;
 
   public GithubReposClient(Context context) {
-    this(context, null);
+    this(context, null, null);
   }
 
-  public GithubReposClient(Context context, String username) {
-    this(context, username, 0);
+  public GithubReposClient(Context context, String username, String sort) {
+    this(context, username, sort, 0);
   }
 
-  public GithubReposClient(Context context, String username, int page) {
+  public GithubReposClient(Context context, String username, String sort, int page) {
     super(context);
     this.username = username;
+    this.sort = sort;
     this.page = page;
   }
 
@@ -35,8 +37,6 @@ public abstract class GithubReposClient extends GithubListClient<List<Repo>> {
       @Override
       protected void call(RestAdapter restAdapter) {
         ReposService reposService = restAdapter.create(ReposService.class);
-        GitskariosSettings settings = new GitskariosSettings(context);
-        String sort = settings.getRepoSort(context.getString(R.string.sort_pushed_value));
         if (page == 0) {
           if (username == null) {
             executeUserFirstPage(sort, reposService, this);

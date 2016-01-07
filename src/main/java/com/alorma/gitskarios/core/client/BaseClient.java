@@ -16,14 +16,16 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
 
   protected StoreCredentials storeCredentials;
 
-  protected Context context;
+  //protected Context context;
   private ApiClient client;
 
   public BaseClient(Context context, ApiClient client) {
     this.client = client;
+    /*
     if (context != null) {
       this.context = context.getApplicationContext();
     }
+    */
     storeCredentials = new StoreCredentials(context);
   }
 
@@ -71,9 +73,11 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
     return storeCredentials.token();
   }
 
+  /*
   public Context getContext() {
     return context;
   }
+  */
 
   public ApiClient getClient() {
     return client;

@@ -5,11 +5,15 @@ import android.content.Context;
 public class UserReposFromOrganizationClient extends GithubReposClient {
 
   public UserReposFromOrganizationClient(Context context) {
-    super(context, null);
+    super(context);
   }
 
-  public UserReposFromOrganizationClient(Context context, int page) {
-    super(context, null, page);
+  public UserReposFromOrganizationClient(Context context, String username, String sort) {
+    super(context, username, sort);
+  }
+
+  public UserReposFromOrganizationClient(Context context, String username, String sort, int page) {
+    super(context, username, sort, page);
   }
 
   @Override

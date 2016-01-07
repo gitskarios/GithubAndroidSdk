@@ -7,12 +7,16 @@ import android.content.Context;
  */
 public class WatchedReposClient extends GithubReposClient {
 
-  public WatchedReposClient(Context context, String username) {
-    super(context, username);
+  public WatchedReposClient(Context context) {
+    super(context);
   }
 
-  public WatchedReposClient(Context context, String username, int page) {
-    super(context, username, page);
+  public WatchedReposClient(Context context, String username, String sort) {
+    super(context, username, sort);
+  }
+
+  public WatchedReposClient(Context context, String username, String sort, int page) {
+    super(context, username, sort, page);
   }
 
   @Override

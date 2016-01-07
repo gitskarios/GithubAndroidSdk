@@ -3,10 +3,14 @@ package com.alorma.github.sdk.services.repo;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Base64;
+
+import com.alorma.github.sdk.R;
 import com.alorma.github.sdk.bean.dto.request.RequestMarkdownDTO;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.content.GetMarkdownClient;
+import com.alorma.github.sdk.utils.GitskariosSettings;
+
 import java.io.UnsupportedEncodingException;
 import retrofit.RestAdapter;
 import rx.Observable;
@@ -17,8 +21,11 @@ import rx.functions.Func1;
  */
 public class GetReadmeContentsClient extends GithubRepoClient<String> {
 
+  private Context context;
+
   public GetReadmeContentsClient(Context context, RepoInfo info) {
     super(context, info);
+    this.context = context;
   }
 
   @Override

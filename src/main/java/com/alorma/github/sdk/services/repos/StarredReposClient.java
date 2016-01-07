@@ -7,16 +7,17 @@ import android.content.Context;
  */
 public class StarredReposClient extends GithubReposClient {
 
+
   public StarredReposClient(Context context) {
     super(context);
   }
 
-  public StarredReposClient(Context context, String username) {
-    super(context, username);
+  public StarredReposClient(Context context, String username, String sort) {
+    super(context, username, sort);
   }
 
-  public StarredReposClient(Context context, String username, int page) {
-    super(context, username, page);
+  public StarredReposClient(Context context, String username, String sort, int page) {
+    super(context, username, sort, page);
   }
 
   @Override
