@@ -17,7 +17,7 @@ public class UnstarRepoClient extends GithubClient<Boolean> {
   private final String repo;
 
   public UnstarRepoClient(Context context, String owner, String repo) {
-    super(context);
+    super();
     this.owner = owner;
     this.repo = repo;
   }

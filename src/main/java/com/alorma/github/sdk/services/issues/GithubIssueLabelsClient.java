@@ -5,7 +5,7 @@ import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,12 +27,12 @@ public class GithubIssueLabelsClient extends GithubClient<List<Label>> {
   };
 
   public GithubIssueLabelsClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
   }
 
   public GithubIssueLabelsClient(Context context, RepoInfo repoInfo, boolean sortAlphabetic) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.sortAlphabetic = sortAlphabetic;
   }

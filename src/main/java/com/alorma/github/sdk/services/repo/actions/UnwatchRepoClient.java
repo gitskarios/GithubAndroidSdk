@@ -17,7 +17,7 @@ public class UnwatchRepoClient extends GithubClient<Boolean> {
   private final String repo;
 
   public UnwatchRepoClient(Context context, String owner, String repo) {
-    super(context);
+    super();
     this.owner = owner;
     this.repo = repo;
   }

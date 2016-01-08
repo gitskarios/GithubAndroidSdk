@@ -16,7 +16,7 @@ public class CheckUserCollaboratorClient extends GithubClient<Boolean> {
   private String user;
 
   public CheckUserCollaboratorClient(Context context, RepoInfo info, String user) {
-    super(context);
+    super();
     this.info = info;
     this.user = user;
   }

@@ -13,7 +13,7 @@ public class GetGistDetailClient extends GithubClient<Gist> {
   private String id;
 
   public GetGistDetailClient(Context context, String id) {
-    super(context);
+    super();
     this.id = id;
   }
 

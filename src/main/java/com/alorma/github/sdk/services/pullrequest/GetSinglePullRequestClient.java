@@ -12,7 +12,7 @@ public class GetSinglePullRequestClient extends GithubClient<PullRequest> {
   private final IssueInfo info;
 
   public GetSinglePullRequestClient(Context context, IssueInfo info) {
-    super(context);
+    super();
     this.info = info;
   }
 

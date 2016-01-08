@@ -13,7 +13,7 @@ public class EditGistClient extends GithubClient<Gist> {
   private EditGistRequestDTO editGistRequestDTO;
 
   public EditGistClient(Context context, String id, EditGistRequestDTO editGistRequestDTO) {
-    super(context);
+    super();
     this.id = id;
     this.editGistRequestDTO = editGistRequestDTO;
   }

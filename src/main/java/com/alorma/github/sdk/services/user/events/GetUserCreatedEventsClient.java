@@ -12,12 +12,12 @@ public class GetUserCreatedEventsClient extends GithubListClient<List<GithubEven
   private int page = 0;
 
   public GetUserCreatedEventsClient(Context context, String username) {
-    super(context);
+    super();
     this.username = username;
   }
 
   public GetUserCreatedEventsClient(Context context, String username, int page) {
-    super(context);
+    super();
     this.username = username;
     this.page = page;
   }

@@ -14,12 +14,12 @@ public class GetUserEventsClient extends GithubListClient<List<GithubEvent>> {
   private int page = 0;
 
   public GetUserEventsClient(Context context, String username) {
-    super(context);
+    super();
     this.username = username;
   }
 
   public GetUserEventsClient(Context context, String username, int page) {
-    super(context);
+    super();
     this.username = username;
     this.page = page;
   }

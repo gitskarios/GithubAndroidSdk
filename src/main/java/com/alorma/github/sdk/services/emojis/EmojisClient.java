@@ -12,7 +12,7 @@ import rx.Observable;
 public class EmojisClient extends GithubClient<HashMap<String, String>> {
 
   public EmojisClient(Context context) {
-    super(context);
+    super();
   }
 
   @Override

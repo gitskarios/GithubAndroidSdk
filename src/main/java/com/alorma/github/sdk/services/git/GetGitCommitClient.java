@@ -12,7 +12,7 @@ public class GetGitCommitClient extends GithubClient<GitCommit> {
   private final RepoInfo info;
 
   public GetGitCommitClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.info = repoInfo;
   }
 

@@ -20,7 +20,7 @@ public class PullRequestReviewCommentsClient extends GithubListClient<List<Revie
   }
 
   public PullRequestReviewCommentsClient(Context context, IssueInfo info, int page) {
-    super(context);
+    super();
     this.info = info;
     this.page = page;
   }

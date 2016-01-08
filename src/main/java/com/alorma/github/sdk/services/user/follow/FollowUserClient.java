@@ -16,7 +16,7 @@ public class FollowUserClient extends GithubClient<Boolean> {
   private String username;
 
   public FollowUserClient(Context context, String username) {
-    super(context);
+    super();
     this.username = username;
   }
 

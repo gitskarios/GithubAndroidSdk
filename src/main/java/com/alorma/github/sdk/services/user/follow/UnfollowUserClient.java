@@ -16,7 +16,7 @@ public class UnfollowUserClient extends GithubClient<Boolean> {
   private String username;
 
   public UnfollowUserClient(Context context, String username) {
-    super(context);
+    super();
     this.username = username;
   }
 

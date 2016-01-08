@@ -16,12 +16,12 @@ public class GetCommitCommentsClient extends GithubListClient<List<CommitComment
   private int page = 0;
 
   public GetCommitCommentsClient(Context context, CommitInfo info) {
-    super(context);
+    super();
     this.info = info;
   }
 
   public GetCommitCommentsClient(Context context, CommitInfo info, int page) {
-    super(context);
+    super();
     this.info = info;
     this.page = page;
   }

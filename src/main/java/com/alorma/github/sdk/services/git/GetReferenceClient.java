@@ -12,7 +12,7 @@ public class GetReferenceClient extends GithubClient<GitReference> {
   private final RepoInfo info;
 
   public GetReferenceClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.info = repoInfo;
   }
 

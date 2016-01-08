@@ -14,7 +14,7 @@ public class PublishCommitCommentClient extends GithubClient<CommitComment> {
   private CommitCommentRequest request;
 
   public PublishCommitCommentClient(Context context, CommitInfo info, CommitCommentRequest request) {
-    super(context);
+    super();
     this.info = info;
     this.request = request;
   }

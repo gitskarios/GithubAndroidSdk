@@ -17,7 +17,7 @@ public class RequestTokenClient extends GithubClient<Token> {
   private final String redirectUri;
 
   public RequestTokenClient(Context context, String code, String clientId, String clientSecret, String redirectUri) {
-    super(context);
+    super();
     this.code = code;
     this.clientId = clientId;
     this.clientSecret = clientSecret;

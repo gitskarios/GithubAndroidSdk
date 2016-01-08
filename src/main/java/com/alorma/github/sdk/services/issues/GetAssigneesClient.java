@@ -14,7 +14,7 @@ public class GetAssigneesClient extends GithubClient<List<User>> {
   private RepoInfo repoInfo;
 
   public GetAssigneesClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
   }
 

@@ -16,7 +16,7 @@ public class GetTeamMembersClient extends GithubListClient<List<User>> {
   }
 
   public GetTeamMembersClient(Context context, String id, int page) {
-    super(context);
+    super();
     this.id = id;
     this.page = page;
   }

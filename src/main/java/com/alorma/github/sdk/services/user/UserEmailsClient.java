@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public class UserEmailsClient extends GithubClient<List<Email>> {
   public UserEmailsClient(Context context) {
-    super(context);
+    super();
   }
 
   @Override

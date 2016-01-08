@@ -16,7 +16,7 @@ public class CreateMilestoneClient extends GithubClient<Milestone> {
   private CreateMilestoneRequestDTO createMilestoneRequestDTO;
 
   public CreateMilestoneClient(Context context, RepoInfo repoInfo, CreateMilestoneRequestDTO createMilestoneRequestDTO) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.createMilestoneRequestDTO = createMilestoneRequestDTO;
   }

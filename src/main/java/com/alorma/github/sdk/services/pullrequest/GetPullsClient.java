@@ -16,12 +16,12 @@ public class GetPullsClient extends GithubListClient<List<PullRequest>> {
   private int page = 0;
 
   public GetPullsClient(Context context, IssueInfo issueInfo) {
-    super(context);
+    super();
     this.issueInfo = issueInfo;
   }
 
   public GetPullsClient(Context context, IssueInfo issueInfo, int page) {
-    super(context);
+    super();
     this.issueInfo = issueInfo;
     this.page = page;
   }

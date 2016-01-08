@@ -18,7 +18,7 @@ public class ChangeIssueStateClient extends GithubClient<Issue> {
   private IssueInfo info;
 
   public ChangeIssueStateClient(Context context, IssueInfo info, IssueState state) {
-    super(context);
+    super();
     this.info = info;
 
     this.issueRequest = new IssueRequest();

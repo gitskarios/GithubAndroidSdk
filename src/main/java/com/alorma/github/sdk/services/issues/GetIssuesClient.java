@@ -31,7 +31,7 @@ public class GetIssuesClient extends GithubListClient<List<Issue>> {
   }
 
   public GetIssuesClient(Context context, IssueInfo issueInfo, Map<String, String> filter, int page) {
-    super(context);
+    super();
     this.issueInfo = issueInfo;
     this.page = page;
     this.filter = filter != null ? filter : new HashMap<String, String>();

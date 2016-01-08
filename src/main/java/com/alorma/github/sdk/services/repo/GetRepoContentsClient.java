@@ -20,7 +20,7 @@ public class GetRepoContentsClient extends GithubListClient<List<Content>> {
   }
 
   public GetRepoContentsClient(Context context, RepoInfo repoInfo, String path) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.path = path;
   }

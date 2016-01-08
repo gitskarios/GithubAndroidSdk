@@ -28,7 +28,7 @@ public class GetForksClient extends GithubListClient<List<Repo>> {
     this(context, repoInfo, 0);
   }
   public GetForksClient(Context context, RepoInfo repoInfo, int page) {
-    super(context);
+    super();
     this.context = context;
     this.repoInfo = repoInfo;
     this.page = page;

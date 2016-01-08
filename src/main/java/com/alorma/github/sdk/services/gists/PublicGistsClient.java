@@ -10,11 +10,11 @@ public class PublicGistsClient extends GithubListClient<List<Gist>> {
   private int page = 0;
 
   public PublicGistsClient(Context context) {
-    super(context);
+    super();
   }
 
   public PublicGistsClient(Context context, int page) {
-    super(context);
+    super();
     this.page = page;
   }
 

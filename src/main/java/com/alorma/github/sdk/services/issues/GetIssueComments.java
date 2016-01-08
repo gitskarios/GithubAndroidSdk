@@ -20,7 +20,7 @@ public class GetIssueComments extends GithubListClient<List<GithubComment>> {
   }
 
   public GetIssueComments(Context context, IssueInfo issueInfo, int page) {
-    super(context);
+    super();
     this.issueInfo = issueInfo;
     this.page = page;
   }

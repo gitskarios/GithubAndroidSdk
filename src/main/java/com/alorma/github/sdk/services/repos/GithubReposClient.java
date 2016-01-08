@@ -1,10 +1,10 @@
 package com.alorma.github.sdk.services.repos;
 
 import android.content.Context;
-import com.alorma.github.sdk.R;
+
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.services.client.GithubListClient;
-import com.alorma.github.sdk.utils.GitskariosSettings;
+
 import java.util.List;
 import retrofit.RestAdapter;
 
@@ -25,7 +25,7 @@ public abstract class GithubReposClient extends GithubListClient<List<Repo>> {
   }
 
   public GithubReposClient(Context context, String username, String sort, int page) {
-    super(context);
+    super();
     this.username = username;
     this.sort = sort;
     this.page = page;

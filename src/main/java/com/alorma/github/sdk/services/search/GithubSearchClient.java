@@ -13,12 +13,12 @@ public abstract class GithubSearchClient<Search, K> extends GithubListClient<K> 
   private int page = 0;
 
   public GithubSearchClient(Context context, String query) {
-    super(context);
+    super();
     this.query = query;
   }
 
   public GithubSearchClient(Context context, String query, int page) {
-    super(context);
+    super();
     this.query = query;
     this.page = page;
   }

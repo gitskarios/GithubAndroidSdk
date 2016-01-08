@@ -29,13 +29,13 @@ public class GetMilestonesClient extends GithubClient<List<Milestone>> {
   };
 
   public GetMilestonesClient(Context context, RepoInfo repoInfo, MilestoneState state) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.state = state;
   }
 
   public GetMilestonesClient(Context context, RepoInfo repoInfo, MilestoneState state, boolean sortAlphabetic) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.state = state;
     this.sortAlphabetic = sortAlphabetic;

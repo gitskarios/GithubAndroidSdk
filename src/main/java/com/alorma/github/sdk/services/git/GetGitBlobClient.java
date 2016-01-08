@@ -12,7 +12,7 @@ public class GetGitBlobClient extends GithubClient<GitBlob> {
   private CommitInfo info;
 
   public GetGitBlobClient(Context context, CommitInfo info) {
-    super(context);
+    super();
     this.info = info;
   }
 

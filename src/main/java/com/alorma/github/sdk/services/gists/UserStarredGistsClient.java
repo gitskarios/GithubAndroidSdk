@@ -14,11 +14,11 @@ public class UserStarredGistsClient extends GithubListClient<List<Gist>> {
   private int page = 0;
 
   public UserStarredGistsClient(Context context) {
-    super(context);
+    super();
   }
 
   public UserStarredGistsClient(Context context, int page) {
-    super(context);
+    super();
     this.page = page;
   }
 

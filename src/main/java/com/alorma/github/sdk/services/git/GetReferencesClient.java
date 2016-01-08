@@ -17,7 +17,7 @@ public class GetReferencesClient extends GithubListClient<List<GitReference>> {
   }
 
   public GetReferencesClient(Context context, RepoInfo repoInfo, int page) {
-    super(context);
+    super();
     this.info = repoInfo;
     this.page = page;
   }

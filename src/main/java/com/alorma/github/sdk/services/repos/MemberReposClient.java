@@ -14,12 +14,12 @@ public class MemberReposClient extends GithubListClient<List<Repo>> {
   private int page;
 
   public MemberReposClient(Context context) {
-    super(context);
+    super();
     page = 0;
   }
 
   public MemberReposClient(Context context, int page) {
-    super(context);
+    super();
     this.page = page;
   }
 

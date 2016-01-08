@@ -20,7 +20,7 @@ public class GetShaCombinedStatus extends GithubListClient<GithubStatusResponse>
   }
 
   public GetShaCombinedStatus(Context context, RepoInfo repoInfo, String ref, int page) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.ref = ref;
     this.page = page;

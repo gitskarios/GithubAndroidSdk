@@ -13,7 +13,7 @@ public class PublishGistClient extends GithubClient<Gist> {
   private Gist gist;
 
   public PublishGistClient(Context context, Gist gist) {
-    super(context);
+    super();
     this.gist = gist;
   }
 

@@ -13,7 +13,7 @@ public class ForkRepoClient extends GithubClient<Repo> {
   private String org;
 
   public ForkRepoClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
   }
 

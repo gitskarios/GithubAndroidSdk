@@ -22,7 +22,7 @@ public class GetRepoCollaboratorsClient extends GithubClient<List<User>> {
   }
 
   public GetRepoCollaboratorsClient(Context context, RepoInfo repoInfo, int page) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
     this.page = page;
   }

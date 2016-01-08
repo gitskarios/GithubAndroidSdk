@@ -16,7 +16,7 @@ public class GetGistCommentsClient extends GithubListClient<List<GithubComment>>
   }
 
   public GetGistCommentsClient(Context context, String id, int page) {
-    super(context);
+    super();
     this.id = id;
     this.page = page;
   }

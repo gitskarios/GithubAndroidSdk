@@ -22,7 +22,7 @@ public class GetMarkdownClient extends GithubClient<String> {
   private RequestMarkdownDTO readme;
 
   public GetMarkdownClient(Context context, RequestMarkdownDTO readme) {
-    super(context);
+    super();
     this.readme = readme;
   }
 

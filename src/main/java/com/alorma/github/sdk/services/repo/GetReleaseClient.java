@@ -14,7 +14,7 @@ public class GetReleaseClient extends GithubClient<Release> {
   private ReleaseInfo info;
 
   public GetReleaseClient(Context context, ReleaseInfo info) {
-    super(context);
+    super();
     this.info = info;
   }
 

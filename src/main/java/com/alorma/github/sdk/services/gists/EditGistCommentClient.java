@@ -14,7 +14,7 @@ public class EditGistCommentClient extends GithubClient<GithubComment> {
   private String commentId;
 
   public EditGistCommentClient(Context context, String gistId, String commentId, CommentRequest body) {
-    super(context);
+    super();
     this.gistId = gistId;
     this.body = body;
     this.commentId = commentId;

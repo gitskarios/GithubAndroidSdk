@@ -1,9 +1,11 @@
 package com.alorma.gitskarios.core.client;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
+
 import com.alorma.gitskarios.core.ApiClient;
+
 import java.util.concurrent.TimeUnit;
+
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -16,7 +18,7 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
 
   private ApiClient client;
 
-  public BaseClient(Context context, ApiClient client) {
+  public BaseClient(ApiClient client) {
     this.client = client;
   }
 

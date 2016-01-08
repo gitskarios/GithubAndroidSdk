@@ -13,7 +13,7 @@ public class DeleteIssueCommentClient extends GithubClient<Response> {
   private String id;
 
   public DeleteIssueCommentClient(Context context, RepoInfo info, String id) {
-    super(context);
+    super();
     this.info = info;
     this.id = id;
   }

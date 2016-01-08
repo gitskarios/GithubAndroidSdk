@@ -17,7 +17,7 @@ public class GetRepoEventsClient extends GithubListClient<List<GithubEvent>> {
   }
 
   public GetRepoEventsClient(Context context, RepoInfo info, int page) {
-    super(context);
+    super();
     this.info = info;
     this.page = page;
   }

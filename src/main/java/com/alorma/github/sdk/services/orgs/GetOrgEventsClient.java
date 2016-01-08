@@ -13,7 +13,7 @@ public class GetOrgEventsClient extends GithubListClient<List<GithubEvent>> {
   private int page;
 
   public GetOrgEventsClient(Context context, String username, String org) {
-    super(context);
+    super();
     this.username = username;
     this.org = org;
   }

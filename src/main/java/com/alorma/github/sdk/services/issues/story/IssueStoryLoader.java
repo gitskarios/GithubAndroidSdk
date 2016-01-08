@@ -34,7 +34,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   private IssueStoryService issueStoryService;
 
   public IssueStoryLoader(Context context, IssueInfo info) {
-    super(context);
+    super();
     this.issueInfo = info;
     this.owner = issueInfo.repoInfo.owner;
     this.repo = issueInfo.repoInfo.name;

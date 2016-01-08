@@ -1,14 +1,13 @@
 package com.alorma.gitskarios.core.client;
 
-import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Pair;
 import com.alorma.gitskarios.core.ApiClient;
+import com.alorma.gitskarios.core.Pair;
+
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -23,20 +22,14 @@ import rx.schedulers.Schedulers;
 
 public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapter.Log {
 
-  public Uri last;
-  public Uri next;
+  public URI last;
+  public URI next;
   public int lastPage;
   public int nextPage;
-  protected StoreCredentials storeCredentials;
-  protected Context context;
   private ApiClient client;
 
-  public BaseListClient(Context context, ApiClient client) {
+  public BaseListClient(ApiClient client) {
     this.client = client;
-    if (context != null) {
-      this.context = context.getApplicationContext();
-    }
-    storeCredentials = new StoreCredentials(context);
   }
 
   protected RestAdapter getRestAdapter() {
@@ -56,7 +49,6 @@ public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapt
     return restAdapterBuilder.build();
   }
 
-  @Nullable
   protected Client getInterceptor() {
     return null;
   }
@@ -75,20 +67,12 @@ public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapt
     return null;
   }
 
-  protected String getToken() {
-    return storeCredentials.token();
-  }
-
-  public Context getContext() {
-    return context;
-  }
-
   public ApiClient getClient() {
     return client;
   }
 
-  public void setStoreCredentials(StoreCredentials storeCredentials) {
-    this.storeCredentials = storeCredentials;
+  protected String getToken() {
+    return TokenProvider.getInstance().getToken();
   }
 
   public abstract class ApiSubscriber implements Observable.OnSubscribe<Pair<K, Integer>>, Callback<K> {
@@ -106,14 +90,7 @@ public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapt
 
     @Override
     public void failure(RetrofitError error) {
-      if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
-        if (context != null) {
-          LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
-          manager.sendBroadcast(new UnAuthIntent(storeCredentials.token()));
-        }
-      } else {
         subscriber.onError(error);
-      }
     }
 
     private Integer getLinkData(Response r) {

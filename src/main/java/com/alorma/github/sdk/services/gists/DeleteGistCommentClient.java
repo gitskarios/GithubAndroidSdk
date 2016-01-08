@@ -12,7 +12,7 @@ public class DeleteGistCommentClient extends GithubClient<Response> {
   private String commentId;
 
   public DeleteGistCommentClient(Context context, String commentId, String id) {
-    super(context);
+    super();
     this.commentId = commentId;
     this.id = id;
   }

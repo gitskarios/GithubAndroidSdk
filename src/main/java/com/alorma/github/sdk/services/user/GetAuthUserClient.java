@@ -13,11 +13,11 @@ public class GetAuthUserClient extends GithubClient<User> {
   private String accessToken;
 
   public GetAuthUserClient(Context context) {
-    super(context);
+    super();
   }
 
   public GetAuthUserClient(Context context, String accessToken) {
-    super(context);
+    super();
     this.accessToken = accessToken;
   }
 

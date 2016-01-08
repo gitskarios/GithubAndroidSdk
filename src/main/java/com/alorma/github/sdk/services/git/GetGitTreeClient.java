@@ -13,7 +13,7 @@ public class GetGitTreeClient extends GithubClient<GitTree> {
   private final boolean recursive;
 
   public GetGitTreeClient(Context context, RepoInfo repoInfo, boolean recursive) {
-    super(context);
+    super();
     this.info = repoInfo;
     this.recursive = recursive;
   }

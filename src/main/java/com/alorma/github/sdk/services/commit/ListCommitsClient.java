@@ -16,13 +16,13 @@ public class ListCommitsClient extends GithubListClient<List<Commit>> {
   private int page;
 
   public ListCommitsClient(Context context, CommitInfo info, int page) {
-    super(context);
+    super();
     this.info = info;
     this.page = page;
   }
 
   public ListCommitsClient(Context context, CommitInfo info, String path, int page) {
-    super(context);
+    super();
     this.info = info;
     this.path = path;
     this.page = page;

@@ -15,7 +15,7 @@ public class GetFileContentClient extends GithubClient<Content> {
   private FileInfo fileInfo;
 
   public GetFileContentClient(Context context, FileInfo fileInfo) {
-    super(context);
+    super();
     this.fileInfo = fileInfo;
   }
 

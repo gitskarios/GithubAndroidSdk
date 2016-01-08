@@ -12,7 +12,7 @@ public abstract class GithubRepoClient<K> extends GithubClient<K> {
   private RepoInfo repoInfo;
 
   public GithubRepoClient(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
   }
 

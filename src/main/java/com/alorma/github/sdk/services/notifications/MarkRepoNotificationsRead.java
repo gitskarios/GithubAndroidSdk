@@ -19,7 +19,7 @@ public class MarkRepoNotificationsRead extends GithubClient<Boolean> {
   private RepoInfo repoInfo;
 
   public MarkRepoNotificationsRead(Context context, RepoInfo repoInfo) {
-    super(context);
+    super();
     this.repoInfo = repoInfo;
   }
 
