@@ -14,7 +14,7 @@ public class GetRepoReleasesClient extends GithubListClient<List<Release>> {
   private RepoInfo info;
   private int page;
 
-  public GetRepoReleasesClient(Context context, RepoInfo info, int page) {
+  public GetRepoReleasesClient(RepoInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

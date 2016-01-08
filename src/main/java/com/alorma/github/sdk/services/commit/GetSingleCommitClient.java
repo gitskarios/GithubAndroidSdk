@@ -14,7 +14,7 @@ public class GetSingleCommitClient extends GithubClient<Commit> {
 
   private CommitInfo info;
 
-  public GetSingleCommitClient(Context context, CommitInfo info) {
+  public GetSingleCommitClient(CommitInfo info) {
     super();
     this.info = info;
   }

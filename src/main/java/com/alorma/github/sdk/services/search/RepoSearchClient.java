@@ -13,12 +13,12 @@ import retrofit.client.Response;
  */
 public class RepoSearchClient extends GithubSearchClient<ReposSearch, List<Repo>> {
 
-  public RepoSearchClient(Context context, String query) {
-    super(context, query);
+  public RepoSearchClient(String query) {
+    super(query);
   }
 
-  public RepoSearchClient(Context context, String query, int page) {
-    super(context, query, page);
+  public RepoSearchClient(String query, int page) {
+    super(query, page);
   }
 
   @Override

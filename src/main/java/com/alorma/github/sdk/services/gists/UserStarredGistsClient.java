@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.services.gists;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**
@@ -13,11 +14,11 @@ public class UserStarredGistsClient extends GithubListClient<List<Gist>> {
 
   private int page = 0;
 
-  public UserStarredGistsClient(Context context) {
+  public UserStarredGistsClient() {
     super();
   }
 
-  public UserStarredGistsClient(Context context, int page) {
+  public UserStarredGistsClient(int page) {
     super();
     this.page = page;
   }

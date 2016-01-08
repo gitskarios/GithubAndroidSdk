@@ -12,7 +12,7 @@ import rx.Observable;
 public class GetGistDetailClient extends GithubClient<Gist> {
   private String id;
 
-  public GetGistDetailClient(Context context, String id) {
+  public GetGistDetailClient(String id) {
     super();
     this.id = id;
   }

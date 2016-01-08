@@ -1,10 +1,11 @@
 package com.alorma.github.sdk.services.commit;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
 import com.alorma.github.sdk.bean.info.CommitInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**
@@ -15,12 +16,12 @@ public class GetCommitCommentsClient extends GithubListClient<List<CommitComment
   private CommitInfo info;
   private int page = 0;
 
-  public GetCommitCommentsClient(Context context, CommitInfo info) {
+  public GetCommitCommentsClient(CommitInfo info) {
     super();
     this.info = info;
   }
 
-  public GetCommitCommentsClient(Context context, CommitInfo info, int page) {
+  public GetCommitCommentsClient(CommitInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

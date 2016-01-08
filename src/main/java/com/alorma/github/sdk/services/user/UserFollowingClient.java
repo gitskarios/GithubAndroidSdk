@@ -14,12 +14,12 @@ public class UserFollowingClient extends GithubListClient<List<User>> {
   private String username;
   private int page = 0;
 
-  public UserFollowingClient(Context context, String username) {
+  public UserFollowingClient(String username) {
     super();
     this.username = username;
   }
 
-  public UserFollowingClient(Context context, String username, int page) {
+  public UserFollowingClient(String username, int page) {
     super();
     this.username = username;
     this.page = page;

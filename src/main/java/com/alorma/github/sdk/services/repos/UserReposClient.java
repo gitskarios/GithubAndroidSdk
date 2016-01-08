@@ -1,19 +1,17 @@
 package com.alorma.github.sdk.services.repos;
 
-import android.content.Context;
-
 public class UserReposClient extends GithubReposClient {
 
-  public UserReposClient(Context context) {
-    super(context);
+  public UserReposClient() {
+    super();
   }
 
-  public UserReposClient(Context context, String username, String sort) {
-    super(context, username, sort);
+  public UserReposClient(String username, String sort) {
+    super(username, sort);
   }
 
-  public UserReposClient(Context context, String username, String sort, int page) {
-    super(context, username, sort, page);
+  public UserReposClient(String username, String sort, int page) {
+    super(username, sort, page);
   }
 
   @Override

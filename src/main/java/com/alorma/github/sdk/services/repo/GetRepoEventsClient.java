@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -12,11 +11,11 @@ public class GetRepoEventsClient extends GithubListClient<List<GithubEvent>> {
   private int page;
   private RepoInfo info;
 
-  public GetRepoEventsClient(Context context, RepoInfo info) {
-    this(context, info, 0);
+  public GetRepoEventsClient(RepoInfo info) {
+    this(info, 0);
   }
 
-  public GetRepoEventsClient(Context context, RepoInfo info, int page) {
+  public GetRepoEventsClient(RepoInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

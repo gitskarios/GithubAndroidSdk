@@ -1,6 +1,6 @@
 package com.alorma.github.sdk.bean.dto.response.events.payload;
 
-import com.alorma.github.sdk.PullRequest;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;

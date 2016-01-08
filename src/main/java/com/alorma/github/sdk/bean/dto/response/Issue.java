@@ -1,7 +1,7 @@
 package com.alorma.github.sdk.bean.dto.response;
 
 import android.os.Parcel;
-import com.alorma.github.sdk.PullRequest;
+
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;

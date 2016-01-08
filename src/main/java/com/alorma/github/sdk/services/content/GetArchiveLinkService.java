@@ -19,7 +19,7 @@ public class GetArchiveLinkService extends GithubClient {
   private String fileType;
   private Downloader downloader;
 
-  public GetArchiveLinkService(Context context, RepoInfo repoInfo, String fileType, Downloader downloader) {
+  public GetArchiveLinkService(RepoInfo repoInfo, String fileType, Downloader downloader) {
     super();
     this.repoInfo = repoInfo;
     this.fileType = fileType;

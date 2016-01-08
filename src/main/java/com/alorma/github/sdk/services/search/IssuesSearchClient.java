@@ -13,12 +13,12 @@ import retrofit.client.Response;
  */
 public class IssuesSearchClient extends GithubSearchClient<IssuesSearch, List<Issue>> {
 
-  public IssuesSearchClient(Context context, String query) {
-    super(context, query);
+  public IssuesSearchClient(String query) {
+    super(query);
   }
 
-  public IssuesSearchClient(Context context, String query, int page) {
-    super(context, query, page);
+  public IssuesSearchClient(String query, int page) {
+    super(query, page);
   }
 
   @Override

@@ -14,8 +14,8 @@ public class EditRepoClient extends GithubRepoClient<Repo> {
 
   private RepoRequestDTO repoRequestDTO;
 
-  public EditRepoClient(Context context, RepoInfo repoInfo, RepoRequestDTO repoRequestDTO) {
-    super(context, repoInfo);
+  public EditRepoClient(RepoInfo repoInfo, RepoRequestDTO repoRequestDTO) {
+    super(repoInfo);
     this.repoRequestDTO = repoRequestDTO;
   }
 

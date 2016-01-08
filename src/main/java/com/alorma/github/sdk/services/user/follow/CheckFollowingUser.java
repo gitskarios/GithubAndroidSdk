@@ -15,7 +15,7 @@ public class CheckFollowingUser extends GithubClient<Boolean> {
 
   private String username;
 
-  public CheckFollowingUser(Context context, String username) {
+  public CheckFollowingUser(String username) {
     super();
     this.username = username;
   }

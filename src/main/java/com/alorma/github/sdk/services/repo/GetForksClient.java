@@ -18,18 +18,17 @@ public class GetForksClient extends GithubListClient<List<Repo>> {
   public static final String NEWEST = "newest";
   public static final String OLDEST = "oldest";
   public static final String STARGAZERS = "stargazers";
-  private final Context context;
+
   private final RepoInfo repoInfo;
   private final int page;
 
   // newest, oldest, stargazers
   private String sort = null;
-  public GetForksClient(Context context, RepoInfo repoInfo) {
-    this(context, repoInfo, 0);
+  public GetForksClient(RepoInfo repoInfo) {
+    this(repoInfo, 0);
   }
-  public GetForksClient(Context context, RepoInfo repoInfo, int page) {
+  public GetForksClient(RepoInfo repoInfo, int page) {
     super();
-    this.context = context;
     this.repoInfo = repoInfo;
     this.page = page;
   }

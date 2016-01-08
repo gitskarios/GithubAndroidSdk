@@ -19,7 +19,7 @@ public class EditIssueClient extends GithubClient<Issue> {
   private IssueInfo info;
   private EditIssueRequestDTO editIssueRequestDTO;
 
-  public EditIssueClient(Context context, IssueInfo info, EditIssueRequestDTO editIssueRequestDTO) {
+  public EditIssueClient(IssueInfo info, EditIssueRequestDTO editIssueRequestDTO) {
     super();
     this.info = info;
     this.editIssueRequestDTO = editIssueRequestDTO;

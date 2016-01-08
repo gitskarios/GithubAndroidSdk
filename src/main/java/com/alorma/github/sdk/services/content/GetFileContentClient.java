@@ -1,9 +1,9 @@
 package com.alorma.github.sdk.services.content;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.FileInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 
@@ -14,7 +14,7 @@ public class GetFileContentClient extends GithubClient<Content> {
 
   private FileInfo fileInfo;
 
-  public GetFileContentClient(Context context, FileInfo fileInfo) {
+  public GetFileContentClient(FileInfo fileInfo) {
     super();
     this.fileInfo = fileInfo;
   }

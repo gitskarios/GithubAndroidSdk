@@ -13,7 +13,7 @@ public class RequestUserClient extends GithubClient<User> {
 
   private String username;
 
-  public RequestUserClient(Context context, String username) {
+  public RequestUserClient(String username) {
     super();
     this.username = username;
   }

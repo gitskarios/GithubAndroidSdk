@@ -13,7 +13,7 @@ import rx.Observable;
 public class LastReleaseClient extends GithubClient<Release> {
   private RepoInfo info;
 
-  public LastReleaseClient(Context context, RepoInfo info) {
+  public LastReleaseClient(RepoInfo info) {
     super();
     this.info = info;
   }

@@ -17,7 +17,7 @@ public class WatchRepoClient extends GithubClient<Boolean> {
   private final String owner;
   private final String repo;
 
-  public WatchRepoClient(Context context, String owner, String repo) {
+  public WatchRepoClient(String owner, String repo) {
     super();
     this.owner = owner;
     this.repo = repo;

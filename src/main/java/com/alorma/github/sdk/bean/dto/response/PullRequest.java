@@ -1,7 +1,6 @@
-package com.alorma.github.sdk;
+package com.alorma.github.sdk.bean.dto.response;
 
 import android.os.Parcel;
-import com.alorma.github.sdk.bean.dto.response.Issue;
 
 /**
  * Created by Bernat on 30/05/2015.

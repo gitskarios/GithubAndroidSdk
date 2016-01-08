@@ -14,7 +14,7 @@ public class CreateRepositoryClient extends GithubClient<Repo> {
 
   private RepoRequestDTO repoRequestDTO;
 
-  public CreateRepositoryClient(Context context, RepoRequestDTO repoRequestDTO) {
+  public CreateRepositoryClient(RepoRequestDTO repoRequestDTO) {
     super();
     this.repoRequestDTO = repoRequestDTO;
   }

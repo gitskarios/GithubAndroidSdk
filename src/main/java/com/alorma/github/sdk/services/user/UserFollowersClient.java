@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.services.user;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**
@@ -14,12 +15,12 @@ public class UserFollowersClient extends GithubListClient<List<User>> {
   private String username;
   private int page = 0;
 
-  public UserFollowersClient(Context context, String username) {
+  public UserFollowersClient(String username) {
     super();
     this.username = username;
   }
 
-  public UserFollowersClient(Context context, String username, int page) {
+  public UserFollowersClient(String username, int page) {
     super();
     this.username = username;
     this.page = page;

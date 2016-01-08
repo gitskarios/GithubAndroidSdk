@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.pullrequest;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -15,11 +14,11 @@ public class GetPullRequestCommits extends GithubListClient<List<Commit>> {
   private IssueInfo info;
   private int page;
 
-  public GetPullRequestCommits(Context context, IssueInfo info) {
-    this(context, info, 0);
+  public GetPullRequestCommits(IssueInfo info) {
+    this(info, 0);
   }
 
-  public GetPullRequestCommits(Context context, IssueInfo info, int page) {
+  public GetPullRequestCommits(IssueInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

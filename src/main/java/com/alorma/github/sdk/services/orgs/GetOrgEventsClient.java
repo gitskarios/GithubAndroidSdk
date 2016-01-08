@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.orgs;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
@@ -12,14 +11,14 @@ public class GetOrgEventsClient extends GithubListClient<List<GithubEvent>> {
   private String org;
   private int page;
 
-  public GetOrgEventsClient(Context context, String username, String org) {
+  public GetOrgEventsClient(String username, String org) {
     super();
     this.username = username;
     this.org = org;
   }
 
-  public GetOrgEventsClient(Context context, String username, String org, int page) {
-    this(context, username, org);
+  public GetOrgEventsClient(String username, String org, int page) {
+    this(username, org);
     this.page = page;
   }
 

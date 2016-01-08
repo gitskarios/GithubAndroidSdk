@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.issues;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -18,19 +17,19 @@ public class GetIssuesClient extends GithubListClient<List<Issue>> {
   private final int page;
   private IssueInfo issueInfo;
 
-  public GetIssuesClient(Context context, Map<String, String> filter) {
-    this(context, null, filter, 0);
+  public GetIssuesClient(Map<String, String> filter) {
+    this(null, filter, 0);
   }
 
-  public GetIssuesClient(Context context, Map<String, String> filter, int page) {
-    this(context, null, filter, page);
+  public GetIssuesClient(Map<String, String> filter, int page) {
+    this(null, filter, page);
   }
 
-  public GetIssuesClient(Context context, IssueInfo issueInfo, Map<String, String> filter) {
-    this(context, issueInfo, filter, 0);
+  public GetIssuesClient(IssueInfo issueInfo, Map<String, String> filter) {
+    this(issueInfo, filter, 0);
   }
 
-  public GetIssuesClient(Context context, IssueInfo issueInfo, Map<String, String> filter, int page) {
+  public GetIssuesClient(IssueInfo issueInfo, Map<String, String> filter, int page) {
     super();
     this.issueInfo = issueInfo;
     this.page = page;

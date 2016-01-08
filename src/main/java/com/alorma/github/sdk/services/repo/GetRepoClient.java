@@ -11,8 +11,8 @@ import rx.Observable;
  */
 public class GetRepoClient extends GithubRepoClient<Repo> {
 
-  public GetRepoClient(Context context, RepoInfo repoInfo) {
-    super(context, repoInfo);
+  public GetRepoClient(RepoInfo repoInfo) {
+    super(repoInfo);
   }
 
   @Override

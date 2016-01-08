@@ -3,7 +3,7 @@ package com.alorma.github.sdk.services.pullrequest.story;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.alorma.github.sdk.PullRequest;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.info.IssueInfo;
@@ -39,7 +39,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
   private final IssueStoryService issueStoryService;
   private PullRequestStoryService pullRequestStoryService;
 
-  public PullRequestStoryLoader(Context context, IssueInfo info) {
+  public PullRequestStoryLoader(IssueInfo info) {
     super();
     this.issueInfo = info;
     this.owner = issueInfo.repoInfo.owner;

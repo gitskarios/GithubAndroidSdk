@@ -14,7 +14,7 @@ public class EditIssueCommentClient extends GithubClient<GithubComment> {
   private String id;
   private CommentRequest body;
 
-  public EditIssueCommentClient(Context context, RepoInfo info, String id, CommentRequest body) {
+  public EditIssueCommentClient(RepoInfo info, String id, CommentRequest body) {
     super();
     this.info = info;
     this.id = id;

@@ -16,7 +16,7 @@ public class PostNewIssueClient extends GithubClient<Issue> {
   private IssueRequest issue;
   private RepoInfo repoInfo;
 
-  public PostNewIssueClient(Context context, RepoInfo repoInfo, IssueRequest issue) {
+  public PostNewIssueClient(RepoInfo repoInfo, IssueRequest issue) {
     super();
     this.repoInfo = repoInfo;
     this.repoInfo = repoInfo;

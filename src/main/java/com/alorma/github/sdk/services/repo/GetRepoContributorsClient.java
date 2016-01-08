@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Contributor;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
@@ -17,11 +16,11 @@ public class GetRepoContributorsClient extends GithubClient<List<Contributor>> {
   private final RepoInfo repoInfo;
   private int page;
 
-  public GetRepoContributorsClient(Context context, RepoInfo repoInfo) {
-    this(context, repoInfo, 0);
+  public GetRepoContributorsClient(RepoInfo repoInfo) {
+    this(repoInfo, 0);
   }
 
-  public GetRepoContributorsClient(Context context, RepoInfo repoInfo, int page) {
+  public GetRepoContributorsClient(RepoInfo repoInfo, int page) {
     super();
     this.repoInfo = repoInfo;
     this.page = page;

@@ -11,7 +11,7 @@ import rx.Observable;
  * Created by Bernat on 12/07/2014.
  */
 public class UserEmailsClient extends GithubClient<List<Email>> {
-  public UserEmailsClient(Context context) {
+  public UserEmailsClient() {
     super();
   }
 

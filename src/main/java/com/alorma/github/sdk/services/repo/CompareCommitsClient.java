@@ -15,7 +15,7 @@ public class CompareCommitsClient extends GithubClient<CompareCommit> {
   private final String base;
   private final String head;
 
-  public CompareCommitsClient(Context context, RepoInfo repoInfo, String base, String head) {
+  public CompareCommitsClient(RepoInfo repoInfo, String base, String head) {
     super();
     this.repoInfo = repoInfo;
     this.base = base;

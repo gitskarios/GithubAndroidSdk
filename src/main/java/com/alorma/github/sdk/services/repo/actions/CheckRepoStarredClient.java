@@ -15,7 +15,7 @@ public class CheckRepoStarredClient extends GithubClient<Boolean> {
   private String repo;
   private String owner;
 
-  public CheckRepoStarredClient(Context context, String owner, String repo) {
+  public CheckRepoStarredClient(String owner, String repo) {
     super();
     this.owner = owner;
     this.repo = repo;

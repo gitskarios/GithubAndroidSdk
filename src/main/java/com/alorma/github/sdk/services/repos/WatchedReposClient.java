@@ -1,22 +1,16 @@
 package com.alorma.github.sdk.services.repos;
 
-import android.content.Context;
-
 /**
  * Created by Bernat on 17/07/2014.
  */
 public class WatchedReposClient extends GithubReposClient {
 
-  public WatchedReposClient(Context context) {
-    super(context);
+  public WatchedReposClient(String username, String sort) {
+    super(username, sort);
   }
 
-  public WatchedReposClient(Context context, String username, String sort) {
-    super(context, username, sort);
-  }
-
-  public WatchedReposClient(Context context, String username, String sort, int page) {
-    super(context, username, sort, page);
+  public WatchedReposClient(String username, String sort, int page) {
+    super(username, sort, page);
   }
 
   @Override

@@ -11,8 +11,8 @@ import rx.Observable;
  */
 public class DeleteRepoClient extends GithubRepoClient<Response> {
 
-  public DeleteRepoClient(Context context, RepoInfo repoInfo) {
-    super(context, repoInfo);
+  public DeleteRepoClient(RepoInfo repoInfo) {
+    super(repoInfo);
   }
 
   @Override

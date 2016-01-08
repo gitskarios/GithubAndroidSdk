@@ -18,7 +18,7 @@ import rx.functions.Func1;
 public class MarkRepoNotificationsRead extends GithubClient<Boolean> {
   private RepoInfo repoInfo;
 
-  public MarkRepoNotificationsRead(Context context, RepoInfo repoInfo) {
+  public MarkRepoNotificationsRead(RepoInfo repoInfo) {
     super();
     this.repoInfo = repoInfo;
   }

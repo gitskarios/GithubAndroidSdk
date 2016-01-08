@@ -11,7 +11,7 @@ public abstract class GithubRepoClient<K> extends GithubClient<K> {
 
   private RepoInfo repoInfo;
 
-  public GithubRepoClient(Context context, RepoInfo repoInfo) {
+  public GithubRepoClient(RepoInfo repoInfo) {
     super();
     this.repoInfo = repoInfo;
   }

@@ -15,12 +15,12 @@ public class GetPullRequestFiles extends GithubListClient<List<CommitFile>> {
   private IssueInfo info;
   private int page;
 
-  public GetPullRequestFiles(Context context, IssueInfo info) {
+  public GetPullRequestFiles(IssueInfo info) {
     super();
     this.info = info;
   }
 
-  public GetPullRequestFiles(Context context, IssueInfo info, int page) {
+  public GetPullRequestFiles(IssueInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

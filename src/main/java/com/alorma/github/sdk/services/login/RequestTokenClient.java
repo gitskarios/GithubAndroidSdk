@@ -16,7 +16,7 @@ public class RequestTokenClient extends GithubClient<Token> {
   private final String clientSecret;
   private final String redirectUri;
 
-  public RequestTokenClient(Context context, String code, String clientId, String clientSecret, String redirectUri) {
+  public RequestTokenClient(String code, String clientId, String clientSecret, String redirectUri) {
     super();
     this.code = code;
     this.clientId = clientId;
@@ -26,12 +26,11 @@ public class RequestTokenClient extends GithubClient<Token> {
 
   @Override
   protected RestAdapter getRestAdapter() {
-    RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(getClient().getApiOauthUrlEndpoint())
+
+    return new RestAdapter.Builder().setEndpoint(getClient().getApiOauthUrlEndpoint())
         .setRequestInterceptor(this)
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .build();
-
-    return restAdapter;
   }
 
   @Override

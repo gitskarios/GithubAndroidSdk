@@ -12,7 +12,7 @@ import rx.Observable;
 public class PublishGistClient extends GithubClient<Gist> {
   private Gist gist;
 
-  public PublishGistClient(Context context, Gist gist) {
+  public PublishGistClient(Gist gist) {
     super();
     this.gist = gist;
   }

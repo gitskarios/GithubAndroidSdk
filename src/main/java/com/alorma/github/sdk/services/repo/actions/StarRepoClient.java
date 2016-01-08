@@ -16,7 +16,7 @@ public class StarRepoClient extends GithubClient<Boolean> {
   private final String owner;
   private final String repo;
 
-  public StarRepoClient(Context context, String owner, String repo) {
+  public StarRepoClient(String owner, String repo) {
     super();
     this.owner = owner;
     this.repo = repo;

@@ -12,7 +12,7 @@ public class PublishGistCommentClient extends GithubClient<GithubComment> {
   private String id;
   private CommentRequest comment;
 
-  public PublishGistCommentClient(Context context, String id, CommentRequest comment) {
+  public PublishGistCommentClient(String id, CommentRequest comment) {
     super();
     this.id = id;
     this.comment = comment;

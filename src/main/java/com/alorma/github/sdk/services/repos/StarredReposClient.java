@@ -1,23 +1,21 @@
 package com.alorma.github.sdk.services.repos;
 
-import android.content.Context;
-
 /**
  * Created by Bernat on 17/07/2014.
  */
 public class StarredReposClient extends GithubReposClient {
 
 
-  public StarredReposClient(Context context) {
-    super(context);
+  public StarredReposClient() {
+    super();
   }
 
-  public StarredReposClient(Context context, String username, String sort) {
-    super(context, username, sort);
+  public StarredReposClient(String username, String sort) {
+    super(username, sort);
   }
 
-  public StarredReposClient(Context context, String username, String sort, int page) {
-    super(context, username, sort, page);
+  public StarredReposClient(String username, String sort, int page) {
+    super(username, sort, page);
   }
 
   @Override

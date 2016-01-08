@@ -1,8 +1,9 @@
 package com.alorma.github.sdk.services.emojis;
 
-import android.content.Context;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import java.util.HashMap;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 
@@ -11,7 +12,7 @@ import rx.Observable;
  */
 public class EmojisClient extends GithubClient<HashMap<String, String>> {
 
-  public EmojisClient(Context context) {
+  public EmojisClient() {
     super();
   }
 

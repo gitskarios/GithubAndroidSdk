@@ -6,16 +6,16 @@ import com.alorma.github.sdk.services.repos.ReposService;
 
 public class OrgsReposClient extends GithubReposClient {
 
-  public OrgsReposClient(Context context) {
-    super(context);
+  public OrgsReposClient() {
+    super();
   }
 
-  public OrgsReposClient(Context context, String username, String sort) {
-    super(context, username, sort);
+  public OrgsReposClient(String username, String sort) {
+    super(username, sort);
   }
 
-  public OrgsReposClient(Context context, String username, String sort, int page) {
-    super(context, username, sort, page);
+  public OrgsReposClient(String username, String sort, int page) {
+    super(username, sort, page);
   }
 
   @Override

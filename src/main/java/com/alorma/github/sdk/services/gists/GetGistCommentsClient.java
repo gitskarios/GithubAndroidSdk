@@ -11,11 +11,11 @@ public class GetGistCommentsClient extends GithubListClient<List<GithubComment>>
   private String id;
   private int page;
 
-  public GetGistCommentsClient(Context context, String id) {
-    this(context, id, 0);
+  public GetGistCommentsClient(String id) {
+    this(id, 0);
   }
 
-  public GetGistCommentsClient(Context context, String id, int page) {
+  public GetGistCommentsClient(String id, int page) {
     super();
     this.id = id;
     this.page = page;

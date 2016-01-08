@@ -11,7 +11,7 @@ import rx.Observable;
  */
 public class GitIgnoreClient extends GithubClient<GitIgnoreTemplates> {
 
-  public GitIgnoreClient(Context context) {
+  public GitIgnoreClient() {
     super();
   }
 

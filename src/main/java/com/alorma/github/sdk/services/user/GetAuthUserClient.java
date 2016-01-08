@@ -12,11 +12,11 @@ import rx.Observable;
 public class GetAuthUserClient extends GithubClient<User> {
   private String accessToken;
 
-  public GetAuthUserClient(Context context) {
+  public GetAuthUserClient() {
     super();
   }
 
-  public GetAuthUserClient(Context context, String accessToken) {
+  public GetAuthUserClient(String accessToken) {
     super();
     this.accessToken = accessToken;
   }

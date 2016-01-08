@@ -1,11 +1,10 @@
 package com.alorma.github.sdk.services.repos;
 
-import android.content.Context;
-
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.services.client.GithubListClient;
 
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**
@@ -16,15 +15,15 @@ public abstract class GithubReposClient extends GithubListClient<List<Repo>> {
   private int page;
   private String sort;
 
-  public GithubReposClient(Context context) {
-    this(context, null, null);
+  public GithubReposClient() {
+    this(null, null);
   }
 
-  public GithubReposClient(Context context, String username, String sort) {
-    this(context, username, sort, 0);
+  public GithubReposClient(String username, String sort) {
+    this(username, sort, 0);
   }
 
-  public GithubReposClient(Context context, String username, String sort, int page) {
+  public GithubReposClient(String username, String sort, int page) {
     super();
     this.username = username;
     this.sort = sort;

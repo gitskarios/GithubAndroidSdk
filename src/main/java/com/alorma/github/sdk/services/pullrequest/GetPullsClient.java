@@ -1,7 +1,7 @@
 package com.alorma.github.sdk.services.pullrequest;
 
 import android.content.Context;
-import com.alorma.github.sdk.PullRequest;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
@@ -15,12 +15,12 @@ public class GetPullsClient extends GithubListClient<List<PullRequest>> {
   private final IssueInfo issueInfo;
   private int page = 0;
 
-  public GetPullsClient(Context context, IssueInfo issueInfo) {
+  public GetPullsClient(IssueInfo issueInfo) {
     super();
     this.issueInfo = issueInfo;
   }
 
-  public GetPullsClient(Context context, IssueInfo issueInfo, int page) {
+  public GetPullsClient(IssueInfo issueInfo, int page) {
     super();
     this.issueInfo = issueInfo;
     this.page = page;

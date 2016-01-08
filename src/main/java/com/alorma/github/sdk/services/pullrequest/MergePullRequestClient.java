@@ -15,7 +15,7 @@ public class MergePullRequestClient extends GithubClient<MergeButtonResponse> {
   private IssueInfo issueInfo;
   private MergeButtonRequest mergeButtonRequest;
 
-  public MergePullRequestClient(Context context, IssueInfo issueInfo, MergeButtonRequest mergeButtonRequest) {
+  public MergePullRequestClient(IssueInfo issueInfo, MergeButtonRequest mergeButtonRequest) {
     super();
     this.issueInfo = issueInfo;
     this.mergeButtonRequest = mergeButtonRequest;

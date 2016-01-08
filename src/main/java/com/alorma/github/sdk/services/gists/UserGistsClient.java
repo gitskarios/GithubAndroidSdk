@@ -11,21 +11,21 @@ public class UserGistsClient extends GithubListClient<List<Gist>> {
   private String username;
   private int page = 0;
 
-  public UserGistsClient(Context context) {
+  public UserGistsClient() {
     super();
   }
 
-  public UserGistsClient(Context context, int page) {
+  public UserGistsClient(int page) {
     super();
     this.page = page;
   }
 
-  public UserGistsClient(Context context, String username) {
+  public UserGistsClient(String username) {
     super();
     this.username = username;
   }
 
-  public UserGistsClient(Context context, String username, int page) {
+  public UserGistsClient(String username, int page) {
     super();
     this.username = username;
     this.page = page;

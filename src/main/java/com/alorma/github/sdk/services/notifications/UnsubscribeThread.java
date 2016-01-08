@@ -15,7 +15,7 @@ public class UnsubscribeThread extends GithubClient<Boolean> {
 
   private Notification notification;
 
-  public UnsubscribeThread(Context context, Notification notification) {
+  public UnsubscribeThread(Notification notification) {
     super();
     this.notification = notification;
   }

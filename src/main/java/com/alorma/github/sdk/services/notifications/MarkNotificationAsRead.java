@@ -15,7 +15,7 @@ public class MarkNotificationAsRead extends GithubClient<Boolean> {
 
   private Notification notification;
 
-  public MarkNotificationAsRead(Context context, Notification notification) {
+  public MarkNotificationAsRead(Notification notification) {
     super();
     this.notification = notification;
   }

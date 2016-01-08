@@ -13,12 +13,12 @@ public class GetOrgTeamsClient extends GithubListClient<List<Team>> {
   private String org;
   private int page = -1;
 
-  public GetOrgTeamsClient(Context context, String org) {
+  public GetOrgTeamsClient(String org) {
     super();
     this.org = org;
   }
 
-  public GetOrgTeamsClient(Context context, String org, int page) {
+  public GetOrgTeamsClient(String org, int page) {
     super();
     this.org = org;
     this.page = page;

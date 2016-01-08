@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.issues;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -15,11 +14,11 @@ public class GetIssueComments extends GithubListClient<List<GithubComment>> {
   private IssueInfo issueInfo;
   private int page;
 
-  public GetIssueComments(Context context, IssueInfo issueInfo) {
-    this(context, issueInfo, 0);
+  public GetIssueComments(IssueInfo issueInfo) {
+    this(issueInfo, 0);
   }
 
-  public GetIssueComments(Context context, IssueInfo issueInfo, int page) {
+  public GetIssueComments(IssueInfo issueInfo, int page) {
     super();
     this.issueInfo = issueInfo;
     this.page = page;

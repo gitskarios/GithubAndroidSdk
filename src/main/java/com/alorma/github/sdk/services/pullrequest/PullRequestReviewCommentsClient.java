@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.pullrequest;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -15,11 +14,11 @@ public class PullRequestReviewCommentsClient extends GithubListClient<List<Revie
   private final int page;
   private IssueInfo info;
 
-  public PullRequestReviewCommentsClient(Context context, IssueInfo info) {
-    this(context, info, 0);
+  public PullRequestReviewCommentsClient(IssueInfo info) {
+    this(info, 0);
   }
 
-  public PullRequestReviewCommentsClient(Context context, IssueInfo info, int page) {
+  public PullRequestReviewCommentsClient(IssueInfo info, int page) {
     super();
     this.info = info;
     this.page = page;

@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo.actions;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -12,13 +11,13 @@ public class ForkRepoClient extends GithubClient<Repo> {
   private RepoInfo repoInfo;
   private String org;
 
-  public ForkRepoClient(Context context, RepoInfo repoInfo) {
+  public ForkRepoClient(RepoInfo repoInfo) {
     super();
     this.repoInfo = repoInfo;
   }
 
-  public ForkRepoClient(Context context, RepoInfo repoInfo, String org) {
-    this(context, repoInfo);
+  public ForkRepoClient(RepoInfo repoInfo, String org) {
+    this(repoInfo);
     this.org = org;
   }
 

@@ -15,12 +15,12 @@ public class OrgsMembersClient extends GithubListClient<List<User>> {
   private final String org;
   private int page = 0;
 
-  public OrgsMembersClient(Context context, String org) {
+  public OrgsMembersClient(String org) {
     super();
     this.org = org;
   }
 
-  public OrgsMembersClient(Context context, String org, int page) {
+  public OrgsMembersClient(String org, int page) {
     super();
     this.org = org;
     this.page = page;

@@ -16,11 +16,11 @@ public class GetNotificationsClient extends GithubClient<List<Notification>> {
   private boolean participating = false;
   private boolean all = false;
 
-  public GetNotificationsClient(Context context) {
+  public GetNotificationsClient() {
     super();
   }
 
-  public GetNotificationsClient(Context context, String token) {
+  public GetNotificationsClient(String token) {
     super();
     this.token = token;
   }

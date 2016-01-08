@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubStatusResponse;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -15,11 +14,11 @@ public class GetShaCombinedStatus extends GithubListClient<GithubStatusResponse>
   private String ref;
   private int page;
 
-  public GetShaCombinedStatus(Context context, RepoInfo repoInfo, String ref) {
-    this(context, repoInfo, ref, 0);
+  public GetShaCombinedStatus(RepoInfo repoInfo, String ref) {
+    this(repoInfo, ref, 0);
   }
 
-  public GetShaCombinedStatus(Context context, RepoInfo repoInfo, String ref, int page) {
+  public GetShaCombinedStatus(RepoInfo repoInfo, String ref, int page) {
     super();
     this.repoInfo = repoInfo;
     this.ref = ref;

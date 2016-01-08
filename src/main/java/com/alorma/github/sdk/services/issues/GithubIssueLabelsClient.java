@@ -26,12 +26,12 @@ public class GithubIssueLabelsClient extends GithubClient<List<Label>> {
     }
   };
 
-  public GithubIssueLabelsClient(Context context, RepoInfo repoInfo) {
+  public GithubIssueLabelsClient(RepoInfo repoInfo) {
     super();
     this.repoInfo = repoInfo;
   }
 
-  public GithubIssueLabelsClient(Context context, RepoInfo repoInfo, boolean sortAlphabetic) {
+  public GithubIssueLabelsClient(RepoInfo repoInfo, boolean sortAlphabetic) {
     super();
     this.repoInfo = repoInfo;
     this.sortAlphabetic = sortAlphabetic;

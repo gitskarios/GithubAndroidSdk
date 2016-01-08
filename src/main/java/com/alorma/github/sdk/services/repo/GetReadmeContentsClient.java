@@ -19,11 +19,8 @@ import rx.functions.Func1;
  */
 public class GetReadmeContentsClient extends GithubRepoClient<String> {
 
-  private Context context;
-
-  public GetReadmeContentsClient(Context context, RepoInfo info) {
-    super(context, info);
-    this.context = context;
+  public GetReadmeContentsClient(RepoInfo info) {
+    super(info);
   }
 
   @Override
@@ -75,7 +72,7 @@ public class GetReadmeContentsClient extends GithubRepoClient<String> {
     }).flatMap(new Func1<RequestMarkdownDTO, Observable<String>>() {
       @Override
       public Observable<String> call(RequestMarkdownDTO requestMarkdownDTO) {
-        return new GetMarkdownClient(context, requestMarkdownDTO).observable();
+        return new GetMarkdownClient(requestMarkdownDTO).observable();
       }
     });
   }

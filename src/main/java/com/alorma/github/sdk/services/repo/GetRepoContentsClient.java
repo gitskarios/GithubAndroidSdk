@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
@@ -15,11 +14,11 @@ public class GetRepoContentsClient extends GithubListClient<List<Content>> {
   private RepoInfo repoInfo;
   private String path = null;
 
-  public GetRepoContentsClient(Context context, RepoInfo repoInfo) {
-    this(context, repoInfo, null);
+  public GetRepoContentsClient(RepoInfo repoInfo) {
+    this(repoInfo, null);
   }
 
-  public GetRepoContentsClient(Context context, RepoInfo repoInfo, String path) {
+  public GetRepoContentsClient(RepoInfo repoInfo, String path) {
     super();
     this.repoInfo = repoInfo;
     this.path = path;

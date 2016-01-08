@@ -33,7 +33,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   private final int num;
   private IssueStoryService issueStoryService;
 
-  public IssueStoryLoader(Context context, IssueInfo info) {
+  public IssueStoryLoader(IssueInfo info) {
     super();
     this.issueInfo = info;
     this.owner = issueInfo.repoInfo.owner;
