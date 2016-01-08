@@ -3,7 +3,9 @@ package com.alorma.github.sdk.services.repo;
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 public class GetRepoEventsClient extends GithubListClient<List<GithubEvent>> {

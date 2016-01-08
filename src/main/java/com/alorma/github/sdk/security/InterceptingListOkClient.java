@@ -4,7 +4,9 @@ import com.alorma.gitskarios.core.client.BaseListClient;
 import com.alorma.gitskarios.core.client.PaginationLink;
 import com.alorma.gitskarios.core.client.RelType;
 import com.squareup.okhttp.OkHttpClient;
+
 import java.io.IOException;
+
 import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.client.Request;

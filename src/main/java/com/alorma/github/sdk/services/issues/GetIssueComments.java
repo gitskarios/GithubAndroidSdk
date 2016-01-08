@@ -3,7 +3,9 @@ package com.alorma.github.sdk.services.issues;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**

@@ -2,6 +2,7 @@ package com.alorma.github.sdk.services.login;
 
 import com.alorma.github.sdk.bean.dto.request.RequestTokenDTO;
 import com.alorma.github.sdk.bean.dto.response.Token;
+
 import retrofit.http.Body;
 import retrofit.http.POST;
 import rx.Observable;

@@ -1,9 +1,9 @@
 package com.alorma.github.sdk.services.pullrequest;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

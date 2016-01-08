@@ -1,12 +1,12 @@
 package com.alorma.github.sdk.services.issues;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.EditIssueRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import retrofit.RestAdapter;
 import retrofit.converter.Converter;
 import retrofit.converter.GsonConverter;

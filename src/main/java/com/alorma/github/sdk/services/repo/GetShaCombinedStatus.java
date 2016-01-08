@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.repo;
 import com.alorma.github.sdk.bean.dto.response.GithubStatusResponse;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import retrofit.RestAdapter;
 
 /**

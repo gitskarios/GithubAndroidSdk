@@ -1,8 +1,8 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

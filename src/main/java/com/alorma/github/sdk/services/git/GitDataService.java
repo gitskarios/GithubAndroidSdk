@@ -4,7 +4,9 @@ import com.alorma.github.sdk.bean.dto.response.GitBlob;
 import com.alorma.github.sdk.bean.dto.response.GitCommit;
 import com.alorma.github.sdk.bean.dto.response.GitReference;
 import com.alorma.github.sdk.bean.dto.response.GitTree;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

@@ -1,10 +1,11 @@
 package com.alorma.github.sdk.services.git;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GitReference;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 public class GetReferencesClient extends GithubListClient<List<GitReference>> {

@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.pullrequest.story;
 
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

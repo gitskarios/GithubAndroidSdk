@@ -4,7 +4,9 @@ import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

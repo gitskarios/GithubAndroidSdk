@@ -1,7 +1,8 @@
 package com.alorma.github.sdk.bean.issue;
 
-import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubStatusResponse;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
+
 import java.util.List;
 
 /**

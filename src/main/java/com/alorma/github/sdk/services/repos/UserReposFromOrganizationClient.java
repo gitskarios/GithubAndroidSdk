@@ -1,7 +1,5 @@
 package com.alorma.github.sdk.services.repos;
 
-import android.content.Context;
-
 public class UserReposFromOrganizationClient extends GithubReposClient {
 
   public UserReposFromOrganizationClient() {

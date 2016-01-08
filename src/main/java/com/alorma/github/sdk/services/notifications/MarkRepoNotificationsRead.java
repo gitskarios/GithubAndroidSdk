@@ -1,12 +1,13 @@
 package com.alorma.github.sdk.services.notifications;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.LastDate;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
+
 import retrofit.RestAdapter;
 import retrofit.client.Response;
 import rx.Observable;

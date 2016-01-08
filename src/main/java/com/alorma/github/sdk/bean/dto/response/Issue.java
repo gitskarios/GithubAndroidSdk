@@ -3,6 +3,7 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 

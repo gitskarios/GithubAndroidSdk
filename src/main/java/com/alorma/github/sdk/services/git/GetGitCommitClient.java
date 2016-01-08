@@ -1,9 +1,9 @@
 package com.alorma.github.sdk.services.git;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GitCommit;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

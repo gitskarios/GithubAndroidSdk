@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.services.gists;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 public class GetGistCommentsClient extends GithubListClient<List<GithubComment>> {

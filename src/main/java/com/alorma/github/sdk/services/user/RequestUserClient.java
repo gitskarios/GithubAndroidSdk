@@ -1,8 +1,8 @@
 package com.alorma.github.sdk.services.user;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

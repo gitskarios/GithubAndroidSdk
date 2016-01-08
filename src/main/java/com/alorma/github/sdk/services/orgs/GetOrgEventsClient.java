@@ -2,7 +2,9 @@ package com.alorma.github.sdk.services.orgs;
 
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 public class GetOrgEventsClient extends GithubListClient<List<GithubEvent>> {

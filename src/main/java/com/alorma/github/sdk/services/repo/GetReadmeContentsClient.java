@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -10,6 +9,7 @@ import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.content.GetMarkdownClient;
 
 import java.io.UnsupportedEncodingException;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;

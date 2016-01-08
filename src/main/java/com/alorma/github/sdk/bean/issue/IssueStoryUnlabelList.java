@@ -2,6 +2,7 @@ package com.alorma.github.sdk.bean.issue;
 
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.User;
+
 import java.util.ArrayList;
 
 /**

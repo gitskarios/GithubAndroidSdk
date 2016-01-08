@@ -10,8 +10,10 @@ import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.dto.response.User;
+
 import java.util.List;
 import java.util.Map;
+
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;

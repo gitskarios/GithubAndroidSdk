@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.security;
 
 import android.net.Uri;
+
 import com.alorma.gitskarios.core.ApiClient;
 
 /**

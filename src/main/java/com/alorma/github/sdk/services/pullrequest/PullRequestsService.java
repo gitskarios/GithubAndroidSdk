@@ -1,12 +1,14 @@
 package com.alorma.github.sdk.services.pullrequest;
 
-import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.request.MergeButtonRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitFile;
 import com.alorma.github.sdk.bean.dto.response.MergeButtonResponse;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;

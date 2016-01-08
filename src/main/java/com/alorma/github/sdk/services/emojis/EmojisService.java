@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.emojis;
 
 import java.util.HashMap;
+
 import retrofit.http.GET;
 import rx.Observable;
 

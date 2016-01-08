@@ -2,6 +2,7 @@ package com.alorma.github.sdk.bean.dto.request;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**

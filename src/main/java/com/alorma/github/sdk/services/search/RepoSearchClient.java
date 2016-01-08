@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.services.search;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.search.ReposSearch;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.Response;

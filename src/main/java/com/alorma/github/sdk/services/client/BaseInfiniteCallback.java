@@ -2,9 +2,11 @@ package com.alorma.github.sdk.services.client;
 
 import com.alorma.gitskarios.core.client.PaginationLink;
 import com.alorma.gitskarios.core.client.RelType;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Header;

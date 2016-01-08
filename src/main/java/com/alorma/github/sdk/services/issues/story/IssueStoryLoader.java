@@ -1,8 +1,8 @@
 package com.alorma.github.sdk.services.issues.story;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
@@ -14,11 +14,14 @@ import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
-import java.util.Collections;
-import java.util.List;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Collections;
+import java.util.List;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;

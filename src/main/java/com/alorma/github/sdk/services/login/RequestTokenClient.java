@@ -1,9 +1,9 @@
 package com.alorma.github.sdk.services.login;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.request.RequestTokenDTO;
 import com.alorma.github.sdk.bean.dto.response.Token;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

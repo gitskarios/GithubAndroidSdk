@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.services.notifications;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.Notification;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 

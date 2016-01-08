@@ -2,6 +2,7 @@ package com.alorma.github.sdk.bean.info;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.alorma.github.sdk.bean.dto.response.IssueState;
 
 /**

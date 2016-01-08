@@ -2,7 +2,9 @@ package com.alorma.github.sdk.services.orgs.teams;
 
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubListClient;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 public class GetTeamMembersClient extends GithubListClient<List<User>> {

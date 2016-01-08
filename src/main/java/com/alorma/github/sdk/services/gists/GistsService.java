@@ -4,7 +4,9 @@ import com.alorma.github.sdk.bean.dto.request.CommentRequest;
 import com.alorma.github.sdk.bean.dto.request.EditGistRequestDTO;
 import com.alorma.github.sdk.bean.dto.response.Gist;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;

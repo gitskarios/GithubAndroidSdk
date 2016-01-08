@@ -6,7 +6,9 @@ import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStory;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;

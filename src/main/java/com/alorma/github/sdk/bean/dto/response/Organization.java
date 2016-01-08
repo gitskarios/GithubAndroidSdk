@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.bean.dto.response;
 
 import android.os.Parcel;
+
 import java.util.Date;
 
 /**

@@ -1,15 +1,16 @@
 package com.alorma.github.sdk.bean.dto.response.events.payload;
 
-import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.Organization;
+import com.alorma.github.sdk.bean.dto.response.PullRequest;
 import com.alorma.github.sdk.bean.dto.response.Release;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.Team;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**

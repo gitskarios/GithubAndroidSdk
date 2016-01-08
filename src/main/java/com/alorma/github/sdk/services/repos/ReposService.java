@@ -1,7 +1,9 @@
 package com.alorma.github.sdk.services.repos;
 
 import com.alorma.github.sdk.bean.dto.response.Repo;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

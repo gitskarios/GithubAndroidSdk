@@ -3,7 +3,9 @@ package com.alorma.github.sdk.services.commit;
 import com.alorma.github.sdk.bean.dto.request.CommitCommentRequest;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.CommitComment;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;

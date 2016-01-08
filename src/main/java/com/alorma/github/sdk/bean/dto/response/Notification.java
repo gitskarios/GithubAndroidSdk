@@ -1,9 +1,10 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import java.util.Comparator;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Comparator;
 
 /**
  * Created by Bernat on 18/02/2015.

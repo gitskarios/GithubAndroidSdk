@@ -1,7 +1,7 @@
 package com.alorma.github.sdk.services.repo.actions;
 
-import android.content.Context;
 import com.alorma.github.sdk.services.client.GithubClient;
+
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

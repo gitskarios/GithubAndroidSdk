@@ -1,10 +1,11 @@
 package com.alorma.github.sdk.services.orgs;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubListClient;
 import com.alorma.github.sdk.services.user.UsersService;
+
 import java.util.List;
+
 import retrofit.RestAdapter;
 
 /**

@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.content.Context;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.GithubClient;
 

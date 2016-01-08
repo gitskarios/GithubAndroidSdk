@@ -1,7 +1,9 @@
 package com.alorma.github.sdk.services.user.events;
 
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

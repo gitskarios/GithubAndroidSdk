@@ -2,8 +2,10 @@ package com.alorma.github.sdk.services.repo;
 
 import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.info.RepoInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import rx.Subscriber;
 
 public abstract class BranchesCallback extends Subscriber<List<Branch>> {

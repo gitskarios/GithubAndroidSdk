@@ -2,7 +2,9 @@ package com.alorma.github.sdk.services.orgs;
 
 import com.alorma.github.sdk.bean.dto.response.GithubEvent;
 import com.alorma.github.sdk.bean.dto.response.Organization;
+
 import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

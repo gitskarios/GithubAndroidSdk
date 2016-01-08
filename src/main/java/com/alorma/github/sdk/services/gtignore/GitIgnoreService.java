@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.gtignore;
 
 import com.alorma.github.sdk.bean.dto.response.GitIgnoreTemplates;
+
 import retrofit.http.GET;
 import rx.Observable;
 
