@@ -2,10 +2,12 @@ package com.alorma.github.sdk.bean.issue;
 
 import com.alorma.github.sdk.bean.dto.response.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryEvent implements IssueStoryDetail {
+public class IssueStoryEvent implements IssueStoryDetail, Serializable{
   public IssueEvent event;
   public long created_at;
 

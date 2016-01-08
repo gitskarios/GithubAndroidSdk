@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-public class GitTreeEntry extends ShaUrl {
+import java.io.Serializable;
+
+public class GitTreeEntry extends ShaUrl implements Serializable {
 
   public String path;
   public String mode;

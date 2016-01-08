@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.bean.dto.request;
 
-public class CommitCommentRequest {
+import java.io.Serializable;
+
+public class CommitCommentRequest implements Serializable {
 
   public String body;
   public String path;

@@ -2,12 +2,13 @@ package com.alorma.github.sdk.bean.dto.response.events.payload;
 
 import com.alorma.github.sdk.bean.dto.response.Commit;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Bernat on 03/10/2014.
  */
-public class PushEventPayload extends GithubEventPayload {
+public class PushEventPayload extends GithubEventPayload implements Serializable {
   public long push_id;
   public int size;
   public int distinct_size;

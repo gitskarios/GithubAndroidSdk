@@ -1,11 +1,12 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Bernat on 04/09/2014.
  */
-public class Organization extends ShaUrl {
+public class Organization extends ShaUrl implements Serializable {
 
   public int id;
   public String login;

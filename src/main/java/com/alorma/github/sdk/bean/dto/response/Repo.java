@@ -1,18 +1,16 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Bernat on 13/07/2014.
  */
-public class Repo extends ShaUrl {
+public class Repo extends ShaUrl implements Serializable {
 
   public boolean fork;
   @SerializedName("private") public boolean isPrivate;

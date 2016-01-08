@@ -4,10 +4,12 @@ import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.Milestone;
 import com.alorma.github.sdk.bean.dto.response.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueEvent {
+public class IssueEvent implements Serializable {
   public int id;
   public String url;
   public User actor;

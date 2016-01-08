@@ -11,12 +11,13 @@ import com.alorma.github.sdk.bean.dto.response.Team;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Bernat on 30/09/2015.
  */
-public class Payload {
+public class Payload implements Serializable {
   public String action;
   public Repo repository;
   public User sender;

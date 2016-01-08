@@ -1,6 +1,8 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-public class GitBlob extends ShaUrl {
+import java.io.Serializable;
+
+public class GitBlob extends ShaUrl implements Serializable {
 
   public String content;
   public int size;

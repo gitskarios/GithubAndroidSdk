@@ -1,11 +1,12 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class Content extends ShaUrl implements Comparable<Content> {
+public class Content extends ShaUrl implements Comparable<Content>, Serializable {
   public ContentType type;
   public int size;
   public String name;

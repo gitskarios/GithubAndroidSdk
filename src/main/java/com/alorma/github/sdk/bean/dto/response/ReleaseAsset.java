@@ -1,12 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  * Created by a557114 on 29/07/2015.
  */
-public class ReleaseAsset {
+public class ReleaseAsset implements Serializable {
 
   public String url;
   public String browser_download_url;

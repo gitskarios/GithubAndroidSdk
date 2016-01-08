@@ -1,9 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 23/08/2014.
  */
-public class GithubComment extends ShaUrl {
+public class GithubComment extends ShaUrl implements Serializable {
 
   private static final int MAX_MESSAGE_LENGHT = 146;
   public String id;

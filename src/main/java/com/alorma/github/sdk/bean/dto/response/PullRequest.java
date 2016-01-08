@@ -1,11 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
+import java.io.Serializable;
 
 /**
  * Created by Bernat on 30/05/2015.
  */
-public class PullRequest extends Issue {
+public class PullRequest extends Issue implements Serializable {
 
   public Head head;
   public Head base;

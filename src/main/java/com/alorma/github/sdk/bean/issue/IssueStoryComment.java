@@ -3,10 +3,12 @@ package com.alorma.github.sdk.bean.issue;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryComment implements IssueStoryDetail {
+public class IssueStoryComment implements IssueStoryDetail, Serializable {
 
   public GithubComment comment;
   public long created_at;

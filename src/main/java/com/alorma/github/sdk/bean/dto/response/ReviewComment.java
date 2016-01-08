@@ -1,9 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 17/07/2015.
  */
-public class ReviewComment {
+public class ReviewComment implements Serializable {
   public String url;
   public int id;
   public String diff_hunk;

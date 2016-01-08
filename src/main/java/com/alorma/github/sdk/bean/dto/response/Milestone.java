@@ -1,13 +1,13 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by Bernat on 22/08/2014.
  */
-public class Milestone extends ShaUrl implements Comparable<Milestone>{
+public class Milestone extends ShaUrl implements Comparable<Milestone>, Serializable{
 
   public String title;
   public int number;

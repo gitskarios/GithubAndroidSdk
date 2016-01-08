@@ -1,11 +1,12 @@
 package com.alorma.github.sdk.bean.dto.response;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * Created by Bernat on 22/12/2014.
  */
-public class CommitFile extends GitChangeStatus {
+public class CommitFile extends GitChangeStatus implements Serializable {
 
   public String filename;
   public String status;

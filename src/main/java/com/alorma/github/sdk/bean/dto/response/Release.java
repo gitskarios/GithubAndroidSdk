@@ -1,16 +1,13 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class Release {
+public class Release implements Serializable{
 
   public String body;
   public String upload_url;

@@ -1,17 +1,15 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
 
-public class Issue extends GithubComment {
+public class Issue extends GithubComment implements Serializable {
 
   public int number;
   public IssueState state;

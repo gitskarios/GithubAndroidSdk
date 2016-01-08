@@ -1,5 +1,7 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-public class GitObject extends ShaUrl {
+import java.io.Serializable;
+
+public class GitObject extends ShaUrl implements Serializable {
   public String type;
 }

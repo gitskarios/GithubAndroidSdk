@@ -1,9 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 10/08/2015.
  */
-public class LicenseContainer {
+public class LicenseContainer implements Serializable {
   public String name;
   public String path;
   public String sha;

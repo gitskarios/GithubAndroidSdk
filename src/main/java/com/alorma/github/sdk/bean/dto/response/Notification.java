@@ -1,9 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
+
 /**
  * Created by Bernat on 18/02/2015.
  */
-public class Notification extends ShaUrl {
+public class Notification extends ShaUrl implements Serializable {
   public long id;
   public Repo repository;
   public NotificationSubject subject;

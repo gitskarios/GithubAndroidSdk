@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class ShaUrl implements Serializable{
+public class ShaUrl implements Serializable {
 
   private static final int MAX_SHA_LENGHT = 8;
   public String sha;

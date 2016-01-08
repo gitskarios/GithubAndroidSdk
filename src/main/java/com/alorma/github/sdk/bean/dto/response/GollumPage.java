@@ -1,10 +1,10 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-
 import com.google.gson.annotations.SerializedName;
 
-public class GollumPage extends ShaUrl {
+import java.io.Serializable;
+
+public class GollumPage extends ShaUrl implements Serializable {
 
   @SerializedName("page_name") public String name;
   public String title;

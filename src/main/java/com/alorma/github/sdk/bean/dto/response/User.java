@@ -1,9 +1,8 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class User extends Organization {
+public class User extends Organization implements Serializable {
 
   public boolean hireable;
   public String date;

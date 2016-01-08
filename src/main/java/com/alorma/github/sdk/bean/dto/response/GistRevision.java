@@ -1,8 +1,9 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class GistRevision extends ShaUrl {
+public class GistRevision extends ShaUrl implements Serializable {
 
   private Date committedAt;
 

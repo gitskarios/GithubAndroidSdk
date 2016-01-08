@@ -3,12 +3,13 @@ package com.alorma.github.sdk.bean.issue;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Bernat on 18/07/2015.
  */
-public class IssueStoryUnlabelList extends ArrayList<Label> implements IssueStoryDetail {
+public class IssueStoryUnlabelList extends ArrayList<Label> implements IssueStoryDetail, Serializable {
 
   public long created_at;
   public User user;

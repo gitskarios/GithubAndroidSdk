@@ -1,9 +1,11 @@
 package com.alorma.github.sdk.bean.dto.response;
 
+import java.io.Serializable;
+
 /**
  * Created by a557114 on 06/09/2015.
  */
-public class GithubStatus {
+public class GithubStatus implements Serializable {
   public int id;
   public String created_at;
   public String updated_at;
