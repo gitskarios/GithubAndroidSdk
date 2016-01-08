@@ -5,17 +5,6 @@ import android.os.Parcelable;
 
 public class User extends Organization {
 
-  @SuppressWarnings("unused") public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-    @Override
-    public User createFromParcel(Parcel in) {
-      return new User(in);
-    }
-
-    @Override
-    public User[] newArray(int size) {
-      return new User[size];
-    }
-  };
   public boolean hireable;
   public String date;
   public String followers_url;
@@ -36,64 +25,6 @@ public class User extends Organization {
   public int disk_usage;
   public UserPlan plan;
   public int organizations;
-
-  public User() {
-    super();
-  }
-
-  protected User(Parcel in) {
-    super(in);
-    hireable = in.readByte() != 0x00;
-    followers_url = in.readString();
-    following_url = in.readString();
-    gists_url = in.readString();
-    starred_url = in.readString();
-    subscriptions_url = in.readString();
-    organizations_url = in.readString();
-    repos_url = in.readString();
-    events_url = in.readString();
-    date = in.readString();
-    received_events_url = in.readString();
-    private_gists = in.readInt();
-    owned_public_repos = in.readInt();
-    owned_private_repos = in.readInt();
-    total_public_repos = in.readInt();
-    total_private_repos = in.readInt();
-    collaborators = in.readInt();
-    disk_usage = in.readInt();
-    organizations = in.readInt();
-    plan = in.readParcelable(UserPlan.class.getClassLoader());
-  }
-
-  @Override
-  public int describeContents() {
-    return super.describeContents();
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeByte((byte) (hireable ? 0x01 : 0x00));
-    dest.writeString(followers_url);
-    dest.writeString(following_url);
-    dest.writeString(gists_url);
-    dest.writeString(starred_url);
-    dest.writeString(subscriptions_url);
-    dest.writeString(organizations_url);
-    dest.writeString(repos_url);
-    dest.writeString(events_url);
-    dest.writeString(date);
-    dest.writeString(received_events_url);
-    dest.writeInt(private_gists);
-    dest.writeInt(owned_public_repos);
-    dest.writeInt(owned_private_repos);
-    dest.writeInt(total_public_repos);
-    dest.writeInt(total_private_repos);
-    dest.writeInt(collaborators);
-    dest.writeInt(disk_usage);
-    dest.writeInt(organizations);
-    dest.writeParcelable(plan, flags);
-  }
 
   @Override
   public String toString() {

@@ -14,17 +14,6 @@ import java.util.List;
  */
 public class Repo extends ShaUrl {
 
-  @SuppressWarnings("unused") public static final Parcelable.Creator<Repo> CREATOR = new Parcelable.Creator<Repo>() {
-    @Override
-    public Repo createFromParcel(Parcel in) {
-      return new Repo(in);
-    }
-
-    @Override
-    public Repo[] newArray(int size) {
-      return new Repo[size];
-    }
-  };
   public boolean fork;
   @SerializedName("private") public boolean isPrivate;
   public Date created_at;
@@ -61,46 +50,6 @@ public class Repo extends ShaUrl {
 
   public Repo() {
     super();
-  }
-
-  protected Repo(Parcel in) {
-    super(in);
-    fork = in.readByte() != 0x00;
-    isPrivate = in.readByte() != 0x00;
-    long tmpCreated_at = in.readLong();
-    created_at = tmpCreated_at != -1 ? new Date(tmpCreated_at) : null;
-    long tmpPushed_at = in.readLong();
-    pushed_at = tmpPushed_at != -1 ? new Date(tmpPushed_at) : null;
-    long tmpUpdated_at = in.readLong();
-    updated_at = tmpUpdated_at != -1 ? new Date(tmpUpdated_at) : null;
-    forks_count = in.readInt();
-    id = in.readLong();
-    parent = in.readParcelable(Repo.class.getClassLoader());
-    source = in.readParcelable(Repo.class.getClassLoader());
-    clone_url = in.readString();
-    description = in.readString();
-    homepage = in.readString();
-    git_url = in.readString();
-    html_url = in.readString();
-    language = in.readString();
-    default_branch = in.readString();
-    mirror_url = in.readString();
-    name = in.readString();
-    full_name = in.readString();
-    ssh_url = in.readString();
-    svn_url = in.readString();
-    url = in.readString();
-    owner = in.readParcelable(User.class.getClassLoader());
-    stargazers_count = in.readInt();
-    subscribers_count = in.readInt();
-    network_count = in.readInt();
-    watchers_count = in.readInt();
-    size = in.readInt();
-    open_issues_count = in.readInt();
-    has_issues = in.readByte() != 0x00;
-    has_downloads = in.readByte() != 0x00;
-    has_wiki = in.readByte() != 0x00;
-    permissions = in.readParcelable(Permissions.class.getClassLoader());
   }
 
   @Override
@@ -153,49 +102,6 @@ public class Repo extends ShaUrl {
 
   public boolean canAdmin() {
     return permissions != null && permissions.admin;
-  }
-
-  @Override
-  public int describeContents() {
-    return super.describeContents();
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeByte((byte) (fork ? 0x01 : 0x00));
-    dest.writeByte((byte) (isPrivate ? 0x01 : 0x00));
-    dest.writeLong(created_at != null ? created_at.getTime() : -1L);
-    dest.writeLong(pushed_at != null ? pushed_at.getTime() : -1L);
-    dest.writeLong(updated_at != null ? updated_at.getTime() : -1L);
-    dest.writeInt(forks_count);
-    dest.writeLong(id);
-    dest.writeParcelable(parent, flags);
-    dest.writeParcelable(source, flags);
-    dest.writeString(clone_url);
-    dest.writeString(description);
-    dest.writeString(homepage);
-    dest.writeString(git_url);
-    dest.writeString(html_url);
-    dest.writeString(language);
-    dest.writeString(default_branch);
-    dest.writeString(mirror_url);
-    dest.writeString(name);
-    dest.writeString(full_name);
-    dest.writeString(ssh_url);
-    dest.writeString(svn_url);
-    dest.writeString(url);
-    dest.writeParcelable(owner, flags);
-    dest.writeInt(stargazers_count);
-    dest.writeInt(subscribers_count);
-    dest.writeInt(network_count);
-    dest.writeInt(watchers_count);
-    dest.writeInt(size);
-    dest.writeInt(open_issues_count);
-    dest.writeByte((byte) (has_issues ? 0x01 : 0x00));
-    dest.writeByte((byte) (has_downloads ? 0x01 : 0x00));
-    dest.writeByte((byte) (has_wiki ? 0x01 : 0x00));
-    dest.writeParcelable(permissions, flags);
   }
 
   public RepoInfo toInfo() {

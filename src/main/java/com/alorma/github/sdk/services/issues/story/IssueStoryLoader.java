@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.issues.story;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
@@ -50,7 +49,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     return getIssueStory();
   }
 
-  @NonNull
   private Observable<IssueStory> getIssueStory() {
     return Observable.zip(getIssueObservable(), getIssueDetailsObservable(), new Func2<Issue, List<IssueStoryDetail>, IssueStory>() {
           @Override
@@ -74,7 +72,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     return Observable.mergeDelayError(commentsDetailsObs, eventDetailsObs).toList();
   }
 
-  @NonNull
   private Observable<List<GithubComment>> getCommentsObs() {
     return Observable.create(new BaseInfiniteCallback<List<GithubComment>>() {
 
@@ -107,7 +104,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     });
   }
 
-  @NonNull
   private Observable<List<IssueEvent>> getEventsObs() {
     return Observable.create(new BaseInfiniteCallback<List<IssueEvent>>() {
       @Override
@@ -122,7 +118,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     });
   }
 
-  @NonNull
   private Observable<IssueStoryDetail> getEventDetailsObs() {
     return getEventsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
       @Override

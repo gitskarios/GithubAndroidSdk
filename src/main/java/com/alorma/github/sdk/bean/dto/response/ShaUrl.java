@@ -1,23 +1,12 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  * Created by Bernat on 20/07/2014.
  */
-public class ShaUrl implements Parcelable {
-  public static final Creator<ShaUrl> CREATOR = new Creator<ShaUrl>() {
-    @Override
-    public ShaUrl createFromParcel(Parcel in) {
-      return new ShaUrl(in);
-    }
+public class ShaUrl implements Serializable{
 
-    @Override
-    public ShaUrl[] newArray(int size) {
-      return new ShaUrl[size];
-    }
-  };
   private static final int MAX_SHA_LENGHT = 8;
   public String sha;
   public String url;
@@ -25,12 +14,6 @@ public class ShaUrl implements Parcelable {
 
   public ShaUrl() {
 
-  }
-
-  protected ShaUrl(Parcel in) {
-    sha = in.readString();
-    url = in.readString();
-    html_url = in.readString();
   }
 
   public static String shortShaStatic(String sha) {
@@ -45,17 +28,5 @@ public class ShaUrl implements Parcelable {
     int end = Math.min(MAX_SHA_LENGHT, sha.length());
 
     return sha.substring(start, end);
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(sha);
-    dest.writeString(url);
-    dest.writeString(html_url);
   }
 }

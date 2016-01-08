@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.client;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.alorma.github.sdk.security.GitHub;
@@ -37,7 +36,6 @@ public abstract class GithubListClient<K> extends BaseListClient<K> {
     return "application/vnd.github.v3.json";
   }
 
-  @Nullable
   @Override
   protected InterceptingListOkClient getInterceptor() {
     return new InterceptingListOkClient(new OkHttpClient(), this);

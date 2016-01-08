@@ -1,6 +1,5 @@
 package com.alorma.github.sdk.services.repo;
 
-import android.support.annotation.StringDef;
 
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.info.RepoInfo;
@@ -21,11 +20,28 @@ public class GetForksClient extends GithubListClient<List<Repo>> {
   public static final String OLDEST = "oldest";
   public static final String STARGAZERS = "stargazers";
 
+  public enum SortType {
+    NEWEST("newest"),
+    OLDEST("oldest"),
+    STARGAZERS("stargazers");
+
+    private String type;
+
+    SortType(String type) {
+
+      this.type = type;
+    }
+
+    public String getType() {
+      return type;
+    }
+  }
+
   private final RepoInfo repoInfo;
   private final int page;
 
   // newest, oldest, stargazers
-  private String sort = null;
+  private SortType sort = null;
   public GetForksClient(RepoInfo repoInfo) {
     this(repoInfo, 0);
   }
@@ -42,18 +58,15 @@ public class GetForksClient extends GithubListClient<List<Repo>> {
       protected void call(RestAdapter restAdapter) {
         RepoService repoService = restAdapter.create(RepoService.class);
         if (page == 0) {
-          repoService.listForks(repoInfo.owner, repoInfo.name, sort, this);
+          repoService.listForks(repoInfo.owner, repoInfo.name, sort.getType(), this);
         } else {
-          repoService.listForks(repoInfo.owner, repoInfo.name, sort, page, this);
+          repoService.listForks(repoInfo.owner, repoInfo.name, sort.getType(), page, this);
         }
       }
     };
   }
 
-  public void setSort(@SORT String sort) {
+  public void setSort(SortType sort) {
     this.sort = sort;
-  }
-
-  @StringDef({ NEWEST, OLDEST, STARGAZERS }) @Retention(RetentionPolicy.SOURCE) public @interface SORT {
   }
 }

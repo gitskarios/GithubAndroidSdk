@@ -1,7 +1,5 @@
 package com.alorma.gitskarios.core.client;
 
-import android.support.annotation.Nullable;
-
 import com.alorma.gitskarios.core.ApiClient;
 
 import java.util.concurrent.TimeUnit;
@@ -39,7 +37,6 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
     return restAdapterBuilder.build();
   }
 
-  @Nullable
   protected Client getInterceptor() {
     return null;
   }
