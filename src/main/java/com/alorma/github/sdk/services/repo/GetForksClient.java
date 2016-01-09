@@ -14,9 +14,9 @@ import retrofit.RestAdapter;
  */
 public class GetForksClient extends GithubListClient<List<Repo>> {
 
-  public static final String NEWEST = "newest";
-  public static final String OLDEST = "oldest";
-  public static final String STARGAZERS = "stargazers";
+  public static final SortType NEWEST = SortType.NEWEST;
+  public static final SortType OLDEST = SortType.OLDEST;
+  public static final SortType STARGAZERS = SortType.STARGAZERS;
 
   public enum SortType {
     NEWEST("newest"),

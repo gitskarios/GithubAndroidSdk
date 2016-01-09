@@ -14,6 +14,13 @@ public class IssueInfo implements Serializable {
   public int commentNum;
   public IssueState state = IssueState.open;
 
+  public IssueInfo() {
+  }
+
+  public IssueInfo(RepoInfo repoInfo) {
+    this.repoInfo = repoInfo;
+  }
+
   @Override
   public String toString() {
     return repoInfo.toString() + "#" + num;
