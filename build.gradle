@@ -6,6 +6,7 @@ buildscript {
     maven { url 'http://dl.bintray.com/amulyakhare/maven' }
   }
   dependencies {
+    classpath 'com.android.tools.build:gradle:2.0.0-alpha3'
     classpath 'com.novoda:bintray-release:0.3.4'
     classpath 'me.tatarka:gradle-retrolambda:3.2.4'
     classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
@@ -54,8 +55,7 @@ dependencies {
   // explicitly depend on RxJava's latest version for bug fixes and new features.
   compile 'io.reactivex:rxjava:1.0.16'
 
-  compile 'joda-time:joda-time:2.9.1'
-  compile 'commons-codec:commons-codec:1.10'
+  compile 'net.danlew:android.joda:2.8.2'
 }
 
 publish {
