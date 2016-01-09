@@ -12,12 +12,12 @@ import rx.Observable;
  * Created by Bernat on 12/07/2014.
  */
 public class UserEmailsClient extends GithubClient<List<Email>> {
-  public UserEmailsClient() {
-    super();
-  }
+    public UserEmailsClient() {
+        super();
+    }
 
-  @Override
-  protected Observable<List<Email>> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(UsersService.class).userEmails();
-  }
+    @Override
+    protected Observable<List<Email>> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(UsersService.class).userEmails();
+    }
 }

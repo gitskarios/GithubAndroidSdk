@@ -1,37 +1,63 @@
 package com.alorma.github.sdk.bean.issue;
 
-import com.alorma.github.sdk.bean.dto.response.User;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
+import com.alorma.github.sdk.bean.dto.response.User;
 
 /**
  * Created by Bernat on 07/04/2015.
  */
-public class IssueStoryEvent implements IssueStoryDetail, Serializable{
-  public IssueEvent event;
-  public long created_at;
+public class IssueStoryEvent implements IssueStoryDetail, Parcelable {
+    public static final Creator<IssueStoryEvent> CREATOR = new Creator<IssueStoryEvent>() {
+        public IssueStoryEvent createFromParcel(Parcel source) {
+            return new IssueStoryEvent(source);
+        }
 
-  public IssueStoryEvent(IssueEvent event) {
-    this.event = event;
-  }
+        public IssueStoryEvent[] newArray(int size) {
+            return new IssueStoryEvent[size];
+        }
+    };
+    public IssueEvent event;
+    public long created_at;
 
-  @Override
-  public boolean isList() {
-    return false;
-  }
+    public IssueStoryEvent(IssueEvent event) {
+        this.event = event;
+    }
 
-  @Override
-  public String getType() {
-    return event.event;
-  }
+    protected IssueStoryEvent(Parcel in) {
+        this.event = in.readParcelable(IssueEvent.class.getClassLoader());
+        this.created_at = in.readLong();
+    }
 
-  @Override
-  public long createdAt() {
-    return created_at;
-  }
+    @Override
+    public boolean isList() {
+        return false;
+    }
 
-  @Override
-  public User user() {
-    return event.actor;
-  }
+    @Override
+    public String getType() {
+        return event.event;
+    }
+
+    @Override
+    public long createdAt() {
+        return created_at;
+    }
+
+    @Override
+    public User user() {
+        return event.actor;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.event, 0);
+        dest.writeLong(this.created_at);
+    }
 }

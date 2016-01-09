@@ -11,15 +11,15 @@ import rx.Observable;
  * Created by a557114 on 29/07/2015.
  */
 public class LastReleaseClient extends GithubClient<Release> {
-  private RepoInfo info;
+    private RepoInfo info;
 
-  public LastReleaseClient(RepoInfo info) {
-    super();
-    this.info = info;
-  }
+    public LastReleaseClient(RepoInfo info) {
+        super();
+        this.info = info;
+    }
 
-  @Override
-  protected Observable<Release> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(RepoService.class).lastRelease(info.owner, info.name);
-  }
+    @Override
+    protected Observable<Release> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class).lastRelease(info.owner, info.name);
+    }
 }

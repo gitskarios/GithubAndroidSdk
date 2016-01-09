@@ -9,15 +9,15 @@ import rx.Observable;
 
 public class GetGitCommitClient extends GithubClient<GitCommit> {
 
-  private final RepoInfo info;
+    private final RepoInfo info;
 
-  public GetGitCommitClient(RepoInfo repoInfo) {
-    super();
-    this.info = repoInfo;
-  }
+    public GetGitCommitClient(RepoInfo repoInfo) {
+        super();
+        this.info = repoInfo;
+    }
 
-  @Override
-  protected Observable<GitCommit> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(GitDataService.class).repoCommit(info.owner, info.name, info.branch);
-  }
+    @Override
+    protected Observable<GitCommit> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(GitDataService.class).repoCommit(info.owner, info.name, info.branch);
+    }
 }

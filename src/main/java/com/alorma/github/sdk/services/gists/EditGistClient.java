@@ -9,17 +9,17 @@ import rx.Observable;
 
 public class EditGistClient extends GithubClient<Gist> {
 
-  private String id;
-  private EditGistRequestDTO editGistRequestDTO;
+    private String id;
+    private EditGistRequestDTO editGistRequestDTO;
 
-  public EditGistClient(String id, EditGistRequestDTO editGistRequestDTO) {
-    super();
-    this.id = id;
-    this.editGistRequestDTO = editGistRequestDTO;
-  }
+    public EditGistClient(String id, EditGistRequestDTO editGistRequestDTO) {
+        super();
+        this.id = id;
+        this.editGistRequestDTO = editGistRequestDTO;
+    }
 
-  @Override
-  protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(GistsService.class).edit(id, editGistRequestDTO);
-  }
+    @Override
+    protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(GistsService.class).edit(id, editGistRequestDTO);
+    }
 }

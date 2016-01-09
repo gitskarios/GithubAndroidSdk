@@ -12,6 +12,6 @@ import rx.Observable;
  */
 public interface LoginService {
 
-  @POST("/login/oauth/access_token")
-  Observable<Token> requestToken(@Body RequestTokenDTO requestTokenDTO);
+    @POST("/login/oauth/access_token")
+    Observable<Token> requestToken(@Body RequestTokenDTO requestTokenDTO);
 }

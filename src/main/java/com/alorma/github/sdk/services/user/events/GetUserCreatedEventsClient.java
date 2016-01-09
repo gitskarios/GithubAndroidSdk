@@ -9,32 +9,32 @@ import retrofit.RestAdapter;
 
 public class GetUserCreatedEventsClient extends GithubListClient<List<GithubEvent>> {
 
-  private String username;
-  private int page = 0;
+    private String username;
+    private int page = 0;
 
-  public GetUserCreatedEventsClient(String username) {
-    super();
-    this.username = username;
-  }
+    public GetUserCreatedEventsClient(String username) {
+        super();
+        this.username = username;
+    }
 
-  public GetUserCreatedEventsClient(String username, int page) {
-    super();
-    this.username = username;
-    this.page = page;
-  }
+    public GetUserCreatedEventsClient(String username, int page) {
+        super();
+        this.username = username;
+        this.page = page;
+    }
 
-  @Override
-  protected ApiSubscriber getApiObservable(RestAdapter restAdapter) {
-    return new ApiSubscriber() {
-      @Override
-      protected void call(RestAdapter restAdapter) {
-        EventsService eventsService = restAdapter.create(EventsService.class);
-        if (page == 0) {
-          eventsService.createdEvents(username, this);
-        } else {
-          eventsService.createdEvents(username, page, this);
-        }
-      }
-    };
-  }
+    @Override
+    protected ApiSubscriber getApiObservable(RestAdapter restAdapter) {
+        return new ApiSubscriber() {
+            @Override
+            protected void call(RestAdapter restAdapter) {
+                EventsService eventsService = restAdapter.create(EventsService.class);
+                if (page == 0) {
+                    eventsService.createdEvents(username, this);
+                } else {
+                    eventsService.createdEvents(username, page, this);
+                }
+            }
+        };
+    }
 }

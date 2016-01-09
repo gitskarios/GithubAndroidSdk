@@ -14,19 +14,19 @@ import rx.Observable;
  */
 public class ChangeIssueStateClient extends GithubClient<Issue> {
 
-  private final IssueRequest issueRequest;
-  private IssueInfo info;
+    private final IssueRequest issueRequest;
+    private IssueInfo info;
 
-  public ChangeIssueStateClient(IssueInfo info, IssueState state) {
-    super();
-    this.info = info;
+    public ChangeIssueStateClient(IssueInfo info, IssueState state) {
+        super();
+        this.info = info;
 
-    this.issueRequest = new IssueRequest();
-    issueRequest.state = state;
-  }
+        this.issueRequest = new IssueRequest();
+        issueRequest.state = state;
+    }
 
-  @Override
-  protected Observable<Issue> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(IssuesService.class).closeIssue(info.repoInfo.owner, info.repoInfo.name, info.num, issueRequest);
-  }
+    @Override
+    protected Observable<Issue> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(IssuesService.class).closeIssue(info.repoInfo.owner, info.repoInfo.name, info.num, issueRequest);
+    }
 }

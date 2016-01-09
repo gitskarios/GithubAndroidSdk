@@ -12,15 +12,15 @@ import rx.Observable;
  */
 public class CreateRepositoryClient extends GithubClient<Repo> {
 
-  private RepoRequestDTO repoRequestDTO;
+    private RepoRequestDTO repoRequestDTO;
 
-  public CreateRepositoryClient(RepoRequestDTO repoRequestDTO) {
-    super();
-    this.repoRequestDTO = repoRequestDTO;
-  }
+    public CreateRepositoryClient(RepoRequestDTO repoRequestDTO) {
+        super();
+        this.repoRequestDTO = repoRequestDTO;
+    }
 
-  @Override
-  protected Observable<Repo> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(RepoService.class).create(repoRequestDTO);
-  }
+    @Override
+    protected Observable<Repo> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class).create(repoRequestDTO);
+    }
 }

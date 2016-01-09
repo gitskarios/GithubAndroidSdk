@@ -10,44 +10,44 @@ import rx.Subscriber;
 
 public abstract class BranchesCallback extends Subscriber<List<Branch>> {
 
-  List<String> names;
-  private RepoInfo repoInfo;
-  private int selectedIndex = 0;
+    List<String> names;
+    private RepoInfo repoInfo;
+    private int selectedIndex = 0;
 
-  public BranchesCallback(RepoInfo repoInfo) {
-    this.repoInfo = repoInfo;
-    names = new ArrayList<>();
-  }
-
-  public RepoInfo getRepoInfo() {
-    return repoInfo;
-  }
-
-  @Override
-  public void onCompleted() {
-    showBranches(names.toArray(new String[names.size()]), selectedIndex);
-  }
-
-  @Override
-  public void onError(Throwable e) {
-
-  }
-
-  @Override
-  public void onNext(List<Branch> branches) {
-    if (branches != null) {
-
-      String[] names = new String[branches.size()];
-      for (int i = 0; i < branches.size(); i++) {
-        String branchName = branches.get(i).name;
-        names[i] = branchName;
-        if ((branchName.equalsIgnoreCase(repoInfo.branch))) {
-          selectedIndex = i;
-        }
-      }
-      showBranches(names, selectedIndex);
+    public BranchesCallback(RepoInfo repoInfo) {
+        this.repoInfo = repoInfo;
+        names = new ArrayList<>();
     }
-  }
 
-  protected abstract void showBranches(String[] branches, int defaultBranchPosition);
+    public RepoInfo getRepoInfo() {
+        return repoInfo;
+    }
+
+    @Override
+    public void onCompleted() {
+        showBranches(names.toArray(new String[names.size()]), selectedIndex);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onNext(List<Branch> branches) {
+        if (branches != null) {
+
+            String[] names = new String[branches.size()];
+            for (int i = 0; i < branches.size(); i++) {
+                String branchName = branches.get(i).name;
+                names[i] = branchName;
+                if ((branchName.equalsIgnoreCase(repoInfo.branch))) {
+                    selectedIndex = i;
+                }
+            }
+            showBranches(names, selectedIndex);
+        }
+    }
+
+    protected abstract void showBranches(String[] branches, int defaultBranchPosition);
 }

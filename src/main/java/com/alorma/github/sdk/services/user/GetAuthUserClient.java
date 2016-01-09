@@ -10,28 +10,28 @@ import rx.Observable;
  * Created by Bernat on 03/10/2014.
  */
 public class GetAuthUserClient extends GithubClient<User> {
-  private String accessToken;
+    private String accessToken;
 
-  public GetAuthUserClient() {
-    super();
-  }
-
-  public GetAuthUserClient(String accessToken) {
-    super();
-    this.accessToken = accessToken;
-  }
-
-  @Override
-  protected Observable<User> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(UsersService.class).me();
-  }
-
-  @Override
-  protected String getToken() {
-    if (accessToken != null) {
-      return accessToken;
-    } else {
-      return super.getToken();
+    public GetAuthUserClient() {
+        super();
     }
-  }
+
+    public GetAuthUserClient(String accessToken) {
+        super();
+        this.accessToken = accessToken;
+    }
+
+    @Override
+    protected Observable<User> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(UsersService.class).me();
+    }
+
+    @Override
+    protected String getToken() {
+        if (accessToken != null) {
+            return accessToken;
+        } else {
+            return super.getToken();
+        }
+    }
 }

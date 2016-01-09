@@ -9,15 +9,15 @@ import rx.Observable;
 
 public class GetSinglePullRequestClient extends GithubClient<PullRequest> {
 
-  private final IssueInfo info;
+    private final IssueInfo info;
 
-  public GetSinglePullRequestClient(IssueInfo info) {
-    super();
-    this.info = info;
-  }
+    public GetSinglePullRequestClient(IssueInfo info) {
+        super();
+        this.info = info;
+    }
 
-  @Override
-  protected Observable<PullRequest> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(PullRequestsService.class).pull(info.repoInfo.owner, info.repoInfo.name, info.num);
-  }
+    @Override
+    protected Observable<PullRequest> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(PullRequestsService.class).pull(info.repoInfo.owner, info.repoInfo.name, info.num);
+    }
 }

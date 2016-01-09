@@ -9,15 +9,15 @@ import rx.Observable;
 
 public class GetGitBlobClient extends GithubClient<GitBlob> {
 
-  private CommitInfo info;
+    private CommitInfo info;
 
-  public GetGitBlobClient(CommitInfo info) {
-    super();
-    this.info = info;
-  }
+    public GetGitBlobClient(CommitInfo info) {
+        super();
+        this.info = info;
+    }
 
-  @Override
-  protected Observable<GitBlob> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(GitDataService.class).repoBlob(info.repoInfo.owner, info.repoInfo.name, info.sha);
-  }
+    @Override
+    protected Observable<GitBlob> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(GitDataService.class).repoBlob(info.repoInfo.owner, info.repoInfo.name, info.sha);
+    }
 }

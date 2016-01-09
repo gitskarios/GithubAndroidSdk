@@ -15,33 +15,33 @@ import rx.Observable;
  */
 public class GetRepoCollaboratorsClient extends GithubClient<List<User>> {
 
-  private final RepoInfo repoInfo;
-  private int page = 0;
+    private final RepoInfo repoInfo;
+    private int page = 0;
 
-  public GetRepoCollaboratorsClient(RepoInfo repoInfo) {
-    this(repoInfo, 0);
-  }
+    public GetRepoCollaboratorsClient(RepoInfo repoInfo) {
+        this(repoInfo, 0);
+    }
 
-  public GetRepoCollaboratorsClient(RepoInfo repoInfo, int page) {
-    super();
-    this.repoInfo = repoInfo;
-    this.page = page;
-  }
+    public GetRepoCollaboratorsClient(RepoInfo repoInfo, int page) {
+        super();
+        this.repoInfo = repoInfo;
+        this.page = page;
+    }
 
-  @Override
-  protected Observable<List<User>> getApiObservable(final RestAdapter restAdapter) {
-    return Observable.create(new BaseInfiniteCallback<List<User>>() {
-      @Override
-      public void execute() {
-        RepoService repoService = restAdapter.create(RepoService.class);
-        repoService.collaborators(repoInfo.owner, repoInfo.name, this);
-      }
+    @Override
+    protected Observable<List<User>> getApiObservable(final RestAdapter restAdapter) {
+        return Observable.create(new BaseInfiniteCallback<List<User>>() {
+            @Override
+            public void execute() {
+                RepoService repoService = restAdapter.create(RepoService.class);
+                repoService.collaborators(repoInfo.owner, repoInfo.name, this);
+            }
 
-      @Override
-      protected void executePaginated(int nextPage) {
-        RepoService repoService = restAdapter.create(RepoService.class);
-        repoService.collaborators(repoInfo.owner, repoInfo.name, page, this);
-      }
-    });
-  }
+            @Override
+            protected void executePaginated(int nextPage) {
+                RepoService repoService = restAdapter.create(RepoService.class);
+                repoService.collaborators(repoInfo.owner, repoInfo.name, page, this);
+            }
+        });
+    }
 }

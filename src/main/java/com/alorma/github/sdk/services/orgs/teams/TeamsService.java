@@ -15,29 +15,29 @@ import retrofit.http.Query;
  */
 public interface TeamsService {
 
-  //Async
-  @GET("/orgs/{org}/teams")
-  void teams(@Path("org") String org, Callback<List<Team>> callback);
+    //Async
+    @GET("/orgs/{org}/teams")
+    void teams(@Path("org") String org, Callback<List<Team>> callback);
 
-  @GET("/orgs/{org}/teams")
-  void teams(@Path("org") String org, @Query("page") int page, Callback<List<Team>> callback);
+    @GET("/orgs/{org}/teams")
+    void teams(@Path("org") String org, @Query("page") int page, Callback<List<Team>> callback);
 
-  @GET("/teams/{id}/members")
-  void members(@Path("id") String id, Callback<List<User>> callback);
+    @GET("/teams/{id}/members")
+    void members(@Path("id") String id, Callback<List<User>> callback);
 
-  @GET("/teams/{id}/members")
-  void members(@Path("id") String id, @Query("page") int page, Callback<List<User>> callback);
+    @GET("/teams/{id}/members")
+    void members(@Path("id") String id, @Query("page") int page, Callback<List<User>> callback);
 
-  //Sync
-  @GET("/orgs/{org}/teams")
-  List<Team> teams(@Path("org") String org);
+    //Sync
+    @GET("/orgs/{org}/teams")
+    List<Team> teams(@Path("org") String org);
 
-  @GET("/orgs/{org}/teams")
-  List<Team> teams(@Path("org") String org, @Query("page") int page);
+    @GET("/orgs/{org}/teams")
+    List<Team> teams(@Path("org") String org, @Query("page") int page);
 
-  @GET("/teams/{id}/members")
-  List<User> members(@Path("id") String id);
+    @GET("/teams/{id}/members")
+    List<User> members(@Path("id") String id);
 
-  @GET("/teams/{id}/members")
-  List<User> members(@Path("id") String id, @Query("page") int page);
+    @GET("/teams/{id}/members")
+    List<User> members(@Path("id") String id, @Query("page") int page);
 }

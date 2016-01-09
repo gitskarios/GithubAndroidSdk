@@ -12,15 +12,15 @@ import rx.Observable;
  */
 public class GetSingleCommitClient extends GithubClient<Commit> {
 
-  private CommitInfo info;
+    private CommitInfo info;
 
-  public GetSingleCommitClient(CommitInfo info) {
-    super();
-    this.info = info;
-  }
+    public GetSingleCommitClient(CommitInfo info) {
+        super();
+        this.info = info;
+    }
 
-  @Override
-  protected Observable<Commit> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(CommitsService.class).singleCommit(info.repoInfo.owner, info.repoInfo.name, info.sha);
-  }
+    @Override
+    protected Observable<Commit> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(CommitsService.class).singleCommit(info.repoInfo.owner, info.repoInfo.name, info.sha);
+    }
 }

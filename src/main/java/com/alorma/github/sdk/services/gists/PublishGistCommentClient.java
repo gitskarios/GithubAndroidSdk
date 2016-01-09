@@ -9,17 +9,17 @@ import rx.Observable;
 
 public class PublishGistCommentClient extends GithubClient<GithubComment> {
 
-  private String id;
-  private CommentRequest comment;
+    private String id;
+    private CommentRequest comment;
 
-  public PublishGistCommentClient(String id, CommentRequest comment) {
-    super();
-    this.id = id;
-    this.comment = comment;
-  }
+    public PublishGistCommentClient(String id, CommentRequest comment) {
+        super();
+        this.id = id;
+        this.comment = comment;
+    }
 
-  @Override
-  protected Observable<GithubComment> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(GistsService.class).publishComment(id, comment);
-  }
+    @Override
+    protected Observable<GithubComment> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(GistsService.class).publishComment(id, comment);
+    }
 }

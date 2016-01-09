@@ -13,12 +13,12 @@ import rx.Observable;
  */
 public class GetRepoBranchesClient extends GithubRepoClient<List<Branch>> {
 
-  public GetRepoBranchesClient(RepoInfo repoInfo) {
-    super(repoInfo);
-  }
+    public GetRepoBranchesClient(RepoInfo repoInfo) {
+        super(repoInfo);
+    }
 
-  @Override
-  protected Observable<List<Branch>> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(RepoService.class).branches(getOwner(), getRepo());
-  }
+    @Override
+    protected Observable<List<Branch>> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(RepoService.class).branches(getOwner(), getRepo());
+    }
 }

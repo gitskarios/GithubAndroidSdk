@@ -10,7 +10,7 @@ import rx.Observable;
  */
 public interface GitIgnoreService {
 
-  //Sync
-  @GET("/gitignore/templates")
-  Observable<GitIgnoreTemplates> list();
+    //Sync
+    @GET("/gitignore/templates")
+    Observable<GitIgnoreTemplates> list();
 }

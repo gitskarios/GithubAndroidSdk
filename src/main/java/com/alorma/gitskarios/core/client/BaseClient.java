@@ -14,54 +14,54 @@ import rx.functions.Func2;
 
 public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.Log {
 
-  private ApiClient client;
+    private ApiClient client;
 
-  public BaseClient(ApiClient client) {
-    this.client = client;
-  }
-
-  protected RestAdapter getRestAdapter() {
-    RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder().setEndpoint(client.getApiEndpoint())
-        .setRequestInterceptor(this)
-        .setLogLevel(RestAdapter.LogLevel.FULL)
-        .setLog(this);
-
-    if (customConverter() != null) {
-      restAdapterBuilder.setConverter(customConverter());
+    public BaseClient(ApiClient client) {
+        this.client = client;
     }
 
-    if (getInterceptor() != null) {
-      restAdapterBuilder.setClient(getInterceptor());
-    }
+    protected RestAdapter getRestAdapter() {
+        RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder().setEndpoint(client.getApiEndpoint())
+                .setRequestInterceptor(this)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(this);
 
-    return restAdapterBuilder.build();
-  }
-
-  protected Client getInterceptor() {
-    return null;
-  }
-
-  public Observable<K> observable() {
-    return getApiObservable(getRestAdapter()).retry(new Func2<Integer, Throwable, Boolean>() {
-      @Override
-      public Boolean call(Integer integer, Throwable throwable) {
-        if (throwable instanceof RetrofitError) {
-          return ((RetrofitError) throwable).getResponse().getStatus() == 202 && integer < 3;
+        if (customConverter() != null) {
+            restAdapterBuilder.setConverter(customConverter());
         }
-        return integer < 3;
-      }
-    }).debounce(100, TimeUnit.MILLISECONDS);
-  }
 
-  protected abstract Observable<K> getApiObservable(RestAdapter restAdapter);
+        if (getInterceptor() != null) {
+            restAdapterBuilder.setClient(getInterceptor());
+        }
 
-  protected Converter customConverter() {
-    return null;
-  }
+        return restAdapterBuilder.build();
+    }
 
-  protected String getToken() {
-    return TokenProvider.getInstance().getToken();
-  }
+    protected Client getInterceptor() {
+        return null;
+    }
+
+    public Observable<K> observable() {
+        return getApiObservable(getRestAdapter()).retry(new Func2<Integer, Throwable, Boolean>() {
+            @Override
+            public Boolean call(Integer integer, Throwable throwable) {
+                if (throwable instanceof RetrofitError) {
+                    return ((RetrofitError) throwable).getResponse().getStatus() == 202 && integer < 3;
+                }
+                return integer < 3;
+            }
+        }).debounce(100, TimeUnit.MILLISECONDS);
+    }
+
+    protected abstract Observable<K> getApiObservable(RestAdapter restAdapter);
+
+    protected Converter customConverter() {
+        return null;
+    }
+
+    protected String getToken() {
+        return TokenProvider.getInstance().getToken();
+    }
 
   /*
   public Context getContext() {
@@ -69,7 +69,7 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
   }
   */
 
-  public ApiClient getClient() {
-    return client;
-  }
+    public ApiClient getClient() {
+        return client;
+    }
 }

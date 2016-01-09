@@ -10,15 +10,15 @@ import rx.Observable;
  * Created by Bernat on 03/04/2015.
  */
 public class PublishGistClient extends GithubClient<Gist> {
-  private Gist gist;
+    private Gist gist;
 
-  public PublishGistClient(Gist gist) {
-    super();
-    this.gist = gist;
-  }
+    public PublishGistClient(Gist gist) {
+        super();
+        this.gist = gist;
+    }
 
-  @Override
-  protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(GistsService.class).publish(gist);
-  }
+    @Override
+    protected Observable<Gist> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(GistsService.class).publish(gist);
+    }
 }

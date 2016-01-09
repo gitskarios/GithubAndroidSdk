@@ -5,9 +5,9 @@ package com.alorma.gitskarios.core;
  */
 public interface ApiClient {
 
-  String getApiOauthUrlEndpoint();
+    String getApiOauthUrlEndpoint();
 
-  String getApiEndpoint();
+    String getApiEndpoint();
 
-  String getType();
+    String getType();
 }

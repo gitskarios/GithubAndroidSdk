@@ -10,7 +10,7 @@ import rx.Observable;
  */
 public interface EmojisService {
 
-  // Sync
-  @GET("/emojis")
-  Observable<HashMap<String, String>> getEmojis();
+    // Sync
+    @GET("/emojis")
+    Observable<HashMap<String, String>> getEmojis();
 }

@@ -13,32 +13,32 @@ import rx.functions.Action1;
  */
 public class GetArchiveLinkService extends GithubClient {
 
-  private RepoInfo repoInfo;
-  private String fileType;
-  private Downloader downloader;
+    private RepoInfo repoInfo;
+    private String fileType;
+    private Downloader downloader;
 
-  public GetArchiveLinkService(RepoInfo repoInfo, String fileType, Downloader downloader) {
-    super();
-    this.repoInfo = repoInfo;
-    this.fileType = fileType;
-    this.downloader = downloader;
-  }
+    public GetArchiveLinkService(RepoInfo repoInfo, String fileType, Downloader downloader) {
+        super();
+        this.repoInfo = repoInfo;
+        this.fileType = fileType;
+        this.downloader = downloader;
+    }
 
-  @Override
-  protected Observable getApiObservable(RestAdapter restAdapter) {
-    Observable<Object> observable =
-        restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch);
+    @Override
+    protected Observable getApiObservable(RestAdapter restAdapter) {
+        Observable<Object> observable =
+                restAdapter.create(ContentService.class).archiveLink(repoInfo.owner, repoInfo.name, fileType, repoInfo.branch);
 
-    observable.doOnError(new Action1<Throwable>() {
-      @Override
-      public void call(Throwable error) {
-        if (error != null && error instanceof RetrofitError) {
-          String url = ((RetrofitError) error).getResponse().getUrl();
-          downloader.download(url);
-        }
-      }
-    });
+        observable.doOnError(new Action1<Throwable>() {
+            @Override
+            public void call(Throwable error) {
+                if (error != null && error instanceof RetrofitError) {
+                    String url = ((RetrofitError) error).getResponse().getUrl();
+                    downloader.download(url);
+                }
+            }
+        });
 
-    return observable;
-  }
+        return observable;
+    }
 }

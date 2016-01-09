@@ -13,22 +13,22 @@ import rx.functions.Func1;
  */
 public class UnsubscribeThread extends GithubClient<Boolean> {
 
-  private Notification notification;
+    private Notification notification;
 
-  public UnsubscribeThread(Notification notification) {
-    super();
-    this.notification = notification;
-  }
+    public UnsubscribeThread(Notification notification) {
+        super();
+        this.notification = notification;
+    }
 
-  @Override
-  protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(NotificationsService.class)
-        .unsubscribeThread(String.valueOf(notification.id))
-        .map(new Func1<Response, Boolean>() {
-          @Override
-          public Boolean call(Response response) {
-            return response != null && response.getStatus() == 204;
-          }
-        });
-  }
+    @Override
+    protected Observable<Boolean> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(NotificationsService.class)
+                .unsubscribeThread(String.valueOf(notification.id))
+                .map(new Func1<Response, Boolean>() {
+                    @Override
+                    public Boolean call(Response response) {
+                        return response != null && response.getStatus() == 204;
+                    }
+                });
+    }
 }

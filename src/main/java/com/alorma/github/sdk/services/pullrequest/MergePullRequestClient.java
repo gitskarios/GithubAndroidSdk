@@ -12,18 +12,18 @@ import rx.Observable;
  * Created by Bernat on 21/06/2015.
  */
 public class MergePullRequestClient extends GithubClient<MergeButtonResponse> {
-  private IssueInfo issueInfo;
-  private MergeButtonRequest mergeButtonRequest;
+    private IssueInfo issueInfo;
+    private MergeButtonRequest mergeButtonRequest;
 
-  public MergePullRequestClient(IssueInfo issueInfo, MergeButtonRequest mergeButtonRequest) {
-    super();
-    this.issueInfo = issueInfo;
-    this.mergeButtonRequest = mergeButtonRequest;
-  }
+    public MergePullRequestClient(IssueInfo issueInfo, MergeButtonRequest mergeButtonRequest) {
+        super();
+        this.issueInfo = issueInfo;
+        this.mergeButtonRequest = mergeButtonRequest;
+    }
 
-  @Override
-  protected Observable<MergeButtonResponse> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(PullRequestsService.class)
-        .merge(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, mergeButtonRequest);
-  }
+    @Override
+    protected Observable<MergeButtonResponse> getApiObservable(RestAdapter restAdapter) {
+        return restAdapter.create(PullRequestsService.class)
+                .merge(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num, mergeButtonRequest);
+    }
 }
