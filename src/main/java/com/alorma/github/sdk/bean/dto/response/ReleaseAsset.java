@@ -25,10 +25,10 @@ public class ReleaseAsset implements Parcelable {
     public String state;
     public String content_type;
     public long size = 0;
-    private int download_count;
-    private String created_at;
-    private String updated_at;
-    private User uploader;
+    public int download_count;
+    public String created_at;
+    public String updated_at;
+    public User uploader;
 
     public ReleaseAsset() {
     }

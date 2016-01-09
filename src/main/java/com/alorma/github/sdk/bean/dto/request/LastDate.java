@@ -13,7 +13,7 @@ public class LastDate implements Parcelable {
             return new LastDate[size];
         }
     };
-    private String last_read_at;
+    public String last_read_at;
 
     public LastDate(String last_read_at) {
         this.last_read_at = last_read_at;
