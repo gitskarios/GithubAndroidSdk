@@ -60,6 +60,39 @@ Or grab it via maven
     <scope>provided</scope>
 </dependency>
 ```
+
+## INIT
+
+```
+    TokenProvider.setTokenProviderInstance(new TokenProviderInterface() {
+      @Override
+      public String getToken() {
+        ...
+      }
+    });
+
+    UrlProvider.setUrlProviderInstance(new UrlProviderInterface() {
+      @Override
+      public String getUrl() {
+        ...
+      }
+    });
+
+    UsernameProvider.setUsernameProviderInterface(new UsernameProviderInterface() {
+      @Override
+      public String getUsername() {
+        ...
+      }
+    });
+
+    LogProvider.setTokenProviderInstance(new LogProviderInterface() {
+      @Override
+      public void log(String message) {
+        ...
+      }
+    });
+```
+
 ## EXAMPLE
 
 Get repositories list:
