@@ -1,7 +1,5 @@
 package com.alorma.github.sdk.services.issues.story;
 
-import android.util.Log;
-
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
@@ -13,6 +11,7 @@ import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.core.client.LogProvider;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -154,11 +153,6 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
         event.equals("unsubscribed") ||
         event.equals("labeled") ||
         event.equals("unlabeled"));
-  }
-
-  @Override
-  public void log(String message) {
-    Log.i("IssueStoryLoader", message);
   }
 
   @Override

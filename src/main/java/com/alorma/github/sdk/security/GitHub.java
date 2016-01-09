@@ -1,7 +1,5 @@
 package com.alorma.github.sdk.security;
 
-import android.net.Uri;
-
 import com.alorma.gitskarios.core.ApiClient;
 
 /**
@@ -17,11 +15,9 @@ public class GitHub implements ApiClient {
 
   public GitHub(String hostname) {
     if (hostname != null) {
-      Uri parse = Uri.parse(hostname);
-      if (parse.getScheme() == null) {
-        parse = parse.buildUpon().scheme("https").build();
+      if (!hostname.startsWith("https://")) {
+        hostname = "https://" + hostname;
       }
-      hostname = parse.toString();
       this.hostname = hostname;
     }
   }

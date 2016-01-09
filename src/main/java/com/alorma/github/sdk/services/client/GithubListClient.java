@@ -1,11 +1,10 @@
 package com.alorma.github.sdk.services.client;
 
-import android.util.Log;
-
 import com.alorma.github.sdk.security.GitHub;
 import com.alorma.github.sdk.security.InterceptingListOkClient;
 import com.alorma.gitskarios.core.ApiClient;
 import com.alorma.gitskarios.core.client.BaseListClient;
+import com.alorma.gitskarios.core.client.LogProvider;
 import com.alorma.gitskarios.core.client.UrlProvider;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -29,7 +28,9 @@ public abstract class GithubListClient<K> extends BaseListClient<K> {
 
   @Override
   public void log(String message) {
-    Log.v("RETROFIT_LOG", message);
+    if (LogProvider.getInstance() != null) {
+      LogProvider.getInstance().log(message);
+    }
   }
 
   public String getAcceptHeader() {
