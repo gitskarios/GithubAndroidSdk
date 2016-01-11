@@ -39,6 +39,7 @@ public class User extends Organization implements Parcelable {
     }
 
     protected User(Parcel in) {
+        super(in);
         this.hireable = in.readByte() != 0;
         this.date = in.readString();
         this.followers_url = in.readString();
@@ -109,6 +110,7 @@ public class User extends Organization implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         dest.writeByte(hireable ? (byte) 1 : (byte) 0);
         dest.writeString(this.date);
         dest.writeString(this.followers_url);
