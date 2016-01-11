@@ -40,7 +40,7 @@ maven {
 Add dependency in your project `build.gradle`
 
 ``` groovy
-    compile 'com.github.alorma:github-sdk:3.1.0'
+    compile 'com.github.alorma:github-sdk:3.1.1'
 ```
 
 Or grab it via maven
@@ -48,14 +48,14 @@ Or grab it via maven
 <dependency>
     <groupId>com.github.alorma</groupId>
     <artifactId>github-sdk</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <type>apklib</type>
     <scope>compile</scope>
 </dependency>
 <dependency>
     <groupId>com.github.alorma</groupId>
     <artifactId>github-sdk</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <type>jar</type>
     <scope>provided</scope>
 </dependency>
