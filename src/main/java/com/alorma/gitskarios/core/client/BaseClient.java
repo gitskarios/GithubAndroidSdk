@@ -60,14 +60,11 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
     }
 
     protected String getToken() {
-        return TokenProvider.getInstance().getToken();
+        if (TokenProvider.getInstance() != null) {
+            return TokenProvider.getInstance().getToken();
+        }
+        return "";
     }
-
-  /*
-  public Context getContext() {
-    return context;
-  }
-  */
 
     public ApiClient getClient() {
         return client;

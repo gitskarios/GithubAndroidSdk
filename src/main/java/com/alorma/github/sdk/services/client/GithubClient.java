@@ -13,8 +13,12 @@ public abstract class GithubClient<K> extends BaseClient<K> {
     }
 
     private static ApiClient getApiClient() {
-        String url = UrlProvider.getInstance().getUrl();
-        return new GitHub(url);
+        if (UrlProvider.getInstance() == null) {
+            return new GitHub();
+        } else {
+            String url = UrlProvider.getInstance().getUrl();
+            return new GitHub(url);
+        }
     }
 
     @Override

@@ -31,7 +31,9 @@ public class GetOrgsClient extends GithubListClient<List<Organization>> {
         return new ApiSubscriber() {
             @Override
             protected void call(RestAdapter restAdapter) {
-                String apiUsername = UsernameProvider.getInstance().getUsername();
+                String apiUsername = UsernameProvider.getInstance() != null
+                        ? UsernameProvider.getInstance().getUsername()
+                        : "";
                 if (username != null && username.equalsIgnoreCase(apiUsername)) {
                     username = null;
                 }

@@ -23,7 +23,6 @@ import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.schedulers.Schedulers;
 
 public class IssueStoryLoader extends GithubClient<IssueStory> {
 
@@ -61,7 +60,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     private Observable<Issue> getIssueObservable() {
-        return issueStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
+        return issueStoryService.detailObs(owner, repo, num);
     }
 
     private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
@@ -86,20 +85,14 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     private Observable<IssueStoryDetail> getCommentsDetailsObs() {
-        return getCommentsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<GithubComment>, Observable<IssueStoryDetail>>() {
-            @Override
-            public Observable<IssueStoryDetail> call(List<GithubComment> githubComments) {
-                return Observable.from(githubComments).map(new Func1<GithubComment, IssueStoryDetail>() {
-                    @Override
-                    public IssueStoryDetail call(GithubComment githubComment) {
-                        long time = getMilisFromDateClearDay(githubComment.created_at);
-                        IssueStoryComment detail = new IssueStoryComment(githubComment);
-                        detail.created_at = time;
-                        return detail;
-                    }
-                });
-            }
-        });
+        return getCommentsObs()
+                .flatMap(githubComments -> Observable.from(githubComments)
+                        .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
+                            long time = getMilisFromDateClearDay(githubComment.created_at);
+                            IssueStoryComment detail = new IssueStoryComment(githubComment);
+                            detail.created_at = time;
+                            return detail;
+                        }));
     }
 
     private Observable<List<IssueEvent>> getEventsObs() {
@@ -117,25 +110,15 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     private Observable<IssueStoryDetail> getEventDetailsObs() {
-        return getEventsObs().subscribeOn(Schedulers.io()).flatMap(new Func1<List<IssueEvent>, Observable<IssueStoryDetail>>() {
-            @Override
-            public Observable<IssueStoryDetail> call(List<IssueEvent> issueEvents) {
-                return Observable.from(issueEvents).filter(new Func1<IssueEvent, Boolean>() {
-                    @Override
-                    public Boolean call(IssueEvent issueEvent) {
-                        return validEvent(issueEvent.event);
-                    }
-                }).map(new Func1<IssueEvent, IssueStoryDetail>() {
-                    @Override
-                    public IssueStoryDetail call(IssueEvent issueEvent) {
-                        long time = getMilisFromDateClearDay(issueEvent.created_at);
-                        IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
-                        detail.created_at = time;
-                        return detail;
-                    }
-                });
-            }
-        });
+        return getEventsObs()
+                .flatMap(issueEvents -> Observable.from(issueEvents)
+                        .filter(issueEvent -> validEvent(issueEvent.event))
+                        .map((Func1<IssueEvent, IssueStoryDetail>) issueEvent -> {
+                            long time = getMilisFromDateClearDay(issueEvent.created_at);
+                            IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
+                            detail.created_at = time;
+                            return detail;
+                        }));
     }
 
     private long getMilisFromDateClearDay(String createdAt) {

@@ -54,7 +54,7 @@ public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapt
     }
 
     public Observable<? extends Pair<K, Integer>> observable() {
-        return getApiObservable().subscribeOn(Schedulers.io());
+        return getApiObservable();
     }
 
     private Observable<? extends Pair<K, Integer>> getApiObservable() {
@@ -72,7 +72,10 @@ public abstract class BaseListClient<K> implements RequestInterceptor, RestAdapt
     }
 
     protected String getToken() {
-        return TokenProvider.getInstance().getToken();
+        if (TokenProvider.getInstance() != null) {
+            return TokenProvider.getInstance().getToken();
+        }
+        return null;
     }
 
     public abstract class ApiSubscriber implements Observable.OnSubscribe<Pair<K, Integer>>, Callback<K> {

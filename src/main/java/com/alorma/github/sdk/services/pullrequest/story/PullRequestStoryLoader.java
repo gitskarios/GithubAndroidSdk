@@ -24,7 +24,6 @@ import java.util.List;
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Bernat on 07/04/2015.
@@ -65,7 +64,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     }
 
     private Observable<PullRequest> getPullRequestObs() {
-        Observable<PullRequest> pullRequestObservable = pullRequestStoryService.detailObs(owner, repo, num).subscribeOn(Schedulers.io());
+        Observable<PullRequest> pullRequestObservable = pullRequestStoryService.detailObs(owner, repo, num);
 
         return Observable.zip(pullRequestObservable, getLabelsObs(), (pullRequest, labels) -> {
             pullRequest.labels = labels;
@@ -94,7 +93,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     }
 
     private Observable<IssueStoryDetail> getCommentsDetailsObs() {
-        return getCommentsObs().subscribeOn(Schedulers.io())
+        return getCommentsObs()
                 .flatMap(githubComments -> Observable.from(githubComments)
                         .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
                             long time = getMilisFromDateClearDay(githubComment.created_at);
@@ -120,12 +119,15 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     }
 
     private Observable<IssueStoryDetail> getEventDetailsObs() {
-        return getEventsObs().subscribeOn(Schedulers.io()).flatMap(issueEvents -> Observable.from(issueEvents).filter(issueEvent -> validEvent(issueEvent.event)).map((Func1<IssueEvent, IssueStoryDetail>) issueEvent -> {
-            long time = getMilisFromDateClearDay(issueEvent.created_at);
-            IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
-            detail.created_at = time;
-            return detail;
-        }));
+        return getEventsObs()
+                .flatMap(issueEvents -> Observable.from(issueEvents)
+                        .filter(issueEvent -> validEvent(issueEvent.event))
+                        .map((Func1<IssueEvent, IssueStoryDetail>) issueEvent -> {
+                            long time = getMilisFromDateClearDay(issueEvent.created_at);
+                            IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
+                            detail.created_at = time;
+                            return detail;
+                        }));
     }
 
     private Observable<List<Label>> getLabelsObs() {
