@@ -45,6 +45,7 @@ public class Payload implements Parcelable {
     public long push_id;
     public int size;
     public int distinct_size;
+    public String ref_type;
     public String ref;
     public String head;
     public String before;
@@ -70,6 +71,7 @@ public class Payload implements Parcelable {
         this.push_id = in.readLong();
         this.size = in.readInt();
         this.distinct_size = in.readInt();
+        this.ref_type = in.readString();
         this.ref = in.readString();
         this.head = in.readString();
         this.before = in.readString();
@@ -99,6 +101,7 @@ public class Payload implements Parcelable {
         dest.writeLong(this.push_id);
         dest.writeInt(this.size);
         dest.writeInt(this.distinct_size);
+        dest.writeString(this.ref_type);
         dest.writeString(this.ref);
         dest.writeString(this.head);
         dest.writeString(this.before);
