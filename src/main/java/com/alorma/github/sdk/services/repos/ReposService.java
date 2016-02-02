@@ -69,10 +69,10 @@ public interface ReposService {
                                  Callback<List<Repo>> callback);
 
     // Member
-    @GET("/user/repos?type=member")
+    @GET("/user/repos?affiliation=collaborator,organization_member")
     void userMemberRepos(Callback<List<Repo>> callback);
 
     // Member
-    @GET("/user/repos?type=member")
+    @GET("/user/repos?affiliation=collaborator,organization_member")
     void userMemberRepos(@Query("page") int page, Callback<List<Repo>> callback);
 }
