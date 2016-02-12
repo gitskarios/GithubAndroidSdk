@@ -8,6 +8,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Client;
+import retrofit.client.Response;
 import retrofit.converter.Converter;
 import rx.Observable;
 import rx.functions.Func2;
@@ -21,7 +22,8 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
     }
 
     protected RestAdapter getRestAdapter() {
-        RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder().setEndpoint(client.getApiEndpoint())
+        RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder()
+            .setEndpoint(client.getApiEndpoint())
                 .setRequestInterceptor(this)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(this);
@@ -42,14 +44,14 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
     }
 
     public Observable<K> observable() {
-        return getApiObservable(getRestAdapter()).retry(new Func2<Integer, Throwable, Boolean>() {
-            @Override
-            public Boolean call(Integer integer, Throwable throwable) {
-                if (throwable instanceof RetrofitError) {
-                    return ((RetrofitError) throwable).getResponse().getStatus() == 202 && integer < 3;
+        return getApiObservable(getRestAdapter()).retry((integer, throwable) -> {
+            if (throwable instanceof RetrofitError) {
+                Response response = ((RetrofitError) throwable).getResponse();
+                if (response != null) {
+                    return response.getStatus() == 202 && integer < 3;
                 }
-                return integer < 3;
             }
+            return integer < 3;
         }).debounce(100, TimeUnit.MILLISECONDS);
     }
 
