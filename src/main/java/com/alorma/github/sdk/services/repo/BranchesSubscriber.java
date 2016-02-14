@@ -8,13 +8,13 @@ import java.util.List;
 
 import rx.Subscriber;
 
-public abstract class BranchesCallback extends Subscriber<List<Branch>> {
+public abstract class BranchesSubscriber extends Subscriber<List<Branch>> {
 
     List<String> names;
     private RepoInfo repoInfo;
     private int selectedIndex = 0;
 
-    public BranchesCallback(RepoInfo repoInfo) {
+    public BranchesSubscriber(RepoInfo repoInfo) {
         this.repoInfo = repoInfo;
         names = new ArrayList<>();
     }

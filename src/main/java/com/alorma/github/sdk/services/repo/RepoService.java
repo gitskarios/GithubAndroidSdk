@@ -81,6 +81,11 @@ public interface RepoService {
     void combinedStatusASync(@Path("owner") String owner, @Path("name") String repo, @Path("ref") String ref, @Query("page") int page,
                              Callback<GithubStatusResponse> callback);
 
+    @GET("/repos/{owner}/{name}/branches")
+    void branches(@Path("owner") String owner, @Path("name") String repo, Callback<List<Branch>> callback);
+    @GET("/repos/{owner}/{name}/branches")
+    void branches(@Path("owner") String owner, @Path("name") String repo, @Query("page") int page, Callback<List<Branch>> callback);
+
     //Sync
     @GET("/repos/{owner}/{name}")
     Observable<Repo> get(@Path("owner") String owner, @Path("name") String repo);
@@ -169,7 +174,4 @@ public interface RepoService {
     //Async
     @GET("/repos/{owner}/{name}")
     Observable<Repo> getObs(@Path("owner") String owner, @Path("name") String repo);
-
-    @GET("/repos/{owner}/{name}/branches")
-    Observable<List<Branch>> branches(@Path("owner") String owner, @Path("name") String repo);
 }

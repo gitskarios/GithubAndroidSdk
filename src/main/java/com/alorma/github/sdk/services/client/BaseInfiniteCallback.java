@@ -3,6 +3,7 @@ package com.alorma.github.sdk.services.client;
 import com.alorma.gitskarios.core.client.PaginationLink;
 import com.alorma.gitskarios.core.client.RelType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import rx.Subscriber;
 public abstract class BaseInfiniteCallback<K> implements Observable.OnSubscribe<K>, Callback<K> {
 
     protected Subscriber<? super K> subscriber;
+    private List<K> ks;
 
     public BaseInfiniteCallback() {
 
@@ -25,6 +27,7 @@ public abstract class BaseInfiniteCallback<K> implements Observable.OnSubscribe<
     @Override
     public void call(Subscriber<? super K> subscriber) {
         this.subscriber = subscriber;
+        ks = new ArrayList<>();
         execute();
     }
 
