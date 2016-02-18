@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.services.pullrequest.story;
 
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
-
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -12,15 +11,17 @@ import rx.Observable;
  */
 public interface PullRequestStoryService {
 
-    //Async
-    @GET("/repos/{owner}/{name}/pulls/{num}")
-    void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num, Callback<PullRequest> issueCallback);
+  //Async
+  @GET("/repos/{owner}/{name}/pulls/{num}")
+  void detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num,
+      Callback<PullRequest> issueCallback);
 
-    //Sync
-    @GET("/repos/{owner}/{name}/pulls/{num}")
-    PullRequest detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+  //Sync
+  @GET("/repos/{owner}/{name}/pulls/{num}")
+  PullRequest detail(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
 
-    //Obs
-    @GET("/repos/{owner}/{name}/pulls/{num}")
-    Observable<PullRequest> detailObs(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num);
+  //Obs
+  @GET("/repos/{owner}/{name}/pulls/{num}")
+  Observable<PullRequest> detailObs(@Path("owner") String owner, @Path("name") String repo,
+      @Path("num") int num);
 }

@@ -8,54 +8,53 @@ import android.os.Parcelable;
  */
 public class ShaUrl implements Parcelable {
 
-    private static final int MAX_SHA_LENGHT = 8;
-    public String sha;
-    public String url;
-    public String html_url;
-
-    public ShaUrl() {
-
+  public static final Creator<ShaUrl> CREATOR = new Creator<ShaUrl>() {
+    public ShaUrl createFromParcel(Parcel source) {
+      return new ShaUrl(source);
     }
 
-    public static String shortShaStatic(String sha) {
-        int start = 0;
-        int end = Math.min(MAX_SHA_LENGHT, sha.length());
-
-        return sha.substring(start, end);
+    public ShaUrl[] newArray(int size) {
+      return new ShaUrl[size];
     }
+  };
+  private static final int MAX_SHA_LENGHT = 8;
+  public String sha;
+  public String url;
+  public String html_url;
 
-    public String shortSha() {
-        int start = 0;
-        int end = Math.min(MAX_SHA_LENGHT, sha.length());
+  public ShaUrl() {
 
-        return sha.substring(start, end);
-    }
+  }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+  protected ShaUrl(Parcel in) {
+    this.sha = in.readString();
+    this.url = in.readString();
+    this.html_url = in.readString();
+  }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.sha);
-        dest.writeString(this.url);
-        dest.writeString(this.html_url);
-    }
+  public static String shortShaStatic(String sha) {
+    int start = 0;
+    int end = Math.min(MAX_SHA_LENGHT, sha.length());
 
-    protected ShaUrl(Parcel in) {
-        this.sha = in.readString();
-        this.url = in.readString();
-        this.html_url = in.readString();
-    }
+    return sha.substring(start, end);
+  }
 
-    public static final Creator<ShaUrl> CREATOR = new Creator<ShaUrl>() {
-        public ShaUrl createFromParcel(Parcel source) {
-            return new ShaUrl(source);
-        }
+  public String shortSha() {
+    int start = 0;
+    int end = Math.min(MAX_SHA_LENGHT, sha.length());
 
-        public ShaUrl[] newArray(int size) {
-            return new ShaUrl[size];
-        }
-    };
+    return sha.substring(start, end);
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.sha);
+    dest.writeString(this.url);
+    dest.writeString(this.html_url);
+  }
 }
