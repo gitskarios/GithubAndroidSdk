@@ -11,6 +11,7 @@ import com.alorma.github.sdk.bean.dto.response.Release;
 import com.alorma.github.sdk.bean.dto.response.Repo;
 import com.alorma.github.sdk.bean.dto.response.User;
 import java.util.List;
+import java.util.Map;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -159,6 +160,9 @@ public interface RepoService {
 
   @DELETE("/repos/{owner}/{name}")
   Observable<Response> delete(@Path("owner") String owner, @Path("name") String repo);
+
+  @GET("/repos/{owner}/{name}/languages")
+  Observable<Map<String, Long>> languages(@Path("owner") String owner, @Path("name") String repo);
 
   @PATCH("/repos/{owner}/{name}")
   Observable<Repo> edit(@Path("owner") String owner, @Path("name") String repo,
