@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.login;
 
 import android.util.Base64;
+import android.util.Log;
 import com.alorma.github.sdk.bean.dto.request.CreateAuthorization;
 import com.alorma.github.sdk.bean.dto.response.GithubAuthorization;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -12,6 +13,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Header;
 import retrofit.client.Response;
 import rx.Observable;
+import rx.functions.Func2;
 
 public class CreateAuthorizationClient extends GithubClient<GithubAuthorization> {
 
@@ -37,12 +39,17 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
       String basicAuth =
           "Basic " + new String(Base64.encode(userCredentials.getBytes(), Base64.DEFAULT));
 
-      request.addHeader("Authorization", basicAuth);
+      request.addHeader("Authorization", basicAuth.trim());
 
       if (otpCode != null) {
-        request.addHeader("X-GitHub-OTP", otpCode);
+        request.addHeader("X-GitHub-OTP", otpCode.trim());
       }
     }
+  }
+
+  @Override
+  public Observable<GithubAuthorization> observable() {
+    return super.observable().retry(0);
   }
 
   @Override
@@ -71,5 +78,10 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
 
   public void setOtpCode(String otpCode) {
     this.otpCode = otpCode;
+  }
+
+  @Override
+  protected Func2<Integer, Throwable, Boolean> retry() {
+    return (integer, throwable) -> false;
   }
 }

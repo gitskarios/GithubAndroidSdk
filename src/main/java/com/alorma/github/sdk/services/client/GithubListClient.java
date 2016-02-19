@@ -27,7 +27,9 @@ public abstract class GithubListClient<K> extends BaseListClient<K> {
   public void intercept(RequestFacade request) {
     request.addHeader("Accept", getAcceptHeader());
     request.addHeader("User-Agent", "Gitskarios");
-    request.addHeader("Authorization", "token " + getToken());
+    if (getToken() != null && getToken().length() > 0) {
+      request.addHeader("Authorization", "token " + getToken());
+    }
   }
 
   @Override

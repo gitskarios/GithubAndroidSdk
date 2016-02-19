@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.user;
 
 import android.util.Base64;
+import android.util.Log;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubClient;
 import java.util.List;
@@ -32,24 +33,26 @@ public class GetAuthUserClient extends GithubClient<User> {
 
   @Override
   protected Observable<User> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(UsersService.class).me().onErrorResumeNext(throwable -> {
-      if (throwable instanceof RetrofitError) {
-        Response response = ((RetrofitError) throwable).getResponse();
-        if (response != null && response.getStatus() == 401) {
-          List<Header> headers = response.getHeaders();
-          if (headers != null) {
-            for (Header header : headers) {
-              if (header.getName().equals("X-GitHub-OTP") && header.getValue()
-                  .contains("required")) {
-                return Observable.error(new TwoFactorAuthException());
+    return restAdapter.create(UsersService.class)
+        .me()
+        .onErrorResumeNext(throwable -> {
+          if (throwable instanceof RetrofitError) {
+            Response response = ((RetrofitError) throwable).getResponse();
+            if (response != null && response.getStatus() == 401) {
+              List<Header> headers = response.getHeaders();
+              if (headers != null) {
+                for (Header header : headers) {
+                  if (header.getName().equals("X-GitHub-OTP") && header.getValue()
+                      .contains("required")) {
+                    return Observable.error(new TwoFactorAuthException());
+                  }
+                }
+                return Observable.error(new UnauthorizedException());
               }
             }
-            return Observable.error(new UnauthorizedException());
           }
-        }
-      }
-      return Observable.error(throwable);
-    });
+          return Observable.error(throwable);
+        });
   }
 
   @Override
@@ -61,8 +64,13 @@ public class GetAuthUserClient extends GithubClient<User> {
       String basicAuth =
           "Basic " + new String(Base64.encode(userCredentials.getBytes(), Base64.DEFAULT));
 
-      request.addHeader("Authorization", basicAuth);
+      request.addHeader("Authorization", basicAuth.trim());
     }
+  }
+
+  @Override
+  public void log(String message) {
+    Log.i("RETROFIIT", message);
   }
 
   @Override

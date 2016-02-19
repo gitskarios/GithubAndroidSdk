@@ -9,6 +9,7 @@ import retrofit.client.Client;
 import retrofit.client.Response;
 import retrofit.converter.Converter;
 import rx.Observable;
+import rx.functions.Func2;
 
 public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.Log {
 
@@ -41,7 +42,11 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
   }
 
   public Observable<K> observable() {
-    return getApiObservable(getRestAdapter()).retry((integer, throwable) -> {
+    return getApiObservable(getRestAdapter()).retry(retry()).debounce(100, TimeUnit.MILLISECONDS);
+  }
+
+  protected Func2<Integer, Throwable, Boolean> retry() {
+    return (integer, throwable) -> {
       if (throwable instanceof RetrofitError) {
         Response response = ((RetrofitError) throwable).getResponse();
         if (response != null) {
@@ -49,7 +54,7 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
         }
       }
       return integer < 3;
-    }).debounce(100, TimeUnit.MILLISECONDS);
+    };
   }
 
   protected abstract Observable<K> getApiObservable(RestAdapter restAdapter);

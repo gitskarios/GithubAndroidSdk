@@ -13,6 +13,7 @@ public interface LoginService {
   @POST("/login/oauth/access_token")
   Observable<Token> requestToken(@Body RequestTokenDTO requestTokenDTO);
 
+  @POST("/authorizations")
   Observable<GithubAuthorization> createAuthorization(
       @Body CreateAuthorization createAuthorization);
 }
