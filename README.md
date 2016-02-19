@@ -98,14 +98,19 @@ Or grab it via maven
 Get repositories list:
 ```java
 GithubReposClient client = new UserReposClient(getActivity(), username);
-client.setOnResultCallback(callback);
-client.execute();
+client.observable()
+.observeOn(AndroidSchedulers.mainThread()
+.subscribeOn(Schedulers.io())
+.subscribe( ... );
 ```
 
 Paginated:
 ```java
 UserReposClient client = new UserReposClient(getActivity(), username, page);
-client.executeSync();
+client.observable()
+.observeOn(AndroidSchedulers.mainThread()
+.subscribeOn(Schedulers.io())
+.subscribe( ... );
 ```
 
 ##LICENSE
