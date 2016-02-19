@@ -4,9 +4,27 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class GithubApp implements Parcelable {
+  public static final Parcelable.Creator<GithubApp> CREATOR = new Parcelable.Creator<GithubApp>() {
+    public GithubApp createFromParcel(Parcel source) {
+      return new GithubApp(source);
+    }
+
+    public GithubApp[] newArray(int size) {
+      return new GithubApp[size];
+    }
+  };
   public String url;
   public String name;
   public String client_id;
+
+  public GithubApp() {
+  }
+
+  protected GithubApp(Parcel in) {
+    this.url = in.readString();
+    this.name = in.readString();
+    this.client_id = in.readString();
+  }
 
   @Override
   public int describeContents() {
@@ -19,25 +37,6 @@ public class GithubApp implements Parcelable {
     dest.writeString(this.name);
     dest.writeString(this.client_id);
   }
-
-  public GithubApp() {
-  }
-
-  protected GithubApp(Parcel in) {
-    this.url = in.readString();
-    this.name = in.readString();
-    this.client_id = in.readString();
-  }
-
-  public static final Parcelable.Creator<GithubApp> CREATOR = new Parcelable.Creator<GithubApp>() {
-    public GithubApp createFromParcel(Parcel source) {
-      return new GithubApp(source);
-    }
-
-    public GithubApp[] newArray(int size) {
-      return new GithubApp[size];
-    }
-  };
 
   @Override
   public String toString() {

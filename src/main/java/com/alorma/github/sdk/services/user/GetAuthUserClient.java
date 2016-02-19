@@ -33,26 +33,24 @@ public class GetAuthUserClient extends GithubClient<User> {
 
   @Override
   protected Observable<User> getApiObservable(RestAdapter restAdapter) {
-    return restAdapter.create(UsersService.class)
-        .me()
-        .onErrorResumeNext(throwable -> {
-          if (throwable instanceof RetrofitError) {
-            Response response = ((RetrofitError) throwable).getResponse();
-            if (response != null && response.getStatus() == 401) {
-              List<Header> headers = response.getHeaders();
-              if (headers != null) {
-                for (Header header : headers) {
-                  if (header.getName().equals("X-GitHub-OTP") && header.getValue()
-                      .contains("required")) {
-                    return Observable.error(new TwoFactorAuthException());
-                  }
-                }
-                return Observable.error(new UnauthorizedException());
+    return restAdapter.create(UsersService.class).me().onErrorResumeNext(throwable -> {
+      if (throwable instanceof RetrofitError) {
+        Response response = ((RetrofitError) throwable).getResponse();
+        if (response != null && response.getStatus() == 401) {
+          List<Header> headers = response.getHeaders();
+          if (headers != null) {
+            for (Header header : headers) {
+              if (header.getName().equals("X-GitHub-OTP") && header.getValue()
+                  .contains("required")) {
+                return Observable.error(new TwoFactorAuthException());
               }
             }
+            return Observable.error(new UnauthorizedException());
           }
-          return Observable.error(throwable);
-        });
+        }
+      }
+      return Observable.error(throwable);
+    });
   }
 
   @Override

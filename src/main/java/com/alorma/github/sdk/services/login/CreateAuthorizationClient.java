@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.services.login;
 
 import android.util.Base64;
-import android.util.Log;
 import com.alorma.github.sdk.bean.dto.request.CreateAuthorization;
 import com.alorma.github.sdk.bean.dto.response.GithubAuthorization;
 import com.alorma.github.sdk.services.client.GithubClient;
@@ -22,7 +21,8 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
   private String otpCode;
   private CreateAuthorization createAuthorization;
 
-  public CreateAuthorizationClient(String username, String password, CreateAuthorization createAuthorization) {
+  public CreateAuthorizationClient(String username, String password,
+      CreateAuthorization createAuthorization) {
     super();
 
     this.username = username;

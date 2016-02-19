@@ -5,6 +5,16 @@ import android.os.Parcelable;
 import java.util.Arrays;
 
 public class GithubAuthorization implements Parcelable {
+  public static final Parcelable.Creator<GithubAuthorization> CREATOR =
+      new Parcelable.Creator<GithubAuthorization>() {
+        public GithubAuthorization createFromParcel(Parcel source) {
+          return new GithubAuthorization(source);
+        }
+
+        public GithubAuthorization[] newArray(int size) {
+          return new GithubAuthorization[size];
+        }
+      };
   public int id;
   public String url;
   public String[] scopes;
@@ -17,6 +27,24 @@ public class GithubAuthorization implements Parcelable {
   public String updated_at;
   public String created_at;
   public String fingerprint;
+
+  public GithubAuthorization() {
+  }
+
+  protected GithubAuthorization(Parcel in) {
+    this.id = in.readInt();
+    this.url = in.readString();
+    this.scopes = in.createStringArray();
+    this.token = in.readString();
+    this.token_last_eight = in.readString();
+    this.hashed_token = in.readString();
+    this.app = in.readParcelable(GithubApp.class.getClassLoader());
+    this.note = in.readString();
+    this.note_url = in.readString();
+    this.updated_at = in.readString();
+    this.created_at = in.readString();
+    this.fingerprint = in.readString();
+  }
 
   @Override
   public int describeContents() {
@@ -38,35 +66,6 @@ public class GithubAuthorization implements Parcelable {
     dest.writeString(this.created_at);
     dest.writeString(this.fingerprint);
   }
-
-  public GithubAuthorization() {
-  }
-
-  protected GithubAuthorization(Parcel in) {
-    this.id = in.readInt();
-    this.url = in.readString();
-    this.scopes = in.createStringArray();
-    this.token = in.readString();
-    this.token_last_eight = in.readString();
-    this.hashed_token = in.readString();
-    this.app = in.readParcelable(GithubApp.class.getClassLoader());
-    this.note = in.readString();
-    this.note_url = in.readString();
-    this.updated_at = in.readString();
-    this.created_at = in.readString();
-    this.fingerprint = in.readString();
-  }
-
-  public static final Parcelable.Creator<GithubAuthorization> CREATOR =
-      new Parcelable.Creator<GithubAuthorization>() {
-        public GithubAuthorization createFromParcel(Parcel source) {
-          return new GithubAuthorization(source);
-        }
-
-        public GithubAuthorization[] newArray(int size) {
-          return new GithubAuthorization[size];
-        }
-      };
 
   @Override
   public String toString() {
