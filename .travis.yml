@@ -18,4 +18,4 @@ branches:
    - develop
    - master
 
-script: ./gradlew assembleDebug
+script: ./gradlew clean build checkstyle
