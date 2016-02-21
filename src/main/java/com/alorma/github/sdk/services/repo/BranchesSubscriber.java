@@ -35,15 +35,13 @@ public abstract class BranchesSubscriber extends Subscriber<List<Branch>> {
   public void onNext(List<Branch> branches) {
     if (branches != null) {
 
-      String[] names = new String[branches.size()];
       for (int i = 0; i < branches.size(); i++) {
         String branchName = branches.get(i).name;
-        names[i] = branchName;
+        this.names.add(branchName);
         if ((branchName.equalsIgnoreCase(repoInfo.branch))) {
           selectedIndex = i;
         }
       }
-      showBranches(names, selectedIndex);
     }
   }
 

@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Bernat on 13/07/2014.
- */
 public class Repo extends ShaUrl implements Parcelable {
 
   public static final Creator<Repo> CREATOR = new Creator<Repo>() {
@@ -54,6 +51,7 @@ public class Repo extends ShaUrl implements Parcelable {
   public Permissions permissions;
   public License license;
   public List<Branch> branches;
+  public String archive_url;
 
   public Repo() {
     super();
@@ -97,6 +95,7 @@ public class Repo extends ShaUrl implements Parcelable {
     this.permissions = in.readParcelable(Permissions.class.getClassLoader());
     this.license = in.readParcelable(License.class.getClassLoader());
     this.branches = in.createTypedArrayList(Branch.CREATOR);
+    this.archive_url = in.readString();
   }
 
   @Override
@@ -134,6 +133,7 @@ public class Repo extends ShaUrl implements Parcelable {
     sb.append(", has_issues=").append(has_issues);
     sb.append(", has_downloads=").append(has_downloads);
     sb.append(", has_wiki=").append(has_wiki);
+    sb.append(", archive_url=").append(archive_url);
     sb.append(", permissions=").append(permissions);
     sb.append('}');
     return sb.toString();
@@ -201,5 +201,6 @@ public class Repo extends ShaUrl implements Parcelable {
     dest.writeParcelable(this.permissions, 0);
     dest.writeParcelable(this.license, 0);
     dest.writeTypedList(branches);
+    dest.writeString(archive_url);
   }
 }

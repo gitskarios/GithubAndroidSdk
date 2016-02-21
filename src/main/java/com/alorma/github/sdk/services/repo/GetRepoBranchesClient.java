@@ -4,6 +4,7 @@ import com.alorma.github.sdk.bean.dto.response.Branch;
 import com.alorma.github.sdk.bean.info.RepoInfo;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit.RestAdapter;
 import rx.Observable;
@@ -29,6 +30,12 @@ public class GetRepoBranchesClient extends GithubClient<List<Branch>> {
         restAdapter.create(RepoService.class)
             .branches(repoInfo.owner, repoInfo.name, nextPage, this);
       }
+    }).startWith(new ArrayList<Branch>()).reduce((accumulated, branches2) -> {
+      if (accumulated == null) {
+        accumulated = new ArrayList<>();
+      }
+      accumulated.addAll(branches2);
+      return accumulated;
     });
   }
 }
