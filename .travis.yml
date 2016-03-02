@@ -1,5 +1,18 @@
 language: android
-sudo: true
+
+branches:
+  only:
+    - develop
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.gradle/native
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/caches/2.10
 
 jdk:
   - oraclejdk8
