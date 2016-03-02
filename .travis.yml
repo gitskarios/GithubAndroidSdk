@@ -26,9 +26,4 @@ android:
   licenses:
    - android-sdk-license-.+
 
-branches:
-  only:
-   - develop
-   - master
-
 script: ./gradlew clean build
