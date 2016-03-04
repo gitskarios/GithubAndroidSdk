@@ -45,6 +45,18 @@ public class GithubComment extends ShaUrl implements Parcelable {
     return 0;
   }
 
+  public static final Creator<GithubComment> CREATOR = new Creator<GithubComment>() {
+    @Override
+    public GithubComment createFromParcel(Parcel in) {
+      return new GithubComment(in);
+    }
+
+    @Override
+    public GithubComment[] newArray(int size) {
+      return new GithubComment[size];
+    }
+  };
+
   @Override
   public void writeToParcel(Parcel dest, int flags) {
     super.writeToParcel(dest, flags);
