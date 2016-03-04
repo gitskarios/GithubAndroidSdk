@@ -8,22 +8,12 @@ import android.os.Parcelable;
  */
 public class ShaUrl implements Parcelable {
 
-  public static final Creator<ShaUrl> CREATOR = new Creator<ShaUrl>() {
-    public ShaUrl createFromParcel(Parcel source) {
-      return new ShaUrl(source);
-    }
-
-    public ShaUrl[] newArray(int size) {
-      return new ShaUrl[size];
-    }
-  };
   private static final int MAX_SHA_LENGHT = 8;
   public String sha;
   public String url;
   public String html_url;
 
   public ShaUrl() {
-
   }
 
   protected ShaUrl(Parcel in) {
@@ -50,6 +40,18 @@ public class ShaUrl implements Parcelable {
   public int describeContents() {
     return 0;
   }
+
+  public static final Creator<ShaUrl> CREATOR = new Creator<ShaUrl>() {
+    @Override
+    public ShaUrl createFromParcel(Parcel source) {
+      return new ShaUrl(source);
+    }
+
+    @Override
+    public ShaUrl[] newArray(int size) {
+      return new ShaUrl[size];
+    }
+  };
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
