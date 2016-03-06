@@ -3,6 +3,7 @@ language: android
 branches:
   only:
     - develop
+    - /^v\.\d\.\d\.\d$/
 
 cache:
   directories:
@@ -27,3 +28,9 @@ android:
    - android-sdk-license-.+
 
 script: ./gradlew clean build
+
+deploy:
+  provider: script
+  script ./gradlew clean build bintrayUpload -PbintrayUser=alorma -PbintrayKey=$BINTRAY_KEY -PdryRun=false
+  on:
+   tags: true
