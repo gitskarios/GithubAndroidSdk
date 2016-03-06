@@ -46,6 +46,13 @@ public interface IssuesService {
   void issues(@QueryMap Map<String, String> filter, @Query("page") int page,
       Callback<List<Issue>> callback);
 
+  @GET("/issues")
+  void userIssues(Callback<List<Issue>> callback);
+
+  @GET("/issues")
+  void userIssues(@Query("page") int page,
+      Callback<List<Issue>> callback);
+
   @GET("/repos/{owner}/{name}/issues/{num}/comments")
   void comments(@Path("owner") String owner, @Path("name") String repo, @Path("num") int num,
       Callback<List<GithubComment>> callback);

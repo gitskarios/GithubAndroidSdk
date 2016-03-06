@@ -17,6 +17,12 @@ public class GetIssuesClient extends GithubListClient<List<Issue>> {
   private final int page;
   private IssueInfo issueInfo;
 
+  public GetIssuesClient() {
+    this(null, 0);
+  }
+  public GetIssuesClient(int page) {
+    this(null, page);
+  }
   public GetIssuesClient(Map<String, String> filter) {
     this(null, filter, 0);
   }
@@ -33,7 +39,7 @@ public class GetIssuesClient extends GithubListClient<List<Issue>> {
     super();
     this.issueInfo = issueInfo;
     this.page = page;
-    this.filter = filter != null ? filter : new HashMap<String, String>();
+    this.filter = filter != null ? filter : new HashMap<>();
   }
 
   @Override
