@@ -31,6 +31,6 @@ script: ./gradlew clean build
 
 deploy:
   provider: script
-  script ./gradlew clean build bintrayUpload -PbintrayUser=alorma -PbintrayKey=$BINTRAY_KEY -PdryRun=false
+  script: ./gradlew clean build bintrayUpload -PbintrayUser=alorma -PbintrayKey=$BINTRAY_KEY -PdryRun=false
   on:
    tags: true
