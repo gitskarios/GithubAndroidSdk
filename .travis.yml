@@ -27,10 +27,10 @@ android:
   licenses:
    - android-sdk-license-.+
 
-script: ./gradlew clean build
+script: ./gradlew build
 
 deploy:
   provider: script
-  script: ./gradlew clean build bintrayUpload -PbintrayUser=alorma -PbintrayKey=$BINTRAY_KEY -PdryRun=false
+  script: ./gradlew bintrayUpload -PbintrayUser=alorma -PbintrayKey=$BINTRAY_KEY -PdryRun=false
   on:
    tags: true
