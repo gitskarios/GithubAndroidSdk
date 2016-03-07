@@ -1,9 +1,9 @@
 package com.alorma.github.sdk.services.user;
 
-import android.util.Base64;
 import android.util.Log;
 import com.alorma.github.sdk.bean.dto.response.User;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.gitskarios.core.Pair;
 import java.util.List;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -11,9 +11,7 @@ import retrofit.client.Header;
 import retrofit.client.Response;
 import rx.Observable;
 
-public class GetAuthUserClient extends GithubClient<User> {
-  private String username;
-  private String password;
+public class GetAuthUserClient extends GithubClient<Pair<User, String>> {
   private String accessToken;
 
   public GetAuthUserClient() {
@@ -25,14 +23,8 @@ public class GetAuthUserClient extends GithubClient<User> {
     this.accessToken = accessToken;
   }
 
-  public GetAuthUserClient(String username, String password) {
-    super();
-    this.username = username;
-    this.password = password;
-  }
-
   @Override
-  protected Observable<User> getApiObservable(RestAdapter restAdapter) {
+  protected Observable<Pair<User, String>> getApiObservable(RestAdapter restAdapter) {
     return restAdapter.create(UsersService.class).me().onErrorResumeNext(throwable -> {
       if (throwable instanceof RetrofitError) {
         Response response = ((RetrofitError) throwable).getResponse();
@@ -50,13 +42,13 @@ public class GetAuthUserClient extends GithubClient<User> {
         }
       }
       return Observable.error(throwable);
-    });
+    }).map(user -> new Pair<>(user, getToken()));
   }
 
   @Override
   public void intercept(RequestFacade request) {
     super.intercept(request);
-
+/*
     if (username != null && password != null) {
       String userCredentials = username + ":" + password;
       String basicAuth =
@@ -64,6 +56,7 @@ public class GetAuthUserClient extends GithubClient<User> {
 
       request.addHeader("Authorization", basicAuth.trim());
     }
+    */
   }
 
   @Override
@@ -73,10 +66,15 @@ public class GetAuthUserClient extends GithubClient<User> {
 
   @Override
   protected String getToken() {
+    /*if (username != null && password != null) {
+      return null;
+    } else {
+    */
     if (accessToken != null) {
       return accessToken;
     } else {
       return super.getToken();
     }
+    /*}*/
   }
 }

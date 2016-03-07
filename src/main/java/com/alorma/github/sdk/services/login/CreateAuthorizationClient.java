@@ -48,6 +48,15 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
   }
 
   @Override
+  protected String getToken() {
+    if (username != null && password != null) {
+      return null;
+    } else {
+      return super.getToken();
+    }
+  }
+
+  @Override
   public Observable<GithubAuthorization> observable() {
     return super.observable().retry(0);
   }
