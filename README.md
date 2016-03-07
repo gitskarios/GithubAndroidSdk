@@ -40,7 +40,7 @@ maven {
 Add dependency in your project `build.gradle`
 
 ``` groovy
-    compile 'com.github.alorma:github-sdk:3.2.4'
+    compile 'com.github.alorma:github-sdk:3.2.5'
 ```
 
 Or grab it via maven
