@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 18/02/2015.
- */
 public class Notification extends ShaUrl implements Parcelable {
   public static final Creator<Notification> CREATOR = new Creator<Notification>() {
     public Notification createFromParcel(Parcel source) {
