@@ -3,6 +3,7 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
+import java.util.Date;
 
 /**
  * Created by Bernat on 22/08/2014.
@@ -25,8 +26,8 @@ public class Milestone extends ShaUrl implements Comparable<Milestone>, Parcelab
   public User creator;
   @SerializedName("open_issues") public int openIssues;
   @SerializedName("closed_issues") public int closedIssues;
-  @SerializedName("created_at") public String createdAt;
-  @SerializedName("updated_at") public String updatedAt;
+  @SerializedName("created_at") public Date createdAt;
+  @SerializedName("updated_at") public Date updatedAt;
   @SerializedName("due_on") public String dueOn;
 
   public Milestone() {
@@ -42,8 +43,10 @@ public class Milestone extends ShaUrl implements Comparable<Milestone>, Parcelab
     this.creator = in.readParcelable(User.class.getClassLoader());
     this.openIssues = in.readInt();
     this.closedIssues = in.readInt();
-    this.createdAt = in.readString();
-    this.updatedAt = in.readString();
+    long tmpCreated_at = in.readLong();
+    this.createdAt = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+    long tmpUpdated_at = in.readLong();
+    this.updatedAt = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
     this.dueOn = in.readString();
   }
 
@@ -67,8 +70,8 @@ public class Milestone extends ShaUrl implements Comparable<Milestone>, Parcelab
     dest.writeParcelable(this.creator, 0);
     dest.writeInt(this.openIssues);
     dest.writeInt(this.closedIssues);
-    dest.writeString(this.createdAt);
-    dest.writeString(this.updatedAt);
+    dest.writeLong(createdAt != null ? createdAt.getTime() : -1);
+    dest.writeLong(updatedAt != null ? updatedAt.getTime() : -1);
     dest.writeString(this.dueOn);
   }
 }
