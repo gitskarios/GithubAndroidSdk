@@ -24,7 +24,7 @@ public class Milestone extends ShaUrl implements Comparable<Milestone>, Parcelab
   public String description;
   public User creator;
   @SerializedName("open_issues") public int openIssues;
-  @SerializedName("closes_issues") public int closedIssues;
+  @SerializedName("closed_issues") public int closedIssues;
   @SerializedName("created_at") public String createdAt;
   @SerializedName("updated_at") public String updatedAt;
   @SerializedName("due_on") public String dueOn;
