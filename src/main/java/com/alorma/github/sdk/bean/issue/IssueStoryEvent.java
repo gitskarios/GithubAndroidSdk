@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.alorma.github.sdk.bean.dto.response.User;
 
-/**
- * Created by Bernat on 07/04/2015.
- */
 public class IssueStoryEvent implements IssueStoryDetail, Parcelable {
   public static final Creator<IssueStoryEvent> CREATOR = new Creator<IssueStoryEvent>() {
     public IssueStoryEvent createFromParcel(Parcel source) {
@@ -46,6 +43,9 @@ public class IssueStoryEvent implements IssueStoryDetail, Parcelable {
 
   @Override
   public User user() {
+    if (event.assigner != null) {
+      return event.assigner;
+    }
     return event.actor;
   }
 

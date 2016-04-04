@@ -28,6 +28,7 @@ public class IssueEvent implements Parcelable {
   public Label label;
   public Milestone milestone;
   public User assignee;
+  public User assigner;
   public Rename rename;
 
   public IssueEvent() {
@@ -43,6 +44,7 @@ public class IssueEvent implements Parcelable {
     this.label = in.readParcelable(Label.class.getClassLoader());
     this.milestone = in.readParcelable(Milestone.class.getClassLoader());
     this.assignee = in.readParcelable(User.class.getClassLoader());
+    this.assigner = in.readParcelable(User.class.getClassLoader());
     this.rename = in.readParcelable(Rename.class.getClassLoader());
   }
 
@@ -62,6 +64,7 @@ public class IssueEvent implements Parcelable {
     dest.writeParcelable(this.label, 0);
     dest.writeParcelable(this.milestone, 0);
     dest.writeParcelable(this.assignee, 0);
+    dest.writeParcelable(this.assigner, 0);
     dest.writeParcelable(this.rename, 0);
   }
 }
