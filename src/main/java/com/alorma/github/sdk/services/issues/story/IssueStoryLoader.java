@@ -44,18 +44,14 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
   }
 
   private Observable<IssueStory> getIssueStory() {
-    return Observable.zip(getIssueObservable(), getIssueDetailsObservable(),
-        new Func2<Issue, List<IssueStoryDetail>, IssueStory>() {
-          @Override
-          public IssueStory call(Issue issue, List<IssueStoryDetail> details) {
-            IssueStory issueStory = new IssueStory();
-            issueStory.issue = issue;
-            issueStory.details = details;
-            Collections.sort(issueStory.details,
-                IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
-            return issueStory;
-          }
-        });
+    return Observable.zip(getIssueObservable(), getIssueDetailsObservable(), (issue, details) -> {
+      IssueStory issueStory = new IssueStory();
+      issueStory.item = issue;
+      issueStory.details = details;
+      Collections.sort(issueStory.details,
+          IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);
+      return issueStory;
+    });
   }
 
   private Observable<Issue> getIssueObservable() {

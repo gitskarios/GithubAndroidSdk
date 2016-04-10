@@ -5,9 +5,6 @@ import android.os.Parcelable;
 import com.alorma.github.sdk.bean.dto.response.Commit;
 import com.alorma.github.sdk.bean.dto.response.User;
 
-/**
- * Created by Bernat on 07/04/2015.
- */
 public class PullRequestStoryCommit implements IssueStoryDetail, Parcelable {
 
   public static final Parcelable.Creator<PullRequestStoryCommit> CREATOR =

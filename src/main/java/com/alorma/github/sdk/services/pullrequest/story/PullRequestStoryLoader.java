@@ -53,7 +53,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     return Observable.zip(getPullRequestObs(), getIssueDetailsObservable(),
         (pullRequest, details) -> {
           PullRequestStory pullRequestStory = new PullRequestStory();
-          pullRequestStory.pullRequest = pullRequest;
+          pullRequestStory.item = pullRequest;
           pullRequestStory.details = details;
           Collections.sort(pullRequestStory.details,
               IssueStoryComparators.ISSUE_STORY_DETAIL_COMPARATOR);

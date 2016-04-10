@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 30/05/2015.
- */
 public class PullRequest extends Issue implements Parcelable {
 
   public static final Creator<PullRequest> CREATOR = new Creator<PullRequest>() {
@@ -27,6 +24,7 @@ public class PullRequest extends Issue implements Parcelable {
   public Boolean mergeable;
   public String patch_url;
   public String diff_url;
+  public GithubStatusResponse statusResponse;
 
   public PullRequest() {
   }
@@ -34,6 +32,7 @@ public class PullRequest extends Issue implements Parcelable {
   protected PullRequest(Parcel in) {
     super(in);
     this.head = in.readParcelable(Head.class.getClassLoader());
+    this.statusResponse = in.readParcelable(GithubStatusResponse.class.getClassLoader());
     this.base = in.readParcelable(Head.class.getClassLoader());
     this.additions = in.readInt();
     this.deletions = in.readInt();
@@ -55,6 +54,7 @@ public class PullRequest extends Issue implements Parcelable {
     super.writeToParcel(dest, flags);
     dest.writeParcelable(this.head, 0);
     dest.writeParcelable(this.base, 0);
+    dest.writeParcelable(this.statusResponse, 0);
     dest.writeInt(this.additions);
     dest.writeInt(this.deletions);
     dest.writeInt(this.commits);
