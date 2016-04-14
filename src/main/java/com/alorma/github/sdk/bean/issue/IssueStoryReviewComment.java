@@ -5,9 +5,6 @@ import android.os.Parcelable;
 import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.dto.response.User;
 
-/**
- * Created by Bernat on 07/04/2015.
- */
 public class IssueStoryReviewComment implements IssueStoryDetail, Parcelable {
   public static final Parcelable.Creator<IssueStoryReviewComment> CREATOR =
       new Parcelable.Creator<IssueStoryReviewComment>() {

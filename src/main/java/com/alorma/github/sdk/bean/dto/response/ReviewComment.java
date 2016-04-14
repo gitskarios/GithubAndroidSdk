@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 17/07/2015.
- */
 public class ReviewComment implements Parcelable {
   public static final Parcelable.Creator<ReviewComment> CREATOR =
       new Parcelable.Creator<ReviewComment>() {

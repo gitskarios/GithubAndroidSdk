@@ -3,16 +3,19 @@ package com.alorma.github.sdk.services.pullrequest.story;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
+import com.alorma.github.sdk.bean.dto.response.ReviewComment;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
 import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
+import com.alorma.github.sdk.bean.issue.IssueStoryReviewComment;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
+import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
 import java.util.Collections;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -22,9 +25,6 @@ import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;
 
-/**
- * Created by Bernat on 07/04/2015.
- */
 public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   private final IssueInfo issueInfo;
@@ -32,6 +32,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
   private final String repo;
   private final int num;
   private final IssueStoryService issueStoryService;
+  private final PullRequestsService pullRequestsService;
   private PullRequestStoryService pullRequestStoryService;
 
   public PullRequestStoryLoader(IssueInfo info) {
@@ -42,6 +43,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     this.num = issueInfo.num;
     pullRequestStoryService = getRestAdapter().create(PullRequestStoryService.class);
     issueStoryService = getRestAdapter().create(IssueStoryService.class);
+    pullRequestsService = getRestAdapter().create(PullRequestsService.class);
   }
 
   @Override
@@ -74,7 +76,10 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
   private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
     Observable<IssueStoryDetail> commentsDetailsObs = getCommentsDetailsObs();
     Observable<IssueStoryDetail> eventDetailsObs = getEventDetailsObs();
-    return Observable.mergeDelayError(commentsDetailsObs, eventDetailsObs).toList();
+    Observable<IssueStoryDetail> reviewCommentsObs = getReviewCommentsDetailsObs();
+    Observable<IssueStoryDetail> details =
+        Observable.mergeDelayError(eventDetailsObs, reviewCommentsObs);
+    return Observable.mergeDelayError(commentsDetailsObs, details).toList();
   }
 
   private Observable<List<GithubComment>> getCommentsObs() {
@@ -126,6 +131,33 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
         .map((Func1<IssueEvent, IssueStoryDetail>) issueEvent -> {
           long time = getMilisFromDateClearDay(issueEvent.created_at);
           IssueStoryEvent detail = new IssueStoryEvent(issueEvent);
+          detail.created_at = time;
+          return detail;
+        }));
+  }
+
+  private Observable<List<ReviewComment>> getReviewCommentsObs() {
+    return Observable.create(new BaseInfiniteCallback<List<ReviewComment>>() {
+
+      @Override
+      public void execute() {
+        pullRequestsService.reviewComments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+            issueInfo.num, this);
+      }
+
+      @Override
+      protected void executePaginated(int nextPage) {
+        pullRequestsService.reviewComments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
+            nextPage, this);
+      }
+    });
+  }
+
+  private Observable<IssueStoryDetail> getReviewCommentsDetailsObs() {
+    return getReviewCommentsObs().flatMap(reviewComments -> Observable.from(reviewComments)
+        .map(reviewComment -> {
+          long time = getMilisFromDateClearDay(reviewComment.created_at);
+          IssueStoryReviewComment detail = new IssueStoryReviewComment(reviewComment);
           detail.created_at = time;
           return detail;
         }));
