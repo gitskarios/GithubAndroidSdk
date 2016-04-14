@@ -1,5 +1,6 @@
 package com.alorma.github.sdk.services.pullrequest.story;
 
+import android.util.Pair;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
@@ -10,14 +11,17 @@ import com.alorma.github.sdk.bean.issue.IssueStoryComment;
 import com.alorma.github.sdk.bean.issue.IssueStoryComparators;
 import com.alorma.github.sdk.bean.issue.IssueStoryDetail;
 import com.alorma.github.sdk.bean.issue.IssueStoryEvent;
-import com.alorma.github.sdk.bean.issue.IssueStoryReviewComment;
+import com.alorma.github.sdk.bean.issue.IssueStoryReviewComments;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
 import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -79,7 +83,10 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
     Observable<IssueStoryDetail> reviewCommentsObs = getReviewCommentsDetailsObs();
     Observable<IssueStoryDetail> details =
         Observable.mergeDelayError(eventDetailsObs, reviewCommentsObs);
-    return Observable.mergeDelayError(commentsDetailsObs, details).toList();
+    return Observable.mergeDelayError(commentsDetailsObs, details)
+        .toSortedList((issueStoryDetail, issueStoryDetail2) -> {
+          return ((Long) issueStoryDetail.createdAt()).compareTo(issueStoryDetail2.createdAt());
+        });
   }
 
   private Observable<List<GithubComment>> getCommentsObs() {
@@ -147,20 +154,29 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
       @Override
       protected void executePaginated(int nextPage) {
-        pullRequestsService.reviewComments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name, issueInfo.num,
-            nextPage, this);
+        pullRequestsService.reviewComments(issueInfo.repoInfo.owner, issueInfo.repoInfo.name,
+            issueInfo.num, nextPage, this);
       }
     });
   }
 
   private Observable<IssueStoryDetail> getReviewCommentsDetailsObs() {
-    return getReviewCommentsObs().flatMap(reviewComments -> Observable.from(reviewComments)
-        .map(reviewComment -> {
-          long time = getMilisFromDateClearDay(reviewComment.created_at);
-          IssueStoryReviewComment detail = new IssueStoryReviewComment(reviewComment);
-          detail.created_at = time;
-          return detail;
-        }));
+    return getReviewCommentsObs().flatMap(reviewComments1 -> {
+
+      Map<String, Pair<String, List<ReviewComment>>> comments = new HashMap<>();
+      for (ReviewComment reviewComment : reviewComments1) {
+        String key = reviewComment.path + reviewComment.position;
+        if (comments.get(key) == null) {
+          comments.put(key, new Pair<>(reviewComment.diff_hunk, new ArrayList<>()));
+        }
+        comments.get(key).second.add(reviewComment);
+      }
+      return Observable.from(comments.values());
+    }).map(pair -> {
+      ReviewComment reviewComment = pair.second.get(0);
+      long time = getMilisFromDateClearDay(reviewComment.created_at);
+      return new IssueStoryReviewComments(pair, time, reviewComment.user);
+    });
   }
 
   private Observable<List<Label>> getLabelsObs() {
