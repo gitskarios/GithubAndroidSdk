@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 20/07/2014.
- */
 public class Branch implements Parcelable {
   public static final Creator<Branch> CREATOR = new Creator<Branch>() {
     public Branch createFromParcel(Parcel source) {
