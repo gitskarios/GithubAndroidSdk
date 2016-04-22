@@ -6,9 +6,6 @@ import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Created by Bernat on 13/07/2014.
- */
 public class PaginationLink {
 
   public URI uri;
