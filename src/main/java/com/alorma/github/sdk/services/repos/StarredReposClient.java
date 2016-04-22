@@ -1,8 +1,5 @@
 package com.alorma.github.sdk.services.repos;
 
-/**
- * Created by Bernat on 17/07/2014.
- */
 public class StarredReposClient extends GithubReposClient {
 
   public StarredReposClient() {
