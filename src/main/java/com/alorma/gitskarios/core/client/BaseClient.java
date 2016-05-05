@@ -42,11 +42,10 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
   }
 
   public Observable<K> observable() {
-    return getApiObservable(getRestAdapter()).retry(retry()).debounce(100, TimeUnit.MILLISECONDS);
+    return getApiObservable(getRestAdapter()).retry(this::retry).debounce(100, TimeUnit.MILLISECONDS);
   }
 
-  protected Func2<Integer, Throwable, Boolean> retry() {
-    return (integer, throwable) -> {
+  protected Boolean retry(Integer integer, Throwable throwable) {
       if (throwable instanceof RetrofitError) {
         Response response = ((RetrofitError) throwable).getResponse();
         if (response != null) {
@@ -54,7 +53,6 @@ public abstract class BaseClient<K> implements RequestInterceptor, RestAdapter.L
         }
       }
       return integer < 3;
-    };
   }
 
   protected abstract Observable<K> getApiObservable(RestAdapter restAdapter);

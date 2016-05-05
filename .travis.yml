@@ -27,7 +27,7 @@ android:
   licenses:
    - android-sdk-license-.+
 
-script: ./gradlew build
+script: ./gradlew assemble
 
 deploy:
   provider: script

@@ -4,6 +4,7 @@ import android.util.Base64;
 import com.alorma.github.sdk.bean.dto.request.CreateAuthorization;
 import com.alorma.github.sdk.bean.dto.response.GithubAuthorization;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.user.TwoFactorAppException;
 import com.alorma.github.sdk.services.user.TwoFactorAuthException;
 import com.alorma.github.sdk.services.user.UnauthorizedException;
 import java.util.List;
@@ -74,7 +75,12 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
                 for (Header header : headers) {
                   if (header.getName().equals("X-GitHub-OTP") && header.getValue()
                       .contains("required")) {
-                    return Observable.error(new TwoFactorAuthException());
+                    String value = header.getValue();
+                    if (value.contains("app")) {
+                      return Observable.error(new TwoFactorAppException());
+                    } else {
+                      return Observable.error(new TwoFactorAuthException());
+                    }
                   }
                 }
                 return Observable.error(new UnauthorizedException());
@@ -90,7 +96,7 @@ public class CreateAuthorizationClient extends GithubClient<GithubAuthorization>
   }
 
   @Override
-  protected Func2<Integer, Throwable, Boolean> retry() {
-    return (integer, throwable) -> false;
+  protected Boolean retry(Integer integer, Throwable throwable) {
+    return false;
   }
 }
