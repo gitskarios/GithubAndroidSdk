@@ -1,6 +1,7 @@
 package com.alorma.github.sdk.services.pullrequest.story;
 
 import android.util.Pair;
+
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.dto.response.PullRequest;
@@ -15,16 +16,20 @@ import com.alorma.github.sdk.bean.issue.IssueStoryReviewComments;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.issues.story.GithubReactionsIssueMapper;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
 import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.functions.Func1;
@@ -107,7 +112,8 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   private Observable<IssueStoryDetail> getCommentsDetailsObs() {
     return getCommentsObs().flatMap(githubComments -> Observable.from(githubComments)
-        .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
+            .map(new GithubReactionsIssueMapper())
+            .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
           long time = getMilisFromDateClearDay(githubComment.created_at);
           IssueStoryComment detail = new IssueStoryComment(githubComment);
           detail.created_at = time;

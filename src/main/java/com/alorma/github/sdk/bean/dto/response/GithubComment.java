@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 23/08/2014.
- */
 public class GithubComment extends ShaUrl implements Parcelable {
 
   private static final int MAX_MESSAGE_LENGHT = 146;
@@ -15,6 +12,7 @@ public class GithubComment extends ShaUrl implements Parcelable {
   public User user;
   public String created_at;
   public String updated_at;
+  public GithubCommentReactions reactions;
 
   public GithubComment() {
   }
