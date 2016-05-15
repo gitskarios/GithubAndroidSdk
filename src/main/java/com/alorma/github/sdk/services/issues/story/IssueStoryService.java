@@ -2,7 +2,6 @@ package com.alorma.github.sdk.services.issues.story;
 
 import com.alorma.github.sdk.bean.dto.request.IssueRequest;
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
-import com.alorma.github.sdk.bean.dto.response.GithubReaction;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.dto.response.Label;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
@@ -13,7 +12,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
-import retrofit.http.Header;
 import retrofit.http.Headers;
 import retrofit.http.PATCH;
 import retrofit.http.POST;
@@ -103,14 +101,4 @@ public interface IssueStoryService {
     Observable<List<GithubComment>> commentsObs(@Path("owner") String owner,
                                                 @Path("name") String repo, @Path("num") int num
             , @Query("page") int page);
-
-    @GET("/repos/{owner}/{repo}/issues/{number}/reactions")
-    @Headers({"Accept: application/vnd.github.squirrel-girl-preview"})
-    Observable<List<GithubReaction>> issueReactions(@Path("owner") String owner,
-                                                    @Path("name") String repo, @Path("num") int num);
-
-    @GET("/repos/{owner}/{repo}/issues/{number}/reactions")
-    @Headers({"Accept: application/vnd.github.squirrel-girl-preview"})
-    Observable<List<GithubReaction>> issueReactions(@Path("owner") String owner,
-                                                    @Path("name") String repo, @Path("num") int num, @Query("page") int page);
 }

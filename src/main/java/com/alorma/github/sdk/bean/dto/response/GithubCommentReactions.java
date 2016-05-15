@@ -1,67 +1,25 @@
 package com.alorma.github.sdk.bean.dto.response;
 
-import com.google.gson.annotations.SerializedName;
+import com.alorma.github.sdk.services.issues.reactions.GithubReaction;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class GithubCommentReactions extends HashMap<String, Object>{
+public class GithubCommentReactions extends HashMap<String, Object> {
 
     private int totalCount;
-    private int plusOne;
-    private int minusOne;
-    private int laugh;
-    private int confused;
-    private int heart;
-    private int hooray;
+
+    private List<GithubReaction> reactions = new ArrayList<>();
 
     private String url;
 
-    public int getTotalCount() {
-        return totalCount;
+    public List<GithubReaction> getReactions() {
+        return reactions;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getPlusOne() {
-        return plusOne;
-    }
-
-    public void setPlusOne(int plusOne) {
-        this.plusOne = plusOne;
-    }
-
-    public int getMinusOne() {
-        return minusOne;
-    }
-
-    public void setMinusOne(int minusOne) {
-        this.minusOne = minusOne;
-    }
-
-    public int getLaugh() {
-        return laugh;
-    }
-
-    public void setLaugh(int laugh) {
-        this.laugh = laugh;
-    }
-
-    public int getHeart() {
-        return heart;
-    }
-
-    public void setHeart(int heart) {
-        this.heart = heart;
-    }
-
-    public int getHooray() {
-        return hooray;
-    }
-
-    public void setHooray(int hooray) {
-        this.hooray = hooray;
+    public void setReactions(List<GithubReaction> reactions) {
+        this.reactions = reactions;
     }
 
     public String getUrl() {
@@ -72,11 +30,11 @@ public class GithubCommentReactions extends HashMap<String, Object>{
         this.url = url;
     }
 
-    public int getConfused() {
-        return confused;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setConfused(int confused) {
-        this.confused = confused;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
     }
 }
