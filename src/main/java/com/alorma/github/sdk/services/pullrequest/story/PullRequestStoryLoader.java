@@ -16,6 +16,8 @@ import com.alorma.github.sdk.bean.issue.IssueStoryReviewComments;
 import com.alorma.github.sdk.bean.issue.PullRequestStory;
 import com.alorma.github.sdk.services.client.BaseInfiniteCallback;
 import com.alorma.github.sdk.services.client.GithubClient;
+import com.alorma.github.sdk.services.issues.story.GithubCommentReactionsIssueMapper;
+import com.alorma.github.sdk.services.issues.story.GithubPRReactionsIssueMapper;
 import com.alorma.github.sdk.services.issues.story.GithubReactionsIssueMapper;
 import com.alorma.github.sdk.services.issues.story.IssueStoryService;
 import com.alorma.github.sdk.services.pullrequest.PullRequestsService;
@@ -74,7 +76,8 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   private Observable<PullRequest> getPullRequestObs() {
     Observable<PullRequest> pullRequestObservable =
-        pullRequestStoryService.detailObs(owner, repo, num);
+        pullRequestStoryService.detailObs(owner, repo, num)
+                .map(new GithubPRReactionsIssueMapper());
 
     return Observable.zip(pullRequestObservable, getLabelsObs(), (pullRequest, labels) -> {
       pullRequest.labels = labels;
@@ -112,7 +115,7 @@ public class PullRequestStoryLoader extends GithubClient<PullRequestStory> {
 
   private Observable<IssueStoryDetail> getCommentsDetailsObs() {
     return getCommentsObs().flatMap(githubComments -> Observable.from(githubComments)
-            .map(new GithubReactionsIssueMapper())
+            .map(new GithubCommentReactionsIssueMapper())
             .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
           long time = getMilisFromDateClearDay(githubComment.created_at);
           IssueStoryComment detail = new IssueStoryComment(githubComment);

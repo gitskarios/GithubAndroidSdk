@@ -89,6 +89,7 @@ public interface IssueStoryService {
 
     // Observable
 
+    @Headers({"Accept: application/vnd.github.squirrel-girl-preview"})
     @GET("/repos/{owner}/{name}/issues/{num}")
     Observable<Issue> detailObs(@Path("owner") String owner, @Path("name") String repo,
                                 @Path("num") int num);

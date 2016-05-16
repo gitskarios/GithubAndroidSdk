@@ -3,7 +3,7 @@ package com.alorma.github.sdk.services.issues.reactions;
 public enum GithubReactionType {
 
     PlusOne("+1", 0x1F44D),
-    MinusOne(".1", 0x1F44E),
+    MinusOne("-1", 0x1F44E),
     Laugh("laugh", 0x1F604),
     Confused("confused", 0x1F615),
     Heart("heart", 0x2764),

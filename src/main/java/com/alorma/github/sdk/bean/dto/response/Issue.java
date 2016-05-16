@@ -5,10 +5,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-/**
- * Created by Bernat on 20/07/2014.
- */
-
 public class Issue extends GithubComment implements Parcelable {
 
   public static final Creator<Issue> CREATOR = new Creator<Issue>() {
@@ -30,6 +26,7 @@ public class Issue extends GithubComment implements Parcelable {
   public int comments;
   @SerializedName("pull_request") public PullRequest pullRequest;
   @SerializedName("closed_at") public String closedAt;
+
   public Repo repository;
 
   public Issue() {

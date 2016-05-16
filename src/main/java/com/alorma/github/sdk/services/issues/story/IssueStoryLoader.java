@@ -1,7 +1,6 @@
 package com.alorma.github.sdk.services.issues.story;
 
 import com.alorma.github.sdk.bean.dto.response.GithubComment;
-import com.alorma.github.sdk.bean.dto.response.GithubCommentReactions;
 import com.alorma.github.sdk.bean.dto.response.Issue;
 import com.alorma.github.sdk.bean.info.IssueInfo;
 import com.alorma.github.sdk.bean.issue.IssueEvent;
@@ -59,7 +58,8 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
     }
 
     private Observable<Issue> getIssueObservable() {
-        return issueStoryService.detailObs(owner, repo, num);
+        return issueStoryService.detailObs(owner, repo, num)
+                .map(new GithubReactionsIssueMapper());
     }
 
     private Observable<List<IssueStoryDetail>> getIssueDetailsObservable() {
@@ -92,7 +92,7 @@ public class IssueStoryLoader extends GithubClient<IssueStory> {
 
     private Observable<IssueStoryDetail> getCommentsDetailsObs() {
         return getCommentsObs().flatMap(githubComments -> Observable.from(githubComments)
-                .map(new GithubReactionsIssueMapper())
+                .map(new GithubCommentReactionsIssueMapper())
                 .map((Func1<GithubComment, IssueStoryDetail>) githubComment -> {
                     long time = getMilisFromDateClearDay(githubComment.created_at);
                     IssueStoryComment detail = new IssueStoryComment(githubComment);
