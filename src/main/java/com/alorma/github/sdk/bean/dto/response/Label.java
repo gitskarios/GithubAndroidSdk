@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 22/08/2014.
- */
 public class Label extends ShaUrl implements Comparable<Label>, Parcelable {
 
   public static final Creator<Label> CREATOR = new Creator<Label>() {

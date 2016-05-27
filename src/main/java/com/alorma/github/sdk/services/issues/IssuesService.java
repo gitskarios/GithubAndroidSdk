@@ -24,9 +24,6 @@ import retrofit.http.Query;
 import retrofit.http.QueryMap;
 import rx.Observable;
 
-/**
- * Created by Bernat on 22/08/2014.
- */
 public interface IssuesService {
 
   //Async

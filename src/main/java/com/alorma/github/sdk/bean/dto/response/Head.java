@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 30/05/2015.
- */
 public class Head extends ShaUrl implements Parcelable {
 
   public static final Creator<Head> CREATOR = new Creator<Head>() {

@@ -5,9 +5,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
-/**
- * Created by Bernat on 22/08/2014.
- */
 public class Milestone extends ShaUrl implements Comparable<Milestone>, Parcelable {
 
   public static final Creator<Milestone> CREATOR = new Creator<Milestone>() {

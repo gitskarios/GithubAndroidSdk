@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.List;
 
-/**
- * Created by a557114 on 06/09/2015.
- */
 public class GithubStatusResponse extends ShaUrl implements Parcelable {
   public static final Creator<GithubStatusResponse> CREATOR = new Creator<GithubStatusResponse>() {
     public GithubStatusResponse createFromParcel(Parcel source) {

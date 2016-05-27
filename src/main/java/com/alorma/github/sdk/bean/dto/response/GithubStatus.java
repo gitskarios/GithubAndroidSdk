@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.dto.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by a557114 on 06/09/2015.
- */
 public class GithubStatus implements Parcelable {
   public static final Parcelable.Creator<GithubStatus> CREATOR =
       new Parcelable.Creator<GithubStatus>() {

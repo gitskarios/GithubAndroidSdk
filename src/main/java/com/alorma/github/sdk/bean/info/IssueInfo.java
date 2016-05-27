@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.alorma.github.sdk.bean.dto.response.IssueState;
 
-/**
- * Created by Bernat on 06/09/2014.
- */
 public class IssueInfo implements Parcelable {
 
   public static final Creator<IssueInfo> CREATOR = new Creator<IssueInfo>() {
