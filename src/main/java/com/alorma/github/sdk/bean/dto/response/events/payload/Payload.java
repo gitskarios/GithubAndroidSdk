@@ -48,6 +48,7 @@ public class Payload implements Parcelable {
   public String before;
   public List<Commit> commits;
   public Repo forkee;
+  public User member;
 
   public Payload() {
   }
