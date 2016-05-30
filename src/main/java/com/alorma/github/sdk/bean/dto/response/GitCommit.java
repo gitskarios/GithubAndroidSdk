@@ -22,6 +22,7 @@ public class GitCommit extends ShaUrl implements Parcelable {
   public String message;
   public ShaUrl tree;
   public int comment_count;
+  public GitCommitVerification verification;
 
   public GitCommit() {
   }

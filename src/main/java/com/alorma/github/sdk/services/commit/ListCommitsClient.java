@@ -49,16 +49,13 @@ public class ListCommitsClient extends GithubListClient<List<Commit>> {
             if (page == 0) {
               commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, this);
             } else {
-              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, page,
-                  this);
+              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, page, this);
             }
           } else {
             if (page == 0) {
-              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, info.sha,
-                  this);
+              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, info.sha, this);
             } else {
-              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, info.sha,
-                  page, this);
+              commitsService.commitsByPath(info.repoInfo.owner, info.repoInfo.name, path, info.sha, page, this);
             }
           }
         }
@@ -68,6 +65,6 @@ public class ListCommitsClient extends GithubListClient<List<Commit>> {
 
   @Override
   public String getAcceptHeader() {
-    return "application/vnd.github.cryptographer-preview+sha";
+    return "application/vnd.github.cryptographer-preview+sha.json";
   }
 }

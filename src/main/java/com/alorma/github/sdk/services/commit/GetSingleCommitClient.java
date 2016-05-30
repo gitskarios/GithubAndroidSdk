@@ -6,9 +6,6 @@ import com.alorma.github.sdk.services.client.GithubClient;
 import retrofit.RestAdapter;
 import rx.Observable;
 
-/**
- * Created by Bernat on 22/12/2014.
- */
 public class GetSingleCommitClient extends GithubClient<Commit> {
 
   private CommitInfo info;
@@ -22,5 +19,10 @@ public class GetSingleCommitClient extends GithubClient<Commit> {
   protected Observable<Commit> getApiObservable(RestAdapter restAdapter) {
     return restAdapter.create(CommitsService.class)
         .singleCommit(info.repoInfo.owner, info.repoInfo.name, info.sha);
+  }
+
+  @Override
+  public String getAcceptHeader() {
+    return "application/vnd.github.cryptographer-preview+sha.json";
   }
 }
