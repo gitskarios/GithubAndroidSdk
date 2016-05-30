@@ -26,6 +26,7 @@ public class Commit extends ShaUrl implements Parcelable {
   public GitCommitFiles files;
   public int days;
   public int comment_count;
+  public GitCommitVerification verification;
 
   public Commit() {
   }

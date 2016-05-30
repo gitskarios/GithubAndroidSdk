@@ -6,9 +6,6 @@ import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 import retrofit.RestAdapter;
 
-/**
- * Created by Bernat on 07/09/2014.
- */
 public class ListCommitsClient extends GithubListClient<List<Commit>> {
   private CommitInfo info;
   private String path;
@@ -67,5 +64,10 @@ public class ListCommitsClient extends GithubListClient<List<Commit>> {
         }
       }
     };
+  }
+
+  @Override
+  public String getAcceptHeader() {
+    return "application/vnd.github.cryptographer-preview+sha";
   }
 }
