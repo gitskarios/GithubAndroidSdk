@@ -7,9 +7,6 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.Response;
 
-/**
- * Created by Bernat on 08/08/2014.
- */
 public class IssuesSearchClient extends GithubSearchClient<IssuesSearch, List<Issue>> {
 
   public IssuesSearchClient(String query) {

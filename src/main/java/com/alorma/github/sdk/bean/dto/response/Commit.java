@@ -78,4 +78,12 @@ public class Commit extends ShaUrl implements Parcelable {
     dest.writeInt(this.days);
     dest.writeInt(this.comment_count);
   }
+
+  public boolean isCommitVerified() {
+    if (commit != null) {
+      GitCommitVerification verification = commit.verification;
+      return verification != null && verification.verified;
+    }
+    return false;
+  }
 }
