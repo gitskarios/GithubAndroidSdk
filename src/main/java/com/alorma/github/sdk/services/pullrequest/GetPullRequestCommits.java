@@ -6,9 +6,6 @@ import com.alorma.github.sdk.services.client.GithubListClient;
 import java.util.List;
 import retrofit.RestAdapter;
 
-/**
- * Created by Bernat on 17/06/2015.
- */
 public class GetPullRequestCommits extends GithubListClient<List<Commit>> {
 
   private IssueInfo info;
@@ -38,5 +35,10 @@ public class GetPullRequestCommits extends GithubListClient<List<Commit>> {
         }
       }
     };
+  }
+
+  @Override
+  public String getAcceptHeader() {
+    return "application/vnd.github.cryptographer-preview+sha.json";
   }
 }
