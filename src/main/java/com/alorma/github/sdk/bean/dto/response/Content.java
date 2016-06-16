@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.List;
 
-/**
- * Created by Bernat on 20/07/2014.
- */
 public class Content extends ShaUrl implements Comparable<Content>, Parcelable {
   public static final Creator<Content> CREATOR = new Creator<Content>() {
     public Content createFromParcel(Parcel source) {
