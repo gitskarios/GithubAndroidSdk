@@ -3,9 +3,6 @@ package com.alorma.github.sdk.bean.info;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Bernat on 24/05/2015.
- */
 public class FileInfo implements Parcelable {
 
   public static final Creator<FileInfo> CREATOR = new Creator<FileInfo>() {
