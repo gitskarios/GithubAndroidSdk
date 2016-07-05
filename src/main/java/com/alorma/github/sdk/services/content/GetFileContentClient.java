@@ -6,9 +6,6 @@ import com.alorma.github.sdk.services.client.GithubClient;
 import retrofit.RestAdapter;
 import rx.Observable;
 
-/**
- * Created by Bernat on 10/09/2014.
- */
 public class GetFileContentClient extends GithubClient<Content> {
 
   private FileInfo fileInfo;
