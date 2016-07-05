@@ -4,6 +4,7 @@ import com.alorma.github.sdk.bean.dto.request.NewContentRequest;
 import com.alorma.github.sdk.bean.dto.response.Content;
 import com.alorma.github.sdk.bean.dto.response.NewContentResponse;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
@@ -35,5 +36,9 @@ public interface ContentService {
 
   @PUT("/repos/{owner}/{repo}/contents/{path}")
   Observable<NewContentResponse> createFile(@Path("owner") String owner, @Path("repo") String repo, @Path("path") String path,
+      @Body NewContentRequest body);
+
+  @DELETE("/repos/{owner}/{repo}/contents/{path}")
+  Observable<NewContentResponse> deleteFile(@Path("owner") String owner, @Path("repo") String repo, @Path("path") String path,
       @Body NewContentRequest body);
 }
